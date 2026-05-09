@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+bash SCRIPTS/validate-bootstrap.sh
+
+echo "pre-push checks passed"
+

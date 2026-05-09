@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+bash SCRIPTS/validate-bootstrap.sh
+
+if git rev-parse --git-dir >/dev/null 2>&1; then
+  private_key_pattern='BEGIN (RSA|DSA|EC|OPENSSH) PRIVATE'' KEY'
+  openai_key_pattern='OPENAI_API_''KEY='
+  anthropic_key_pattern='ANTHROPIC_API_''KEY='
+  token_pattern='s''k-[A-Za-z0-9_-]{20,}'
+  secret_pattern="${private_key_pattern}|${openai_key_pattern}|${anthropic_key_pattern}|${token_pattern}"
+  staged_tmp="$(mktemp)"
+  git diff --cached --name-only -z --diff-filter=ACM > "$staged_tmp"
+  if [[ -s "$staged_tmp" ]]; then
+    if xargs -0 grep -InE "$secret_pattern" < "$staged_tmp" >/tmp/precommit-secret-hit.$$ 2>/dev/null; then
+      echo "Potential secret detected in staged files:" >&2
+      cat /tmp/precommit-secret-hit.$$ >&2
+      rm -f /tmp/precommit-secret-hit.$$
+      rm -f "$staged_tmp"
+      exit 1
+    fi
+    rm -f /tmp/precommit-secret-hit.$$
+  fi
+  rm -f "$staged_tmp"
+fi
+
+echo "pre-commit checks passed"

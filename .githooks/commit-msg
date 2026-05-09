@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+msg_file="${1:?commit message file required}"
+first_line="$(sed -n '1p' "$msg_file")"
+
+if echo "$first_line" | grep -Eq '(SPEC-[0-9]+|BACKLOG-[0-9]+|ADR-[0-9]+|BOOT-[0-9]+|[A-Z][A-Z0-9]+-[0-9]+|initial bootstrap|bootstrap scaffold)'; then
+  exit 0
+fi
+
+cat >&2 <<'MSG'
+Commit message should reference a spec, backlog item, ADR, ticket, or bootstrap task.
+
+Examples:
+  SPEC-001 add login acceptance criteria
+  BACKLOG-012 implement profile form
+  ADR-003 select persistence model
+  BOOT-001 validate bootstrap scaffold
+MSG
+exit 1
+
