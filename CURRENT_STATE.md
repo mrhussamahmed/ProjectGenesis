@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v2.7
+version: v2.8
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -35,19 +35,14 @@ authoritative: false
 
 ## Active Implementation Phase
 
-- Public GitHub publication work is ready for PR under BOOT-016. The target
-  remote is `https://github.com/mrhussamahmed/ProjectGenesis.git`; the public
-  README, AGPLv3 license, Code Owners file, GitHub branch protection guide, and
-  review package were validated and reviewed for a feature-branch PR instead of
-  a direct `main` update.
-- Draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` is open
-  from `codex/start-requirement-breakdown-command` into `main`.
-- Initial GitHub branch protection is configured on `main`: pull request
-  reviews are required, Code Owner review is required, stale approvals are
-  dismissed, last-push approval is required, conversations must be resolved,
-  force pushes are disabled, and branch deletion is disabled. Required status
-  checks are intentionally not configured yet because the validation workflow
-  is not on `main` until the publication PR is merged.
+- Public GitHub publication work under BOOT-016 is merged. PR
+  `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` merged into `main`
+  at merge commit `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`.
+- GitHub branch protection is configured on `main`: pull request reviews are
+  required, Code Owner review is required, stale approvals are dismissed,
+  last-push approval is required, conversations must be resolved, the
+  `validate` status check is required with strict branch freshness, force
+  pushes are disabled, and branch deletion is disabled.
 - Command shortcut work added `COMMANDS/start-requirement-breakdown.md` so the
   user can trigger downstream product intake with `Start requirement breakdown`.
   Independent plan review requested changes; the state-update order, dispatch
@@ -97,7 +92,7 @@ authoritative: false
 
 ## Active Branch
 
-- `codex/start-requirement-breakdown-command`
+- `main`
 
 ## Active Worktree
 
@@ -107,15 +102,12 @@ authoritative: false
 
 - Bootstrap package completeness and downstream project intake readiness after
   `SPEC-BOOT-002`.
-- BOOT-016 public repository publication and maintainer-review controls.
+- Downstream project readiness using the published ProjectGenesis scaffold.
 
 ## Current Blockers
 
 - No product-specific input has been provided for a downstream software
   project.
-- Public publication is pending owner review and merge. After the publication
-  PR is merged and the validation workflow exists on `main`, tighten branch
-  protection to require the `validate` status check.
 
 ## Current Source-Of-Truth Files
 
@@ -139,9 +131,8 @@ authoritative: false
 
 ## Next Recommended Action
 
-Review draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1`, merge
-when accepted, then tighten branch protection to require the `validate` status
-check after the workflow exists on `main`.
+Use the published scaffold for the next project by adding source material under
+`00_intake/raw/` and triggering `Start requirement breakdown.`
 
 ## Latest Validation
 

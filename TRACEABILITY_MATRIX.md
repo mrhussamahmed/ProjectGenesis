@@ -2,11 +2,11 @@ artifact_id: ART-TRACE-001
 title: Traceability Matrix
 type: traceability
 status: authoritative
-version: v2.4
+version: v2.5
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup
+source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -62,7 +62,7 @@ instead of a product spec. Product implementation must not use this exception.
 | Proposed Improvement | Source | Spec ID | Backlog Item | Review Record | Tests | Current Status |
 |----------------------|--------|---------|--------------|---------------|-------|----------------|
 | Intake, product context, requirements control, context packs, command prompts, validator, workflow, multi-agent synchronization, and onboarding cleanup for the reusable bootstrap scaffold | User-supplied scaffold improvement plan, 2026-05-13 | SPEC-BOOT-002 | BOOT-009 through BOOT-015 | `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md`; `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks | Implemented, validated, and reviewed; ready for commit |
-| Public ProjectGenesis GitHub publication with AGPLv3 license, public README, Code Owners, branch protection guidance, and reviewable publication PR | User publication request, 2026-05-13; `origin/main` initial AGPLv3 license | none | BOOT-016 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`; `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`; draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; GitHub auth and repo checks; branch protection API verification | Reviewed, approved, pushed, draft PR opened, and initial branch protection configured; pending owner review, merge, and status-check protection after workflow lands on `main` |
+| Public ProjectGenesis GitHub publication with AGPLv3 license, public README, Code Owners, branch protection guidance, and reviewable publication PR | User publication request, 2026-05-13; `origin/main` initial AGPLv3 license | none | BOOT-016 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`; `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`; merged PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; GitHub auth and repo checks; branch protection API verification; GitHub Actions `validate` | Merged to `main` at `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`; branch protection requires PR review, Code Owner review, conversation resolution, and `validate` status check |
 
 ## Scaffold Improvement Requirement Mapping
 

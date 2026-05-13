@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v2.7
+version: v2.8
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -30,7 +30,7 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Current Branch
 
-`codex/start-requirement-breakdown-command`
+`main`
 
 ## Current Worktree
 
@@ -38,15 +38,12 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Last Completed Task
 
-Added the reusable `Start requirement breakdown` command shortcut under the
-existing `SPEC-BOOT-002` command prompt framework.
+Merged BOOT-016 ProjectGenesis public publication PR and enabled required
+`validate` branch protection on `main`.
 
 ## Current In-Progress Task
 
-BOOT-016 public ProjectGenesis GitHub publication: public README, AGPLv3
-license, Code Owners, branch protection guidance, push, and pull request
-creation. Validation, publication review, branch push, draft PR creation, and
-initial branch protection configuration are complete.
+None.
 
 ## Files Changed
 
@@ -70,6 +67,7 @@ initial branch protection configuration are complete.
 - `GITHUB_REPOSITORY_SETUP.md`
 - `BACKLOG.md`
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`
+- `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`
 
 ## Specs Changed
 
@@ -108,9 +106,9 @@ initial branch protection configuration are complete.
 - `main` should be protected so future changes require pull requests and
   maintainer review. The required `validate` status check can be enforced after
   the workflow exists on the default branch.
-- Initial `main` branch protection is active, but `required_status_checks` is
-  still `null` until `.github/workflows/bootstrap-validation.yml` exists on
-  `main`.
+- `main` branch protection now requires pull request review, Code Owner review,
+  conversation resolution, and the `validate` status check with strict branch
+  freshness.
 
 ## Assumptions Made
 
@@ -205,8 +203,8 @@ initial branch protection configuration are complete.
 
 - Stack-specific tests were not run because this is a Markdown and shell
   scaffold implementation, not a product implementation.
-- Required status-check branch protection is still pending until the
-  publication PR is merged and the validation workflow exists on `main`.
+- Stack-specific product tests were not run because this is scaffold
+  publication work, not product implementation.
 
 ## Known Failures
 
@@ -231,17 +229,12 @@ asks.
 
 ## Untracked Files
 
-- `COMMANDS/start-requirement-breakdown.md`
-- `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md`
-- `.github/CODEOWNERS`
-- `GITHUB_REPOSITORY_SETUP.md`
-- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`
+- None known.
 
 ## Next Recommended Action
 
-Review draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1`, merge
-when accepted, then update branch protection to require the `validate` status
-check.
+Use the published scaffold for the next project by adding source material under
+`00_intake/raw/` and triggering `Start requirement breakdown.`
 
 ## What The Next AI Must Read First
 
@@ -265,8 +258,6 @@ product-specific specs, backlog, architecture updates, and test plans.
 
 Bootstrap scaffold: baseline exists. Scaffold improvement: `SPEC-BOOT-002`
 v1.2 implementation is validated. The `Start requirement breakdown` command
-shortcut is implemented on branch `codex/start-requirement-breakdown-command`.
-BOOT-016 public repository publication is in progress on the same branch.
-Validation, review, branch push, draft PR creation, and initial branch
-protection are complete; it awaits owner review, merge, and later status-check
-branch protection tightening.
+shortcut is merged to `main`. BOOT-016 public repository publication is merged
+to `main`, and GitHub branch protection now requires PR review plus the
+`validate` status check.
