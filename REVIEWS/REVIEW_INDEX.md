@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v1.1
+version: v1.8
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
+source: Initial bootstrap scaffold, final adversarial review, and narrow re-review
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -24,12 +24,18 @@ Review records and review packages live in this folder.
 |-----------|--------------|----------|------|----------|------|------|--------|
 | REVIEW-2026-05-09-bootstrap-baseline | bootstrap baseline | request changes, addressed | medium | user adversarial review | 2026-05-09 | `REVIEWS/REVIEW-2026-05-09-bootstrap-baseline.md` | addressed |
 | REVIEW-2026-05-09-shared-role-system | shared role system update | request changes | medium | Codex adversarial review | 2026-05-09 | `REVIEWS/REVIEW-2026-05-09-shared-role-system.md` | ready for re-review |
+| REVIEW-2026-05-13-scaffold-improvement-plan | scaffold improvement plan | request changes | high | Codex adversarial review | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md` | active |
+| REVIEW-2026-05-13-spec-boot-002-v0.2 | SPEC-BOOT-002 v0.2 | request changes | high | independent reviewers | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.2.md` | addressed in SPEC-BOOT-002 v0.4 |
+| REVIEW-2026-05-13-spec-boot-002-v0.4 | SPEC-BOOT-002 v0.4 | approve with minor comments | high | independent reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md` | addressed; spec activated |
+| REVIEW-2026-05-13-scaffold-intake-governance-implementation | SPEC-BOOT-002 implementation | approve with minor comments | high | independent reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | active; P1/P2 findings addressed |
+| REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial | SPEC-BOOT-002 final adversarial review | request changes, addressed | high | Codex adversarial review plus narrow re-review | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | addressed; narrow re-review found no remaining P0/P1/P2 findings |
 
 ## Review Packages
 
 | Package ID | PR Or Branch | Purpose | File | Status |
 |------------|--------------|---------|------|--------|
 | PR-PACKAGE-2026-05-09-shared-role-system | shared role system update | Durable review package for shared `memory/ai/` role system change | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-09-shared-role-system.md` | active |
+| PR-PACKAGE-2026-05-13-scaffold-intake-governance | scaffold intake and governance implementation | Review package for `SPEC-BOOT-002` implementation | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-scaffold-intake-governance.md` | active |
 
 ## Rules
 

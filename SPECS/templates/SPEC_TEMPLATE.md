@@ -25,6 +25,9 @@ authoritative: true
 - Created:
 - Last updated:
 - Source input:
+- Source IDs:
+- Requirement IDs:
+- Confidence:
 - Related product requirement:
 - Related backlog item:
 - Related Linear ticket:
@@ -37,21 +40,27 @@ Describe the value this work creates.
 
 ## Functional Requirements
 
-| ID | Requirement | Source | Priority |
-|----|-------------|--------|----------|
-| FR-001 |  |  | P1 |
+| ID | Requirement | Requirement IDs | Source IDs | Confidence | Status | Priority |
+|----|-------------|-----------------|------------|------------|--------|----------|
+| FR-001 |  |  |  |  |  | P1 |
 
 ## Non-Functional Requirements
 
-| ID | Requirement | Source | Priority |
-|----|-------------|--------|----------|
-| NFR-001 |  |  | P1 |
+| ID | Requirement | Requirement IDs | Source IDs | Confidence | Status | Priority |
+|----|-------------|-----------------|------------|------------|--------|----------|
+| NFR-001 |  |  |  |  |  | P1 |
 
 ## Acceptance Criteria
 
-| ID | Given | When | Then | Test Mapping |
-|----|-------|------|------|--------------|
-| AC-001 |  |  |  |  |
+| ID | Requirement IDs | Given | When | Then | Test Mapping |
+|----|-----------------|-------|------|------|--------------|
+| AC-001 |  |  |  |  |  |
+
+## Source Evidence
+
+| Claim Or Requirement | Source IDs | Assumption Link | Open Question Link | Evidence Status |
+|----------------------|------------|-----------------|--------------------|-----------------|
+|  |  |  |  |  |
 
 ## Edge Cases
 
@@ -67,11 +76,15 @@ Describe the value this work creates.
 
 ## Assumptions
 
-- 
+| ID | Assumption | Risk | Status | Expiry | Approval Evidence |
+|----|------------|------|--------|--------|-------------------|
+|  |  |  |  |  |  |
 
 ## Open Questions
 
-- 
+| ID | Question | Blocks | Owner | Status |
+|----|----------|--------|-------|--------|
+|  |  |  |  |  |
 
 ## Test Requirements
 
@@ -102,6 +115,8 @@ Describe the value this work creates.
 ## Definition Of Ready
 
 - [ ] Acceptance criteria are clear.
+- [ ] Important requirements have source evidence or approved assumptions.
+- [ ] Low-confidence important requirements are not used as implementation authority.
 - [ ] Dependencies are documented.
 - [ ] Architecture impact is known or explicitly not applicable.
 - [ ] Test expectations are defined.
@@ -134,4 +149,3 @@ Describe the value this work creates.
 | Version | Date | Change | Author |
 |---------|------|--------|--------|
 | v0.1 |  | Initial draft. |  |
-

@@ -2,12 +2,12 @@ artifact_id: ART-STATE-005
 title: Stale Items
 type: shared-state
 status: active
-version: v1.0
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
-linked_specs: []
+source: Initial bootstrap scaffold, final adversarial review, and stale status fix
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -22,13 +22,13 @@ backlog items, and files that need review before reuse.
 
 ## Current Stale Items
 
-None identified in the initialized bootstrap package.
+- No current stale items.
 
 ## Stale Item Log
 
 | ID | Item | Type | Why Stale Or Suspicious | Current Source Of Truth | Required Action | Owner | Status |
 |----|------|------|-------------------------|-------------------------|-----------------|-------|--------|
-| none | none | none | none | none | none | none | none |
+| STALE-2026-05-13-001 | `SPECS/SPEC_INDEX.md` `SPEC-BOOT-002` current-status cell | spec-index status drift | It said final review findings were "under correction" while `CURRENT_STATE.md`, `AI_HANDOFF.md`, and `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` said P1/P2 findings were addressed. | `SPECS/SPEC_INDEX.md`; `CURRENT_STATE.md`; `AI_HANDOFF.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | Updated `SPECS/SPEC_INDEX.md` to match the final review state; validation passed and narrow re-review approved the correction. | AI Bootstrap Maintainers | resolved |
 
 ## Rules
 
@@ -40,4 +40,3 @@ None identified in the initialized bootstrap package.
   it blindly.
 - Resolve drift by updating specs, architecture, ADRs, tests, backlog,
   traceability, and artifact registry together.
-

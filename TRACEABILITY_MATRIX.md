@@ -2,11 +2,11 @@ artifact_id: ART-TRACE-001
 title: Traceability Matrix
 type: traceability
 status: authoritative
-version: v1.2
+version: v2.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request and initial scaffold
+source: User request, initial scaffold, final adversarial review, stale status fix, and narrow re-review
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -19,6 +19,14 @@ authoritative: true
 Traceability maps requirements to specs, backlog items, ADRs, architecture,
 implementation branches, changed files, tests, review records, release status,
 and current status.
+
+## Expanded Traceability Format
+
+New project-specific rows should preserve this evidence chain where practical:
+
+| Source IDs | Requirement IDs | Spec ID | Acceptance Criteria | Backlog Item | ADR | Planned Or Changed Files | Tests | Review Record | Release Status | Current Status |
+|------------|-----------------|---------|---------------------|--------------|-----|--------------------------|-------|---------------|----------------|----------------|
+| none | none | none | none | none | none | none | none | none | none | Use this format for future project-specific traceability. |
 
 ## Bootstrap Requirements
 
@@ -48,3 +56,33 @@ instead of a product spec. Product implementation must not use this exception.
 - Do not claim traceability exists unless the mapping is here.
 - Mark requirements as unimplemented or unverified when evidence is missing.
 - Mark implementation without linked spec as orphaned and create a cleanup task.
+
+## Proposed Bootstrap Improvements Under Review
+
+| Proposed Improvement | Source | Spec ID | Backlog Item | Review Record | Tests | Current Status |
+|----------------------|--------|---------|--------------|---------------|-------|----------------|
+| Intake, product context, requirements control, context packs, command prompts, validator, workflow, multi-agent synchronization, and onboarding cleanup for the reusable bootstrap scaffold | User-supplied scaffold improvement plan, 2026-05-13 | SPEC-BOOT-002 | BOOT-009 through BOOT-015 | `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md`; `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks | Implemented, validated, and reviewed; ready for commit |
+
+## Scaffold Improvement Requirement Mapping
+
+| Requirement | Spec ID | Backlog Item | Evidence | Tests | Review Record | Current Status |
+|-------------|---------|--------------|----------|-------|---------------|----------------|
+| SBG-FR-001: Governing spec before implementation | SPEC-BOOT-002 | BOOT-009 | User adjusted plan; `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md`; `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md` | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md` | implemented and reviewed |
+| SBG-FR-002: `00_intake/raw/` canonical and `INPUT/` legacy alias | SPEC-BOOT-002 | BOOT-010 | User adjusted plan; review finding P1 | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-003: Source registry and stable source IDs | SPEC-BOOT-002 | BOOT-010 | User adjusted plan | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-004: Product context artifacts | SPEC-BOOT-002 | BOOT-011 | User adjusted plan | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-005: Requirements, assumptions, and risk registers | SPEC-BOOT-002 | BOOT-011 | User adjusted plan; review finding P1 | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-006: Evidence-aware spec, ADR, and backlog templates | SPEC-BOOT-002 | BOOT-012 | User adjusted plan; review finding P2 | `git diff --check`; manual review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-007: Expanded traceability chain | SPEC-BOOT-002 | BOOT-012 | User adjusted plan | traceability review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-008: Subordinate context packs | SPEC-BOOT-002 | BOOT-014 | User adjusted plan; review finding P1 | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-009: Safe command prompt framework | SPEC-BOOT-002 | BOOT-014 | User adjusted plan; review finding P2 | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-010: Narrow direct-main documentation exception | SPEC-BOOT-002 | BOOT-012 | User adjusted plan; review finding P1; SPEC-BOOT-002 v0.3 correction | policy-file review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-011: Validator behavior and red-check examples first | SPEC-BOOT-002 | BOOT-013 | User adjusted plan; review finding P2 | `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-012: RTF onboarding migration | SPEC-BOOT-002 | BOOT-015 | User adjusted plan; review finding P2 | registry and manual review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-013: External ticket evidence rules | SPEC-BOOT-002 | BOOT-012 | SPEC-BOOT-002 v0.2 independent review finding P2 | backlog and traceability review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-001: Preserve source-of-truth hierarchy and role system | SPEC-BOOT-002 | BOOT-010 through BOOT-015 | `AI_PROJECT_BOOTSTRAP.md`; `memory/ai/SHARED_AGENT_RULES.md`; independent review finding P1 | final review and validator coverage | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-002: Plain Markdown first | SPEC-BOOT-002 | BOOT-010 through BOOT-015 | User adjusted plan; SPEC-BOOT-002 | manual review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-003: Small staged implementation slices | SPEC-BOOT-002 | BOOT-009 through BOOT-015 | User adjusted plan; review recommendation | backlog sequencing review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-004: Lightweight local validation | SPEC-BOOT-002 | BOOT-013 | `GOVERNANCE.md`; `RISK_MODEL.md`; SPEC-BOOT-002 | validator performance review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-005: Avoid shadow governance | SPEC-BOOT-002 | BOOT-014 | Review finding P2; SPEC-BOOT-002 authority limits | validator and review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-006: New Markdown artifact metadata and registry entries | SPEC-BOOT-002 | BOOT-010 through BOOT-015 | `GOVERNANCE.md`; review finding P2; SPEC-BOOT-002 artifact inventory | `bash SCRIPTS/validate-bootstrap.sh`; registry checks | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | implemented, reviewed, and final spec-index status correction approved |

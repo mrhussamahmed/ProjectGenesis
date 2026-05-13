@@ -2,12 +2,12 @@ artifact_id: ART-GIT-001
 title: Branch And Worktree Guide
 type: guide
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request and reference repository audit
-linked_specs: []
+source: User request, reference repository audit, and SPEC-BOOT-002
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -26,6 +26,44 @@ authoritative: true
 - Include a spec or ticket ID in commit messages where possible.
 - Do not commit secrets, generated noise, or build artifacts unless
   intentionally versioned.
+
+## Direct Main Documentation Exception
+
+Direct edits on `main` are allowed only for low-risk documentation changes that
+do not alter source-of-truth meaning.
+
+Allowed on `main`:
+
+- typo fixes
+- formatting fixes
+- non-authoritative wording improvements
+- small README-style documentation fixes
+
+Not allowed on `main`:
+
+- governance changes
+- specs
+- ADRs
+- backlog changes
+- templates
+- validator scripts
+- hooks
+- role files
+- source-of-truth files
+- security policy
+- release policy
+- dependency policy
+
+Required checks for eligible direct-`main` documentation edits:
+
+1. Run `git status --short --branch` before and after the edit.
+2. Run `git diff --check`.
+3. Run `bash SCRIPTS/validate-bootstrap.sh` when the touched file is registered
+   in `ARTIFACT_REGISTRY.md` or referenced by `CONTEXT_INDEX.md`.
+
+No fresh adversarial review is required for typo, formatting, or small
+non-authoritative wording-only changes on `main`. Any change that touches
+source-of-truth meaning requires a branch and the normal review path.
 
 Recommended branch names:
 
@@ -81,4 +119,3 @@ Recommended branch names:
 - Do not commit secrets.
 - Do not commit generated local files unless required.
 - Each commit should be explainable from a spec, backlog item, ticket, or ADR.
-

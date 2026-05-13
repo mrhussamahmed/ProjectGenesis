@@ -24,6 +24,8 @@ check_dir() {
 required_files=(
   "AI_PROJECT_BOOTSTRAP.md"
   "BOOTSTRAP_USAGE.md"
+  "GETTING_STARTED.md"
+  "NEW_PROJECT_INITIALIZATION.md"
   "BOOTSTRAP_AUDIT.md"
   "CLAUDE.md"
   "AGENTS.md"
@@ -48,6 +50,25 @@ required_files=(
   "PR_REVIEW_POLICY.md"
   "PR_MERGE_POLICY.md"
   "AI_REVIEW_PROMPTS.md"
+  "00_intake/SOURCE_REGISTRY.md"
+  "00_intake/INTAKE_INDEX.md"
+  "INPUT/README.md"
+  "01_context/PROJECT_BRIEF.md"
+  "01_context/PROJECT_CHARTER.md"
+  "01_context/GLOSSARY.md"
+  "01_context/CONSTRAINTS.md"
+  "02_requirements/REQUIREMENTS_INDEX.md"
+  "02_requirements/ASSUMPTIONS_REGISTER.md"
+  "02_requirements/RISK_REGISTER.md"
+  "CONTEXT_PACKS/README.md"
+  "CONTEXT_PACKS/product-intake.md"
+  "CONTEXT_PACKS/spec-authoring.md"
+  "CONTEXT_PACKS/architecture.md"
+  "CONTEXT_PACKS/implementation.md"
+  "CONTEXT_PACKS/review.md"
+  "CONTEXT_PACKS/resume.md"
+  "COMMANDS/COMMAND_INDEX.md"
+  "COMMANDS/COMMAND_TEMPLATE.md"
   "memory/ai/SHARED_AGENT_RULES.md"
   "memory/ai/ROLE_PRODUCT_ANALYST.md"
   "memory/ai/ROLE_SPEC_AUTHOR.md"
@@ -83,6 +104,7 @@ required_files=(
   "HANDOFFS/HANDOFF_INDEX.md"
   "SCRIPTS/start-claude.sh"
   "SCRIPTS/validate-bootstrap.sh"
+  "SCRIPTS/validate-bootstrap-red-checks.sh"
   ".githooks/pre-commit"
   ".githooks/commit-msg"
   ".githooks/pre-push"
@@ -104,6 +126,13 @@ required_dirs=(
   "WORKLOG"
   "HANDOFFS"
   "INPUT"
+  "00_intake"
+  "00_intake/raw"
+  "00_intake/summaries"
+  "01_context"
+  "02_requirements"
+  "CONTEXT_PACKS"
+  "COMMANDS"
   "memory"
   "memory/ai"
   "SCRIPTS"
@@ -162,6 +191,168 @@ while IFS= read -r file; do
   fi
   rm -f /tmp/bootstrap-placeholder-hit.$$
 done < <(find . -type f -name '*.md' -not -path './.git/*' -print | sed 's#^\./##')
+
+while IFS= read -r file; do
+  if grep -Eq '^status: (approved|active)$' "$file"; then
+    while IFS= read -r requirement_id; do
+      [[ -n "$requirement_id" ]] && fail "$file approved spec missing source IDs: $requirement_id"
+    done < <(awk -F'|' '
+      function trim(value) {
+        gsub(/^[ \t]+|[ \t]+$/, "", value)
+        return value
+      }
+      /^\|/ {
+        first = trim($2)
+        if (first == "ID") {
+          source_col = 0
+          for (i = 2; i < NF; i++) {
+            header = tolower(trim($i))
+            if (header == "source" || header == "source ids") {
+              source_col = i
+            }
+          }
+          next
+        }
+        if (first ~ /(^|-)FR-[A-Za-z0-9]/ || first ~ /(^|-)NFR-[A-Za-z0-9]/) {
+          if (source_col == 0) {
+            print first
+            next
+          }
+          source_value = trim($(source_col))
+          if (source_value == "" || tolower(source_value) == "none") {
+            print first
+          }
+        }
+      }
+    ' "$file")
+  fi
+done < <(find SPECS -maxdepth 1 -type f -name '*.md' -print)
+
+while IFS= read -r id; do
+  [[ -n "$id" ]] && fail "BACKLOG.md active backlog item missing linked spec: $id"
+done < <(awk -F'|' '
+  function trim(value) {
+    gsub(/^[ \t]+|[ \t]+$/, "", value)
+    return value
+  }
+  /^\| [^|-]/ && $2 !~ /ID/ {
+    id = trim($2)
+    dependencies = trim($8)
+    readiness = trim($9)
+    if (id !~ /^BOOT-/ && readiness ~ /^(ready|in-progress|in-review|done)$/ && dependencies !~ /(SPEC-|discovery exception)/) {
+      print id
+    }
+  }
+' BACKLOG.md)
+
+if git_branch="$(git branch --show-current 2>/dev/null)" && [[ -n "$git_branch" ]]; then
+  handoff_branch="$(awk '
+    /^## Current Branch$/ {
+      getline
+      getline
+      gsub(/`/, "")
+      print
+      exit
+    }
+  ' AI_HANDOFF.md)"
+  if [[ -n "$handoff_branch" && "$handoff_branch" != "$git_branch" ]]; then
+    fail "AI_HANDOFF.md branch does not match git branch: $handoff_branch != $git_branch"
+  fi
+fi
+
+if [[ -d COMMANDS ]]; then
+  while IFS= read -r file; do
+    case "$file" in
+      COMMANDS/COMMAND_INDEX.md) continue ;;
+    esac
+    for section in \
+      "## Purpose" \
+      "## Required Role" \
+      "## Required Files To Read" \
+      "## Inputs" \
+      "## Outputs" \
+      "## Stop Conditions" \
+      "## Validation" \
+      "## Authority Limit"; do
+      grep -Fq "$section" "$file" || fail "$file command missing section: $section"
+    done
+  done < <(find COMMANDS -maxdepth 1 -type f -name '*.md' -print)
+fi
+
+if [[ -d CONTEXT_PACKS ]]; then
+  while IFS= read -r file; do
+    for section in \
+      "## Files To Read First" \
+      "## Files To Read If Relevant" \
+      "## Files Not To Scan Unless Needed" \
+      "## Expected Outputs" \
+      "## Stop Conditions" \
+      "## Authority Limit"; do
+      grep -Fq "$section" "$file" || fail "$file context pack missing section: $section"
+    done
+    grep -Fq "cannot" "$file" || fail "$file context pack missing explicit authority limit"
+  done < <(find CONTEXT_PACKS -maxdepth 1 -type f -name '*.md' ! -name 'README.md' -print)
+fi
+
+if [[ -f "00_intake/SOURCE_REGISTRY.md" ]]; then
+  while IFS='|' read -r kind id; do
+    case "$kind" in
+      freshness) fail "00_intake/SOURCE_REGISTRY.md source registry row missing freshness: $id" ;;
+      processing) fail "00_intake/SOURCE_REGISTRY.md source registry row missing processing state: $id" ;;
+    esac
+  done < <(awk -F'|' '
+    function trim(value) {
+      gsub(/^[ \t]+|[ \t]+$/, "", value)
+      return value
+    }
+    /^\| SRC-/ {
+      id = trim($2)
+      freshness = trim($7)
+      processing = trim($8)
+      if (freshness == "" || freshness == "none") {
+        print "freshness|" id
+      }
+      if (processing == "" || processing == "none") {
+        print "processing|" id
+      }
+    }
+  ' 00_intake/SOURCE_REGISTRY.md)
+fi
+
+if [[ -f "02_requirements/ASSUMPTIONS_REGISTER.md" ]]; then
+  while IFS='|' read -r kind id; do
+    case "$kind" in
+      expiry) fail "02_requirements/ASSUMPTIONS_REGISTER.md assumption row missing expiry: $id" ;;
+      evidence) fail "02_requirements/ASSUMPTIONS_REGISTER.md approved assumption missing approval evidence: $id" ;;
+      disallowed-evidence) fail "02_requirements/ASSUMPTIONS_REGISTER.md approved assumption has disallowed approval evidence: $id" ;;
+      unsupported-evidence) fail "02_requirements/ASSUMPTIONS_REGISTER.md approved assumption missing allowed approval evidence: $id" ;;
+    esac
+  done < <(awk -F'|' '
+    function trim(value) {
+      gsub(/^[ \t]+|[ \t]+$/, "", value)
+      return value
+    }
+    /^\| ASM-/ {
+      id = trim($2)
+      status = trim($6)
+      expiry = trim($7)
+      evidence = trim($8)
+      evidence_lc = tolower(evidence)
+      if (expiry == "" || expiry == "none") {
+        print "expiry|" id
+      }
+      if (status == "approved") {
+        if (evidence == "" || evidence == "none") {
+          print "evidence|" id
+        } else if (evidence_lc ~ /(self-approved|self approved|self approval|same agent|by author|author-only)/) {
+          print "disallowed-evidence|" id
+        } else if (evidence !~ /(explicit user approval|user approval|approved spec|active spec|accepted ADR|maintainer-approved|verified external|SPEC-[A-Z0-9-]+|ADR-[A-Z0-9-]+|SRC-[0-9]+)/) {
+          print "unsupported-evidence|" id
+        }
+      }
+    }
+  ' 02_requirements/ASSUMPTIONS_REGISTER.md)
+fi
 
 grep -Fq "ARTIFACT_REGISTRY.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference ARTIFACT_REGISTRY.md"
 grep -Fq "TRACEABILITY_MATRIX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference TRACEABILITY_MATRIX.md"

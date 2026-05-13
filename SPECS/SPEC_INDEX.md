@@ -2,9 +2,9 @@ artifact_id: ART-SPEC-INDEX
 title: Spec Index
 type: spec-index
 status: active
-version: v1.0
+version: v1.7
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
 source: Initial bootstrap scaffold
 linked_specs: []
@@ -23,7 +23,7 @@ infrastructure tasks, refactors, and acceptance criteria.
 
 | Spec ID | Title | File | Status | Version | Owner | Related Backlog | Related Ticket | Related ADRs | Current Status |
 |---------|-------|------|--------|---------|-------|-----------------|----------------|--------------|----------------|
-| none | none | none | none | none | none | none | none | none | No product specs created yet. |
+| SPEC-BOOT-002 | Scaffold Intake And Governance Improvement | `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md` | active | v1.2 | AI Bootstrap Maintainers | BOOT-009 through BOOT-015 | none | none | Active; BOOT-010 through BOOT-015 implemented, validated, and final review P1/P2 findings addressed. |
 
 ## Rules
 
@@ -32,4 +32,3 @@ infrastructure tasks, refactors, and acceptance criteria.
   spike work, and backlog preparation only.
 - Update this index whenever a spec is created, changed, superseded,
   cancelled, archived, implemented, tested, or released.
-

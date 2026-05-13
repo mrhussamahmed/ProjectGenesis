@@ -36,8 +36,12 @@ Out of scope:
 
 - Linked spec:
 - Linked acceptance criteria:
+- Linked requirements:
+- Source IDs:
+- Approved assumptions:
+- Open questions:
 - Related ADR:
-- Related Linear ticket:
+- Related external ticket:
 
 ## Dependencies
 
@@ -63,9 +67,11 @@ low | medium | high | critical
 
 ## Linear Ticket
 
-- Should become Linear ticket: yes/no
-- Linear status: draft/not-created/created
-- Linear ID:
+- Should become external ticket: yes/no
+- Tracker: none | Linear | GitHub Issues | other
+- Ticket status: draft/not-created/created
+- Ticket ID or URL:
+- Confirmation evidence:
 
 ## Priority
 
@@ -74,6 +80,18 @@ P0 | P1 | P2 | P3
 ## Readiness Status
 
 not-ready | ready | blocked | in-progress | in-review | done
+
+## Readiness Evidence
+
+- Source evidence:
+- Spec status:
+- Acceptance criteria:
+- Dependencies:
+- Architecture impact:
+- Test expectations:
+- Branch/worktree plan:
+- Required reviewers:
+- Blocked until:
 
 ## Test Expectations
 
@@ -95,4 +113,3 @@ not-ready | ready | blocked | in-progress | in-review | done
 - File ownership boundaries:
 - Shared files requiring coordination:
 - Stop conditions:
-

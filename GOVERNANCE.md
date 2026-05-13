@@ -2,12 +2,12 @@ artifact_id: ART-GOV-001
 title: Governance
 type: governance
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request and reference repository audit
-linked_specs: []
+source: User request, reference repository audit, and SPEC-BOOT-002
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -124,6 +124,17 @@ traceability, and artifact registry together.
 - High-risk changes require focused review by security, architecture, QA, and
   release roles.
 - Reviewers use repository evidence, not implementer chat history.
+
+## Direct Main Documentation Exception
+
+`BRANCH_AND_WORKTREE_GUIDE.md` defines the only direct-`main` exception. It is
+limited to low-risk documentation edits that do not alter source-of-truth
+meaning. Governance, specs, ADRs, backlog, templates, validation, hooks, roles,
+security, release, dependency policy, registry, traceability, current state,
+and handoff changes require a branch and normal review.
+
+Agents must not use the direct-`main` exception for ambiguity, convenience, or
+large documentation changes. When in doubt, use a branch.
 
 ## Required End-Of-Session Updates
 

@@ -2,12 +2,12 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v1.2
+version: v2.4
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
-linked_specs: []
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, and narrow re-review
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -18,7 +18,7 @@ authoritative: false
 
 ## Current Date
 
-2026-05-09
+2026-05-13
 
 ## Active Agent
 
@@ -26,7 +26,7 @@ Codex
 
 ## Current Role
 
-Documentation Curator, Implementation Agent
+Documentation Curator, DevOps Release Reviewer
 
 ## Current Branch
 
@@ -38,164 +38,196 @@ Documentation Curator, Implementation Agent
 
 ## Last Completed Task
 
-Prepared the scaffold for baseline commit, including fixing the pre-commit hook
-so its secret scanner does not match its own pattern definitions, and created
-the baseline commit on `main`.
+Merged reviewed `SPEC-BOOT-002` scaffold intake and governance implementation
+into `main`.
 
 ## Current In-Progress Task
 
-None. Baseline commit has been created on `main`.
+None.
 
 ## Files Changed
 
-- `memory/ai/SHARED_AGENT_RULES.md`
-- `memory/ai/ROLE_PRODUCT_ANALYST.md`
-- `memory/ai/ROLE_SPEC_AUTHOR.md`
-- `memory/ai/ROLE_ARCHITECT.md`
-- `memory/ai/ROLE_BACKLOG_PLANNER.md`
-- `memory/ai/ROLE_IMPLEMENTATION_AGENT.md`
-- `memory/ai/ROLE_QA_REVIEWER.md`
-- `memory/ai/ROLE_SECURITY_REVIEWER.md`
-- `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md`
-- `memory/ai/ROLE_DOCUMENTATION_CURATOR.md`
-- `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md`
-- `memory/ai/ROLE_DIAGRAM_ARCHITECT.md`
-- `SCRIPTS/start-claude.sh`
+- `00_intake/`
+- `01_context/`
+- `02_requirements/`
+- `CONTEXT_PACKS/`
+- `COMMANDS/`
+- `GETTING_STARTED.md`
+- `NEW_PROJECT_INITIALIZATION.md`
+- `INPUT/README.md`
 - `SCRIPTS/validate-bootstrap.sh`
-- `AGENTS.md`
-- `CLAUDE.md`
+- `SCRIPTS/validate-bootstrap-red-checks.sh`
+- `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md`
+- `SPECS/templates/SPEC_TEMPLATE.md`
+- `ADR/templates/ADR_TEMPLATE.md`
+- `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`
+- `BRANCH_AND_WORKTREE_GUIDE.md`
+- `GOVERNANCE.md`
 - `CONTEXT_INDEX.md`
 - `BOOTSTRAP_USAGE.md`
-- `AI_PROJECT_BOOTSTRAP.md`
-- `ARCHITECTURE.md`
-- `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
-- `TEST_RESULTS.md`
-- `WORKLOG/WORKLOG_INDEX.md`
-- `REVIEWS/REVIEW-2026-05-09-shared-role-system.md`
-- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-09-shared-role-system.md`
-- `REVIEWS/REVIEW_INDEX.md`
-- `.githooks/pre-commit`
+- `ARTIFACT_REGISTRY.md`
+- `STALE_ITEMS.md`
+- `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
+- `REVIEWS/`
+- shared state, test result, and worklog files
+- `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md`
 
 ## Specs Changed
 
-- None. No product specs were created or changed.
+- `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md` activated as v1.0
+  and aligned to v1.2 after implementation status and final-review fixes.
 
 ## Artifacts Changed
 
-- New shared role artifacts registered under `memory/ai/`.
-- `SCRIPTS/start-claude.sh` registered as an optional Claude convenience helper.
-- `SCRIPTS/validate-bootstrap.sh` updated to check shared role files and
-  allowlisted Claude modes.
-- `AGENTS.md` and `CLAUDE.md` updated as short entrypoints pointing to
-  `memory/ai/`.
-- `CONTEXT_INDEX.md`, `BOOTSTRAP_USAGE.md`, and `AI_PROJECT_BOOTSTRAP.md`
-  updated to document the shared role system.
-- `ARCHITECTURE.md` updated to include the shared role system and Diagram
-  Architect process step.
-- `TRACEABILITY_MATRIX.md`, `ARTIFACT_REGISTRY.md`, `CURRENT_STATE.md`,
-  `AI_HANDOFF.md`, `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md` updated.
-- Durable PR review package added under `REVIEWS/`.
-- Claude default mode documented as orientation-only in the startup helper and
-  docs, and validator checks were added for that documentation.
-- `.githooks/pre-commit` updated so the secret scanner does not detect its own
-  pattern definitions in staged hook content.
+- Added a durable review record under `REVIEWS/`.
+- Registered the review in `REVIEWS/REVIEW_INDEX.md` and
+  `ARTIFACT_REGISTRY.md`.
+- Added proposed `SPEC-BOOT-002` and registered it in `SPECS/SPEC_INDEX.md`,
+  `ARTIFACT_REGISTRY.md`, and `TRACEABILITY_MATRIX.md`.
+- Added staged blocked backlog items BOOT-009 through BOOT-015 to `BACKLOG.md`.
+- Updated current state, handoff, test results, and worklog.
+- Corrected BOOT-012 scope in the spec and backlog to include workflow policy
+  updates, and registered the v0.2 versions in registry, traceability, state,
+  test results, and worklog.
+- Added durable independent review record for SPEC-BOOT-002 v0.2 and addressed
+  findings in v0.3/v0.4, including NFR traceability and fuller artifact
+  inventory.
+- Added fresh review record approving SPEC-BOOT-002 v0.4 with minor comments.
+- Added intake, context, requirement, context-pack, command, onboarding, and
+  validator artifacts for BOOT-010 through BOOT-015.
+- Added implementation review package for final fresh-context review.
+- Added final implementation review record and addressed P1/P2 findings:
+  column-aware source evidence validation, approved-assumption approval
+  evidence validation, Product Analyst intake path alignment, and explicit
+  context-pack authority limits.
+- Added final adversarial review record requesting changes for stale
+  `SPECS/SPEC_INDEX.md` current-status text and registered it in review,
+  registry, traceability, state, test-results, and worklog artifacts.
+- Recorded the stale spec-index status in `STALE_ITEMS.md`, then resolved it
+  after correcting `SPECS/SPEC_INDEX.md`.
 
 ## Decisions Made
 
-- The bootstrap is stack-neutral.
-- Linear is optional and local Markdown backlog remains authoritative when
-  tickets are drafts.
-- Parallel implementation defaults to not allowed until explicitly proven safe.
-- Local validation remains lightweight; stack-specific heavy checks belong in
-  CI after stack selection.
-- Shared agent behavior lives in `memory/ai/`, not in Claude-specific startup
-  prompts.
-- `SCRIPTS/start-claude.sh` uses an explicit mode allowlist and loads only
-  `memory/ai/SHARED_AGENT_RULES.md` plus the selected role file.
-- Codex and other non-Claude agents read the same role files directly.
-- Claude `default` mode remains allowlisted to satisfy the original scaffold
-  requirement, but it is orientation-only and not valid for task work until a
-  role file is read.
+- `SPEC-BOOT-002` is active at v1.2.
+- Markdown remains authoritative until external ticket creation is confirmed by
+  tool or command evidence.
+- `INPUT/` is a legacy alias; `00_intake/raw/` is canonical.
+- Implementation validation passed and prior fresh-context implementation
+  review approved with minor comments after required fixes.
+- Final adversarial review requested one P2 correction before staging or
+  commit. `SPECS/SPEC_INDEX.md` no longer says final review findings are under
+  correction.
+- Narrow re-review approved the correction with minor comments and found no
+  remaining P0/P1/P2 findings.
 
 ## Assumptions Made
 
 - The current folder is the package root.
-- GitHub Actions templates are appropriate but optional.
-- The reference project is used for reusable process patterns only.
-- Older `memory/ai/PROJECT_AI_RULES.md` and `memory/ai/*_SYSTEM_PROMPT.md`
-  compatibility files did not exist in this scaffold, so no aliases were kept.
+- The user requested continuing through the plan without stopping.
+- No downstream product-specific input exists yet.
 
 ## Open Questions
 
-- Which product input should be used for the first downstream project scaffold?
-- Will Linear be available for the downstream project?
+- No product open questions block `SPEC-BOOT-002`.
+- No review finding blocks staging or committing.
 
 ## Tests Run
 
-- `git status --short --branch` - inspected; repository has no commits yet and
-  scaffold files are untracked.
-- `bash SCRIPTS/validate-bootstrap.sh` - passed.
-- `bash -n SCRIPTS/start-claude.sh` - passed.
-- `bash -n SCRIPTS/validate-bootstrap.sh` - passed.
-- Focused required-file existence check for shared role files and
-  `SCRIPTS/start-claude.sh` - failed before implementation, as expected.
-- `bash SCRIPTS/validate-bootstrap.sh` - failed until new files were registered
-  in `ARTIFACT_REGISTRY.md`, then passed.
-- `bash -n SCRIPTS/start-claude.sh && bash -n SCRIPTS/validate-bootstrap.sh`
-  - passed.
-- Review fix validation: `bash SCRIPTS/validate-bootstrap.sh` - passed.
-- Review fix syntax checks:
-  `bash -n SCRIPTS/start-claude.sh && bash -n SCRIPTS/validate-bootstrap.sh`
-  - passed.
-- Commit preparation validation: `bash SCRIPTS/validate-bootstrap.sh` -
-  passed.
-- Commit preparation syntax checks:
-  `bash -n .githooks/pre-commit && bash -n SCRIPTS/start-claude.sh && bash -n
-  SCRIPTS/validate-bootstrap.sh` - passed.
-- `.githooks/pre-commit` - passed after fixing the hook self-scan false
-  positive.
+- `git status --short --branch` - clean on `main` before review branch.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed before review state updates.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after review state updates.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after creating `SPEC-BOOT-002`
+  and updating required state files.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after the `SPEC-BOOT-002` v0.2
+  correction and state updates.
+- `git diff --check` - passed after the `SPEC-BOOT-002` v0.2 correction.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after the `SPEC-BOOT-002` v0.4
+  correction and state updates.
+- `git diff --check` - passed after the `SPEC-BOOT-002` v0.4 correction.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after implementing BOOT-010
+  through BOOT-015.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed after validator red
+  checks were implemented.
+- `git diff --check` - passed after implementing BOOT-010 through BOOT-015.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after final review fixes.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed after adding empty
+  source ID, self-approved assumption, and unsupported assumption evidence red
+  checks.
+- `git diff --check` - passed after final review fixes.
+- Independent implementation re-review approved with minor comments and found
+  no remaining P0/P1/P2 findings.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after final state cleanup.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed after final state
+  cleanup.
+- `git diff --check` - passed after final state cleanup.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed during final adversarial
+  review.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed during final
+  adversarial review.
+- `git diff --check` - passed during final adversarial review.
+- `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` - passed during final adversarial
+  review.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after final adversarial review
+  state updates.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed after final
+  adversarial review state updates.
+- `git diff --check` - passed after final adversarial review state updates.
+- `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` - passed after final adversarial
+  review state updates.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after stale spec-index status
+  correction.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed after stale
+  spec-index status correction.
+- `git diff --check` - passed after stale spec-index status correction.
+- `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` - passed after stale spec-index
+  status correction.
+- Narrow re-review approved with minor comments and found no remaining
+  P0/P1/P2 findings.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed on `main` before merge commit.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed on `main` before
+  merge commit.
+- `git diff --check` - passed on `main` before merge commit.
+- `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` - passed on `main` before merge
+  commit.
 
 ## Tests Not Run
 
-- `.githooks/pre-commit` and `.githooks/pre-push` were not rerun for this
-  scaffold-only update because `bash SCRIPTS/validate-bootstrap.sh` is the
-  relevant changed validation target.
-- No product-specific tests exist because no product spec or implementation
-  exists.
+- Stack-specific tests were not run because this is a Markdown and shell
+  scaffold implementation, not a product implementation.
+- `.githooks/pre-commit` and `.githooks/pre-push` were not run because no commit
+  or push was performed.
 
 ## Known Failures
 
-- None known after implementing review fixes. The previous shared role review
-  decision remains request changes until a fresh re-review records a new
-  decision.
+- None known for the implemented scaffold validation.
 
 ## Known Risks
 
-- Governance can become heavy if future agents create unnecessary artifacts for
-  small changes. Use the no-over-engineering rule in `GOVERNANCE.md`.
-- Claude helper execution depends on the `claude` CLI being available in the
-  caller environment.
-- Fresh re-review is still needed because the implementation agent must not
-  self-approve its own review fixes.
+- This merge changes core governance, templates, validation, branch policy,
+  intake flow, and onboarding material; final adversarial review requested one
+  P2 status-consistency correction, now fixed and approved by narrow
+  re-review.
+- Validator parsing is intentionally lightweight and should be watched for
+  false positives as real downstream projects use the scaffold.
 
 ## Dirty Worktree Status
 
-- Repository has no commits yet on `main`.
-- Bootstrap files remain untracked and ready for baseline commit.
+Merge commit is being prepared on `main`. After the merge commit, the worktree
+should be clean.
 
 ## Untracked Files
 
-- All scaffold files are currently untracked because the repository has just
-  been initialized.
+- None expected after the merge commit.
 
 ## Next Recommended Action
 
-Run fresh adversarial re-review when desired, then start product intake when
-product input is available. No separate merge target exists in this repository
-yet.
+No immediate action required after the merge commit. Use the scaffold for the
+next downstream project intake when ready.
 
 ## What The Next AI Must Read First
 
@@ -217,6 +249,7 @@ product-specific specs, backlog, architecture updates, and test plans.
 
 ## Implementation Status
 
-Bootstrap scaffold: shared role system implemented, review fixes applied,
-pre-commit hook fixed, validation passes, and baseline commit created on
-`main`. Product implementation: not started.
+Bootstrap scaffold: baseline exists. Scaffold improvement: `SPEC-BOOT-002`
+v1.2 implementation is validated. Final adversarial review requested one P2
+spec-index status correction; it is fixed, validated, and approved by narrow
+re-review. Merge into `main` is ready to commit.
