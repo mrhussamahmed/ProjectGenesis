@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v2.6
+version: v2.7
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -40,6 +40,14 @@ authoritative: false
   README, AGPLv3 license, Code Owners file, GitHub branch protection guide, and
   review package were validated and reviewed for a feature-branch PR instead of
   a direct `main` update.
+- Draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` is open
+  from `codex/start-requirement-breakdown-command` into `main`.
+- Initial GitHub branch protection is configured on `main`: pull request
+  reviews are required, Code Owner review is required, stale approvals are
+  dismissed, last-push approval is required, conversations must be resolved,
+  force pushes are disabled, and branch deletion is disabled. Required status
+  checks are intentionally not configured yet because the validation workflow
+  is not on `main` until the publication PR is merged.
 - Command shortcut work added `COMMANDS/start-requirement-breakdown.md` so the
   user can trigger downstream product intake with `Start requirement breakdown`.
   Independent plan review requested changes; the state-update order, dispatch
@@ -105,8 +113,9 @@ authoritative: false
 
 - No product-specific input has been provided for a downstream software
   project.
-- Public publication is pending branch push, pull request creation, and GitHub
-  branch protection confirmation.
+- Public publication is pending owner review and merge. After the publication
+  PR is merged and the validation workflow exists on `main`, tighten branch
+  protection to require the `validate` status check.
 
 ## Current Source-Of-Truth Files
 
@@ -130,9 +139,9 @@ authoritative: false
 
 ## Next Recommended Action
 
-Finish BOOT-016 validation and review, push the publication branch, open a pull
-request to `main`, and configure GitHub branch protection for maintainer
-review.
+Review draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1`, merge
+when accepted, then tighten branch protection to require the `validate` status
+check after the workflow exists on `main`.
 
 ## Latest Validation
 

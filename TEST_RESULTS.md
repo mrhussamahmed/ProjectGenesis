@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.16
+version: v1.17
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -51,6 +51,8 @@ authoritative: false
 | 2026-05-13 | BOOT-016 publication review checks | scoped independent reviewer; `test -f CONTRIBUTING.md`; `gh api repos/mrhussamahmed/ProjectGenesis/branches/main/protection` | mixed, expected | Independent reviewer approved with no P0/P1/P2 findings; `CONTRIBUTING.md` exists; branch protection API returned `Branch not protected`, confirming protection still needs configuration. |
 | 2026-05-13 | BOOT-016 final pre-stage validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Final validation passed after recording the publication review and source-of-truth updates, before staging selected files. |
 | 2026-05-13 | BOOT-016 final state edit validation | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check` | passed | Validation and whitespace checks passed after marking BOOT-016 as in-review and aligning current state, handoff, and traceability. |
+| 2026-05-13 | BOOT-016 commit and publication controls | `.githooks/pre-commit`; `.githooks/pre-push`; `git push -u origin codex/start-requirement-breakdown-command`; `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head codex/start-requirement-breakdown-command --draft`; `gh api --method PUT repos/mrhussamahmed/ProjectGenesis/branches/main/protection`; `gh pr view 1 --repo mrhussamahmed/ProjectGenesis --json url,isDraft,headRefName,baseRefName,state,title`; `gh api repos/mrhussamahmed/ProjectGenesis/branches/main/protection` | passed | Commit `ced7fb0` created and pushed, draft PR #1 opened, and initial `main` branch protection configured with PR review, Code Owner review, stale-review dismissal, last-push approval, conversation resolution, force-push block, and deletion block. Required status checks remain unset until the workflow exists on `main`. |
+| 2026-05-13 | BOOT-016 post-protection state validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Validation passed after recording draft PR #1 and initial branch protection in current state, handoff, traceability, review, registry, worklog, and test results. |
 
 ## Rules
 

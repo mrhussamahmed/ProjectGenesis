@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PROJECTGENESIS-PUBLICATION
 title: ProjectGenesis Publication Review
 type: pr-review
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-13
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Scoped independent reviewer and local repository-grounded review
+source: Scoped independent reviewer, local repository-grounded review, and GitHub branch protection setup
 linked_specs: []
 linked_tickets: [BOOT-016]
 linked_adrs: []
@@ -56,9 +56,11 @@ No P0, P1, or P2 findings.
 - `gh repo view mrhussamahmed/ProjectGenesis --json nameWithOwner,visibility,defaultBranchRef,url`
   confirmed the target repository is public and uses `main` as the default
   branch.
-- `gh api repos/mrhussamahmed/ProjectGenesis/branches/main/protection`
-  returned `Branch not protected`, so branch protection still needs to be
-  configured before claiming it is active.
+- Initial `main` branch protection was configured after review. Follow-up API
+  verification confirmed required pull request reviews, Code Owner review,
+  stale-review dismissal, last-push approval, conversation resolution, force
+  push block, and branch deletion block. Required status checks are still
+  unset until the validation workflow exists on `main`.
 
 ## Validation
 
@@ -73,8 +75,7 @@ No P0, P1, or P2 findings.
 
 ## Required Follow-Up
 
-- Stage only intended publication and command-shortcut files. Do not stage the
-  unrelated legacy RTF deletions.
-- Push the feature branch and open a pull request.
-- Configure GitHub branch protection. Required status checks can be tightened
-  after the validation workflow exists on `main`.
+- Review and merge draft PR
+  `https://github.com/mrhussamahmed/ProjectGenesis/pull/1`.
+- After the validation workflow exists on `main`, tighten branch protection to
+  require the `validate` status check.

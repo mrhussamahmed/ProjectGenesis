@@ -2,11 +2,11 @@ artifact_id: ART-REG-001
 title: Artifact Registry
 type: registry
 status: authoritative
-version: v2.6
+version: v2.7
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 implementation and merge, final adversarial review, stale status fix, narrow re-review, start requirement breakdown command shortcut, and public repository publication request
+source: Initial bootstrap scaffold, SPEC-BOOT-002 implementation and merge, final adversarial review, stale status fix, narrow re-review, start requirement breakdown command shortcut, public repository publication request, and GitHub branch protection setup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -63,8 +63,8 @@ Common fields for all entries below unless stated otherwise:
 | ART-ADR-001 | adr-guide | Decision Governance | `DECISIONS.md` | authoritative | v1.0 | user request, audit | none | none | true | ADR rules. |
 | ART-GIT-001 | guide | Branch And Worktree Guide | `BRANCH_AND_WORKTREE_GUIDE.md` | authoritative | v1.1 | user request, audit, SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Git and worktree rules, including narrow direct-main documentation exception. |
 | ART-PAR-001 | execution-plan | Parallel Execution Plan | `PARALLEL_EXECUTION_PLAN.md` | authoritative | v1.0 | user request, audit | none | none | true | Parallel work gate. |
-| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v2.5 | scaffold, shared role update, review fix, SPEC-BOOT-002 implementation, merge, final adversarial review, stale status fix, narrow re-review, and command shortcut setup | SPEC-BOOT-002 | none | true | Current artifact inventory. |
-| ART-TRACE-001 | traceability | Traceability Matrix | `TRACEABILITY_MATRIX.md` | authoritative | v2.3 | scaffold, shared role update, review fix, SPEC-BOOT-002 final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request | SPEC-BOOT-002 | none | true | Requirement-to-evidence map. |
+| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v2.7 | scaffold, shared role update, review fix, SPEC-BOOT-002 implementation, merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | true | Current artifact inventory. |
+| ART-TRACE-001 | traceability | Traceability Matrix | `TRACEABILITY_MATRIX.md` | authoritative | v2.4 | scaffold, shared role update, review fix, SPEC-BOOT-002 final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | true | Requirement-to-evidence map. |
 | ART-TEST-001 | test-strategy | Test Strategy | `TEST_STRATEGY.md` | authoritative | v1.0 | user request | none | none | true | Testing principles. |
 | ART-TEST-002 | test-plan | Test Plan | `TEST_PLAN.md` | authoritative | v1.0 | scaffold | none | none | true | Current test plan. |
 | ART-REVIEW-001 | review-policy | PR Review Policy | `PR_REVIEW_POLICY.md` | authoritative | v1.0 | user request | none | none | true | Adversarial review rules. |
@@ -84,13 +84,13 @@ Common fields for all entries below unless stated otherwise:
 | Artifact ID | Type | Title | File Path | Status | Version | Source Input | Linked Specs | Linked ADRs | Authoritative | Notes |
 |-------------|------|-------|-----------|--------|---------|--------------|--------------|-------------|---------------|-------|
 | ART-STATE-001 | shared-state | Project Memory | `PROJECT_MEMORY.md` | active | v1.0 | scaffold | none | none | false | Summary only. |
-| ART-STATE-002 | shared-state | Current State | `CURRENT_STATE.md` | active | v2.6 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request | SPEC-BOOT-002 | none | false | Current operational view. |
-| ART-STATE-003 | shared-state | AI Handoff | `AI_HANDOFF.md` | active | v2.6 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request | SPEC-BOOT-002 | none | false | Agent transition state. |
+| ART-STATE-002 | shared-state | Current State | `CURRENT_STATE.md` | active | v2.7 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Current operational view. |
+| ART-STATE-003 | shared-state | AI Handoff | `AI_HANDOFF.md` | active | v2.7 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Agent transition state. |
 | ART-STATE-004 | shared-state | Open Questions | `OPEN_QUESTIONS.md` | active | v1.0 | scaffold | none | none | false | Unresolved blockers. |
 | ART-STATE-005 | shared-state | Stale Items | `STALE_ITEMS.md` | active | v1.2 | scaffold, final adversarial review, stale status fix | SPEC-BOOT-002 | none | false | Drift and stale items; final spec-index status drift is resolved and narrow re-review approved the correction. |
 | ART-BACKLOG-001 | backlog | Backlog | `BACKLOG.md` | active | v1.6 | scaffold, SPEC-BOOT-002 v1.0 implementation, public repository publication request | SPEC-BOOT-002 | none | true | Current backlog mirror, including staged items for the active scaffold intake and governance improvement plus public publication work. |
 | ART-PLAN-001 | implementation-plan | Implementation Plan | `IMPLEMENTATION_PLAN.md` | active | v1.0 | scaffold | none | none | true | Bootstrap implementation plan. |
-| ART-TEST-003 | test-results | Test Results | `TEST_RESULTS.md` | active | v1.16 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request | SPEC-BOOT-002 | none | false | Validation history. |
+| ART-TEST-003 | test-results | Test Results | `TEST_RESULTS.md` | active | v1.17 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Validation history. |
 
 ## Template And Directory Artifacts
 
@@ -115,12 +115,12 @@ Common fields for all entries below unless stated otherwise:
 | ART-REVIEW-SCAFFOLD-INTAKE-GOVERNANCE-IMPLEMENTATION | pr-review | Scaffold Intake And Governance Implementation Review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | active | v1.0 | independent reviewer agent for SPEC-BOOT-002 implementation | SPEC-BOOT-002 | none | false | Final implementation review approved with minor comments after P1/P2 findings were addressed. |
 | ART-REVIEW-SCAFFOLD-INTAKE-GOVERNANCE-FINAL-ADVERSARIAL | pr-review | Scaffold Intake And Governance Final Adversarial Review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | addressed | v1.1 | Codex final adversarial review requested by user, stale status fix, and narrow re-review | SPEC-BOOT-002 | none | false | Final adversarial review requested changes for stale `SPECS/SPEC_INDEX.md` current-status text; correction approved by narrow re-review. |
 | ART-REVIEW-START-REQ-BREAKDOWN-PLAN | review | Start Requirement Breakdown Command Plan Review | `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md` | addressed | v1.0 | independent reviewer agent for command shortcut plan | SPEC-BOOT-002 | none | false | Plan review requested changes for state update order, dispatch wording, conditional multi-agent review, and traceability linkage; findings addressed. |
-| ART-REVIEW-PROJECTGENESIS-PUBLICATION | pr-review | ProjectGenesis Publication Review | `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md` | active | v1.0 | scoped independent reviewer and local repository-grounded review | none | none | false | Publication review approved with no P0/P1/P2 findings; branch protection still requires GitHub API configuration. |
+| ART-REVIEW-PROJECTGENESIS-PUBLICATION | pr-review | ProjectGenesis Publication Review | `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md` | active | v1.1 | scoped independent reviewer, local repository-grounded review, and GitHub branch protection setup | none | none | false | Publication review approved with no P0/P1/P2 findings; initial branch protection configured and status-check enforcement remains a post-merge follow-up. |
 | ART-REVIEW-TEMPLATE | template | Adversarial Review Template | `REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Review output template. |
 | ART-PR-PACKAGE-TEMPLATE | template | PR Review Package Template | `REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Implementer review package. |
 | ART-TEST-MANUAL | checklist | Manual Test Checklist | `TESTS/MANUAL_TEST_CHECKLIST.md` | active | v1.0 | scaffold | none | none | false | Manual validation checklist. |
 | ART-TEST-AC-MAP | traceability | Acceptance Criteria Map | `TESTS/ACCEPTANCE_CRITERIA_MAP.md` | active | v1.3 | scaffold, SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | true | AC-to-test map. |
-| ART-WORKLOG-INDEX | worklog | Worklog Index | `WORKLOG/WORKLOG_INDEX.md` | active | v2.4 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request | SPEC-BOOT-002 | none | false | Session history. |
+| ART-WORKLOG-INDEX | worklog | Worklog Index | `WORKLOG/WORKLOG_INDEX.md` | active | v2.5 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Session history. |
 | ART-HANDOFF-INDEX | handoff-index | Handoff Index | `HANDOFFS/HANDOFF_INDEX.md` | active | v1.0 | scaffold | none | none | false | Historical handoffs. |
 | ART-SCRIPT-CLAUDE | script | Claude Role Startup Helper | `SCRIPTS/start-claude.sh` | active | v1.1 | user request, review fix | none | none | false | Optional Claude helper that loads shared rules and one allowlisted role file through `--append-system-prompt`; default mode is orientation-only. |
 | ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | active | v1.5 | scaffold, shared role update, review fix, SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Lightweight validation, including column-aware spec evidence, approved assumption evidence, intake, command, context pack, and handoff checks. |

@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v2.6
+version: v2.7
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -45,7 +45,8 @@ existing `SPEC-BOOT-002` command prompt framework.
 
 BOOT-016 public ProjectGenesis GitHub publication: public README, AGPLv3
 license, Code Owners, branch protection guidance, push, and pull request
-creation. Validation and publication review are complete.
+creation. Validation, publication review, branch push, draft PR creation, and
+initial branch protection configuration are complete.
 
 ## Files Changed
 
@@ -107,6 +108,9 @@ creation. Validation and publication review are complete.
 - `main` should be protected so future changes require pull requests and
   maintainer review. The required `validate` status check can be enforced after
   the workflow exists on the default branch.
+- Initial `main` branch protection is active, but `required_status_checks` is
+  still `null` until `.github/workflows/bootstrap-validation.yml` exists on
+  `main`.
 
 ## Assumptions Made
 
@@ -201,8 +205,8 @@ creation. Validation and publication review are complete.
 
 - Stack-specific tests were not run because this is a Markdown and shell
   scaffold implementation, not a product implementation.
-- GitHub branch protection configuration is still pending until the branch is
-  pushed and the publication PR is opened.
+- Required status-check branch protection is still pending until the
+  publication PR is merged and the validation workflow exists on `main`.
 
 ## Known Failures
 
@@ -235,9 +239,9 @@ asks.
 
 ## Next Recommended Action
 
-Finish BOOT-016 validation and review, then stage only intended files, commit,
-push the feature branch, open a pull request to `main`, and configure GitHub
-branch protection for maintainer review.
+Review draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1`, merge
+when accepted, then update branch protection to require the `validate` status
+check.
 
 ## What The Next AI Must Read First
 
@@ -263,5 +267,6 @@ Bootstrap scaffold: baseline exists. Scaffold improvement: `SPEC-BOOT-002`
 v1.2 implementation is validated. The `Start requirement breakdown` command
 shortcut is implemented on branch `codex/start-requirement-breakdown-command`.
 BOOT-016 public repository publication is in progress on the same branch.
-Validation and review are complete; it awaits commit, push, PR creation, and
-branch protection confirmation.
+Validation, review, branch push, draft PR creation, and initial branch
+protection are complete; it awaits owner review, merge, and later status-check
+branch protection tightening.
