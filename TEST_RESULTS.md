@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.31
+version: v1.32
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, and BOOT-018 final review approval
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, and BOOT-018 merge
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -71,6 +71,8 @@ authoritative: false
 | 2026-05-13 | SPEC-BOOT-003 approval-state validation | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; `grep -n '[[:blank:]]$' SPECS/SPEC-BOOT-003-adaptive-governance-routing.md REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`; `git status --short --branch` | passed | Validation passed after promoting `SPEC-BOOT-003` to approved v1.0, recording re-review approval, and keeping first-slice mechanics policy-only. Red checks were not run because validator behavior did not change. |
 | 2026-05-13 | SPEC-BOOT-003 final narrow review | fresh-context subagent review; `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; new-file trailing-whitespace scan; `git status --short --branch` | passed | Final narrow review approved with no P0/P1/P2/P3 findings and confirmed branch readiness for commit and PR/merge under repository policy. |
 | 2026-05-13 | SPEC-BOOT-003 final pre-commit validation | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; `grep -n '[[:blank:]]$' SPECS/SPEC-BOOT-003-adaptive-governance-routing.md REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`; `git status --short --branch` | passed | Final validation passed after recording final approval, state, handoff, registry, traceability, test results, worklog, and review index updates before commit. Red checks were not run because validator behavior did not change. |
+| 2026-05-13 | SPEC-BOOT-003 commit, PR, and merge | `.githooks/pre-commit`; `git push -u origin codex/spec-boot-003-adaptive-governance`; `.githooks/pre-push`; `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head codex/spec-boot-003-adaptive-governance`; `gh pr checks 3 --repo mrhussamahmed/ProjectGenesis --watch --interval 5`; `gh pr merge 3 --repo mrhussamahmed/ProjectGenesis --merge --admin --delete-branch`; `git fetch origin && git switch main && git merge --ff-only origin/main` | passed | Commit `0d05135` pushed, PR #3 opened, GitHub Actions `validate` passed, normal merge was blocked by missing GitHub-hosted review approval, admin merge succeeded, remote branch was deleted, and local `main` fast-forwarded to merge commit `2e4c3480181f8b6b395e48588b5c3c99cc52aee8`. |
+| 2026-05-13 | BOOT-018 post-merge state cleanup validation | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; `git status --short --branch` | passed | Validation passed after updating state, handoff, backlog, traceability, registry, test results, worklog, and spec index for merged PR #3 on `main`. |
 
 ## Rules
 
