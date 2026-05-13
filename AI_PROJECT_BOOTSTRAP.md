@@ -2,12 +2,12 @@ artifact_id: ART-BOOT-001
 title: AI Project Bootstrap Operating System
 type: governance
 status: authoritative
-version: v1.2
+version: v1.3
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request and reference repository audit
-linked_specs: []
+source: User request, reference repository audit, and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -36,6 +36,7 @@ The bootstrap enforces:
 - fresh-context adversarial PR review
 - risk-based review model and effort selection
 - safe parallel work by multiple agents only when justified
+- adaptive governance routing through `OPERATION_ROUTING.md`
 
 ## Source-Of-Truth Hierarchy
 
@@ -76,6 +77,7 @@ acting. At minimum, read:
 - `TRACEABILITY_MATRIX.md`
 - `BRANCH_AND_WORKTREE_GUIDE.md`
 - `GOVERNANCE.md`
+- `OPERATION_ROUTING.md`
 - relevant spec files and ADRs
 - `git status --short --branch`, when Git is available
 
@@ -167,6 +169,7 @@ AI agents only when file ownership is disjoint and contracts are stable.
 
 Before implementation, confirm the task has:
 
+- durable operation classification from `OPERATION_ROUTING.md`
 - linked approved or active spec
 - clear acceptance criteria
 - known dependencies

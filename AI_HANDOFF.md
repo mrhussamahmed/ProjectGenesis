@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.11
+version: v3.12
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, and BOOT-018 merge
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, and BOOT-019 through BOOT-024 startup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -18,7 +18,7 @@ authoritative: false
 
 ## Current Date
 
-2026-05-13
+2026-05-14
 
 ## Active Agent
 
@@ -26,11 +26,11 @@ Codex
 
 ## Current Role
 
-Spec Author
+Documentation Curator
 
 ## Current Branch
 
-`main`
+`codex/boot-019-024-adaptive-governance`
 
 ## Current Worktree
 
@@ -43,10 +43,93 @@ approving policy-only `SPEC-BOOT-003` v1.0 for adaptive governance routing.
 
 ## Current In-Progress Task
 
-No active implementation task is in progress. BOOT-018 is merged to `main` at
-`2e4c3480181f8b6b395e48588b5c3c99cc52aee8`. `SPEC-BOOT-003` v1.0 is approved as
-a policy-only spec, but follow-up mechanics changes still require separate
-reviewed slices.
+BOOT-019 through BOOT-024 are authorized by the user for implementation on
+branch `codex/boot-019-024-adaptive-governance`. Work begins with a state-sync
+correction for stale BOOT-018 next-action text, then implements the approved
+adaptive governance routing mechanics from `SPEC-BOOT-003`.
+
+## BOOT-019-024 Pre-Change Classification
+
+- Operation profile: `strict-protected`
+- Target files: `CURRENT_STATE.md`, `AI_HANDOFF.md`, `BACKLOG.md`,
+  `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, `GOVERNANCE.md`,
+  `BRANCH_AND_WORKTREE_GUIDE.md`, `RISK_MODEL.md`,
+  `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `CONTEXT_INDEX.md`,
+  `AI_PROJECT_BOOTSTRAP.md`, `SPECS/SPEC_INDEX.md`,
+  `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`,
+  `SCRIPTS/validate-bootstrap.sh`, `SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `.github/workflows/bootstrap-validation.yml`, relevant context packs,
+  command/template/review artifacts, and any new registered governance artifact
+  required by the implementation.
+- Protected files touched: yes; governance, review, branch, risk, context,
+  validator, CI, state, traceability, registry, test, worklog, context-pack,
+  command, and template artifacts are protected.
+- Expected risk: high
+- Branch requirement: branch required; active branch is
+  `codex/boot-019-024-adaptive-governance`.
+- Required validation: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, shell
+  syntax checks for changed scripts/hooks, and GitHub Actions `validate` before
+  merge.
+- Required review: fresh-context adversarial review before merge; repeat review
+  after fixes until no blocking P0, P1, or blocking P2 findings remain.
+- Traceability impact: required because BOOT-019 through BOOT-024 implement
+  approved adaptive governance routing requirements and validation evidence.
+- Registry impact: required because protected artifacts will change and a new
+  registered governance artifact may be added.
+- Handoff/state impact: required because active task, branch, files changed,
+  validation, review status, and next safe action change.
+- Dirty worktree status: clean on `main` before branch creation; after branch
+  creation, only this classification edit is dirty before substantive target
+  edits.
+- Escalation triggers checked: validator, CI, shared governance, branch policy,
+  risk/review policy, source-of-truth hierarchy, context packs, command/template
+  guidance, current-state/handoff mechanics, protected artifacts, traceability,
+  registry, test evidence, and multi-agent review are in scope; product
+  behavior, downstream app code, secrets, data migrations, auth, payments, and
+  external tracker writes are out of scope.
+
+## BOOT-019-024 Final Evidence Envelope
+
+- Operation profile: `strict-protected`
+- Classification confidence: high
+- Escalation triggers checked: validator, red-check, CI, shared-rule, role,
+  governance, branch, risk, PR/merge policy, context-pack, command, template,
+  source-of-truth hierarchy, state/handoff, traceability, registry, test-result,
+  worklog, review-package, and performance-measurement surfaces were in scope.
+- Files read: `memory/ai/SHARED_AGENT_RULES.md`,
+  `memory/ai/ROLE_DOCUMENTATION_CURATOR.md`,
+  `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md`,
+  `AI_PROJECT_BOOTSTRAP.md`, `CONTEXT_INDEX.md`, `CURRENT_STATE.md`,
+  `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`,
+  `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`,
+  `TRACEABILITY_MATRIX.md`, `BACKLOG.md`, `GOVERNANCE.md`,
+  `BRANCH_AND_WORKTREE_GUIDE.md`, `RISK_MODEL.md`, `PR_REVIEW_POLICY.md`,
+  `PR_MERGE_POLICY.md`, validator scripts, CI workflow, context packs,
+  command files, review templates, test files, worklog, and review index.
+- Files changed: see `Files Changed` below and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-adaptive-governance-implementation.md`.
+- Files intentionally not read: archived review records and unrelated legacy
+  intake files were not read because this operation is governed by current
+  `SPEC-BOOT-003`, current registry/traceability, and current protected
+  governance mechanics.
+- Artifacts not impacted: downstream product implementation files, product
+  runtime architecture, security/privacy product controls, external tracker
+  tickets, and ADR decisions are not impacted because this branch changes only
+  ProjectGenesis governance and validation mechanics.
+- Validation run: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
+  shell syntax checks for validator, red-check helper, Claude helper, and hooks
+  passed locally on 2026-05-14.
+- Validation skipped: GitHub Actions `validate` is pending PR creation;
+  stack-specific product tests are not applicable because no product code
+  changed.
+- Review required: fresh-context adversarial review is requested and must be
+  approved, with all P0/P1/blocking P2 findings fixed, before merge.
+- Next safe action: wait for the fresh reviewer result, fix findings if any,
+  rerun strict validation, then commit, push, open a PR, verify CI, merge, and
+  sync `main`.
 
 ## Pre-Change Classification
 
@@ -174,33 +257,60 @@ reviewed slices.
 
 ## Files Changed
 
+- `.github/workflows/bootstrap-validation.yml`
+- `AI_HANDOFF.md`
+- `AI_PROJECT_BOOTSTRAP.md`
+- `ARTIFACT_REGISTRY.md`
+- `BACKLOG.md`
+- `BRANCH_AND_WORKTREE_GUIDE.md`
+- `CI_CD_GUIDE.md`
+- `COMMANDS/COMMAND_INDEX.md`
+- `COMMANDS/COMMAND_TEMPLATE.md`
+- `COMMANDS/start-requirement-breakdown.md`
+- `CONTEXT_INDEX.md`
+- `CONTEXT_PACKS/*.md`
+- `CURRENT_STATE.md`
+- `GOVERNANCE.md`
+- `GOVERNANCE_PERFORMANCE.md`
+- `HOOKS_AND_GUARDRAILS.md`
+- `OPERATION_ROUTING.md`
+- `PR_MERGE_POLICY.md`
+- `PR_REVIEW_POLICY.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-adaptive-governance-implementation.md`
+- `REVIEWS/REVIEW_INDEX.md`
+- `REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md`
+- `REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md`
+- `RISK_MODEL.md`
+- `SCRIPTS/validate-bootstrap-red-checks.sh`
+- `SCRIPTS/validate-bootstrap.sh`
 - `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`
 - `SPECS/SPEC_INDEX.md`
-- `BACKLOG.md`
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
+- `TEST_PLAN.md`
 - `TEST_RESULTS.md`
+- `TEST_STRATEGY.md`
+- `TRACEABILITY_MATRIX.md`
 - `WORKLOG/WORKLOG_INDEX.md`
-- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md`
-- `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`
-- `REVIEWS/REVIEW_INDEX.md`
+- `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md`
+- `memory/ai/ROLE_DOCUMENTATION_CURATOR.md`
+- `memory/ai/SHARED_AGENT_RULES.md`
 
 ## Specs Changed
 
-- Added approved `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md` at v1.0.
-  It is policy-only and not active implemented mechanics yet.
+- `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md` remains approved at
+  v1.0 and now records BOOT-019 through BOOT-024 implementation status pending
+  fresh-context review.
 
 ## Artifacts Changed
 
-- Added approved `SPEC-BOOT-003` policy-only spec.
-- Added BOOT-018 through BOOT-024 to `BACKLOG.md`.
-- Added `SPEC-BOOT-003` to `SPECS/SPEC_INDEX.md`.
-- Registered `ART-SPEC-BOOT-003` in `ARTIFACT_REGISTRY.md`.
-- Added BOOT-018 review package and review record.
-- Added adaptive governance routing traceability rows.
-- Updated current state, handoff, test results, and worklog for BOOT-018.
+- Added `OPERATION_ROUTING.md` as the authoritative adaptive routing control
+  plane.
+- Added `GOVERNANCE_PERFORMANCE.md` as BOOT-024 baseline modeled measurement
+  and projected performance evidence.
+- Updated governance, branch, risk, review, merge, context, command,
+  context-pack, test, validator, CI, state, registry, traceability, acceptance
+  map, review package, review index, test results, and worklog artifacts for
+  BOOT-019 through BOOT-024.
 
 ## Decisions Made
 
@@ -415,16 +525,11 @@ reviewed slices.
 
 ## Tests Not Run
 
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` was not run for BOOT-018
-  because this policy-only slice does not change validator behavior.
-- Script or hook shell syntax checks were not run for BOOT-018 because no
-  scripts, hooks, or CI files changed.
-- Stack-specific tests were not run because this is a Markdown and shell
-  scaffold implementation, not a product implementation.
-- Stack-specific product tests were not run because this is scaffold
-  publication work, not product implementation.
-- No stack-specific tests were run for BOOT-017 because this is a Markdown and
-  scaffold documentation update, not product code.
+- GitHub Actions `validate` has not run yet for this branch because the PR has
+  not been created.
+- Stack-specific product tests were not run because BOOT-019 through BOOT-024
+  change ProjectGenesis governance, validation, CI, and documentation mechanics,
+  not downstream product code.
 
 ## Known Failures
 
@@ -432,31 +537,31 @@ reviewed slices.
 
 ## Known Risks
 
-- `SPEC-BOOT-003` is approved as policy-only. Treating it as active implemented
-  mechanics before BOOT-019 through BOOT-024 would bypass the staged governance
-  model.
-- Future validator/profile enforcement is intentionally not implemented in
-  BOOT-018 and must be handled by later reviewed slices.
-- The validator checks command files for required sections but does not enforce
-  trigger registration; manual trigger lookup was run for this change.
-- Command shortcuts must remain subordinate to repository governance and role
-  files.
+- Structural validator checks cannot prove semantic classification correctness.
+  Fresh-context adversarial review remains required for this strict-protected
+  branch.
+- `GOVERNANCE_PERFORMANCE.md` records projected speed and token improvements,
+  not long-term measured production data. Future material operations should
+  record actual timing evidence.
+- CI validation is pending until the branch is pushed and a PR is opened.
 
 ## Dirty Worktree Status
 
-Dirty files are expected only for BOOT-018 post-merge state cleanup on `main`:
-`CURRENT_STATE.md`, `AI_HANDOFF.md`, `BACKLOG.md`, `ARTIFACT_REGISTRY.md`,
-`TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
-No unrelated dirty files are expected.
+Dirty files are expected only for BOOT-019 through BOOT-024 adaptive governance
+implementation on `codex/boot-019-024-adaptive-governance`. No unrelated dirty
+files are known.
 
 ## Untracked Files
 
-- None expected after BOOT-018 merge.
+- `OPERATION_ROUTING.md`
+- `GOVERNANCE_PERFORMANCE.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-adaptive-governance-implementation.md`
+- `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md`
 
 ## Next Recommended Action
 
-Validate and commit the BOOT-018 post-merge state cleanup on `main`, then push
-`main`.
+Fresh-context re-review approved with minor comments. Commit, push, open a PR,
+verify CI, merge, and sync `main`.
 
 ## What The Next AI Must Read First
 
@@ -471,8 +576,8 @@ Validate and commit the BOOT-018 post-merge state cleanup on `main`, then push
 9. `TRACEABILITY_MATRIX.md`
 10. `SPECS/SPEC_INDEX.md`
 11. `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`
-12. `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md`
-13. `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`
+12. `OPERATION_ROUTING.md`
+13. `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-adaptive-governance-implementation.md`
 
 ## Warnings About Partial Work
 
@@ -481,14 +586,9 @@ product-specific specs, backlog, architecture updates, and test plans.
 
 ## Implementation Status
 
-Bootstrap scaffold: baseline exists. Scaffold improvement: `SPEC-BOOT-002`
-v1.2 implementation is validated. The `Start requirement breakdown` command
-shortcut is merged to `main`. BOOT-016 public repository publication is merged
-to `main`, and GitHub branch protection now requires PR review plus the
-`validate` status check. Bootstrap Validation uses `actions/checkout@v5`.
-BOOT-017 README positioning and tooling prerequisite update is merged to `main`;
-independent narrow re-review approved with no remaining P0/P1/P2 blockers and
-final validation passed before merge. BOOT-018 approved `SPEC-BOOT-003` v1.0 is
-merged to `main` through PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/3`
-at merge commit `2e4c3480181f8b6b395e48588b5c3c99cc52aee8`; final post-merge
-state cleanup is in progress on `main`.
+Bootstrap scaffold: baseline exists. `SPEC-BOOT-002` v1.2 implementation is
+validated and merged. BOOT-016 publication, BOOT-017 README/tooling update, and
+BOOT-018 `SPEC-BOOT-003` policy approval are merged to `main`. BOOT-019 through
+BOOT-024 adaptive governance mechanics are implemented on
+`codex/boot-019-024-adaptive-governance`, local strict validation has passed,
+and fresh-context adversarial review is pending.

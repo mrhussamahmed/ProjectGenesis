@@ -2,12 +2,12 @@ artifact_id: ART-CONTEXT-PACK-IMPLEMENTATION
 title: Implementation Context Pack
 type: context-pack
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: SPEC-BOOT-002 and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -21,6 +21,7 @@ authoritative: false
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `memory/ai/ROLE_IMPLEMENTATION_AGENT.md`
 - `CONTEXT_INDEX.md`
+- `OPERATION_ROUTING.md`
 - `CURRENT_STATE.md`
 - `AI_HANDOFF.md`
 - relevant active spec
@@ -60,6 +61,6 @@ authoritative: false
 
 This pack cannot authorize implementation from draft, proposed, or missing
 specs except explicitly recorded spike work. It cannot override
-`CONTEXT_INDEX.md`, shared agent rules, selected role files, accepted ADRs,
+`CONTEXT_INDEX.md`, `OPERATION_ROUTING.md`, shared agent rules, selected role files, accepted ADRs,
 `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, or
 `AI_HANDOFF.md`.

@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.10
+version: v3.11
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, and BOOT-018 merge
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, and BOOT-019 through BOOT-024 startup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -24,10 +24,11 @@ authoritative: false
   final adversarial review P2 spec-index status correction has been addressed
   and narrow re-review found no remaining P0, P1, or P2 findings.
 - `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md` is approved at v1.0.
-  It is a policy-only spec for adaptive governance routing. It authorizes
-  BOOT-019 through BOOT-024 follow-up slices, but it does not by itself replace
-  existing governance, validator, hook, CI, role, context-pack, command,
-  template, README, or state-structure mechanics.
+  It is the governing spec for adaptive governance routing. BOOT-019 through
+  BOOT-024 are now in progress on
+  `codex/boot-019-024-adaptive-governance` to implement the follow-up
+  governance, impact-map, validation, handoff, validator, CI/manual evidence,
+  and performance-measurement mechanics.
 
 ## Proposed Specs
 
@@ -56,6 +57,10 @@ authoritative: false
   P1, P2, or P3 findings. Validator, hook, CI, role, context-pack, command,
   template, README, and state-structure changes are intentionally out of scope
   until separate reviewed follow-up slices.
+- BOOT-019 through BOOT-024 are authorized by the user and started on branch
+  `codex/boot-019-024-adaptive-governance`. This work is classified
+  `strict-protected` because it includes validator and CI/manual validation
+  mechanics. It must receive fresh-context adversarial review before merge.
 - README positioning and tooling prerequisite update under BOOT-017 is merged
   into `main`. The README now explains
   ProjectGenesis capabilities and audience fit, then documents Linear as the
@@ -126,7 +131,7 @@ authoritative: false
 
 ## Active Branch
 
-- `main`
+- `codex/boot-019-024-adaptive-governance`
 
 ## Active Worktree
 
@@ -139,18 +144,17 @@ authoritative: false
 - Downstream project readiness using the published ProjectGenesis scaffold.
 - Downstream project readiness using the updated public README and published
   ProjectGenesis scaffold.
-- Adaptive governance routing under approved `SPEC-BOOT-003`, with BOOT-018
-  merged and BOOT-019 through BOOT-024 blocked pending separate work
-  authorization and reviewed implementation slices.
+- Adaptive governance routing under approved `SPEC-BOOT-003`, with BOOT-019
+  through BOOT-024 in progress as a reviewed strict-protected implementation.
 
 ## Current Blockers
 
 - No product-specific input has been provided for a downstream software
   project.
 - No active bootstrap publication blockers.
-- Follow-up `SPEC-BOOT-003` mechanics still require separate reviewed slices
-  before changing validators, hooks, CI, role files, context packs, commands,
-  templates, README content, or state-file structure.
+- BOOT-019 through BOOT-024 require fresh-context adversarial review and passing
+  validation before merge. No product-specific input has been provided for a
+  downstream software project.
 
 ## Current Source-Of-Truth Files
 
@@ -177,8 +181,9 @@ authoritative: false
 
 ## Next Recommended Action
 
-Validate and commit the BOOT-018 post-merge state cleanup on `main`, then push
-`main`.
+Commit BOOT-019 through BOOT-024 on
+`codex/boot-019-024-adaptive-governance`, push, open a PR, verify CI, merge,
+and sync `main`.
 
 ## Latest Validation
 

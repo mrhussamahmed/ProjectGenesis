@@ -4,9 +4,9 @@ type: spec
 status: approved
 version: v1.0
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request, repository performance analysis, and fresh-context adversarial review approval on 2026-05-13
+source: User request, repository performance analysis, fresh-context adversarial review approval on 2026-05-13, and BOOT-019 through BOOT-024 implementation
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -23,7 +23,7 @@ authoritative: true
 - Version: v1.0
 - Owner or responsible agent: AI Bootstrap Maintainers
 - Created: 2026-05-13
-- Last updated: 2026-05-13
+- Last updated: 2026-05-14
 - Source input:
   - User request to reduce ProjectGenesis execution time and token cost without
     weakening governance, safety, traceability, validation, or multi-agent
@@ -55,6 +55,15 @@ This spec does not authorize changes to validators, hooks, CI workflows, shared
 role files, context packs, command files, templates, README content, or
 state-file structure. Those changes require later reviewed implementation
 slices after this spec is approved or activated.
+
+## Implementation Status
+
+BOOT-019 through BOOT-024 are implemented on branch
+`codex/boot-019-024-adaptive-governance` and pending fresh-context adversarial
+review. The implementation adds the routed governance control plane,
+impact map, validation modes, durable evidence rules, current-state and handoff
+guidance, validator support, CI red checks, and performance measurement
+authorized by this approved spec.
 
 ## Goal
 

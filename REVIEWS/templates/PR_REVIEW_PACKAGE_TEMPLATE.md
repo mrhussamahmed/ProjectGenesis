@@ -30,6 +30,16 @@ authoritative: false
 
 - 
 
+## Operation Routing
+
+- Routing authority: `OPERATION_ROUTING.md`
+- Operation profile:
+- Validation mode:
+- Pre-change classification location:
+- Final evidence envelope location:
+- Impact map summary:
+- Skipped reads or validations:
+
 ## Linked ADRs
 
 - 
@@ -100,4 +110,3 @@ authoritative: false
 - Worktree:
 - Dirty status:
 - Untracked files:
-

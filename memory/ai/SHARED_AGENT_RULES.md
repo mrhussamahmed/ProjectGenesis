@@ -2,12 +2,12 @@ artifact_id: ART-AI-SHARED-RULES
 title: Shared Agent Rules
 type: agent-rules
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request and review fix
-linked_specs: []
+source: User request, review fix, and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -28,6 +28,9 @@ Follow the source-of-truth hierarchy in `AI_PROJECT_BOOTSTRAP.md` and
 
 - Read `CONTEXT_INDEX.md` before meaningful work.
 - Follow `GOVERNANCE.md`.
+- Use `OPERATION_ROUTING.md` to classify meaningful operations before target
+  file edits and to scope reads, writes, validation, review, and handoff
+  evidence.
 - Use `CURRENT_STATE.md` and `AI_HANDOFF.md` as current operational state.
 - Use `ARTIFACT_REGISTRY.md` before trusting artifacts.
 - Use `TRACEABILITY_MATRIX.md` for requirement, spec, backlog, code, test,
@@ -73,6 +76,7 @@ Do not start implementation unless the task satisfies Definition of Ready in
 
 Implementation requires:
 
+- durable operation classification from `OPERATION_ROUTING.md`
 - an approved or active spec, or a bootstrap-governance exception explicitly
   tracked in backlog and traceability
 - clear acceptance criteria
@@ -94,6 +98,8 @@ analysis, spike work, backlog preparation, and documentation only.
   items, or commits.
 - Record failed or skipped checks honestly in `TEST_RESULTS.md` and
   `AI_HANDOFF.md`.
+- Record the final evidence envelope required by `OPERATION_ROUTING.md` before
+  claiming meaningful work is complete.
 - If evidence is incomplete, report the work as incomplete or pending review.
 
 ## Documentation And State Updates

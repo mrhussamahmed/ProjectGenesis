@@ -2,12 +2,12 @@ artifact_id: ART-RISK-001
 title: Risk Model
 type: risk-model
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request
-linked_specs: []
+source: User request and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -80,10 +80,14 @@ critical security, privacy, data, migration, or deployment concern.
 | Trigger | Minimum Risk | Minimum Review |
 |---------|--------------|----------------|
 | docs-only typo | low | light |
+| `docs-trivial` operation profile | low | light |
+| `docs-public-claim` operation profile | medium | light or adversarial based on claim risk |
+| `state-sync` operation profile | medium | light or standard when resolving drift |
+| `planning-governance` operation profile | high | deep or adversarial deep |
+| `strict-protected` operation profile | high to critical | adversarial deep or multi-role review |
 | isolated behavior with tests | medium | standard |
 | shared module or API contract | high | deep |
 | auth, authorization, secrets, PII | critical | multi-role review |
 | migration or destructive operation | critical | multi-role review |
 | deployment or rollback change | high | deep |
 | unclear requirements | medium | spike or clarification |
-

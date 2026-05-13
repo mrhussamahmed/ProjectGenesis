@@ -2,12 +2,12 @@ artifact_id: ART-TEST-002
 title: Test Plan
 type: test-plan
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
-linked_specs: []
+source: Initial bootstrap scaffold and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -23,6 +23,9 @@ authoritative: true
 | Required files and folders | `bash SCRIPTS/validate-bootstrap.sh` | exits 0 | passed |
 | Metadata blocks | `bash SCRIPTS/validate-bootstrap.sh` | key root files include metadata | passed |
 | Handoff sections | `bash SCRIPTS/validate-bootstrap.sh` | required handoff sections exist | passed |
+| Operation routing structure | `bash SCRIPTS/validate-bootstrap.sh` | routing file, profile names, impact map, validation modes, and evidence envelope sections exist | active |
+| Operation routing red checks | `bash SCRIPTS/validate-bootstrap-red-checks.sh` | invalid routing fixtures fail for expected reasons | active |
+| Script and CI syntax | shell syntax checks and CI `validate` | changed scripts and workflow are valid | active |
 
 ## Product-Specific Tests
 
@@ -39,6 +42,6 @@ When the first spec is created, add:
 
 ## Exit Criteria
 
-The bootstrap scaffold is valid when `SCRIPTS/validate-bootstrap.sh` passes and
-`CURRENT_STATE.md`, `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`, and
-`TRACEABILITY_MATRIX.md` are initialized.
+The bootstrap scaffold is valid when the routed validation mode passes and
+`CURRENT_STATE.md`, `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`,
+`TRACEABILITY_MATRIX.md`, and `OPERATION_ROUTING.md` are aligned.

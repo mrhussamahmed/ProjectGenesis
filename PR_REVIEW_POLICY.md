@@ -2,12 +2,12 @@ artifact_id: ART-REVIEW-001
 title: PR Review Policy
 type: review-policy
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request and reference repository audit
-linked_specs: []
+source: User request, reference repository audit, and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -24,6 +24,7 @@ The reviewer must not rely on implementer chat history. The reviewer reads:
 
 - review package
 - PR diff or local diff
+- operation classification and evidence envelope from `OPERATION_ROUTING.md`
 - relevant specs
 - relevant ADRs
 - tests and test results
@@ -68,6 +69,11 @@ The reviewer must check:
 - Are migrations safe and rollback possible?
 - Are hidden assumptions present?
 - Is there evidence of hallucinated claims?
+- Was the operation classified before target edits, and does the selected
+  profile match the touched files, protected artifacts, validation, and review
+  evidence?
+- Are skipped reads, skipped validation, and not-impacted artifacts justified by
+  the operation profile and impact map?
 
 ## Blocking Issues
 
@@ -102,4 +108,3 @@ The reviewer must include:
 
 High-risk or complex PRs may require two rounds of adversarial review plus
 focused security, architecture, QA, and release reviews.
-

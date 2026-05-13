@@ -2,12 +2,12 @@ artifact_id: ART-CONTEXT-PACK-RESUME
 title: Resume Context Pack
 type: context-pack
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: SPEC-BOOT-002 and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -21,6 +21,7 @@ authoritative: false
 - `memory/ai/SHARED_AGENT_RULES.md`
 - selected role file
 - `CONTEXT_INDEX.md`
+- `OPERATION_ROUTING.md`
 - `CURRENT_STATE.md`
 - `AI_HANDOFF.md`
 - `ARTIFACT_REGISTRY.md`
@@ -58,7 +59,8 @@ authoritative: false
 ## Authority Limit
 
 This pack helps resume safely but cannot override the source-of-truth hierarchy
-or selected role requirements, including `CONTEXT_INDEX.md`, shared agent
+or selected role requirements, including `CONTEXT_INDEX.md`,
+`OPERATION_ROUTING.md`, shared agent
 rules, selected role files, approved or active specs, accepted ADRs,
 `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, and
 `AI_HANDOFF.md`.

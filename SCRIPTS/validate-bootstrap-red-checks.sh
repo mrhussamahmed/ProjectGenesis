@@ -14,10 +14,12 @@ failures=0
 copy_repo() {
   local name="$1"
   local dest="$tmp_root/$name"
+  local current_branch
+  current_branch="$(git -C "$repo_root" branch --show-current 2>/dev/null || printf '%s' main)"
   mkdir -p "$dest"
   rsync -a --exclude '.git' "$repo_root/" "$dest/"
   git -C "$dest" init -q
-  git -C "$dest" symbolic-ref HEAD refs/heads/codex/adversarial-plan-review
+  git -C "$dest" symbolic-ref HEAD "refs/heads/$current_branch"
   printf '%s\n' "$dest"
 }
 
@@ -228,6 +230,44 @@ EOF
   expect_failure "approved assumption unsupported evidence" "approved assumption missing allowed approval evidence" "$dir"
 }
 
+case_operation_routing_missing_profile() {
+  local dir
+  dir="$(copy_repo operation-routing-missing-profile)"
+  perl -0pi -e 's/`strict-protected`/`strict-protected-removed`/g' "$dir/OPERATION_ROUTING.md"
+  expect_failure "operation routing missing profile" "OPERATION_ROUTING.md missing operation profile: strict-protected" "$dir"
+}
+
+case_operation_routing_missing_validation_mode() {
+  local dir
+  dir="$(copy_repo operation-routing-missing-validation-mode)"
+  perl -0pi -e 's/\| strict \|/[removed-mode]/' "$dir/OPERATION_ROUTING.md"
+  expect_failure "operation routing missing validation mode" "OPERATION_ROUTING.md missing validation mode: strict" "$dir"
+}
+
+case_operation_routing_missing_context_reference() {
+  local dir
+  dir="$(copy_repo operation-routing-missing-context-reference)"
+  perl -0pi -e 's/`OPERATION_ROUTING.md`/`OPERATION_ROUTING_REMOVED.md`/g' "$dir/CONTEXT_INDEX.md"
+  expect_failure "operation routing missing context reference" "CONTEXT_INDEX.md does not reference OPERATION_ROUTING.md" "$dir"
+}
+
+case_protected_mechanics_misclassified() {
+  local dir
+  dir="$(copy_repo protected-mechanics-misclassified)"
+  perl -0pi -e 's/Operation profile: `strict-protected`/Operation profile: `planning-governance`/' "$dir/AI_HANDOFF.md"
+  expect_failure "protected mechanics misclassified" "protected mechanics classification must be strict-protected" "$dir"
+}
+
+case_protected_planning_misclassified() {
+  local dir
+  dir="$(copy_repo protected-planning-misclassified)"
+  perl -0pi -e '
+    s/Operation profile: `strict-protected`/Operation profile: `docs-trivial`/;
+    s/`CURRENT_STATE\.md`, `AI_HANDOFF\.md`, `BACKLOG\.md`,\n  `ARTIFACT_REGISTRY\.md`, `TRACEABILITY_MATRIX\.md`, `TEST_RESULTS\.md`,\n  `WORKLOG\/WORKLOG_INDEX\.md`, `GOVERNANCE\.md`,\n  `BRANCH_AND_WORKTREE_GUIDE\.md`, `RISK_MODEL\.md`,\n  `PR_REVIEW_POLICY\.md`, `PR_MERGE_POLICY\.md`, `CONTEXT_INDEX\.md`,\n  `AI_PROJECT_BOOTSTRAP\.md`, `SPECS\/SPEC_INDEX\.md`,\n  `SPECS\/SPEC-BOOT-003-adaptive-governance-routing\.md`,\n  `SCRIPTS\/validate-bootstrap\.sh`, `SCRIPTS\/validate-bootstrap-red-checks\.sh`,\n  `\.github\/workflows\/bootstrap-validation\.yml`, relevant context packs,\n  command\/template\/review artifacts, and any new registered governance artifact\n  required by the implementation\./`SPECS\/SPEC_INDEX.md`, `BACKLOG.md`, `TRACEABILITY_MATRIX.md`, and `ARTIFACT_REGISTRY.md`./;
+  ' "$dir/AI_HANDOFF.md"
+  expect_failure "protected planning misclassified" "protected planning classification must be planning-governance or strict-protected" "$dir"
+}
+
 case_approved_spec_missing_source
 case_approved_spec_empty_source
 case_active_backlog_missing_spec
@@ -239,6 +279,11 @@ case_assumption_missing_expiry
 case_approved_assumption_missing_evidence
 case_approved_assumption_self_approved
 case_approved_assumption_unsupported_evidence
+case_operation_routing_missing_profile
+case_operation_routing_missing_validation_mode
+case_operation_routing_missing_context_reference
+case_protected_mechanics_misclassified
+case_protected_planning_misclassified
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2

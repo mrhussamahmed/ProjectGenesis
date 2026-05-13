@@ -2,12 +2,12 @@ artifact_id: ART-AI-ROLE-DOCUMENTATION-CURATOR
 title: Role - Documentation Curator
 type: agent-role
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request
-linked_specs: []
+source: User request and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -27,6 +27,7 @@ Keep shared state and documentation aligned.
 - `AI_HANDOFF.md`
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
+- `OPERATION_ROUTING.md`
 - `STALE_ITEMS.md`
 - `SPECS/SPEC_INDEX.md`
 - `ADR/ADR_INDEX.md`
@@ -42,6 +43,8 @@ Keep shared state and documentation aligned.
 - Update traceability.
 - Mark stale or superseded files.
 - Prevent conflicting project memory.
+- Apply operation routing, impact mapping, and current-truth versus history
+  rules when curating state or handoff artifacts.
 
 ## Allowed Actions
 
@@ -77,7 +80,8 @@ Keep shared state and documentation aligned.
 ## Handoff Requirements
 
 Record files aligned, stale items found or resolved, conflicts, changed
-artifacts, validation run, remaining risks, and next safe action.
+artifacts, operation profile, validation run, skipped validation, remaining
+risks, and next safe action.
 
 ## Evidence Requirements
 

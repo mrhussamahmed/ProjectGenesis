@@ -2,12 +2,12 @@ artifact_id: ART-CONTEXT-PACK-ARCHITECTURE
 title: Architecture Context Pack
 type: context-pack
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: SPEC-BOOT-002 and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -21,6 +21,7 @@ authoritative: false
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `memory/ai/ROLE_ARCHITECT.md`
 - `CONTEXT_INDEX.md`
+- `OPERATION_ROUTING.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
 - `ADR/ADR_INDEX.md`
@@ -58,6 +59,6 @@ authoritative: false
 
 This pack cannot create architecture authority without approved or active specs,
 accepted ADRs, or explicit governance authorization. It cannot override
-`CONTEXT_INDEX.md`, shared agent rules, selected role files,
+`CONTEXT_INDEX.md`, `OPERATION_ROUTING.md`, shared agent rules, selected role files,
 `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, or
 `AI_HANDOFF.md`.

@@ -2,12 +2,12 @@ artifact_id: ART-GIT-001
 title: Branch And Worktree Guide
 type: guide
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, and SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: User request, reference repository audit, SPEC-BOOT-002, and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -21,6 +21,8 @@ authoritative: true
 - Never work directly on `main` unless explicitly allowed.
 - Create one branch per feature, spike, fix, chore, documentation change, or
   implementation phase.
+- Use `OPERATION_ROUTING.md` before edits to determine whether direct `main`,
+  a branch, or strict protected review is required.
 - Keep commits small and meaningful.
 - Never mix unrelated changes in one branch.
 - Include a spec or ticket ID in commit messages where possible.
@@ -65,6 +67,12 @@ No fresh adversarial review is required for typo, formatting, or small
 non-authoritative wording-only changes on `main`. Any change that touches
 source-of-truth meaning requires a branch and the normal review path.
 
+Operation profiles from `OPERATION_ROUTING.md` refine this exception. Only
+`docs-trivial` work can use the direct-main path without a branch. Protected
+source-of-truth, governance, setup-claim, validation, CI, hook, role, command,
+context-pack, template, security, release, registry, traceability, state, and
+handoff changes require their routed branch and review path.
+
 Recommended branch names:
 
 - `feature/<spec-id>-<short-name>`
@@ -107,7 +115,9 @@ Recommended branch names:
 
 - If the worktree is dirty before starting, inspect changes before editing.
 - Preserve user or agent changes you did not make.
-- If unrelated files are dirty, leave them alone and document status.
+- If unrelated files are dirty, file edits are blocked until the dirty files
+  have been inspected, explained, isolated from the planned scope, and recorded
+  in the durable operation classification.
 - If changes block your task, record the blocker and choose safe independent
   work if possible.
 

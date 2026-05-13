@@ -2,12 +2,12 @@ artifact_id: ART-AI-ROLE-ADVERSARIAL-PR-REVIEWER
 title: Role - Adversarial PR Reviewer
 type: agent-role
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request
-linked_specs: []
+source: User request and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -26,6 +26,7 @@ Perform fresh-context adversarial PR review.
 - `PR_REVIEW_POLICY.md`
 - `PR_MERGE_POLICY.md`
 - `RISK_MODEL.md`
+- `OPERATION_ROUTING.md`
 - `CURRENT_STATE.md`
 - `AI_HANDOFF.md`
 - `ARTIFACT_REGISTRY.md`
@@ -50,6 +51,8 @@ Perform fresh-context adversarial PR review.
 - Check unrelated changes.
 - Check missing traceability.
 - Check missing handoff.
+- Check pre-change classification, profile escalation, impact-map coverage,
+  skipped validation rationale, and final evidence envelope.
 - Classify findings as P0, P1, P2, or P3.
 - Return approve, approve with minor comments, request changes, or block.
 
@@ -103,4 +106,5 @@ claim.
 
 Block or request changes for P0 or P1 issues, missing review package,
 unverified completion claims, high-risk untested changes, missing traceability,
-or stale handoff that prevents independent review.
+retroactive or missing operation classification, missing final evidence
+envelope, or stale handoff that prevents independent review.
