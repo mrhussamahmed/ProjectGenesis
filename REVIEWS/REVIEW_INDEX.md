@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v1.8
+version: v2.0
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, final adversarial review, and narrow re-review
+source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, and public repository publication request
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -29,6 +29,8 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-13-spec-boot-002-v0.4 | SPEC-BOOT-002 v0.4 | approve with minor comments | high | independent reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md` | addressed; spec activated |
 | REVIEW-2026-05-13-scaffold-intake-governance-implementation | SPEC-BOOT-002 implementation | approve with minor comments | high | independent reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | active; P1/P2 findings addressed |
 | REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial | SPEC-BOOT-002 final adversarial review | request changes, addressed | high | Codex adversarial review plus narrow re-review | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | addressed; narrow re-review found no remaining P0/P1/P2 findings |
+| REVIEW-2026-05-13-start-requirement-breakdown-plan | start requirement breakdown command plan | request changes, addressed | medium | independent reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md` | addressed |
+| REVIEW-2026-05-13-projectgenesis-publication | ProjectGenesis public repository publication | approve | medium | scoped independent reviewer plus local repository-grounded review | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md` | active |
 
 ## Review Packages
 
@@ -36,6 +38,7 @@ Review records and review packages live in this folder.
 |------------|--------------|---------|------|--------|
 | PR-PACKAGE-2026-05-09-shared-role-system | shared role system update | Durable review package for shared `memory/ai/` role system change | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-09-shared-role-system.md` | active |
 | PR-PACKAGE-2026-05-13-scaffold-intake-governance | scaffold intake and governance implementation | Review package for `SPEC-BOOT-002` implementation | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-scaffold-intake-governance.md` | active |
+| PR-PACKAGE-2026-05-13-projectgenesis-publication | ProjectGenesis public repository publication | Review package for public README, AGPLv3 license, GitHub Code Owners, branch protection guidance, and publication PR | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md` | active |
 
 ## Rules
 

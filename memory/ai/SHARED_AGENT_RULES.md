@@ -54,6 +54,18 @@ Claude, Codex, or another coding agent.
   mode until the relevant `memory/ai/ROLE_*.md` file has been read or Claude is
   restarted with an allowlisted role mode.
 
+## Command Shortcuts
+
+If the user gives a short workflow command or phrase, read
+`COMMANDS/COMMAND_INDEX.md`. When the phrase is an exact or unambiguous trigger
+match, read the matching command file and follow its stop conditions. If the
+trigger or required inputs are ambiguous, ask for clarification.
+
+Command files are workflow shortcuts only. They cannot override repository
+governance, approved or active specs, accepted ADRs, `CONTEXT_INDEX.md`,
+selected role files, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
+`CURRENT_STATE.md`, `AI_HANDOFF.md`, or runtime/tool policies.
+
 ## Implementation Gate
 
 Do not start implementation unless the task satisfies Definition of Ready in

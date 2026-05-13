@@ -24,6 +24,17 @@ workflows, not source-of-truth governance.
 | Command | Purpose | Status |
 |---------|---------|--------|
 | `COMMAND_TEMPLATE.md` | Template for future workflow prompts. | active |
+| `start-requirement-breakdown.md` | Runs the downstream project intake and requirement breakdown workflow from `00_intake/raw/`. Trigger: `Start requirement breakdown`. | active |
+
+## Recognized User Triggers
+
+| Trigger | Command |
+|---------|---------|
+| `Start requirement breakdown` | `COMMANDS/start-requirement-breakdown.md` |
+| `Start requirement breakdown.` | `COMMANDS/start-requirement-breakdown.md` |
+| `Run requirement breakdown` | `COMMANDS/start-requirement-breakdown.md` |
+| `Run project intake` | `COMMANDS/start-requirement-breakdown.md` |
+| `Kick off project intake` | `COMMANDS/start-requirement-breakdown.md` |
 
 ## Rules
 
@@ -32,3 +43,6 @@ workflows, not source-of-truth governance.
 - Commands cannot override `CONTEXT_INDEX.md`, shared agent rules, selected
   role files, specs, ADRs, registry, traceability, current state, or handoff.
 - Add command files only when the workflow is stable enough to reuse.
+- When a user gives a short workflow phrase, match exact or unambiguous triggers
+  here before asking for clarification. If the trigger or required input is
+  ambiguous, ask for clarification.

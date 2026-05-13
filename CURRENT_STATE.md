@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v2.4
+version: v2.6
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, and narrow re-review
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -35,6 +35,15 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- Public GitHub publication work is ready for PR under BOOT-016. The target
+  remote is `https://github.com/mrhussamahmed/ProjectGenesis.git`; the public
+  README, AGPLv3 license, Code Owners file, GitHub branch protection guide, and
+  review package were validated and reviewed for a feature-branch PR instead of
+  a direct `main` update.
+- Command shortcut work added `COMMANDS/start-requirement-breakdown.md` so the
+  user can trigger downstream product intake with `Start requirement breakdown`.
+  Independent plan review requested changes; the state-update order, dispatch
+  wording, conditional review language, and traceability linkage were addressed.
 - Shared AI role system for Claude, Codex, and other coding agents added to the
   reusable bootstrap scaffold and validated.
 - Fresh adversarial review of the shared role update requested changes; P1 and
@@ -80,7 +89,7 @@ authoritative: false
 
 ## Active Branch
 
-- `main`
+- `codex/start-requirement-breakdown-command`
 
 ## Active Worktree
 
@@ -90,11 +99,14 @@ authoritative: false
 
 - Bootstrap package completeness and downstream project intake readiness after
   `SPEC-BOOT-002`.
+- BOOT-016 public repository publication and maintainer-review controls.
 
 ## Current Blockers
 
 - No product-specific input has been provided for a downstream software
   project.
+- Public publication is pending branch push, pull request creation, and GitHub
+  branch protection confirmation.
 
 ## Current Source-Of-Truth Files
 
@@ -118,8 +130,9 @@ authoritative: false
 
 ## Next Recommended Action
 
-Use the scaffold for the next downstream project intake, or create the next
-bootstrap improvement spec if more governance changes are needed.
+Finish BOOT-016 validation and review, push the publication branch, open a pull
+request to `main`, and configure GitHub branch protection for maintainer
+review.
 
 ## Latest Validation
 
@@ -204,3 +217,7 @@ bootstrap improvement spec if more governance changes are needed.
   `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passed on 2026-05-13 before the
   merge commit.
+- Start requirement breakdown command shortcut validation:
+  `bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `git diff --check`, and manual trigger lookup with `rg -n "Start requirement
+  breakdown" ...` passed on 2026-05-13.

@@ -2,11 +2,11 @@ artifact_id: ART-WORKLOG-INDEX
 title: Worklog Index
 type: worklog
 status: active
-version: v2.2
+version: v2.4
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, and narrow re-review
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -37,3 +37,5 @@ current state, and handoff.
 | 2026-05-13 | Codex | Adversarial PR Reviewer | Performed final adversarial review of the uncommitted `SPEC-BOOT-002` implementation and requested changes for one P2 stale source-of-truth finding in `SPECS/SPEC_INDEX.md`. | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md`, `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `STALE_ITEMS.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md` | `bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and validator shell syntax checks passed before and after review state updates | `AI_HANDOFF.md` |
 | 2026-05-13 | Codex | Documentation Curator, DevOps Release Reviewer | Corrected the stale `SPEC-BOOT-002` current-status text in `SPECS/SPEC_INDEX.md`, marked the stale item resolved, updated state files, and completed narrow re-review. | `SPECS/SPEC_INDEX.md`, `STALE_ITEMS.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md`, `REVIEWS/REVIEW_INDEX.md` | `bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and validator shell syntax checks passed; narrow re-review approved with minor comments and no P0/P1/P2 findings | `AI_HANDOFF.md` |
 | 2026-05-13 | Codex | Documentation Curator, DevOps Release Reviewer | Merged reviewed `SPEC-BOOT-002` scaffold intake and governance implementation into `main` with final branch-state updates. | `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md` | `bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and validator shell syntax checks passed on `main` before merge commit | `AI_HANDOFF.md` |
+| 2026-05-13 | Codex | Documentation Curator | Added the `Start requirement breakdown` command shortcut, recorded independent plan review findings, and linked the shortcut to the existing SPEC-BOOT-002 command framework. | `COMMANDS/start-requirement-breakdown.md`, `COMMANDS/COMMAND_INDEX.md`, `memory/ai/SHARED_AGENT_RULES.md`, `CONTEXT_INDEX.md`, `BOOTSTRAP_USAGE.md`, `NEW_PROJECT_INITIALIZATION.md`, `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md`, `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md` | `bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and manual trigger lookup passed | `AI_HANDOFF.md` |
+| 2026-05-13 | Codex | Documentation Curator, DevOps Release Reviewer | Prepared BOOT-016 public ProjectGenesis repository publication with README, AGPLv3 license, Code Owners, branch protection guidance, review package, and source-of-truth updates. | `README.md`, `LICENSE`, `.github/CODEOWNERS`, `GITHUB_REPOSITORY_SETUP.md`, `BACKLOG.md`, `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`, registry, traceability, review index, current state, handoff, test results, and worklog | Validation pending in this in-progress state | `AI_HANDOFF.md` |

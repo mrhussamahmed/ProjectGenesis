@@ -46,6 +46,13 @@ First read:
 
 Project input is stored under 00_intake/raw/.
 
+For the shortest kickoff, after adding rough material under 00_intake/raw/, say:
+
+Start requirement breakdown.
+
+The agent must resolve that phrase through COMMANDS/COMMAND_INDEX.md and follow
+COMMANDS/start-requirement-breakdown.md.
+
 Use the bootstrap scaffold to prepare this repository for AI-assisted
 development:
 

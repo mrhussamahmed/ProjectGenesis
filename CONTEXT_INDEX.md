@@ -47,6 +47,17 @@ define project truth.
 - relevant ADRs
 - `git status --short --branch`, when Git is available
 
+## Command Shortcuts
+
+- `COMMANDS/COMMAND_INDEX.md`
+- matched command file under `COMMANDS/`
+
+When a user gives a short workflow phrase, read `COMMANDS/COMMAND_INDEX.md`.
+If the phrase is an exact or unambiguous trigger, read the matched command file
+and follow its required role, required reads, stop conditions, validation, and
+authority limit. If the trigger or required input is ambiguous, ask for
+clarification.
+
 ## Product Intake
 
 - `BOOTSTRAP_USAGE.md`

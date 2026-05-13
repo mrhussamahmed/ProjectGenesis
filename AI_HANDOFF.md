@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v2.4
+version: v2.6
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, and narrow re-review
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -30,7 +30,7 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Current Branch
 
-`main`
+`codex/start-requirement-breakdown-command`
 
 ## Current Worktree
 
@@ -38,74 +38,57 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Last Completed Task
 
-Merged reviewed `SPEC-BOOT-002` scaffold intake and governance implementation
-into `main`.
+Added the reusable `Start requirement breakdown` command shortcut under the
+existing `SPEC-BOOT-002` command prompt framework.
 
 ## Current In-Progress Task
 
-None.
+BOOT-016 public ProjectGenesis GitHub publication: public README, AGPLv3
+license, Code Owners, branch protection guidance, push, and pull request
+creation. Validation and publication review are complete.
 
 ## Files Changed
 
-- `00_intake/`
-- `01_context/`
-- `02_requirements/`
-- `CONTEXT_PACKS/`
-- `COMMANDS/`
-- `GETTING_STARTED.md`
-- `NEW_PROJECT_INITIALIZATION.md`
-- `INPUT/README.md`
-- `SCRIPTS/validate-bootstrap.sh`
-- `SCRIPTS/validate-bootstrap-red-checks.sh`
-- `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md`
-- `SPECS/templates/SPEC_TEMPLATE.md`
-- `ADR/templates/ADR_TEMPLATE.md`
-- `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`
-- `BRANCH_AND_WORKTREE_GUIDE.md`
-- `GOVERNANCE.md`
+- `COMMANDS/start-requirement-breakdown.md`
+- `COMMANDS/COMMAND_INDEX.md`
+- `memory/ai/SHARED_AGENT_RULES.md`
 - `CONTEXT_INDEX.md`
 - `BOOTSTRAP_USAGE.md`
-- `TRACEABILITY_MATRIX.md`
+- `NEW_PROJECT_INITIALIZATION.md`
+- `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md`
+- `REVIEWS/REVIEW_INDEX.md`
 - `ARTIFACT_REGISTRY.md`
-- `STALE_ITEMS.md`
-- `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
-- `REVIEWS/`
-- shared state, test result, and worklog files
-- `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md`
+- `TRACEABILITY_MATRIX.md`
+- `CURRENT_STATE.md`
+- `AI_HANDOFF.md`
+- `TEST_RESULTS.md`
+- `WORKLOG/WORKLOG_INDEX.md`
+- `README.md`
+- `LICENSE`
+- `.github/CODEOWNERS`
+- `GITHUB_REPOSITORY_SETUP.md`
+- `BACKLOG.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`
 
 ## Specs Changed
 
-- `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md` activated as v1.0
-  and aligned to v1.2 after implementation status and final-review fixes.
+- No spec files changed. Active `SPEC-BOOT-002` covers this as a command
+  prompt framework follow-up under `SBG-FR-009` and `BOOT-014`.
 
 ## Artifacts Changed
 
-- Added a durable review record under `REVIEWS/`.
-- Registered the review in `REVIEWS/REVIEW_INDEX.md` and
-  `ARTIFACT_REGISTRY.md`.
-- Added proposed `SPEC-BOOT-002` and registered it in `SPECS/SPEC_INDEX.md`,
-  `ARTIFACT_REGISTRY.md`, and `TRACEABILITY_MATRIX.md`.
-- Added staged blocked backlog items BOOT-009 through BOOT-015 to `BACKLOG.md`.
-- Updated current state, handoff, test results, and worklog.
-- Corrected BOOT-012 scope in the spec and backlog to include workflow policy
-  updates, and registered the v0.2 versions in registry, traceability, state,
-  test results, and worklog.
-- Added durable independent review record for SPEC-BOOT-002 v0.2 and addressed
-  findings in v0.3/v0.4, including NFR traceability and fuller artifact
-  inventory.
-- Added fresh review record approving SPEC-BOOT-002 v0.4 with minor comments.
-- Added intake, context, requirement, context-pack, command, onboarding, and
-  validator artifacts for BOOT-010 through BOOT-015.
-- Added implementation review package for final fresh-context review.
-- Added final implementation review record and addressed P1/P2 findings:
-  column-aware source evidence validation, approved-assumption approval
-  evidence validation, Product Analyst intake path alignment, and explicit
-  context-pack authority limits.
-- Added final adversarial review record requesting changes for stale
-  `SPECS/SPEC_INDEX.md` current-status text and registered it in review,
-  registry, traceability, state, test-results, and worklog artifacts.
-- Recorded the stale spec-index status in `STALE_ITEMS.md`, then resolved it
-  after correcting `SPECS/SPEC_INDEX.md`.
+- Added `COMMANDS/start-requirement-breakdown.md`.
+- Added recognized triggers to `COMMANDS/COMMAND_INDEX.md`, including
+  `Start requirement breakdown`.
+- Added shared command shortcut lookup guidance to
+  `memory/ai/SHARED_AGENT_RULES.md`.
+- Added command shortcut context guidance to `CONTEXT_INDEX.md`.
+- Added user-facing shortcut guidance to `BOOTSTRAP_USAGE.md` and
+  `NEW_PROJECT_INITIALIZATION.md`.
+- Added independent plan review record
+  `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md`.
+- Updated registry, traceability, current state, handoff, test results, and
+  worklog.
 
 ## Decisions Made
 
@@ -113,24 +96,32 @@ None.
 - Markdown remains authoritative until external ticket creation is confirmed by
   tool or command evidence.
 - `INPUT/` is a legacy alias; `00_intake/raw/` is canonical.
-- Implementation validation passed and prior fresh-context implementation
-  review approved with minor comments after required fixes.
-- Final adversarial review requested one P2 correction before staging or
-  commit. `SPECS/SPEC_INDEX.md` no longer says final review findings are under
-  correction.
-- Narrow re-review approved the correction with minor comments and found no
-  remaining P0/P1/P2 findings.
+- No new spec is required for this command shortcut because it is a compatible
+  extension of the active `SPEC-BOOT-002` command prompt framework.
+- Command dispatch belongs in shared agent rules, but only for exact or
+  unambiguous trigger matches.
+- Multi-agent review in the command is conditional on runtime support and
+  authorization; single-agent review fallback is allowed when needed.
+- Public repository publication should happen through a feature branch and pull
+  request, not a direct `main` update.
+- `main` should be protected so future changes require pull requests and
+  maintainer review. The required `validate` status check can be enforced after
+  the workflow exists on the default branch.
 
 ## Assumptions Made
 
 - The current folder is the package root.
-- The user requested continuing through the plan without stopping.
+- The user requested a plan, independent review, and execution for the command
+  shortcut.
 - No downstream product-specific input exists yet.
+- The target repository `mrhussamahmed/ProjectGenesis` is the intended public
+  remote for this scaffold.
 
 ## Open Questions
 
-- No product open questions block `SPEC-BOOT-002`.
-- No review finding blocks staging or committing.
+- No open questions block this command shortcut.
+- No open questions block BOOT-016 publication setup.
+- The existing unrelated legacy RTF deletions remain outside this task.
 
 ## Tests Run
 
@@ -194,13 +185,24 @@ None.
 - `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` - passed on `main` before merge
   commit.
+- Independent plan review - request changes; P1/P2/P3 findings addressed.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after command shortcut changes.
+- `git diff --check` - passed after command shortcut changes.
+- `rg -n "Start requirement breakdown" COMMANDS/COMMAND_INDEX.md
+  COMMANDS/start-requirement-breakdown.md BOOTSTRAP_USAGE.md
+  NEW_PROJECT_INITIALIZATION.md` - passed and confirmed trigger visibility.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed after command
+  shortcut changes.
+- `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` - passed after command shortcut
+  changes.
 
 ## Tests Not Run
 
 - Stack-specific tests were not run because this is a Markdown and shell
   scaffold implementation, not a product implementation.
-- `.githooks/pre-commit` and `.githooks/pre-push` were not run because no commit
-  or push was performed.
+- GitHub branch protection configuration is still pending until the branch is
+  pushed and the publication PR is opened.
 
 ## Known Failures
 
@@ -208,26 +210,34 @@ None.
 
 ## Known Risks
 
-- This merge changes core governance, templates, validation, branch policy,
-  intake flow, and onboarding material; final adversarial review requested one
-  P2 status-consistency correction, now fixed and approved by narrow
-  re-review.
-- Validator parsing is intentionally lightweight and should be watched for
-  false positives as real downstream projects use the scaffold.
+- The validator checks command files for required sections but does not enforce
+  trigger registration; manual trigger lookup was run for this change.
+- Command shortcuts must remain subordinate to repository governance and role
+  files.
 
 ## Dirty Worktree Status
 
-Merge commit is being prepared on `main`. After the merge commit, the worktree
-should be clean.
+The worktree has unrelated legacy RTF deletions outside this task:
+
+- `start here/Project starting instruction tips.rtf`
+- `start here/new project initialization prompt.rtf`
+
+Preserve them and do not stage or restore them unless the maintainer explicitly
+asks.
 
 ## Untracked Files
 
-- None expected after the merge commit.
+- `COMMANDS/start-requirement-breakdown.md`
+- `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md`
+- `.github/CODEOWNERS`
+- `GITHUB_REPOSITORY_SETUP.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`
 
 ## Next Recommended Action
 
-No immediate action required after the merge commit. Use the scaffold for the
-next downstream project intake when ready.
+Finish BOOT-016 validation and review, then stage only intended files, commit,
+push the feature branch, open a pull request to `main`, and configure GitHub
+branch protection for maintainer review.
 
 ## What The Next AI Must Read First
 
@@ -250,6 +260,8 @@ product-specific specs, backlog, architecture updates, and test plans.
 ## Implementation Status
 
 Bootstrap scaffold: baseline exists. Scaffold improvement: `SPEC-BOOT-002`
-v1.2 implementation is validated. Final adversarial review requested one P2
-spec-index status correction; it is fixed, validated, and approved by narrow
-re-review. Merge into `main` is ready to commit.
+v1.2 implementation is validated. The `Start requirement breakdown` command
+shortcut is implemented on branch `codex/start-requirement-breakdown-command`.
+BOOT-016 public repository publication is in progress on the same branch.
+Validation and review are complete; it awaits commit, push, PR creation, and
+branch protection confirmation.

@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.14
+version: v1.16
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, and narrow re-review
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -46,6 +46,11 @@ authoritative: false
 | 2026-05-13 | SPEC-BOOT-002 final adversarial review state validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Validation passed after adding the final review record, stale-item entry, registry, traceability, state, handoff, test-result, and worklog updates. |
 | 2026-05-13 | SPEC-BOOT-002 stale spec-index status fix | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | `SPECS/SPEC_INDEX.md` status text was corrected, `STALE_ITEMS.md` marked the stale item resolved, and narrow re-review approved with no remaining P0/P1/P2 findings. |
 | 2026-05-13 | SPEC-BOOT-002 main merge validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Validation passed on `main` after applying the merge and updating final branch state, before creating the merge commit. |
+| 2026-05-13 | Start requirement breakdown command shortcut | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh`; `rg -n "Start requirement breakdown" COMMANDS/COMMAND_INDEX.md COMMANDS/start-requirement-breakdown.md BOOTSTRAP_USAGE.md NEW_PROJECT_INITIALIZATION.md` | passed | Added `COMMANDS/start-requirement-breakdown.md`, command-index triggers, shared command lookup guidance, usage docs, plan review record, registry, traceability, current state, and handoff updates. |
+| 2026-05-13 | BOOT-016 public repository publication pre-review validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh`; `gh auth status && gh repo view mrhussamahmed/ProjectGenesis --json nameWithOwner,visibility,defaultBranchRef,url` | passed | Bootstrap validation, red checks, whitespace check, shell syntax checks, GitHub authentication, and target repository visibility/default-branch checks passed before fresh publication review. |
+| 2026-05-13 | BOOT-016 publication review checks | scoped independent reviewer; `test -f CONTRIBUTING.md`; `gh api repos/mrhussamahmed/ProjectGenesis/branches/main/protection` | mixed, expected | Independent reviewer approved with no P0/P1/P2 findings; `CONTRIBUTING.md` exists; branch protection API returned `Branch not protected`, confirming protection still needs configuration. |
+| 2026-05-13 | BOOT-016 final pre-stage validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Final validation passed after recording the publication review and source-of-truth updates, before staging selected files. |
+| 2026-05-13 | BOOT-016 final state edit validation | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check` | passed | Validation and whitespace checks passed after marking BOOT-016 as in-review and aligning current state, handoff, and traceability. |
 
 ## Rules
 

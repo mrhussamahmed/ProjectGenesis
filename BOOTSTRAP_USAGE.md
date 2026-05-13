@@ -25,14 +25,25 @@ For the shortest path, start with `GETTING_STARTED.md` and then use
 ## Start From A Product Idea
 
 1. Put the idea in `00_intake/raw/` or paste it into the current AI session.
-2. Register the idea in `00_intake/SOURCE_REGISTRY.md` when it is stored as a
-   file.
-3. Tell the AI: "Read `AI_PROJECT_BOOTSTRAP.md` and scaffold this project from
-   the product idea."
-4. The AI must read `CONTEXT_INDEX.md`, run the repository scan, and create:
-   specs, architecture, ADRs where needed, backlog, test strategy,
-   traceability, artifact registry, and current state.
-5. Implementation must wait until the first task satisfies Definition of Ready.
+2. Tell the AI: `Start requirement breakdown.`
+3. The AI must read `COMMANDS/COMMAND_INDEX.md`, execute the matched command
+   file, register and summarize intake sources, and create evidence-linked
+   product context, requirements, assumptions, risks, backlog candidates, and
+   readiness status.
+4. Implementation must wait until the first task satisfies Definition of Ready.
+
+## Command Shortcuts
+
+Reusable workflow commands live under `COMMANDS/`. The main downstream intake
+shortcut is:
+
+```text
+Start requirement breakdown.
+```
+
+Agents must match short workflow phrases through `COMMANDS/COMMAND_INDEX.md`.
+Command files are workflow shortcuts only and cannot override repository
+governance, role files, specs, ADRs, traceability, current state, or handoff.
 
 ## Start From A PRD
 

@@ -2,11 +2,11 @@ artifact_id: ART-TRACE-001
 title: Traceability Matrix
 type: traceability
 status: authoritative
-version: v2.1
+version: v2.3
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request, initial scaffold, final adversarial review, stale status fix, and narrow re-review
+source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, and public repository publication request
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -62,6 +62,7 @@ instead of a product spec. Product implementation must not use this exception.
 | Proposed Improvement | Source | Spec ID | Backlog Item | Review Record | Tests | Current Status |
 |----------------------|--------|---------|--------------|---------------|-------|----------------|
 | Intake, product context, requirements control, context packs, command prompts, validator, workflow, multi-agent synchronization, and onboarding cleanup for the reusable bootstrap scaffold | User-supplied scaffold improvement plan, 2026-05-13 | SPEC-BOOT-002 | BOOT-009 through BOOT-015 | `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md`; `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks | Implemented, validated, and reviewed; ready for commit |
+| Public ProjectGenesis GitHub publication with AGPLv3 license, public README, Code Owners, branch protection guidance, and reviewable publication PR | User publication request, 2026-05-13; `origin/main` initial AGPLv3 license | none | BOOT-016 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`; `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; GitHub auth and repo checks | Reviewed, approved, and final pre-stage validation passed; pending push, PR, and GitHub branch protection configuration |
 
 ## Scaffold Improvement Requirement Mapping
 
@@ -76,6 +77,7 @@ instead of a product spec. Product implementation must not use this exception.
 | SBG-FR-007: Expanded traceability chain | SPEC-BOOT-002 | BOOT-012 | User adjusted plan | traceability review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
 | SBG-FR-008: Subordinate context packs | SPEC-BOOT-002 | BOOT-014 | User adjusted plan; review finding P1 | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
 | SBG-FR-009: Safe command prompt framework | SPEC-BOOT-002 | BOOT-014 | User adjusted plan; review finding P2 | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-009 follow-up: `Start requirement breakdown` command shortcut | SPEC-BOOT-002 | BOOT-014 follow-up | User request on 2026-05-13; `COMMANDS/start-requirement-breakdown.md`; `COMMANDS/COMMAND_INDEX.md` | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; manual trigger check | `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md` | implemented after plan review corrections |
 | SBG-FR-010: Narrow direct-main documentation exception | SPEC-BOOT-002 | BOOT-012 | User adjusted plan; review finding P1; SPEC-BOOT-002 v0.3 correction | policy-file review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
 | SBG-FR-011: Validator behavior and red-check examples first | SPEC-BOOT-002 | BOOT-013 | User adjusted plan; review finding P2 | `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
 | SBG-FR-012: RTF onboarding migration | SPEC-BOOT-002 | BOOT-015 | User adjusted plan; review finding P2 | registry and manual review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
