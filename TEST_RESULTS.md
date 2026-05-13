@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.18
+version: v1.19
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and post-merge CI cleanup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -55,6 +55,7 @@ authoritative: false
 | 2026-05-13 | BOOT-016 post-protection state validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Validation passed after recording draft PR #1 and initial branch protection in current state, handoff, traceability, review, registry, worklog, and test results. |
 | 2026-05-13 | BOOT-016 merge and final protection | `gh pr ready 1 --repo mrhussamahmed/ProjectGenesis`; `gh pr merge 1 --repo mrhussamahmed/ProjectGenesis --merge --admin --delete-branch`; `git fetch origin`; `git switch main && git merge --ff-only origin/main`; `gh api --method PUT repos/mrhussamahmed/ProjectGenesis/branches/main/protection`; `gh api repos/mrhussamahmed/ProjectGenesis/branches/main/protection`; `gh pr view 1 --repo mrhussamahmed/ProjectGenesis --json url,isDraft,state,mergedAt,mergeCommit` | passed | PR #1 merged to `main` at `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`, remote feature branch was deleted, local `main` fast-forwarded, and branch protection now requires the `validate` status check in addition to PR review, Code Owner review, conversation resolution, force-push block, and deletion block. |
 | 2026-05-13 | BOOT-016 final cleanup validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Validation passed after updating final state, handoff, backlog, traceability, review, registry, worklog, and test results to reflect the merged PR and required `validate` branch protection. |
+| 2026-05-13 | BOOT-016 post-merge GitHub Actions | `gh run view 25820108188 --repo mrhussamahmed/ProjectGenesis --log-failed`; `gh run list --repo mrhussamahmed/ProjectGenesis --branch main --limit 5 --json databaseId,displayTitle,headSha,status,conclusion,workflowName,createdAt,url` | fixed | Merge commit `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406` failed because `AI_HANDOFF.md` still named `codex/start-requirement-breakdown-command` while CI ran on `main`; final cleanup commit `732917aa7582e2f76e46af88b0a9ffde82effeeb` corrected state and the `Bootstrap Validation` workflow passed. |
 
 ## Rules
 
