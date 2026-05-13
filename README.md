@@ -2,11 +2,11 @@ artifact_id: ART-README
 title: ProjectGenesis README
 type: public-readme
 status: active
-version: v1.0
+version: v1.2
 created: 2026-05-13
 updated: 2026-05-13
 owner: ProjectGenesis Maintainers
-source: Public repository publication request
+source: Public repository publication request, tooling prerequisite documentation update, and public positioning update
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -16,14 +16,81 @@ authoritative: true
 
 # ProjectGenesis
 
-ProjectGenesis is a reusable, AI-native software delivery scaffold. It gives
-AI coding agents a shared operating model for turning rough ideas into
-traceable requirements, specs, backlog items, architecture decisions, validation
-plans, review records, and release-ready handoffs.
+Build with AI speed without losing project control.
 
-The project is intentionally plain Markdown first. It is designed to work across
-Codex, Claude, Gemini, and other agents without relying on one vendor's memory,
-chat history, or hidden prompt state.
+ProjectGenesis is a reusable, AI-native software delivery scaffold for founders,
+solo builders, vibe coders, product teams, and engineering teams who want AI
+agents to help plan and build software without turning rough ideas into
+unverifiable guesses.
+
+Drop messy notes, rough product ideas, customer feedback, screenshots, research,
+or early specs into the scaffold. ProjectGenesis gives your AI agent a governed
+process for turning that material into product context, evidence-linked
+requirements, assumptions, risks, open questions, specs, backlog candidates,
+architecture decision records, validation plans, review records, and handoffs.
+
+The outcome is not blind trust in AI. The outcome is an auditable project
+workspace where important claims trace back to source material, unclear input is
+marked as an assumption or open question, and implementation does not start
+until the work is ready enough to review and validate.
+
+The project is intentionally plain Markdown first. It works across Codex,
+Claude, Gemini, and other agents without depending on one vendor's memory, chat
+history, or hidden prompt state.
+
+## What ProjectGenesis Gives You
+
+| Capability | What It Does |
+|------------|--------------|
+| Rough idea intake | Turns incomplete notes and early ideas into structured product understanding without pretending every idea is confirmed. |
+| Product foundation | Creates and maintains product briefs, charters, value propositions, target users, workflows, constraints, and success metrics. |
+| Evidence-linked requirements | Tracks requirements back to source IDs, approved assumptions, risks, and open questions. |
+| Backlog breakdown | Produces epics, features, user stories, spikes, validation tasks, and architecture decision tasks that are ready to refine or export. |
+| Spec-first delivery | Encourages draft specs before implementation and blocks coding when critical requirements are unclear. |
+| Architecture governance | Captures high-impact decisions as ADR candidates or ADRs with evidence, options, trade-offs, and approval status. |
+| Multi-agent continuity | Gives Codex, Claude, Gemini, and future agents the same source-of-truth files, roles, handoffs, review records, and task state. |
+| Anti-hallucination controls | Uses source registries, confidence levels, assumptions registers, traceability, readiness gates, and adversarial reviews. |
+| Test and validation planning | Maps acceptance criteria, expected test types, manual validation, edge cases, and release readiness. |
+| External tool readiness | Supports GitHub governance, optional Linear backlog storage, and optional GitHub Spec Kit integration without making them mandatory. |
+
+## Who It Is For
+
+ProjectGenesis is useful when you want AI to move fast, but you still need a
+record of what was decided, why it was decided, what remains uncertain, and what
+must be true before code is written.
+
+It is especially useful for:
+
+- AI-first builders who start with rough ideas and want a stronger path to
+  implementation
+- founders and solo builders who need structure without a full product team
+- engineers who want AI agents to follow the same project truth across sessions
+- teams that want requirements, backlog, architecture, testing, reviews, and
+  handoffs to stay synchronized
+
+It is not a replacement for product judgment, engineering review, security
+review, user research, or legal review. It gives those activities a place to
+live and a process agents can follow.
+
+## How It Works
+
+1. You drop raw material into `00_intake/raw/`.
+2. You ask an agent to run:
+
+   ```text
+   Start requirement breakdown.
+   ```
+
+3. The agent registers sources, assigns stable source IDs, and summarizes the
+   material.
+4. The agent expands rough ideas into product context while labeling claims as
+   confirmed, inferred, or assumption.
+5. The agent extracts requirements, risks, open questions, specs, backlog
+   candidates, architecture concerns, acceptance criteria, and validation needs.
+6. Reviewers or fresh-context agents challenge the output before it is treated
+   as ready.
+7. Implementation begins only after the relevant work satisfies Definition of
+   Ready and the source-of-truth files are updated.
 
 ## What Problem It Solves
 
@@ -88,7 +155,10 @@ Important folders and files include:
    run `COMMANDS/start-requirement-breakdown.md`.
 5. Review the generated product context, requirements, assumptions, risks, open
    questions, backlog candidates, draft specs, and readiness classification.
-6. Do not start implementation until the relevant task satisfies Definition of
+6. If you want backlog items stored in Linear, complete the Linear setup in
+   [External Backlog Storage](#external-backlog-storage) before asking an agent
+   to create external tickets.
+7. Do not start implementation until the relevant task satisfies Definition of
    Ready in `AI_PROJECT_BOOTSTRAP.md`.
 
 ## The Main Intake Command
@@ -179,6 +249,134 @@ Recommended GitHub settings:
 
 See `GITHUB_REPOSITORY_SETUP.md` for setup commands and verification steps.
 
+## External Backlog Storage
+
+ProjectGenesis always works with local Markdown backlog files:
+
+- `BACKLOG.md`
+- `BACKLOG/BACKLOG_INDEX.md`
+- detailed files under `BACKLOG/` when useful
+
+Those files are the default backlog source of truth. External trackers are
+optional. Do not claim external tickets exist until an integration, CLI, API, or
+human-confirmed URL proves they exist.
+
+### Supported External Tracker: Linear
+
+Linear is the recommended external backlog store when you want a team-facing
+issue tracker. Use it for confirmed or ready backlog items, not as a substitute
+for intake evidence, specs, assumptions, or traceability.
+
+Useful Linear references:
+
+- [Linear MCP server setup](https://linear.app/docs/mcp)
+- [Linear issue creation](https://linear.app/docs/creating-issues)
+- [Linear projects](https://linear.app/docs/projects)
+- [Linear issue statuses](https://linear.app/docs/configuring-workflows)
+- [Linear labels](https://linear.app/docs/labels)
+
+Before asking an agent to create Linear issues, prepare Linear:
+
+1. Create or choose a Linear workspace.
+2. Create or choose the Linear team that will own the issues. Linear issues are
+   always linked to a single team and require a title and status.
+3. Create a Linear project for the downstream product or release if the work
+   should be grouped under one delivery outcome.
+4. Configure team workflow statuses. The default Linear flow is
+   `Backlog`, `Todo`, `In Progress`, `Done`, and `Canceled`; add statuses such
+   as `In Review` or `Ready to Merge` only if your team will use them.
+5. Create issue labels or label groups that match the scaffold vocabulary. A
+   practical starting set is:
+   - `type:epic`
+   - `type:feature`
+   - `type:story`
+   - `type:spike`
+   - `type:validation`
+   - `status:blocked`
+   - `source:assumption`
+   - `risk:high`
+6. Optionally create issue templates for epics, stories, spikes, validation
+   tasks, and architecture decision tasks. Templates should include fields for
+   requirement IDs, source IDs, assumptions, risks, acceptance criteria, test
+   expectations, and definition of done.
+7. Decide who may create or update Linear issues: human only, agent with review,
+   or agent direct after approval.
+8. Connect the AI agent to Linear.
+
+For Codex, Linear's MCP setup uses:
+
+```sh
+codex mcp add linear --url https://mcp.linear.app/mcp
+```
+
+If this is the first MCP server configured for Codex, enable the remote MCP
+client in `~/.codex/config.toml`:
+
+```toml
+[features]
+experimental_use_rmcp_client = true
+```
+
+Then authenticate:
+
+```sh
+codex mcp login linear
+```
+
+For other agents, use the official Linear connector or MCP setup for that
+agent. Do not commit API keys, tokens, OAuth credentials, or exported private
+Linear data to this repository.
+
+### Linear Operating Rules
+
+- Markdown remains authoritative until a real Linear issue ID or URL is
+  recorded.
+- Every Linear issue created from ProjectGenesis should link back to local
+  requirements, source IDs, assumptions, specs, and acceptance criteria.
+- After creating or updating Linear issues, update `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`, and `TRACEABILITY_MATRIX.md`.
+- If Linear is not configured, agents must keep backlog candidates in Markdown.
+- If Linear data conflicts with repository source-of-truth files, pause and
+  record the conflict in `STALE_ITEMS.md` or `OPEN_QUESTIONS.md`.
+
+## Optional Spec Kit Integration
+
+ProjectGenesis is already spec-first and does not require GitHub Spec Kit. Use
+Spec Kit only when you want its external specification-driven development CLI,
+templates, or agent commands for a downstream project.
+
+Official Spec Kit reference:
+
+- [github/spec-kit](https://github.com/github/spec-kit)
+
+If you adopt Spec Kit:
+
+- install only from the official `github/spec-kit` repository
+- pin a release for repeatability when possible
+- review generated files before accepting them
+- register generated or adopted artifacts in `ARTIFACT_REGISTRY.md`
+- keep ProjectGenesis source-of-truth rules in force unless an approved
+  migration spec says otherwise
+
+The official Spec Kit CLI can be installed with `uv`:
+
+```sh
+uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+specify version
+```
+
+One-time use is also possible:
+
+```sh
+uvx --from git+https://github.com/github/spec-kit.git specify init .
+```
+
+Do not run `specify init` blindly in an established ProjectGenesis repository.
+First decide whether Spec Kit should create separate `.specify/` artifacts,
+augment the existing `SPECS/` and `COMMANDS/` workflow, or be skipped for that
+project. If Spec Kit creates overlapping specs, tasks, or command files, treat
+that as a governance decision and reconcile it before implementation.
+
 ## Requirements
 
 ProjectGenesis itself is mostly Markdown and shell. To use the scaffold, you
@@ -187,8 +385,16 @@ need:
 - Git
 - Bash
 - an AI coding agent that can read and edit repository files
-- optional: GitHub Actions for CI validation
+- GitHub, if you want hosted collaboration, branch protection, pull requests,
+  and GitHub Actions validation
 - optional: GitHub CLI for repository setup and branch protection
+- optional: Linear workspace and MCP or connector access for external backlog
+  storage
+- optional: Spec Kit CLI if you intentionally adopt Spec Kit for a downstream
+  project
+- optional: document conversion tools if your intake material includes PDFs,
+  slides, spreadsheets, screenshots, or exported documents that agents cannot
+  read directly
 
 No application framework, package manager, database, or cloud provider is
 selected by default.

@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v2.9
+version: v3.4
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and checkout action maintenance
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, and BOOT-017 PR creation
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -30,7 +30,7 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Current Branch
 
-`main`
+`codex/readme-tooling-prereqs`
 
 ## Current Worktree
 
@@ -38,13 +38,16 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Last Completed Task
 
-Merged BOOT-016 ProjectGenesis public publication PR, enabled required
-`validate` branch protection on `main`, and updated Bootstrap Validation to
-use `actions/checkout@v5`.
+Updated the public README to better explain ProjectGenesis capabilities and
+audience fit, and to document Linear backlog storage prerequisites, Linear
+setup, optional Spec Kit use, and other supported tooling before downstream
+project work.
 
 ## Current In-Progress Task
 
-None.
+BOOT-017 README positioning and tooling prerequisite update. Fresh-context
+review findings are addressed, narrow re-review approved, final validation
+passed, and PR #2 is open.
 
 ## Files Changed
 
@@ -70,6 +73,8 @@ None.
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`
 - `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`
 - `.github/workflows/bootstrap-validation.yml`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-readme-tooling-prereqs.md`
+- `REVIEWS/REVIEW-2026-05-13-readme-tooling-prereqs.md`
 
 ## Specs Changed
 
@@ -90,6 +95,12 @@ None.
   `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md`.
 - Updated registry, traceability, current state, handoff, test results, and
   worklog.
+- Expanded the public README introduction, capabilities overview, audience
+  guidance, and "how it works" explanation for AI-first builders while keeping
+  limitations and governance boundaries visible.
+- Added BOOT-017 fresh-context review record and addressed both P1 findings:
+  unrelated tracked RTF deletions were removed from the worktree diff, and
+  BOOT-017 now consistently links to active `SPEC-BOOT-002`.
 
 ## Decisions Made
 
@@ -111,6 +122,18 @@ None.
 - `main` branch protection now requires pull request review, Code Owner review,
   conversation resolution, and the `validate` status check with strict branch
   freshness.
+- Markdown backlog files remain authoritative unless a real external ticket ID
+  or URL is recorded.
+- Linear is a supported optional external backlog store, not a hard dependency
+  for all ProjectGenesis use.
+- Spec Kit is optional and must not silently override ProjectGenesis
+  source-of-truth files.
+- README marketing language must not overclaim correctness or replace human
+  product, engineering, security, or legal judgment.
+- BOOT-017 is governed by active `SPEC-BOOT-002` as a compatible documentation
+  follow-up to the scaffold command framework, source-of-truth hierarchy, and
+  external ticket evidence rules.
+- BOOT-017 PR is open at `https://github.com/mrhussamahmed/ProjectGenesis/pull/2`.
 
 ## Assumptions Made
 
@@ -125,7 +148,9 @@ None.
 
 - No open questions block this command shortcut.
 - No open questions block BOOT-016 publication setup.
-- The existing unrelated legacy RTF deletions remain outside this task.
+- No open questions block BOOT-017 README positioning and tooling prerequisite
+  documentation.
+- No open questions block BOOT-017 final validation or PR creation.
 
 ## Tests Run
 
@@ -200,6 +225,23 @@ None.
 - `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` - passed after command shortcut
   changes.
+- BOOT-017 fresh-context review initially requested changes for unrelated RTF
+  deletions and inconsistent spec linkage; both were addressed, and narrow
+  re-review approved with no remaining P0/P1/P2 blockers.
+- `bash SCRIPTS/validate-bootstrap.sh` - passed after BOOT-017 review record and
+  source-of-truth updates.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` - passed after BOOT-017 review
+  record and source-of-truth updates.
+- `git diff --check` - passed after BOOT-017 review record and source-of-truth
+  updates.
+- `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` - passed after BOOT-017 review
+  record and source-of-truth updates.
+- Placeholder scan with `rg` - passed with no matches.
+- `git push -u origin codex/readme-tooling-prereqs` - passed; pre-push hook
+  passed.
+- `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head
+  codex/readme-tooling-prereqs` - passed and opened PR #2.
 
 ## Tests Not Run
 
@@ -207,6 +249,8 @@ None.
   scaffold implementation, not a product implementation.
 - Stack-specific product tests were not run because this is scaffold
   publication work, not product implementation.
+- No stack-specific tests were run for BOOT-017 because this is a Markdown and
+  scaffold documentation update, not product code.
 
 ## Known Failures
 
@@ -221,22 +265,17 @@ None.
 
 ## Dirty Worktree Status
 
-The worktree has unrelated legacy RTF deletions outside this task:
-
-- `start here/Project starting instruction tips.rtf`
-- `start here/new project initialization prompt.rtf`
-
-Preserve them and do not stage or restore them unless the maintainer explicitly
-asks.
+No unrelated dirty files are expected. The previously visible tracked RTF
+deletions were restored because they are archived registered artifacts and were
+outside BOOT-017.
 
 ## Untracked Files
 
-- None known.
+- None.
 
 ## Next Recommended Action
 
-Use the published scaffold for the next project by adding source material under
-`00_intake/raw/` and triggering `Start requirement breakdown.`
+Review and merge BOOT-017 PR #2 after required checks and approvals.
 
 ## What The Next AI Must Read First
 
@@ -263,3 +302,6 @@ v1.2 implementation is validated. The `Start requirement breakdown` command
 shortcut is merged to `main`. BOOT-016 public repository publication is merged
 to `main`, and GitHub branch protection now requires PR review plus the
 `validate` status check. Bootstrap Validation uses `actions/checkout@v5`.
+BOOT-017 README positioning and tooling prerequisite update is in progress on
+`codex/readme-tooling-prereqs`; independent narrow re-review approved with no
+remaining P0/P1/P2 blockers, final validation passed, and PR #2 is open.
