@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v2.0
+version: v2.3
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, and public repository publication request
+source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, and BOOT-017 review
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -31,6 +31,7 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial | SPEC-BOOT-002 final adversarial review | request changes, addressed | high | Codex adversarial review plus narrow re-review | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | addressed; narrow re-review found no remaining P0/P1/P2 findings |
 | REVIEW-2026-05-13-start-requirement-breakdown-plan | start requirement breakdown command plan | request changes, addressed | medium | independent reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md` | addressed |
 | REVIEW-2026-05-13-projectgenesis-publication | ProjectGenesis public repository publication | approve | medium | scoped independent reviewer plus local repository-grounded review | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md` | active |
+| REVIEW-2026-05-13-readme-tooling-prereqs | README positioning and tooling prerequisites | request changes, addressed; narrow re-review approved | medium | independent fresh-context reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-readme-tooling-prereqs.md` | active |
 
 ## Review Packages
 
@@ -39,6 +40,7 @@ Review records and review packages live in this folder.
 | PR-PACKAGE-2026-05-09-shared-role-system | shared role system update | Durable review package for shared `memory/ai/` role system change | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-09-shared-role-system.md` | active |
 | PR-PACKAGE-2026-05-13-scaffold-intake-governance | scaffold intake and governance implementation | Review package for `SPEC-BOOT-002` implementation | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-scaffold-intake-governance.md` | active |
 | PR-PACKAGE-2026-05-13-projectgenesis-publication | ProjectGenesis public repository publication | Review package for public README, AGPLv3 license, GitHub Code Owners, branch protection guidance, and publication PR | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md` | active |
+| PR-PACKAGE-2026-05-13-readme-tooling-prereqs | README positioning and tooling prerequisites | Review package for public positioning, capability explanation, Linear backlog storage, Linear setup, optional Spec Kit use, and supported tooling README updates | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-readme-tooling-prereqs.md` | active |
 
 ## Rules
 

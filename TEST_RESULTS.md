@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.21
+version: v1.24
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, and final maintenance validation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, and BOOT-017 review
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -58,6 +58,9 @@ authoritative: false
 | 2026-05-13 | BOOT-016 post-merge GitHub Actions | `gh run view 25820108188 --repo mrhussamahmed/ProjectGenesis --log-failed`; `gh run list --repo mrhussamahmed/ProjectGenesis --branch main --limit 5 --json databaseId,displayTitle,headSha,status,conclusion,workflowName,createdAt,url` | fixed | Merge commit `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406` failed because `AI_HANDOFF.md` still named `codex/start-requirement-breakdown-command` while CI ran on `main`; final cleanup commit `732917aa7582e2f76e46af88b0a9ffde82effeeb` corrected state and the `Bootstrap Validation` workflow passed. |
 | 2026-05-13 | Checkout action maintenance | `git ls-remote --tags https://github.com/actions/checkout.git 'refs/tags/v5*'`; `gh run watch 25820507903 --repo mrhussamahmed/ProjectGenesis --exit-status` | passed | Confirmed `actions/checkout@v5` exists after GitHub Actions warned that `actions/checkout@v4` uses deprecated Node 20; prior `main` validation run `25820507903` passed before this maintenance update. |
 | 2026-05-13 | Checkout action maintenance validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | Validation passed after updating Bootstrap Validation to `actions/checkout@v5` and aligning registry, handoff, test results, and worklog. |
+| 2026-05-13 | BOOT-017 README tooling prerequisite source check | official Linear docs; official GitHub Spec Kit docs | passed | Confirmed Linear MCP, issue, project, workflow, and label setup guidance plus Spec Kit installation guidance from official sources before editing README. |
+| 2026-05-13 | BOOT-017 README positioning and tooling prerequisite review | fresh-context independent review and narrow re-review | passed | Initial review requested changes for unrelated RTF deletions and inconsistent spec linkage; both findings were addressed and narrow re-review approved with no remaining P0/P1/P2 blockers. |
+| 2026-05-13 | BOOT-017 README positioning and tooling prerequisite validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh`; placeholder scan with `rg` | passed | Validation passed after README updates, review record, spec-linkage correction, state updates, and worktree cleanup. Placeholder scan returned no matches. |
 
 ## Rules
 

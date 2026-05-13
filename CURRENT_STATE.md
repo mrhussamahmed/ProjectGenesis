@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v2.8
+version: v3.2
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, and BOOT-017 validation
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -35,6 +35,17 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- README positioning and tooling prerequisite update is in progress on
+  `codex/readme-tooling-prereqs` under BOOT-017. The README now explains
+  ProjectGenesis capabilities and audience fit, then documents Linear as the
+  recommended optional external backlog store, required Linear setup before
+  external ticket creation, optional Spec Kit installation and source-of-truth
+  boundaries, and other setup requirements.
+- BOOT-017 fresh-context review initially requested changes for unrelated RTF
+  deletions in the worktree and inconsistent spec linkage. The tracked RTF
+  files were restored, BOOT-017 now links consistently to active `SPEC-BOOT-002`,
+  and narrow re-review approved with no remaining P0, P1, or P2 blockers.
+- BOOT-017 validation passed after review record and state updates.
 - Public GitHub publication work under BOOT-016 is merged. PR
   `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` merged into `main`
   at merge commit `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`.
@@ -92,7 +103,7 @@ authoritative: false
 
 ## Active Branch
 
-- `main`
+- `codex/readme-tooling-prereqs`
 
 ## Active Worktree
 
@@ -103,11 +114,13 @@ authoritative: false
 - Bootstrap package completeness and downstream project intake readiness after
   `SPEC-BOOT-002`.
 - Downstream project readiness using the published ProjectGenesis scaffold.
+- BOOT-017 README positioning and tooling prerequisite clarity.
 
 ## Current Blockers
 
 - No product-specific input has been provided for a downstream software
   project.
+- BOOT-017 is pending PR and merge.
 
 ## Current Source-Of-Truth Files
 
@@ -131,8 +144,7 @@ authoritative: false
 
 ## Next Recommended Action
 
-Use the published scaffold for the next project by adding source material under
-`00_intake/raw/` and triggering `Start requirement breakdown.`
+Open a reviewable BOOT-017 PR and merge after review.
 
 ## Latest Validation
 
@@ -221,3 +233,9 @@ Use the published scaffold for the next project by adding source material under
   `bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`,
   `git diff --check`, and manual trigger lookup with `rg -n "Start requirement
   breakdown" ...` passed on 2026-05-13.
+- BOOT-017 README positioning and tooling prerequisite validation:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`,
+  `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh`, and placeholder scan passed on
+  2026-05-13 after review fixes.
