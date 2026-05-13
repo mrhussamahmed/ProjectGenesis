@@ -2,11 +2,11 @@ artifact_id: ART-TEST-AC-MAP
 title: Acceptance Criteria Map
 type: traceability
 status: active
-version: v1.4
+version: v1.5
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 activation, and SPEC-BOOT-003 implementation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 activation, SPEC-BOOT-003 implementation, and BOOT-019 through BOOT-024 review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -34,16 +34,16 @@ Map acceptance criteria to automated and manual tests.
 | SPEC-BOOT-002 | SBG-AC-012 | Manual review and registry check | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | passed | RTF content migrated to Markdown and legacy RTF files registered as archived. |
 | SPEC-BOOT-002 | SBG-AC-013 | Validator and review | `SCRIPTS/validate-bootstrap.sh`; `SCRIPTS/validate-bootstrap-red-checks.sh`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | passed | Assumption expiry and allowed approval evidence checks are implemented. |
 | SPEC-BOOT-002 | SBG-AC-014 | Review gate | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | passed | Ticket evidence guidance is implemented in backlog workflow. |
-| SPEC-BOOT-003 | AGR-AC-001 | Validator and review | `SCRIPTS/validate-bootstrap.sh`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | pending review | `OPERATION_ROUTING.md` defines profile precedence and escalation targets. |
-| SPEC-BOOT-003 | AGR-AC-002 | Handoff inspection and review | `AI_HANDOFF.md`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | pending review | BOOT-019 through BOOT-024 started with durable pre-change classification before substantive target edits. |
-| SPEC-BOOT-003 | AGR-AC-003 | Handoff inspection and review | `AI_HANDOFF.md`; `TEST_RESULTS.md`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | pending review | BOOT-019 through BOOT-024 final evidence envelope is recorded in `AI_HANDOFF.md`; review approval is pending. |
-| SPEC-BOOT-003 | AGR-AC-004 | Validator and review | `SCRIPTS/validate-bootstrap.sh`; `OPERATION_ROUTING.md` | pending review | Protected artifact families and profile escalation are defined structurally. |
-| SPEC-BOOT-003 | AGR-AC-005 | Review and git status evidence | `AI_HANDOFF.md`; `git status --short --branch` | pending review | Dirty worktree blocking rule is recorded in operation routing and branch policy. |
-| SPEC-BOOT-003 | AGR-AC-006 | Review | `OPERATION_ROUTING.md`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | pending review | Non-impact rules require concrete rationale in the evidence envelope. |
-| SPEC-BOOT-003 | AGR-AC-007 | Review | `OPERATION_ROUTING.md`; `AI_HANDOFF.md`; `CURRENT_STATE.md` | pending review | Current-state and handoff compression rules require durable section references. |
-| SPEC-BOOT-003 | AGR-AC-008 | Review | `OPERATION_ROUTING.md`; `PR_REVIEW_POLICY.md` | pending review | Claim evidence rules are defined with accepted evidence types. |
-| SPEC-BOOT-003 | AGR-AC-009 | Red checks and CI | `SCRIPTS/validate-bootstrap-red-checks.sh`; `.github/workflows/bootstrap-validation.yml`; `TEST_RESULTS.md` | pending review | Validator-rule changes require red-check and shell-syntax evidence, and CI runs red checks. |
-| SPEC-BOOT-003 | AGR-AC-010 | Diff and review | `git diff --name-only`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | pending review | First slice remained policy-only; this follow-up slice implements the mechanics authorized by BOOT-019 through BOOT-024. |
+| SPEC-BOOT-003 | AGR-AC-001 | Validator and review | `SCRIPTS/validate-bootstrap.sh`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | passed | `OPERATION_ROUTING.md` defines profile precedence and escalation targets. |
+| SPEC-BOOT-003 | AGR-AC-002 | Handoff inspection and review | `AI_HANDOFF.md`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | passed | BOOT-019 through BOOT-024 started with durable pre-change classification before substantive target edits. |
+| SPEC-BOOT-003 | AGR-AC-003 | Handoff inspection and review | `AI_HANDOFF.md`; `TEST_RESULTS.md`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | passed | BOOT-019 through BOOT-024 final evidence envelope is recorded in `AI_HANDOFF.md`; review approved with minor comments. |
+| SPEC-BOOT-003 | AGR-AC-004 | Validator and review | `SCRIPTS/validate-bootstrap.sh`; `OPERATION_ROUTING.md` | passed | Protected artifact families and profile escalation are defined structurally. |
+| SPEC-BOOT-003 | AGR-AC-005 | Review and git status evidence | `AI_HANDOFF.md`; `git status --short --branch` | passed | Dirty worktree blocking rule is recorded in operation routing and branch policy. |
+| SPEC-BOOT-003 | AGR-AC-006 | Review | `OPERATION_ROUTING.md`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | passed | Non-impact rules require concrete rationale in the evidence envelope. |
+| SPEC-BOOT-003 | AGR-AC-007 | Review | `OPERATION_ROUTING.md`; `AI_HANDOFF.md`; `CURRENT_STATE.md` | passed | Current-state and handoff compression rules require durable section references. |
+| SPEC-BOOT-003 | AGR-AC-008 | Review | `OPERATION_ROUTING.md`; `PR_REVIEW_POLICY.md` | passed | Claim evidence rules are defined with accepted evidence types. |
+| SPEC-BOOT-003 | AGR-AC-009 | Red checks and CI | `SCRIPTS/validate-bootstrap-red-checks.sh`; `.github/workflows/bootstrap-validation.yml`; `TEST_RESULTS.md` | passed | Validator-rule changes require red-check and shell-syntax evidence, and CI runs red checks. |
+| SPEC-BOOT-003 | AGR-AC-010 | Diff and review | `git diff --name-only`; `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | passed | First slice remained policy-only; this follow-up slice implements the mechanics authorized by BOOT-019 through BOOT-024. |
 
 ## Rules
 
