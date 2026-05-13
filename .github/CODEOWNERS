@@ -1,0 +1,3 @@
+# Require maintainer review for every path when GitHub branch protection
+# enables "Require review from Code Owners".
+* @mrhussamahmed

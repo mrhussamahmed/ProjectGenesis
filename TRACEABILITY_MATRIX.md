@@ -1,0 +1,90 @@
+artifact_id: ART-TRACE-001
+title: Traceability Matrix
+type: traceability
+status: authoritative
+version: v2.4
+created: 2026-05-09
+updated: 2026-05-13
+owner: AI Bootstrap Maintainers
+source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: true
+
+# Traceability Matrix
+
+Traceability maps requirements to specs, backlog items, ADRs, architecture,
+implementation branches, changed files, tests, review records, release status,
+and current status.
+
+## Expanded Traceability Format
+
+New project-specific rows should preserve this evidence chain where practical:
+
+| Source IDs | Requirement IDs | Spec ID | Acceptance Criteria | Backlog Item | ADR | Planned Or Changed Files | Tests | Review Record | Release Status | Current Status |
+|------------|-----------------|---------|---------------------|--------------|-----|--------------------------|-------|---------------|----------------|----------------|
+| none | none | none | none | none | none | none | none | none | none | Use this format for future project-specific traceability. |
+
+## Bootstrap Requirements
+
+Bootstrap baseline requirements use `BOOT-001` as the governing backlog item
+instead of a product spec. Product implementation must not use this exception.
+
+| Product Requirement | Spec ID | Backlog Item | Linear Ticket | ADR | Architecture Doc | Implementation Branch | Changed Files | Tests | Review Record | Release Status | Current Status |
+|---------------------|---------|--------------|---------------|-----|------------------|-----------------------|---------------|-------|---------------|----------------|----------------|
+| REQ-BOOT-001: Spec-driven development | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `AI_PROJECT_BOOTSTRAP.md`, `GOVERNANCE.md`, `SPECS/templates/SPEC_TEMPLATE.md` | `SCRIPTS/validate-bootstrap.sh` existence checks | pending | not released | initialized |
+| REQ-BOOT-002: Test-driven development | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `TEST_STRATEGY.md`, `TEST_PLAN.md`, `TESTS/ACCEPTANCE_CRITERIA_MAP.md` | validator plus future stack tests | pending | not released | initialized |
+| REQ-BOOT-003: Artifact lifecycle control | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `ARTIFACT_REGISTRY.md`, `GOVERNANCE.md` | metadata checks with documented `AGENTS.md` and `CLAUDE.md` exception | pending | not released | initialized |
+| REQ-BOOT-004: Branch and worktree hygiene | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `BRANCH_AND_WORKTREE_GUIDE.md`, `.githooks/` | hook templates and validator | pending | not released | initialized |
+| REQ-BOOT-005: Anti-hallucination and source-of-truth rules | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `AI_PROJECT_BOOTSTRAP.md`, `GOVERNANCE.md`, `CONTEXT_INDEX.md` | validator required files | pending | not released | initialized |
+| REQ-BOOT-006: Autonomous backlog creation | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `BACKLOG.md`, `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md` | validator required files | pending | not released | initialized |
+| REQ-BOOT-007: Architecture decision tracking | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `DECISIONS.md`, `ADR/ADR_INDEX.md`, `ADR/templates/ADR_TEMPLATE.md` | validator required files | pending | not released | initialized |
+| REQ-BOOT-008: Shared AI handoff | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `AI_HANDOFF.md`, `HANDOFFS/HANDOFF_INDEX.md` | handoff section checks | pending | not released | initialized |
+| REQ-BOOT-009: Production-readiness checks | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `RELEASE_READINESS.md`, `CI_CD_GUIDE.md`, `SECURITY_AND_PRIVACY.md`, `OBSERVABILITY.md` | validator required files | pending | not released | initialized |
+| REQ-BOOT-010: Fresh adversarial PR review | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `AI_REVIEW_PROMPTS.md`, `REVIEWS/` | validator required files | pending | not released | initialized |
+| REQ-BOOT-011: Risk-based model and effort selection | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `RISK_MODEL.md` | validator required files | pending | not released | initialized |
+| REQ-BOOT-012: Safe parallel AI execution | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `PARALLEL_EXECUTION_PLAN.md` | validator required files | pending | not released | initialized |
+| REQ-BOOT-013: Shared AI role system for Claude, Codex, and other agents | none | BOOT-001 | none | none | `ARCHITECTURE.md` | none | `memory/ai/SHARED_AGENT_RULES.md`, `memory/ai/ROLE_PRODUCT_ANALYST.md`, `memory/ai/ROLE_SPEC_AUTHOR.md`, `memory/ai/ROLE_ARCHITECT.md`, `memory/ai/ROLE_BACKLOG_PLANNER.md`, `memory/ai/ROLE_IMPLEMENTATION_AGENT.md`, `memory/ai/ROLE_QA_REVIEWER.md`, `memory/ai/ROLE_SECURITY_REVIEWER.md`, `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md`, `memory/ai/ROLE_DOCUMENTATION_CURATOR.md`, `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md`, `memory/ai/ROLE_DIAGRAM_ARCHITECT.md`, `CLAUDE.md`, `AGENTS.md`, `SCRIPTS/start-claude.sh`, `CONTEXT_INDEX.md`, `BOOTSTRAP_USAGE.md`, `AI_PROJECT_BOOTSTRAP.md`, `SCRIPTS/validate-bootstrap.sh`, `REVIEWS/PR_REVIEW_PACKAGE-2026-05-09-shared-role-system.md`, `REVIEWS/REVIEW_INDEX.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash -n SCRIPTS/start-claude.sh`; `bash -n SCRIPTS/validate-bootstrap.sh` | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-09-shared-role-system.md`; `REVIEWS/REVIEW-2026-05-09-shared-role-system.md` | not released | ready for re-review |
+
+## Rules
+
+- Update this matrix whenever specs, backlog items, tickets, code, tests,
+  architecture, or reviews change.
+- Do not claim traceability exists unless the mapping is here.
+- Mark requirements as unimplemented or unverified when evidence is missing.
+- Mark implementation without linked spec as orphaned and create a cleanup task.
+
+## Proposed Bootstrap Improvements Under Review
+
+| Proposed Improvement | Source | Spec ID | Backlog Item | Review Record | Tests | Current Status |
+|----------------------|--------|---------|--------------|---------------|-------|----------------|
+| Intake, product context, requirements control, context packs, command prompts, validator, workflow, multi-agent synchronization, and onboarding cleanup for the reusable bootstrap scaffold | User-supplied scaffold improvement plan, 2026-05-13 | SPEC-BOOT-002 | BOOT-009 through BOOT-015 | `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md`; `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks | Implemented, validated, and reviewed; ready for commit |
+| Public ProjectGenesis GitHub publication with AGPLv3 license, public README, Code Owners, branch protection guidance, and reviewable publication PR | User publication request, 2026-05-13; `origin/main` initial AGPLv3 license | none | BOOT-016 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`; `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`; draft PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; GitHub auth and repo checks; branch protection API verification | Reviewed, approved, pushed, draft PR opened, and initial branch protection configured; pending owner review, merge, and status-check protection after workflow lands on `main` |
+
+## Scaffold Improvement Requirement Mapping
+
+| Requirement | Spec ID | Backlog Item | Evidence | Tests | Review Record | Current Status |
+|-------------|---------|--------------|----------|-------|---------------|----------------|
+| SBG-FR-001: Governing spec before implementation | SPEC-BOOT-002 | BOOT-009 | User adjusted plan; `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md`; `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md` | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md` | implemented and reviewed |
+| SBG-FR-002: `00_intake/raw/` canonical and `INPUT/` legacy alias | SPEC-BOOT-002 | BOOT-010 | User adjusted plan; review finding P1 | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-003: Source registry and stable source IDs | SPEC-BOOT-002 | BOOT-010 | User adjusted plan | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-004: Product context artifacts | SPEC-BOOT-002 | BOOT-011 | User adjusted plan | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-005: Requirements, assumptions, and risk registers | SPEC-BOOT-002 | BOOT-011 | User adjusted plan; review finding P1 | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-006: Evidence-aware spec, ADR, and backlog templates | SPEC-BOOT-002 | BOOT-012 | User adjusted plan; review finding P2 | `git diff --check`; manual review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-007: Expanded traceability chain | SPEC-BOOT-002 | BOOT-012 | User adjusted plan | traceability review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-008: Subordinate context packs | SPEC-BOOT-002 | BOOT-014 | User adjusted plan; review finding P1 | `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-009: Safe command prompt framework | SPEC-BOOT-002 | BOOT-014 | User adjusted plan; review finding P2 | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-009 follow-up: `Start requirement breakdown` command shortcut | SPEC-BOOT-002 | BOOT-014 follow-up | User request on 2026-05-13; `COMMANDS/start-requirement-breakdown.md`; `COMMANDS/COMMAND_INDEX.md` | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; manual trigger check | `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md` | implemented after plan review corrections |
+| SBG-FR-010: Narrow direct-main documentation exception | SPEC-BOOT-002 | BOOT-012 | User adjusted plan; review finding P1; SPEC-BOOT-002 v0.3 correction | policy-file review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-011: Validator behavior and red-check examples first | SPEC-BOOT-002 | BOOT-013 | User adjusted plan; review finding P2 | `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `bash SCRIPTS/validate-bootstrap.sh` | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-012: RTF onboarding migration | SPEC-BOOT-002 | BOOT-015 | User adjusted plan; review finding P2 | registry and manual review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-FR-013: External ticket evidence rules | SPEC-BOOT-002 | BOOT-012 | SPEC-BOOT-002 v0.2 independent review finding P2 | backlog and traceability review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-001: Preserve source-of-truth hierarchy and role system | SPEC-BOOT-002 | BOOT-010 through BOOT-015 | `AI_PROJECT_BOOTSTRAP.md`; `memory/ai/SHARED_AGENT_RULES.md`; independent review finding P1 | final review and validator coverage | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-002: Plain Markdown first | SPEC-BOOT-002 | BOOT-010 through BOOT-015 | User adjusted plan; SPEC-BOOT-002 | manual review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-003: Small staged implementation slices | SPEC-BOOT-002 | BOOT-009 through BOOT-015 | User adjusted plan; review recommendation | backlog sequencing review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-004: Lightweight local validation | SPEC-BOOT-002 | BOOT-013 | `GOVERNANCE.md`; `RISK_MODEL.md`; SPEC-BOOT-002 | validator performance review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-005: Avoid shadow governance | SPEC-BOOT-002 | BOOT-014 | Review finding P2; SPEC-BOOT-002 authority limits | validator and review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | implemented and reviewed |
+| SBG-NFR-006: New Markdown artifact metadata and registry entries | SPEC-BOOT-002 | BOOT-010 through BOOT-015 | `GOVERNANCE.md`; review finding P2; SPEC-BOOT-002 artifact inventory | `bash SCRIPTS/validate-bootstrap.sh`; registry checks | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | implemented, reviewed, and final spec-index status correction approved |

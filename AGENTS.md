@@ -1,0 +1,56 @@
+# Repository Instructions For Codex And Generic AI Agents
+
+This project uses the AI Project Bootstrap operating model. Repository files
+are source of truth. Chat history is non-authoritative context.
+
+## Shared Role System
+
+Before doing any work, read `memory/ai/SHARED_AGENT_RULES.md`. Then read the
+`memory/ai/ROLE_*.md` file matching the assigned task.
+
+Codex does not need Claude's `--append-system-prompt`. Codex must treat the
+selected `ROLE_*.md` file as its operating role for the session and follow the
+same source-of-truth hierarchy, handoff rules, traceability rules, diagram
+rules, and review rules as Claude.
+
+Codex must update `CURRENT_STATE.md` and `AI_HANDOFF.md` before stopping.
+Codex must not rely on chat history as source of truth.
+
+## Codex Role Selection
+
+| Task type | Codex must read |
+|-----------|-----------------|
+| Product discovery | `memory/ai/ROLE_PRODUCT_ANALYST.md` |
+| Spec creation | `memory/ai/ROLE_SPEC_AUTHOR.md` |
+| Architecture | `memory/ai/ROLE_ARCHITECT.md` |
+| Backlog planning | `memory/ai/ROLE_BACKLOG_PLANNER.md` |
+| Implementation | `memory/ai/ROLE_IMPLEMENTATION_AGENT.md` |
+| QA/test review | `memory/ai/ROLE_QA_REVIEWER.md` |
+| Security review | `memory/ai/ROLE_SECURITY_REVIEWER.md` |
+| DevOps/release | `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md` |
+| Documentation/state cleanup | `memory/ai/ROLE_DOCUMENTATION_CURATOR.md` |
+| PR review | `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md` |
+| Diagrams | `memory/ai/ROLE_DIAGRAM_ARCHITECT.md` |
+
+## Required Reading
+
+After selecting the shared role, read:
+
+1. `AI_PROJECT_BOOTSTRAP.md`
+2. `CONTEXT_INDEX.md`
+3. `CURRENT_STATE.md`
+4. `AI_HANDOFF.md`
+5. `ARTIFACT_REGISTRY.md`
+6. `SPECS/SPEC_INDEX.md`
+7. `TRACEABILITY_MATRIX.md`
+8. `GOVERNANCE.md`
+9. `BRANCH_AND_WORKTREE_GUIDE.md`
+10. relevant specs, ADRs, backlog items, and tests
+
+Also inspect `git status --short --branch` when Git is available.
+
+## Validation
+
+Run `bash SCRIPTS/validate-bootstrap.sh` for bootstrap consistency. For product
+implementation, also run the stack-specific checks defined in the active spec,
+test plan, or CI configuration.

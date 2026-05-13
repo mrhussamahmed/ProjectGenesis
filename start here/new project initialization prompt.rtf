@@ -1,0 +1,304 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2869
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww27420\viewh26840\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs36 \cf0 \expnd0\expndtw0\kerning0
+You are an autonomous AI software delivery agent working inside a new software project.\
+\
+This repository already contains an AI project bootstrap scaffold. Your job is to use it to initialize this new project properly before implementation starts.\
+\
+Do not start production coding yet.\
+\
+First, read the bootstrap and project-governance files in this order:\
+\
+1. AI_PROJECT_BOOTSTRAP.md\
+2. BOOTSTRAP_USAGE.md\
+3. GOVERNANCE.md\
+4. CONTEXT_INDEX.md\
+5. CURRENT_STATE.md\
+6. AI_HANDOFF.md\
+7. ARTIFACT_REGISTRY.md\
+8. TRACEABILITY_MATRIX.md\
+9. SPECS/SPEC_INDEX.md\
+10. BACKLOG.md\
+11. BRANCH_AND_WORKTREE_GUIDE.md\
+12. RISK_MODEL.md\
+13. PR_REVIEW_POLICY.md\
+14. PR_MERGE_POLICY.md\
+15. HOOKS_AND_GUARDRAILS.md\
+\
+If any of these files are missing, create them using the bootstrap rules before continuing.\
+\
+Project input:\
+\
+[PASTE THE NEW PROJECT IDEA / PRD / FEATURE LIST / EXCEL SUMMARY / REQUIREMENTS HERE]\
+\
+Your task\
+\
+Use the existing bootstrap scaffold to prepare this repository for production-quality AI-assisted development.\
+\
+Do the following:\
+\
+1. Audit the repository\
+\
+Inspect the current repo structure, existing files, package setup, documentation, tests, CI/CD, hooks, branches, and git status.\
+\
+Create or update:\
+\
+- BOOTSTRAP_AUDIT.md\
+- STALE_ITEMS.md\
+- CURRENT_STATE.md\
+- AI_HANDOFF.md\
+\
+Clearly separate:\
+\
+- existing useful files\
+- stale or conflicting files\
+- missing files\
+- assumptions\
+- open questions\
+- risks\
+\
+Do not overwrite valuable existing files without preserving useful content.\
+\
+2. Extract requirements\
+\
+From the project input, extract:\
+\
+- product goals\
+- target users\
+- core workflows\
+- functional requirements\
+- non-functional requirements\
+- integrations\
+- data needs\
+- security/privacy concerns\
+- observability needs\
+- assumptions\
+- open questions\
+\
+Create or update:\
+\
+- PROJECT_MEMORY.md\
+- OPEN_QUESTIONS.md\
+\
+Do not invent missing requirements. If something is unclear but not blocking, document a safe assumption. If it is blocking, document it as an open question.\
+\
+3. Create the initial specs\
+\
+Create project-specific specs under:\
+\
+- SPECS/\
+\
+Update:\
+\
+- SPECS/SPEC_INDEX.md\
+\
+Each spec must include:\
+\
+- spec ID\
+- title\
+- status\
+- version\
+- source input\
+- functional requirements\
+- non-functional requirements\
+- acceptance criteria\
+- edge cases\
+- dependencies\
+- risks\
+- assumptions\
+- open questions\
+- test requirements\
+- security/privacy requirements\
+- observability requirements\
+- definition of ready\
+- definition of done\
+\
+Use draft/proposed/approved/active status correctly.\
+\
+Do not mark a spec as implemented or tested unless there is evidence.\
+\
+4. Create architecture and ADRs\
+\
+Create or update:\
+\
+- ARCHITECTURE.md\
+- DECISIONS.md\
+- ADR/ADR_INDEX.md\
+- ADR/ADR-001-<short-name>.md where needed\
+\
+Architecture must include:\
+\
+- system overview\
+- main components\
+- data model direction\
+- API boundaries\
+- integration points\
+- deployment assumptions\
+- security/privacy considerations\
+- observability needs\
+- failure modes\
+- risks\
+- implementation phases\
+\
+Create ADRs for meaningful decisions such as framework choice, persistence model, API style, deployment model, auth model, or major architectural boundaries.\
+\
+5. Create the backlog\
+\
+Create or update:\
+\
+- BACKLOG.md\
+- BACKLOG/BACKLOG_INDEX.md\
+- BACKLOG/<backlog-item>.md where useful\
+\
+The backlog must be sequenced by dependency and implementation order, not just feature order.\
+\
+Each backlog item must include:\
+\
+- title\
+- purpose\
+- scope\
+- linked spec\
+- linked acceptance criteria\
+- dependencies\
+- risks\
+- priority\
+- complexity\
+- readiness status\
+- suggested owner role\
+- test expectations\
+- definition of done\
+- whether it can run in parallel\
+- file ownership boundaries if parallel work is safe\
+\
+If Linear is available, prepare Linear-ticket-ready tasks. Do not claim tickets exist unless you actually create them.\
+\
+6. Create the implementation plan\
+\
+Create or update:\
+\
+- IMPLEMENTATION_PLAN.md\
+- PARALLEL_EXECUTION_PLAN.md\
+\
+The implementation plan must define:\
+\
+- phases\
+- task order\
+- dependencies\
+- first safe implementation task\
+- recommended first branch\
+- test approach\
+- review approach\
+- release/readiness approach\
+\
+The parallel execution plan must clearly say which tasks can run in parallel and which must stay sequential.\
+\
+Do not allow parallel work if tasks touch shared architecture, shared schemas, shared APIs, dependencies, CI/CD, auth, deployment, or global configuration without coordination.\
+\
+7. Create the test strategy\
+\
+Create or update:\
+\
+- TEST_STRATEGY.md\
+- TEST_PLAN.md\
+- TESTS/ACCEPTANCE_CRITERIA_MAP.md\
+- TESTS/MANUAL_TEST_CHECKLIST.md\
+- TEST_RESULTS.md\
+\
+Map acceptance criteria to tests where practical.\
+\
+Define expected unit, integration, end-to-end, contract, security, performance, and manual tests as relevant.\
+\
+8. Initialize traceability and artifact control\
+\
+Create or update:\
+\
+- ARTIFACT_REGISTRY.md\
+- TRACEABILITY_MATRIX.md\
+\
+The traceability matrix must map:\
+\
+- product requirement\
+- spec ID\
+- backlog item\
+- ADR\
+- architecture section\
+- planned files/modules\
+- planned tests\
+- current status\
+\
+The artifact registry must identify which files are authoritative, active, draft, generated, temporary, superseded, deprecated, cancelled, or archived.\
+\
+9. Set up development guardrails\
+\
+Create or update:\
+\
+- HOOKS_AND_GUARDRAILS.md\
+- CI_CD_GUIDE.md\
+- SECURITY_AND_PRIVACY.md\
+- OBSERVABILITY.md\
+- RELEASE_READINESS.md\
+- CONTRIBUTING.md\
+\
+If practical, create lightweight validation scripts under:\
+\
+- SCRIPTS/\
+\
+Do not create heavy hooks that slow normal development. Keep local hooks fast and put heavier checks in CI.\
+\
+10. Prepare the first implementation step, but do not code yet\
+\
+Before stopping, clearly state:\
+\
+- whether the project is ready for first implementation\
+- the first recommended branch name\
+- the first recommended backlog item\
+- why it is the safest first task\
+- which spec it links to\
+- which tests should be written first\
+- whether any blocker exists\
+\
+Update:\
+\
+- CURRENT_STATE.md\
+- AI_HANDOFF.md\
+- ARTIFACT_REGISTRY.md\
+- TRACEABILITY_MATRIX.md\
+- WORKLOG/WORKLOG_INDEX.md\
+\
+Rules you must follow\
+\
+- Use the bootstrap scaffold as the operating model.\
+- Do not rely on chat memory as source of truth.\
+- Use repository files as evidence.\
+- Do not claim completion without file/test evidence.\
+- Do not start implementation until the first task satisfies Definition of Ready.\
+- Do not silently resolve conflicts between files.\
+- If files conflict, document the conflict in STALE_ITEMS.md or OPEN_QUESTIONS.md.\
+- If an artifact is replaced, mark the old one as superseded instead of deleting it.\
+- Keep CLAUDE.md and AGENTS.md short and practical. Link to shared project-state files instead of duplicating long instructions.\
+- Update handoff files before stopping.\
+- Keep the setup reusable, practical, and not over-engineered.\
+\
+Final response required\
+\
+After finishing the initialization, give me a concise report with:\
+\
+1. Files created or updated\
+2. Specs created\
+3. ADRs created\
+4. Backlog summary\
+5. First recommended implementation branch\
+6. First five implementation actions\
+7. Open questions\
+8. Risks\
+9. Parallel work opportunities, if any\
+10. Confirmation that CURRENT_STATE.md, AI_HANDOFF.md, ARTIFACT_REGISTRY.md, and TRACEABILITY_MATRIX.md were updated\
+\
+Do not start coding until I explicitly ask you to start implementation.\
+}

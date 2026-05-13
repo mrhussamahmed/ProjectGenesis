@@ -1,0 +1,165 @@
+artifact_id: ART-REG-001
+title: Artifact Registry
+type: registry
+status: authoritative
+version: v2.7
+created: 2026-05-09
+updated: 2026-05-13
+owner: AI Bootstrap Maintainers
+source: Initial bootstrap scaffold, SPEC-BOOT-002 implementation and merge, final adversarial review, stale status fix, narrow re-review, start requirement breakdown command shortcut, public repository publication request, and GitHub branch protection setup
+linked_specs: [SPEC-BOOT-002]
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: true
+
+# Artifact Registry
+
+The registry identifies current, authoritative, active, draft, generated,
+temporary, superseded, deprecated, cancelled, and archived artifacts. Do not
+use superseded, deprecated, cancelled, or archived artifacts as current truth.
+
+Common fields for all entries below unless stated otherwise:
+
+- created: 2026-05-09
+- updated: 2026-05-09
+- created by: Codex
+- owner: AI Bootstrap Maintainers
+- linked tickets: none
+- replaces: none
+- replaced by: none
+
+## Current Authoritative Artifacts
+
+| Artifact ID | Type | Title | File Path | Status | Version | Source Input | Linked Specs | Linked ADRs | Authoritative | Notes |
+|-------------|------|-------|-----------|--------|---------|--------------|--------------|-------------|---------------|-------|
+| ART-AGENT-CLAUDE | agent-instructions | Claude Instructions | `CLAUDE.md` | authoritative | v1.2 | scaffold, shared role update, review fix | none | none | true | Short Claude entrypoint; shared role files in `memory/ai/` are the behavior source of truth. |
+| ART-AGENT-GENERIC | agent-instructions | Codex And Generic Agent Instructions | `AGENTS.md` | authoritative | v1.1 | scaffold, shared role update | none | none | true | Short Codex and generic agent entrypoint; shared role files in `memory/ai/` are the behavior source of truth. |
+| ART-README | public-readme | ProjectGenesis README | `README.md` | authoritative | v1.0 | public repository publication request | SPEC-BOOT-002 | none | true | Public overview, usage guide, requirements, repository controls, limitations, and license summary. |
+| ART-LICENSE-AGPL-3 | license | GNU Affero General Public License v3.0 | `LICENSE` | authoritative | v1.0 | public repository publication request and GitHub repository initialization | none | none | true | Full AGPLv3 license text for the public repository. |
+| ART-AI-SHARED-RULES | agent-rules | Shared Agent Rules | `memory/ai/SHARED_AGENT_RULES.md` | authoritative | v1.2 | user request, review fix, command shortcut setup | none | none | true | Shared behavior rules for Claude, Codex, and other coding agents, including command shortcut lookup. |
+| ART-AI-ROLE-PRODUCT-ANALYST | agent-role | Product Analyst Role | `memory/ai/ROLE_PRODUCT_ANALYST.md` | authoritative | v1.1 | user request and SPEC-BOOT-002 final review fix | SPEC-BOOT-002 | none | true | Product discovery role definition aligned to canonical `00_intake/raw/` intake path. |
+| ART-AI-ROLE-SPEC-AUTHOR | agent-role | Spec Author Role | `memory/ai/ROLE_SPEC_AUTHOR.md` | authoritative | v1.0 | user request | none | none | true | Spec creation and maintenance role definition. |
+| ART-AI-ROLE-ARCHITECT | agent-role | Architect Role | `memory/ai/ROLE_ARCHITECT.md` | authoritative | v1.0 | user request | none | none | true | Architecture role definition. |
+| ART-AI-ROLE-BACKLOG-PLANNER | agent-role | Backlog Planner Role | `memory/ai/ROLE_BACKLOG_PLANNER.md` | authoritative | v1.0 | user request | none | none | true | Backlog planning role definition. |
+| ART-AI-ROLE-IMPLEMENTATION-AGENT | agent-role | Implementation Agent Role | `memory/ai/ROLE_IMPLEMENTATION_AGENT.md` | authoritative | v1.0 | user request | none | none | true | Ready-task implementation role definition. |
+| ART-AI-ROLE-QA-REVIEWER | agent-role | QA Reviewer Role | `memory/ai/ROLE_QA_REVIEWER.md` | authoritative | v1.0 | user request | none | none | true | Test and acceptance coverage review role definition. |
+| ART-AI-ROLE-SECURITY-REVIEWER | agent-role | Security Reviewer Role | `memory/ai/ROLE_SECURITY_REVIEWER.md` | authoritative | v1.0 | user request | none | none | true | Security and privacy review role definition. |
+| ART-AI-ROLE-DEVOPS-RELEASE-REVIEWER | agent-role | DevOps Release Reviewer Role | `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md` | authoritative | v1.0 | user request | none | none | true | CI/CD, release, rollback, and observability review role definition. |
+| ART-AI-ROLE-DOCUMENTATION-CURATOR | agent-role | Documentation Curator Role | `memory/ai/ROLE_DOCUMENTATION_CURATOR.md` | authoritative | v1.0 | user request | none | none | true | Shared state and documentation alignment role definition. |
+| ART-AI-ROLE-ADVERSARIAL-PR-REVIEWER | agent-role | Adversarial PR Reviewer Role | `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md` | authoritative | v1.0 | user request | none | none | true | Fresh-context PR review role definition. |
+| ART-AI-ROLE-DIAGRAM-ARCHITECT | agent-role | Diagram Architect Role | `memory/ai/ROLE_DIAGRAM_ARCHITECT.md` | authoritative | v1.0 | user request | none | none | true | Mermaid diagram creation and review role definition. |
+| ART-BOOT-001 | governance | AI Project Bootstrap Operating System | `AI_PROJECT_BOOTSTRAP.md` | authoritative | v1.2 | user request, audit, shared role update, review fix | none | none | true | Primary entrypoint. |
+| ART-BOOT-002 | guide | Bootstrap Usage Guide | `BOOTSTRAP_USAGE.md` | authoritative | v1.4 | user request, audit, shared role update, review fix, SPEC-BOOT-002, command shortcut setup | SPEC-BOOT-002 | none | true | How to use the package, including the `Start requirement breakdown` shortcut. |
+| ART-GETTING-STARTED | guide | Getting Started | `GETTING_STARTED.md` | authoritative | v1.0 | migrated from legacy RTF onboarding notes | SPEC-BOOT-002 | none | true | Primary getting-started guide for using the reusable scaffold master. |
+| ART-NEW-PROJECT-INIT | guide | New Project Initialization | `NEW_PROJECT_INITIALIZATION.md` | authoritative | v1.1 | migrated from legacy RTF initialization prompt, command shortcut setup | SPEC-BOOT-002 | none | true | New downstream project initialization prompt with the short intake command. |
+| ART-LEGACY-START-TIPS-RTF | guide | Legacy Project Starting Instruction Tips | `start here/Project starting instruction tips.rtf` | archived | v1.0 | original onboarding RTF | SPEC-BOOT-002 | none | false | Preserved legacy RTF content; superseded by `GETTING_STARTED.md`. |
+| ART-LEGACY-NEW-PROJECT-PROMPT-RTF | guide | Legacy New Project Initialization Prompt | `start here/new project initialization prompt.rtf` | archived | v1.0 | original onboarding RTF | SPEC-BOOT-002 | none | false | Preserved legacy RTF content; superseded by `NEW_PROJECT_INITIALIZATION.md`. |
+| ART-BOOT-003 | audit | Bootstrap Repository Audit | `BOOTSTRAP_AUDIT.md` | authoritative | v1.0 | target and reference audit | none | none | true | Audit record. |
+| ART-GOV-001 | governance | Governance | `GOVERNANCE.md` | authoritative | v1.2 | user request, audit, review follow-up, SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Core rules, including agent entrypoint metadata exception and direct-main documentation exception boundary. |
+| ART-CTX-001 | guide | Context Index | `CONTEXT_INDEX.md` | authoritative | v1.3 | user request, audit, shared role update, SPEC-BOOT-002, command shortcut setup | SPEC-BOOT-002 | none | true | Required reading map, including command shortcut lookup. |
+| ART-ARCH-001 | architecture | Bootstrap Architecture | `ARCHITECTURE.md` | authoritative | v1.1 | user request, audit, shared role update | none | none | true | Process architecture. |
+| ART-ADR-001 | adr-guide | Decision Governance | `DECISIONS.md` | authoritative | v1.0 | user request, audit | none | none | true | ADR rules. |
+| ART-GIT-001 | guide | Branch And Worktree Guide | `BRANCH_AND_WORKTREE_GUIDE.md` | authoritative | v1.1 | user request, audit, SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Git and worktree rules, including narrow direct-main documentation exception. |
+| ART-PAR-001 | execution-plan | Parallel Execution Plan | `PARALLEL_EXECUTION_PLAN.md` | authoritative | v1.0 | user request, audit | none | none | true | Parallel work gate. |
+| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v2.7 | scaffold, shared role update, review fix, SPEC-BOOT-002 implementation, merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | true | Current artifact inventory. |
+| ART-TRACE-001 | traceability | Traceability Matrix | `TRACEABILITY_MATRIX.md` | authoritative | v2.4 | scaffold, shared role update, review fix, SPEC-BOOT-002 final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | true | Requirement-to-evidence map. |
+| ART-TEST-001 | test-strategy | Test Strategy | `TEST_STRATEGY.md` | authoritative | v1.0 | user request | none | none | true | Testing principles. |
+| ART-TEST-002 | test-plan | Test Plan | `TEST_PLAN.md` | authoritative | v1.0 | scaffold | none | none | true | Current test plan. |
+| ART-REVIEW-001 | review-policy | PR Review Policy | `PR_REVIEW_POLICY.md` | authoritative | v1.0 | user request | none | none | true | Adversarial review rules. |
+| ART-REVIEW-002 | merge-policy | PR Merge Policy | `PR_MERGE_POLICY.md` | authoritative | v1.0 | user request | none | none | true | Merge gate. |
+| ART-REVIEW-003 | prompt-library | AI Review Prompts | `AI_REVIEW_PROMPTS.md` | authoritative | v1.0 | user request | none | none | true | Reviewer prompt library. |
+| ART-RISK-001 | risk-model | Risk Model | `RISK_MODEL.md` | authoritative | v1.0 | user request | none | none | true | Review effort selection. |
+| ART-HOOKS-001 | guide | Hooks And Guardrails | `HOOKS_AND_GUARDRAILS.md` | authoritative | v1.0 | user request | none | none | true | Local hook and CI guardrail guidance. |
+| ART-SEC-001 | security | Security And Privacy | `SECURITY_AND_PRIVACY.md` | authoritative | v1.0 | user request | none | none | true | Security rules. |
+| ART-OBS-001 | observability | Observability | `OBSERVABILITY.md` | authoritative | v1.0 | user request | none | none | true | Observability rules. |
+| ART-CI-001 | ci-guide | CI/CD Guide | `CI_CD_GUIDE.md` | authoritative | v1.0 | user request | none | none | true | CI guidance. |
+| ART-REL-001 | release | Release Readiness | `RELEASE_READINESS.md` | authoritative | v1.0 | user request | none | none | true | Release checklist. |
+| ART-CONTRIB-001 | contribution-guide | Contributing | `CONTRIBUTING.md` | authoritative | v1.0 | user request | none | none | true | Contributor workflow. |
+| ART-GITHUB-REPOSITORY-SETUP | repository-setup | GitHub Repository Setup | `GITHUB_REPOSITORY_SETUP.md` | authoritative | v1.0 | public repository publication request | none | none | true | Repository publication, branch protection, and maintainer-review setup guide. |
+
+## Active Shared State Artifacts
+
+| Artifact ID | Type | Title | File Path | Status | Version | Source Input | Linked Specs | Linked ADRs | Authoritative | Notes |
+|-------------|------|-------|-----------|--------|---------|--------------|--------------|-------------|---------------|-------|
+| ART-STATE-001 | shared-state | Project Memory | `PROJECT_MEMORY.md` | active | v1.0 | scaffold | none | none | false | Summary only. |
+| ART-STATE-002 | shared-state | Current State | `CURRENT_STATE.md` | active | v2.7 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Current operational view. |
+| ART-STATE-003 | shared-state | AI Handoff | `AI_HANDOFF.md` | active | v2.7 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Agent transition state. |
+| ART-STATE-004 | shared-state | Open Questions | `OPEN_QUESTIONS.md` | active | v1.0 | scaffold | none | none | false | Unresolved blockers. |
+| ART-STATE-005 | shared-state | Stale Items | `STALE_ITEMS.md` | active | v1.2 | scaffold, final adversarial review, stale status fix | SPEC-BOOT-002 | none | false | Drift and stale items; final spec-index status drift is resolved and narrow re-review approved the correction. |
+| ART-BACKLOG-001 | backlog | Backlog | `BACKLOG.md` | active | v1.6 | scaffold, SPEC-BOOT-002 v1.0 implementation, public repository publication request | SPEC-BOOT-002 | none | true | Current backlog mirror, including staged items for the active scaffold intake and governance improvement plus public publication work. |
+| ART-PLAN-001 | implementation-plan | Implementation Plan | `IMPLEMENTATION_PLAN.md` | active | v1.0 | scaffold | none | none | true | Bootstrap implementation plan. |
+| ART-TEST-003 | test-results | Test Results | `TEST_RESULTS.md` | active | v1.17 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Validation history. |
+
+## Template And Directory Artifacts
+
+| Artifact ID | Type | Title | File Path | Status | Version | Source Input | Linked Specs | Linked ADRs | Authoritative | Notes |
+|-------------|------|-------|-----------|--------|---------|--------------|--------------|-------------|---------------|-------|
+| ART-SPEC-INDEX | spec-index | Spec Index | `SPECS/SPEC_INDEX.md` | active | v1.7 | scaffold, SPEC-BOOT-002 v1.2, stale status fix | SPEC-BOOT-002 | none | true | Spec inventory; final stale status correction approved by narrow re-review. |
+| ART-SPEC-BOOT-002 | spec | Scaffold Intake And Governance Improvement | `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md` | active | v1.2 | user adjusted plan, adversarial review, independent review corrections, implementation status alignment, and final review fixes on 2026-05-13 | SPEC-BOOT-002 | none | true | Governing active spec for intake, requirements, context packs, command prompts, validation, branch exception, and onboarding migration. |
+| ART-SPEC-TEMPLATE | template | Spec Template | `SPECS/templates/SPEC_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Template for new specs. |
+| ART-ADR-INDEX | adr-index | ADR Index | `ADR/ADR_INDEX.md` | active | v1.0 | scaffold | none | none | true | ADR inventory. |
+| ART-ADR-TEMPLATE | template | ADR Template | `ADR/templates/ADR_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Template for new ADRs. |
+| ART-BACKLOG-INDEX | backlog-index | Backlog Index | `BACKLOG/BACKLOG_INDEX.md` | active | v1.0 | scaffold | none | none | true | Backlog item inventory. |
+| ART-BACKLOG-TEMPLATE | template | Backlog Item Template | `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Template for detailed items. |
+| ART-REVIEW-INDEX | review-index | Review Index | `REVIEWS/REVIEW_INDEX.md` | active | v2.0 | scaffold, shared role review fixes, scaffold plan review, SPEC-BOOT-002 reviews, final adversarial review, narrow re-review, command shortcut plan review, and public repository publication request | SPEC-BOOT-002 | none | true | Review inventory. |
+| ART-REVIEW-BOOT-001 | pr-review | Bootstrap Baseline Adversarial Review | `REVIEWS/REVIEW-2026-05-09-bootstrap-baseline.md` | active | v1.0 | user adversarial review | none | none | false | Review findings and fix evidence before baseline commit. |
+| ART-PR-PACKAGE-SHARED-ROLE-001 | pr-review-package | Shared Role System PR Review Package | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-09-shared-role-system.md` | active | v1.0 | shared role system implementation | none | none | false | Durable review package for the shared `memory/ai/` role system update. |
+| ART-PR-PACKAGE-SCAFFOLD-INTAKE-GOVERNANCE | pr-review-package | Scaffold Intake And Governance PR Review Package | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-scaffold-intake-governance.md` | active | v1.0 | SPEC-BOOT-002 implementation | SPEC-BOOT-002 | none | false | Review package for the scaffold intake and governance implementation. |
+| ART-PR-PACKAGE-PROJECTGENESIS-PUBLICATION | pr-review-package | ProjectGenesis Public Repository Publication Review Package | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md` | active | v1.0 | public repository publication request | none | none | false | Review package for the public README, AGPLv3 license, Code Owners, branch protection guidance, and publication PR. |
+| ART-REVIEW-SHARED-ROLE-001 | pr-review | Shared Role System Adversarial Review | `REVIEWS/REVIEW-2026-05-09-shared-role-system.md` | active | v1.1 | Codex adversarial review, review fix response | none | none | false | Review findings for the shared `memory/ai/` role system update before baseline commit, with implementer response recorded. |
+| ART-REVIEW-SCAFFOLD-PLAN-001 | pr-review | Scaffold Improvement Plan Adversarial Review | `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md` | active | v1.0 | user-supplied scaffold improvement plan | none | none | false | Fresh-context review of the pre-implementation scaffold improvement plan; decision is request changes before implementation. |
+| ART-REVIEW-SPEC-BOOT-002-V02 | pr-review | SPEC-BOOT-002 v0.2 Independent Review | `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.2.md` | addressed | v1.0 | independent reviewer agents for SPEC-BOOT-002 v0.2 | SPEC-BOOT-002 | none | false | Independent review findings addressed in SPEC-BOOT-002 v0.4; fresh review still required before approval. |
+| ART-REVIEW-SPEC-BOOT-002-V04 | pr-review | SPEC-BOOT-002 v0.4 Fresh Review | `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md` | active | v1.0 | independent reviewer agent for SPEC-BOOT-002 v0.4 | SPEC-BOOT-002 | none | false | Fresh review approved SPEC-BOOT-002 v0.4 with minor comments; spec activated as v1.0. |
+| ART-REVIEW-SCAFFOLD-INTAKE-GOVERNANCE-IMPLEMENTATION | pr-review | Scaffold Intake And Governance Implementation Review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md` | active | v1.0 | independent reviewer agent for SPEC-BOOT-002 implementation | SPEC-BOOT-002 | none | false | Final implementation review approved with minor comments after P1/P2 findings were addressed. |
+| ART-REVIEW-SCAFFOLD-INTAKE-GOVERNANCE-FINAL-ADVERSARIAL | pr-review | Scaffold Intake And Governance Final Adversarial Review | `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | addressed | v1.1 | Codex final adversarial review requested by user, stale status fix, and narrow re-review | SPEC-BOOT-002 | none | false | Final adversarial review requested changes for stale `SPECS/SPEC_INDEX.md` current-status text; correction approved by narrow re-review. |
+| ART-REVIEW-START-REQ-BREAKDOWN-PLAN | review | Start Requirement Breakdown Command Plan Review | `REVIEWS/REVIEW-2026-05-13-start-requirement-breakdown-plan.md` | addressed | v1.0 | independent reviewer agent for command shortcut plan | SPEC-BOOT-002 | none | false | Plan review requested changes for state update order, dispatch wording, conditional multi-agent review, and traceability linkage; findings addressed. |
+| ART-REVIEW-PROJECTGENESIS-PUBLICATION | pr-review | ProjectGenesis Publication Review | `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md` | active | v1.1 | scoped independent reviewer, local repository-grounded review, and GitHub branch protection setup | none | none | false | Publication review approved with no P0/P1/P2 findings; initial branch protection configured and status-check enforcement remains a post-merge follow-up. |
+| ART-REVIEW-TEMPLATE | template | Adversarial Review Template | `REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Review output template. |
+| ART-PR-PACKAGE-TEMPLATE | template | PR Review Package Template | `REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Implementer review package. |
+| ART-TEST-MANUAL | checklist | Manual Test Checklist | `TESTS/MANUAL_TEST_CHECKLIST.md` | active | v1.0 | scaffold | none | none | false | Manual validation checklist. |
+| ART-TEST-AC-MAP | traceability | Acceptance Criteria Map | `TESTS/ACCEPTANCE_CRITERIA_MAP.md` | active | v1.3 | scaffold, SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | true | AC-to-test map. |
+| ART-WORKLOG-INDEX | worklog | Worklog Index | `WORKLOG/WORKLOG_INDEX.md` | active | v2.5 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, and GitHub branch protection setup | SPEC-BOOT-002 | none | false | Session history. |
+| ART-HANDOFF-INDEX | handoff-index | Handoff Index | `HANDOFFS/HANDOFF_INDEX.md` | active | v1.0 | scaffold | none | none | false | Historical handoffs. |
+| ART-SCRIPT-CLAUDE | script | Claude Role Startup Helper | `SCRIPTS/start-claude.sh` | active | v1.1 | user request, review fix | none | none | false | Optional Claude helper that loads shared rules and one allowlisted role file through `--append-system-prompt`; default mode is orientation-only. |
+| ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | active | v1.5 | scaffold, shared role update, review fix, SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Lightweight validation, including column-aware spec evidence, approved assumption evidence, intake, command, context pack, and handoff checks. |
+| ART-SCRIPT-VALIDATE-RED | script | Bootstrap Red Check Validator | `SCRIPTS/validate-bootstrap-red-checks.sh` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Non-destructive temporary-fixture red checks for validator rules, including empty source IDs and disallowed assumption approval evidence. |
+| ART-INPUT-DIR | input-directory | Product Input Directory | `INPUT/.gitkeep` | active | v1.0 | scaffold | none | none | false | Placeholder keeps the documented input directory present. |
+| ART-INPUT-LEGACY-README | guide | Input Legacy Alias | `INPUT/README.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | false | Compatibility guide pointing legacy `INPUT/` usage to `00_intake/raw/`. |
+| ART-INTAKE-RAW-DIR | input-directory | Raw Intake Directory | `00_intake/raw/.gitkeep` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | false | Placeholder keeps canonical raw intake directory present. |
+| ART-INTAKE-SUMMARIES-DIR | input-directory | Intake Summaries Directory | `00_intake/summaries/.gitkeep` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | false | Placeholder keeps intake summaries directory present. |
+| ART-INTAKE-SOURCE-REGISTRY | source-registry | Source Registry | `00_intake/SOURCE_REGISTRY.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Stable source ID and source freshness registry. |
+| ART-INTAKE-INDEX | intake-index | Intake Index | `00_intake/INTAKE_INDEX.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Intake processing index. |
+| ART-CONTEXT-PROJECT-BRIEF | product-context | Project Brief | `01_context/PROJECT_BRIEF.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Downstream project brief template artifact. |
+| ART-CONTEXT-PROJECT-CHARTER | product-context | Project Charter | `01_context/PROJECT_CHARTER.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Downstream project charter template artifact. |
+| ART-CONTEXT-GLOSSARY | glossary | Glossary | `01_context/GLOSSARY.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Downstream project glossary artifact. |
+| ART-CONTEXT-CONSTRAINTS | product-context | Constraints | `01_context/CONSTRAINTS.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Downstream project constraints artifact. |
+| ART-REQ-INDEX | requirements-registry | Requirements Index | `02_requirements/REQUIREMENTS_INDEX.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Controlled requirements registry. |
+| ART-REQ-ASSUMPTIONS | assumptions-registry | Assumptions Register | `02_requirements/ASSUMPTIONS_REGISTER.md` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | true | Assumption status, expiry, allowed approval evidence markers, and approval evidence register. |
+| ART-REQ-RISK-REGISTER | risk-register | Risk Register | `02_requirements/RISK_REGISTER.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Product, technical, delivery, security, privacy, and operational risk register. |
+| ART-CONTEXT-PACKS-README | context-pack-index | Context Packs Guide | `CONTEXT_PACKS/README.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Context pack index and authority guidance. |
+| ART-CONTEXT-PACK-PRODUCT-INTAKE | context-pack | Product Intake Context Pack | `CONTEXT_PACKS/product-intake.md` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Scoped read manifest for product intake with explicit full authority limit. |
+| ART-CONTEXT-PACK-SPEC-AUTHORING | context-pack | Spec Authoring Context Pack | `CONTEXT_PACKS/spec-authoring.md` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Scoped read manifest for spec authoring with explicit full authority limit. |
+| ART-CONTEXT-PACK-ARCHITECTURE | context-pack | Architecture Context Pack | `CONTEXT_PACKS/architecture.md` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Scoped read manifest for architecture work with explicit full authority limit. |
+| ART-CONTEXT-PACK-IMPLEMENTATION | context-pack | Implementation Context Pack | `CONTEXT_PACKS/implementation.md` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Scoped read manifest for implementation work with explicit full authority limit. |
+| ART-CONTEXT-PACK-REVIEW | context-pack | Review Context Pack | `CONTEXT_PACKS/review.md` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Scoped read manifest for fresh-context review with explicit full authority limit. |
+| ART-CONTEXT-PACK-RESUME | context-pack | Resume Context Pack | `CONTEXT_PACKS/resume.md` | active | v1.1 | SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Scoped read manifest for resuming after context loss with explicit full authority limit. |
+| ART-COMMAND-INDEX | command-index | Command Index | `COMMANDS/COMMAND_INDEX.md` | active | v1.1 | SPEC-BOOT-002, command shortcut setup | SPEC-BOOT-002 | none | true | Command prompt inventory, rules, and recognized user triggers. |
+| ART-COMMAND-TEMPLATE | command-template | Command Template | `COMMANDS/COMMAND_TEMPLATE.md` | active | v1.0 | SPEC-BOOT-002 | SPEC-BOOT-002 | none | false | Template for reusable command prompts. |
+| ART-COMMAND-START-REQUIREMENT-BREAKDOWN | command | Start Requirement Breakdown | `COMMANDS/start-requirement-breakdown.md` | active | v1.0 | user request on 2026-05-13 and SPEC-BOOT-002 command framework | SPEC-BOOT-002 | none | false | Reusable downstream project intake and requirement breakdown workflow triggered by `Start requirement breakdown`. |
+| ART-HOOK-PRECOMMIT | hook | Pre-commit Hook Template | `.githooks/pre-commit` | active | v1.1 | scaffold, commit validation fix | none | none | false | Fast local validation and secret pattern check that avoids matching its own scanner definition. |
+| ART-HOOK-COMMITMSG | hook | Commit Message Hook Template | `.githooks/commit-msg` | active | v1.0 | scaffold | none | none | false | Commit reference reminder. |
+| ART-HOOK-PREPUSH | hook | Pre-push Hook Template | `.githooks/pre-push` | active | v1.0 | scaffold | none | none | false | Bootstrap validation before push. |
+| ART-CI-WORKFLOW | ci-template | Bootstrap Validation Workflow | `.github/workflows/bootstrap-validation.yml` | active | v1.0 | scaffold | none | none | false | Optional GitHub Actions validation. |
+| ART-GITHUB-CODEOWNERS | github-config | Code Owners | `.github/CODEOWNERS` | active | v1.0 | public repository publication request | none | none | false | Assigns all repository paths to `@mrhussamahmed` for Code Owner review when branch protection enables it. |
+| ART-GITIGNORE | config | Git Ignore | `.gitignore` | active | v1.0 | scaffold | none | none | false | Generic generated file and secret-adjacent ignores. |
+
+## Lifecycle Rules
+
+- Add every meaningful artifact here when it is created.
+- Update status and version when an artifact changes.
+- Mark replaced artifacts as superseded, deprecated, cancelled, or archived.
+- Add a visible banner at the top of superseded artifacts.
+- Generated artifacts must identify their source.
+- Temporary artifacts must have a cleanup decision.
