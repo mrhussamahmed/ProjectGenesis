@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.8
+version: v1.9
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, and README positioning/tooling prerequisite update
+source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, and BOOT-017 merge
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -39,7 +39,7 @@ under `BACKLOG/`.
 | BOOT-014 | Add context packs and command prompt framework | Add subordinate context packs and safe command prompt scaffolding after validator rules can check authority limits. | P2 | medium | medium | BOOT-013 | done | can parallelize after validator boundaries are stable | Documentation Curator |
 | BOOT-015 | Migrate onboarding RTF files | Convert useful RTF content to Markdown and register legacy lifecycle status. | P2 | medium | medium | BOOT-009 | done | can parallelize after spec approval | Documentation Curator |
 | BOOT-016 | Publish ProjectGenesis public repository | Add public README, AGPLv3 license, Code Owners, GitHub branch protection guidance, and a reviewable publication PR. | P1 | low | medium | origin repository access | done | sequential | Documentation Curator, DevOps Release Reviewer |
-| BOOT-017 | Improve README positioning and tooling prerequisites | Clarify ProjectGenesis capabilities, audience fit, Linear backlog storage, Linear setup, optional Spec Kit use, and other supported tooling before downstream project work starts. | P2 | low | low | BOOT-016 | in-review | sequential | Documentation Curator, DevOps Release Reviewer |
+| BOOT-017 | Improve README positioning and tooling prerequisites | Clarify ProjectGenesis capabilities, audience fit, Linear backlog storage, Linear setup, optional Spec Kit use, and other supported tooling before downstream project work starts. | P2 | low | low | BOOT-016 | done | sequential | Documentation Curator, DevOps Release Reviewer |
 
 ## External Ticket Workflow
 

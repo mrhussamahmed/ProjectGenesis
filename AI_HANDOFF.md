@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.4
+version: v3.6
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, and BOOT-017 PR creation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, and BOOT-017 post-merge state cleanup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -30,7 +30,7 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Current Branch
 
-`codex/readme-tooling-prereqs`
+`main`
 
 ## Current Worktree
 
@@ -45,9 +45,8 @@ project work.
 
 ## Current In-Progress Task
 
-BOOT-017 README positioning and tooling prerequisite update. Fresh-context
-review findings are addressed, narrow re-review approved, final validation
-passed, and PR #2 is open.
+None. BOOT-017 README positioning and tooling prerequisite update is merged to
+`main`.
 
 ## Files Changed
 
@@ -133,7 +132,8 @@ passed, and PR #2 is open.
 - BOOT-017 is governed by active `SPEC-BOOT-002` as a compatible documentation
   follow-up to the scaffold command framework, source-of-truth hierarchy, and
   external ticket evidence rules.
-- BOOT-017 PR is open at `https://github.com/mrhussamahmed/ProjectGenesis/pull/2`.
+- BOOT-017 PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/2` merged
+  into `main` at merge commit `7a4e3140d1c029ced05f5938a64e223cec0e2011`.
 
 ## Assumptions Made
 
@@ -242,6 +242,14 @@ passed, and PR #2 is open.
   passed.
 - `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head
   codex/readme-tooling-prereqs` - passed and opened PR #2.
+- `gh pr merge 2 --repo mrhussamahmed/ProjectGenesis --merge --admin
+  --delete-branch` - passed and merged PR #2.
+- `git fetch origin && git switch main && git merge --ff-only origin/main` -
+  passed and fast-forwarded local `main` to merge commit
+  `7a4e3140d1c029ced05f5938a64e223cec0e2011`.
+- `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
+  validator shell syntax checks passed after BOOT-017 post-merge state cleanup.
 
 ## Tests Not Run
 
@@ -275,7 +283,7 @@ outside BOOT-017.
 
 ## Next Recommended Action
 
-Review and merge BOOT-017 PR #2 after required checks and approvals.
+Use the updated `main` scaffold for the next downstream project intake.
 
 ## What The Next AI Must Read First
 
@@ -302,6 +310,6 @@ v1.2 implementation is validated. The `Start requirement breakdown` command
 shortcut is merged to `main`. BOOT-016 public repository publication is merged
 to `main`, and GitHub branch protection now requires PR review plus the
 `validate` status check. Bootstrap Validation uses `actions/checkout@v5`.
-BOOT-017 README positioning and tooling prerequisite update is in progress on
-`codex/readme-tooling-prereqs`; independent narrow re-review approved with no
-remaining P0/P1/P2 blockers, final validation passed, and PR #2 is open.
+BOOT-017 README positioning and tooling prerequisite update is merged to `main`;
+independent narrow re-review approved with no remaining P0/P1/P2 blockers and
+final validation passed before merge.

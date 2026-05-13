@@ -2,11 +2,11 @@ artifact_id: ART-TRACE-001
 title: Traceability Matrix
 type: traceability
 status: authoritative
-version: v2.10
+version: v2.11
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, and BOOT-017 PR creation
+source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, and BOOT-017 merge
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -63,7 +63,7 @@ instead of a product spec. Product implementation must not use this exception.
 |----------------------|--------|---------|--------------|---------------|-------|----------------|
 | Intake, product context, requirements control, context packs, command prompts, validator, workflow, multi-agent synchronization, and onboarding cleanup for the reusable bootstrap scaffold | User-supplied scaffold improvement plan, 2026-05-13 | SPEC-BOOT-002 | BOOT-009 through BOOT-015 | `REVIEWS/REVIEW-2026-05-13-scaffold-improvement-plan.md`; `REVIEWS/REVIEW-2026-05-13-spec-boot-002-v0.4.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-implementation.md`; `REVIEWS/REVIEW-2026-05-13-scaffold-intake-governance-final-adversarial.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks | Implemented, validated, and reviewed; ready for commit |
 | Public ProjectGenesis GitHub publication with AGPLv3 license, public README, Code Owners, branch protection guidance, and reviewable publication PR | User publication request, 2026-05-13; `origin/main` initial AGPLv3 license | none | BOOT-016 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`; `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`; merged PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; GitHub auth and repo checks; branch protection API verification; GitHub Actions `validate` | Merged to `main` at `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`; branch protection requires PR review, Code Owner review, conversation resolution, and `validate` status check |
-| README public positioning and tooling prerequisites for ProjectGenesis capabilities, Linear backlog storage, Linear setup, optional Spec Kit use, GitHub controls, and document conversion tooling | User request, 2026-05-13; official Linear docs; official GitHub Spec Kit docs | SPEC-BOOT-002 | BOOT-017 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-readme-tooling-prereqs.md`; `REVIEWS/REVIEW-2026-05-13-readme-tooling-prereqs.md`; PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/2` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; placeholder scan; pre-commit hook; pre-push hook | Review approved, validation passed, and PR #2 open |
+| README public positioning and tooling prerequisites for ProjectGenesis capabilities, Linear backlog storage, Linear setup, optional Spec Kit use, GitHub controls, and document conversion tooling | User request, 2026-05-13; official Linear docs; official GitHub Spec Kit docs | SPEC-BOOT-002 | BOOT-017 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-readme-tooling-prereqs.md`; `REVIEWS/REVIEW-2026-05-13-readme-tooling-prereqs.md`; merged PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/2` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; placeholder scan; pre-commit hook; pre-push hook; GitHub Actions `validate` | Merged to `main` at `7a4e3140d1c029ced05f5938a64e223cec0e2011` |
 
 ## Scaffold Improvement Requirement Mapping
 

@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.25
+version: v1.27
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, and BOOT-017 PR creation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, and BOOT-017 post-merge state cleanup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -62,6 +62,8 @@ authoritative: false
 | 2026-05-13 | BOOT-017 README positioning and tooling prerequisite review | fresh-context independent review and narrow re-review | passed | Initial review requested changes for unrelated RTF deletions and inconsistent spec linkage; both findings were addressed and narrow re-review approved with no remaining P0/P1/P2 blockers. |
 | 2026-05-13 | BOOT-017 README positioning and tooling prerequisite validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh`; placeholder scan with `rg` | passed | Validation passed after README updates, review record, spec-linkage correction, state updates, and worktree cleanup. Placeholder scan returned no matches. |
 | 2026-05-13 | BOOT-017 PR creation | `.githooks/pre-commit`; `git push -u origin codex/readme-tooling-prereqs`; `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head codex/readme-tooling-prereqs` | passed | Commit `6637385` was created and pushed after pre-commit and pre-push validation; PR #2 opened at `https://github.com/mrhussamahmed/ProjectGenesis/pull/2`. |
+| 2026-05-13 | BOOT-017 merge | `gh pr merge 2 --repo mrhussamahmed/ProjectGenesis --merge --admin --delete-branch`; `git fetch origin && git switch main && git merge --ff-only origin/main`; GitHub Actions `validate` | passed | PR #2 merged to `main` at `7a4e3140d1c029ced05f5938a64e223cec0e2011`; local `main` fast-forwarded to the merge commit. |
+| 2026-05-13 | BOOT-017 post-merge state cleanup | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; `bash -n SCRIPTS/validate-bootstrap.sh && bash -n SCRIPTS/validate-bootstrap-red-checks.sh` | passed | State files were updated on `main` to mark PR #2 merged and BOOT-017 done. |
 
 ## Rules
 

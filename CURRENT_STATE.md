@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.3
+version: v3.5
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, and BOOT-017 PR creation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, and BOOT-017 post-merge state cleanup
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -35,8 +35,8 @@ authoritative: false
 
 ## Active Implementation Phase
 
-- README positioning and tooling prerequisite update is in progress on
-  `codex/readme-tooling-prereqs` under BOOT-017. The README now explains
+- README positioning and tooling prerequisite update under BOOT-017 is merged
+  into `main`. The README now explains
   ProjectGenesis capabilities and audience fit, then documents Linear as the
   recommended optional external backlog store, required Linear setup before
   external ticket creation, optional Spec Kit installation and source-of-truth
@@ -46,7 +46,8 @@ authoritative: false
   files were restored, BOOT-017 now links consistently to active `SPEC-BOOT-002`,
   and narrow re-review approved with no remaining P0, P1, or P2 blockers.
 - BOOT-017 validation passed after review record and state updates.
-- BOOT-017 PR is open at `https://github.com/mrhussamahmed/ProjectGenesis/pull/2`.
+- BOOT-017 PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/2` merged
+  into `main` at merge commit `7a4e3140d1c029ced05f5938a64e223cec0e2011`.
 - Public GitHub publication work under BOOT-016 is merged. PR
   `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` merged into `main`
   at merge commit `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`.
@@ -104,7 +105,7 @@ authoritative: false
 
 ## Active Branch
 
-- `codex/readme-tooling-prereqs`
+- `main`
 
 ## Active Worktree
 
@@ -115,13 +116,14 @@ authoritative: false
 - Bootstrap package completeness and downstream project intake readiness after
   `SPEC-BOOT-002`.
 - Downstream project readiness using the published ProjectGenesis scaffold.
-- BOOT-017 README positioning and tooling prerequisite clarity.
+- Downstream project readiness using the updated public README and published
+  ProjectGenesis scaffold.
 
 ## Current Blockers
 
 - No product-specific input has been provided for a downstream software
   project.
-- BOOT-017 PR #2 is pending review/merge.
+- No active bootstrap publication blockers.
 
 ## Current Source-Of-Truth Files
 
@@ -145,7 +147,8 @@ authoritative: false
 
 ## Next Recommended Action
 
-Review and merge BOOT-017 PR #2 after required checks and approvals.
+Start the next downstream project intake by adding rough material to
+`00_intake/raw/` and running `Start requirement breakdown`.
 
 ## Latest Validation
 
@@ -240,3 +243,7 @@ Review and merge BOOT-017 PR #2 after required checks and approvals.
   `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh`, and placeholder scan passed on
   2026-05-13 after review fixes.
+- BOOT-017 post-merge state cleanup validation:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
+  validator shell syntax checks passed on 2026-05-13.
