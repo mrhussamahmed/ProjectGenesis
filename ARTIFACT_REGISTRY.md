@@ -2,11 +2,11 @@ artifact_id: ART-REG-001
 title: Artifact Registry
 type: registry
 status: authoritative
-version: v2.9
+version: v3.1
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 implementation and merge, final adversarial review, stale status fix, narrow re-review, start requirement breakdown command shortcut, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and post-merge CI cleanup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 implementation and merge, final adversarial review, stale status fix, narrow re-review, start requirement breakdown command shortcut, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, and final maintenance validation
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -63,7 +63,7 @@ Common fields for all entries below unless stated otherwise:
 | ART-ADR-001 | adr-guide | Decision Governance | `DECISIONS.md` | authoritative | v1.0 | user request, audit | none | none | true | ADR rules. |
 | ART-GIT-001 | guide | Branch And Worktree Guide | `BRANCH_AND_WORKTREE_GUIDE.md` | authoritative | v1.1 | user request, audit, SPEC-BOOT-002 | SPEC-BOOT-002 | none | true | Git and worktree rules, including narrow direct-main documentation exception. |
 | ART-PAR-001 | execution-plan | Parallel Execution Plan | `PARALLEL_EXECUTION_PLAN.md` | authoritative | v1.0 | user request, audit | none | none | true | Parallel work gate. |
-| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v2.9 | scaffold, shared role update, review fix, SPEC-BOOT-002 implementation, merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and post-merge CI cleanup | SPEC-BOOT-002 | none | true | Current artifact inventory. |
+| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v3.1 | scaffold, shared role update, review fix, SPEC-BOOT-002 implementation, merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, and final maintenance validation | SPEC-BOOT-002 | none | true | Current artifact inventory. |
 | ART-TRACE-001 | traceability | Traceability Matrix | `TRACEABILITY_MATRIX.md` | authoritative | v2.5 | scaffold, shared role update, review fix, SPEC-BOOT-002 final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge | SPEC-BOOT-002 | none | true | Requirement-to-evidence map. |
 | ART-TEST-001 | test-strategy | Test Strategy | `TEST_STRATEGY.md` | authoritative | v1.0 | user request | none | none | true | Testing principles. |
 | ART-TEST-002 | test-plan | Test Plan | `TEST_PLAN.md` | authoritative | v1.0 | scaffold | none | none | true | Current test plan. |
@@ -85,12 +85,12 @@ Common fields for all entries below unless stated otherwise:
 |-------------|------|-------|-----------|--------|---------|--------------|--------------|-------------|---------------|-------|
 | ART-STATE-001 | shared-state | Project Memory | `PROJECT_MEMORY.md` | active | v1.0 | scaffold | none | none | false | Summary only. |
 | ART-STATE-002 | shared-state | Current State | `CURRENT_STATE.md` | active | v2.8 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge | SPEC-BOOT-002 | none | false | Current operational view. |
-| ART-STATE-003 | shared-state | AI Handoff | `AI_HANDOFF.md` | active | v2.8 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge | SPEC-BOOT-002 | none | false | Agent transition state. |
+| ART-STATE-003 | shared-state | AI Handoff | `AI_HANDOFF.md` | active | v2.9 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and checkout action maintenance | SPEC-BOOT-002 | none | false | Agent transition state. |
 | ART-STATE-004 | shared-state | Open Questions | `OPEN_QUESTIONS.md` | active | v1.0 | scaffold | none | none | false | Unresolved blockers. |
 | ART-STATE-005 | shared-state | Stale Items | `STALE_ITEMS.md` | active | v1.2 | scaffold, final adversarial review, stale status fix | SPEC-BOOT-002 | none | false | Drift and stale items; final spec-index status drift is resolved and narrow re-review approved the correction. |
 | ART-BACKLOG-001 | backlog | Backlog | `BACKLOG.md` | active | v1.7 | scaffold, SPEC-BOOT-002 v1.0 implementation, public repository publication request, and ProjectGenesis PR merge | SPEC-BOOT-002 | none | true | Current backlog mirror, including staged items for the active scaffold intake and governance improvement plus completed public publication work. |
 | ART-PLAN-001 | implementation-plan | Implementation Plan | `IMPLEMENTATION_PLAN.md` | active | v1.0 | scaffold | none | none | true | Bootstrap implementation plan. |
-| ART-TEST-003 | test-results | Test Results | `TEST_RESULTS.md` | active | v1.19 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and post-merge CI cleanup | SPEC-BOOT-002 | none | false | Validation history. |
+| ART-TEST-003 | test-results | Test Results | `TEST_RESULTS.md` | active | v1.21 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, and final maintenance validation | SPEC-BOOT-002 | none | false | Validation history. |
 
 ## Template And Directory Artifacts
 
@@ -120,7 +120,7 @@ Common fields for all entries below unless stated otherwise:
 | ART-PR-PACKAGE-TEMPLATE | template | PR Review Package Template | `REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md` | active | v1.0 | scaffold | none | none | false | Implementer review package. |
 | ART-TEST-MANUAL | checklist | Manual Test Checklist | `TESTS/MANUAL_TEST_CHECKLIST.md` | active | v1.0 | scaffold | none | none | false | Manual validation checklist. |
 | ART-TEST-AC-MAP | traceability | Acceptance Criteria Map | `TESTS/ACCEPTANCE_CRITERIA_MAP.md` | active | v1.3 | scaffold, SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | true | AC-to-test map. |
-| ART-WORKLOG-INDEX | worklog | Worklog Index | `WORKLOG/WORKLOG_INDEX.md` | active | v2.7 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and post-merge CI cleanup | SPEC-BOOT-002 | none | false | Session history. |
+| ART-WORKLOG-INDEX | worklog | Worklog Index | `WORKLOG/WORKLOG_INDEX.md` | active | v2.9 | scaffold, shared role update, review fix, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, and final maintenance validation | SPEC-BOOT-002 | none | false | Session history. |
 | ART-HANDOFF-INDEX | handoff-index | Handoff Index | `HANDOFFS/HANDOFF_INDEX.md` | active | v1.0 | scaffold | none | none | false | Historical handoffs. |
 | ART-SCRIPT-CLAUDE | script | Claude Role Startup Helper | `SCRIPTS/start-claude.sh` | active | v1.1 | user request, review fix | none | none | false | Optional Claude helper that loads shared rules and one allowlisted role file through `--append-system-prompt`; default mode is orientation-only. |
 | ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | active | v1.5 | scaffold, shared role update, review fix, SPEC-BOOT-002 final review fixes | SPEC-BOOT-002 | none | false | Lightweight validation, including column-aware spec evidence, approved assumption evidence, intake, command, context pack, and handoff checks. |
@@ -151,7 +151,7 @@ Common fields for all entries below unless stated otherwise:
 | ART-HOOK-PRECOMMIT | hook | Pre-commit Hook Template | `.githooks/pre-commit` | active | v1.1 | scaffold, commit validation fix | none | none | false | Fast local validation and secret pattern check that avoids matching its own scanner definition. |
 | ART-HOOK-COMMITMSG | hook | Commit Message Hook Template | `.githooks/commit-msg` | active | v1.0 | scaffold | none | none | false | Commit reference reminder. |
 | ART-HOOK-PREPUSH | hook | Pre-push Hook Template | `.githooks/pre-push` | active | v1.0 | scaffold | none | none | false | Bootstrap validation before push. |
-| ART-CI-WORKFLOW | ci-template | Bootstrap Validation Workflow | `.github/workflows/bootstrap-validation.yml` | active | v1.0 | scaffold | none | none | false | Optional GitHub Actions validation. |
+| ART-CI-WORKFLOW | ci-template | Bootstrap Validation Workflow | `.github/workflows/bootstrap-validation.yml` | active | v1.1 | scaffold and checkout action maintenance | none | none | false | GitHub Actions validation using `actions/checkout@v5`. |
 | ART-GITHUB-CODEOWNERS | github-config | Code Owners | `.github/CODEOWNERS` | active | v1.0 | public repository publication request | none | none | false | Assigns all repository paths to `@mrhussamahmed` for Code Owner review when branch protection enables it. |
 | ART-GITIGNORE | config | Git Ignore | `.gitignore` | active | v1.0 | scaffold | none | none | false | Generic generated file and secret-adjacent ignores. |
 

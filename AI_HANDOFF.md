@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v2.8
+version: v2.9
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, and ProjectGenesis PR merge
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, and checkout action maintenance
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -38,8 +38,9 @@ Documentation Curator, DevOps Release Reviewer
 
 ## Last Completed Task
 
-Merged BOOT-016 ProjectGenesis public publication PR and enabled required
-`validate` branch protection on `main`.
+Merged BOOT-016 ProjectGenesis public publication PR, enabled required
+`validate` branch protection on `main`, and updated Bootstrap Validation to
+use `actions/checkout@v5`.
 
 ## Current In-Progress Task
 
@@ -68,6 +69,7 @@ None.
 - `BACKLOG.md`
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`
 - `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`
+- `.github/workflows/bootstrap-validation.yml`
 
 ## Specs Changed
 
@@ -260,4 +262,4 @@ Bootstrap scaffold: baseline exists. Scaffold improvement: `SPEC-BOOT-002`
 v1.2 implementation is validated. The `Start requirement breakdown` command
 shortcut is merged to `main`. BOOT-016 public repository publication is merged
 to `main`, and GitHub branch protection now requires PR review plus the
-`validate` status check.
+`validate` status check. Bootstrap Validation uses `actions/checkout@v5`.
