@@ -2,12 +2,12 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.5
+version: v3.9
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, and BOOT-017 post-merge state cleanup
-linked_specs: [SPEC-BOOT-002]
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, and BOOT-018 final review approval
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -23,6 +23,15 @@ authoritative: false
   fresh-context implementation review approved with minor comments, and the
   final adversarial review P2 spec-index status correction has been addressed
   and narrow re-review found no remaining P0, P1, or P2 findings.
+- `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md` is approved at v1.0.
+  It is a policy-only spec for adaptive governance routing. It authorizes
+  BOOT-019 through BOOT-024 follow-up slices, but it does not by itself replace
+  existing governance, validator, hook, CI, role, context-pack, command,
+  template, README, or state-structure mechanics.
+
+## Proposed Specs
+
+- None.
 
 ## Active Architecture
 
@@ -35,6 +44,17 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- BOOT-018 is approved and ready for merge on branch
+  `codex/spec-boot-003-adaptive-governance`. This first slice creates the
+  approved `SPEC-BOOT-003` policy and aligns spec index, backlog, registry,
+  traceability, current state, handoff, test results, review records, and
+  worklog. Initial review requested changes for non-durable prior-review source
+  claims, follow-up backlog gates, and traceability metadata; those findings are
+  addressed. Fresh-context re-review approved with minor comments and no
+  remaining P0, P1, or P2 findings. Final narrow review approved with no P0,
+  P1, P2, or P3 findings. Validator, hook, CI, role, context-pack, command,
+  template, README, and state-structure changes are intentionally out of scope
+  until separate reviewed follow-up slices.
 - README positioning and tooling prerequisite update under BOOT-017 is merged
   into `main`. The README now explains
   ProjectGenesis capabilities and audience fit, then documents Linear as the
@@ -105,7 +125,7 @@ authoritative: false
 
 ## Active Branch
 
-- `main`
+- `codex/spec-boot-003-adaptive-governance`
 
 ## Active Worktree
 
@@ -118,12 +138,20 @@ authoritative: false
 - Downstream project readiness using the published ProjectGenesis scaffold.
 - Downstream project readiness using the updated public README and published
   ProjectGenesis scaffold.
+- Adaptive governance routing under approved `SPEC-BOOT-003`, with BOOT-018
+  ready for merge and BOOT-019 through BOOT-024 blocked pending merge and
+  separate work authorization.
 
 ## Current Blockers
 
 - No product-specific input has been provided for a downstream software
   project.
 - No active bootstrap publication blockers.
+- BOOT-018 must be committed, pushed, and merged before the approved
+  `SPEC-BOOT-003` policy is available on `main`.
+- Follow-up `SPEC-BOOT-003` mechanics still require separate reviewed slices
+  before changing validators, hooks, CI, role files, context packs, commands,
+  templates, README content, or state-file structure.
 
 ## Current Source-Of-Truth Files
 
@@ -135,6 +163,9 @@ authoritative: false
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 - `SPECS/SPEC_INDEX.md`
+- `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md`
+- `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`
 - `ARCHITECTURE.md`
 - `BACKLOG.md`
 - `BRANCH_AND_WORKTREE_GUIDE.md`
@@ -147,8 +178,8 @@ authoritative: false
 
 ## Next Recommended Action
 
-Start the next downstream project intake by adding rough material to
-`00_intake/raw/` and running `Start requirement breakdown`.
+Commit, push, and merge the approved BOOT-018 policy-only `SPEC-BOOT-003`
+branch, then record post-merge state on `main`.
 
 ## Latest Validation
 
@@ -247,3 +278,28 @@ Start the next downstream project intake by adding rough material to
   `bash SCRIPTS/validate-bootstrap.sh`,
   `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
   validator shell syntax checks passed on 2026-05-13.
+- SPEC-BOOT-003 policy-only proposal validation:
+  `bash SCRIPTS/validate-bootstrap.sh`, `git diff --check`, and a
+  trailing-whitespace scan of the new spec passed on 2026-05-13 on branch
+  `codex/spec-boot-003-adaptive-governance`. Red checks were not run because
+  this slice does not change validator behavior.
+- SPEC-BOOT-003 review-fix validation:
+  `bash SCRIPTS/validate-bootstrap.sh`, `git diff --check`, new-file
+  trailing-whitespace scan, and `git status --short --branch` passed on
+  2026-05-13 after addressing initial review findings and adding durable review
+  artifacts. Red checks were not run because validator behavior did not change.
+- SPEC-BOOT-003 fresh-context adversarial re-review approved with minor comments
+  on 2026-05-13. No P0, P1, or P2 findings remain. The only P3 metadata comment
+  was addressed by aligning `SPECS/SPEC_INDEX.md` linked-spec metadata with the
+  registry.
+- SPEC-BOOT-003 final narrow review approved on 2026-05-13 with no P0, P1, P2,
+  or P3 findings. The reviewer confirmed branch readiness to commit and proceed
+  to PR or merge under repository policy.
+- SPEC-BOOT-003 approval-state validation:
+  `bash SCRIPTS/validate-bootstrap.sh`, `git diff --check`, new-file
+  trailing-whitespace scan, and `git status --short --branch` passed on
+  2026-05-13 after promoting the policy-only spec to approved v1.0.
+- SPEC-BOOT-003 final pre-commit validation:
+  `bash SCRIPTS/validate-bootstrap.sh`, `git diff --check`, new-file
+  trailing-whitespace scan, and `git status --short --branch` passed on
+  2026-05-13 after final review/state records were updated.

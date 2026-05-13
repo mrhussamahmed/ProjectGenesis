@@ -2,12 +2,12 @@ artifact_id: ART-SPEC-INDEX
 title: Spec Index
 type: spec-index
 status: active
-version: v1.7
+version: v1.10
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
-linked_specs: []
+source: Initial bootstrap scaffold, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, and SPEC-BOOT-003 approval
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -24,6 +24,7 @@ infrastructure tasks, refactors, and acceptance criteria.
 | Spec ID | Title | File | Status | Version | Owner | Related Backlog | Related Ticket | Related ADRs | Current Status |
 |---------|-------|------|--------|---------|-------|-----------------|----------------|--------------|----------------|
 | SPEC-BOOT-002 | Scaffold Intake And Governance Improvement | `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md` | active | v1.2 | AI Bootstrap Maintainers | BOOT-009 through BOOT-015 | none | none | Active; BOOT-010 through BOOT-015 implemented, validated, and final review P1/P2 findings addressed. |
+| SPEC-BOOT-003 | Adaptive Governance Routing | `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md` | approved | v1.0 | AI Bootstrap Maintainers | BOOT-018 through BOOT-024 | none | none | Approved policy-only spec; re-review found no P0/P1/P2 findings, and follow-up mechanics require separate reviewed slices. |
 
 ## Rules
 
