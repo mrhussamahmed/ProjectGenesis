@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.32
+version: v1.33
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, and BOOT-018 merge
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, and BOOT-019 through BOOT-024 validation
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -73,6 +73,8 @@ authoritative: false
 | 2026-05-13 | SPEC-BOOT-003 final pre-commit validation | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; `grep -n '[[:blank:]]$' SPECS/SPEC-BOOT-003-adaptive-governance-routing.md REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`; `git status --short --branch` | passed | Final validation passed after recording final approval, state, handoff, registry, traceability, test results, worklog, and review index updates before commit. Red checks were not run because validator behavior did not change. |
 | 2026-05-13 | SPEC-BOOT-003 commit, PR, and merge | `.githooks/pre-commit`; `git push -u origin codex/spec-boot-003-adaptive-governance`; `.githooks/pre-push`; `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head codex/spec-boot-003-adaptive-governance`; `gh pr checks 3 --repo mrhussamahmed/ProjectGenesis --watch --interval 5`; `gh pr merge 3 --repo mrhussamahmed/ProjectGenesis --merge --admin --delete-branch`; `git fetch origin && git switch main && git merge --ff-only origin/main` | passed | Commit `0d05135` pushed, PR #3 opened, GitHub Actions `validate` passed, normal merge was blocked by missing GitHub-hosted review approval, admin merge succeeded, remote branch was deleted, and local `main` fast-forwarded to merge commit `2e4c3480181f8b6b395e48588b5c3c99cc52aee8`. |
 | 2026-05-13 | BOOT-018 post-merge state cleanup validation | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; `git status --short --branch` | passed | Validation passed after updating state, handoff, backlog, traceability, registry, test results, worklog, and spec index for merged PR #3 on `main`. |
+| 2026-05-14 | BOOT-019 through BOOT-024 adaptive governance implementation validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; shell syntax checks for validator, red-check helper, Claude helper, and hooks | passed | Validation passed after adding operation routing, impact map, validation modes, handoff rules, structural validator checks, red-check fixtures, CI red checks, and performance measurement. GitHub Actions `validate` remains pending until PR creation. |
+| 2026-05-14 | BOOT-019 through BOOT-024 review-fix validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; shell syntax checks for validator, red-check helper, Claude helper, and hooks | passed | Validation passed after addressing initial fresh-context review findings for final evidence envelope, BOOT-024 baseline measurement records, protected-path misclassification red checks, and complete review-package changed-file evidence. GitHub Actions `validate` remains pending until PR creation. |
 
 ## Rules
 

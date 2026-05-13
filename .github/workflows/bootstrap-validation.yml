@@ -14,3 +14,15 @@ jobs:
 
       - name: Validate bootstrap package
         run: bash SCRIPTS/validate-bootstrap.sh
+
+      - name: Run bootstrap red checks
+        run: bash SCRIPTS/validate-bootstrap-red-checks.sh
+
+      - name: Check shell syntax
+        run: |
+          bash -n SCRIPTS/validate-bootstrap.sh
+          bash -n SCRIPTS/validate-bootstrap-red-checks.sh
+          bash -n SCRIPTS/start-claude.sh
+          bash -n .githooks/pre-commit
+          bash -n .githooks/pre-push
+          bash -n .githooks/commit-msg

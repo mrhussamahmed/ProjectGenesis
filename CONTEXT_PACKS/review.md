@@ -2,12 +2,12 @@ artifact_id: ART-CONTEXT-PACK-REVIEW
 title: Review Context Pack
 type: context-pack
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: SPEC-BOOT-002 and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -23,6 +23,7 @@ authoritative: false
 - `PR_REVIEW_POLICY.md`
 - `PR_MERGE_POLICY.md`
 - `RISK_MODEL.md`
+- `OPERATION_ROUTING.md`
 - `CURRENT_STATE.md`
 - `AI_HANDOFF.md`
 - `ARTIFACT_REGISTRY.md`
@@ -56,12 +57,15 @@ authoritative: false
 - missing review package for PR-ready work
 - stale handoff prevents independent review
 - unverified completion claims
+- missing or retroactive operation classification
+- missing final evidence envelope for meaningful work
 - high-risk untested changes
 
 ## Authority Limit
 
 This pack cannot rely on implementer chat history and cannot approve without
-repository evidence. It cannot override `CONTEXT_INDEX.md`, shared agent
+repository evidence. It cannot override `CONTEXT_INDEX.md`,
+`OPERATION_ROUTING.md`, shared agent
 rules, selected role files, approved or active specs, accepted ADRs,
 `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, or
 `AI_HANDOFF.md`.

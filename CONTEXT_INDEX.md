@@ -2,12 +2,12 @@ artifact_id: ART-CTX-001
 title: Context Index
 type: guide
 status: authoritative
-version: v1.2
+version: v1.3
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, and SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: User request, reference repository audit, SPEC-BOOT-002, and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -43,9 +43,14 @@ define project truth.
 - `TRACEABILITY_MATRIX.md`
 - `BRANCH_AND_WORKTREE_GUIDE.md`
 - `GOVERNANCE.md`
+- `OPERATION_ROUTING.md`
 - relevant spec files
 - relevant ADRs
 - `git status --short --branch`, when Git is available
+
+Use the read tiers in `OPERATION_ROUTING.md` after minimum context is loaded.
+Do not open Tier 3, Tier 4, or large historical artifacts unless the operation
+profile, impact map, or unresolved evidence requires them.
 
 ## Command Shortcuts
 
@@ -78,6 +83,7 @@ registry.
 - `AI_PROJECT_BOOTSTRAP.md`
 - `CURRENT_STATE.md`
 - `AI_HANDOFF.md`
+- `OPERATION_ROUTING.md`
 - relevant spec
 - relevant backlog item
 - relevant ADRs
@@ -109,6 +115,7 @@ registry.
 
 - `PR_REVIEW_POLICY.md`
 - `PR_MERGE_POLICY.md`
+- `OPERATION_ROUTING.md`
 - `AI_REVIEW_PROMPTS.md`
 - review package under `REVIEWS/`
 - PR diff or local diff

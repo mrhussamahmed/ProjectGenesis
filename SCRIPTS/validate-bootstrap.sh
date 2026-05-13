@@ -30,6 +30,8 @@ required_files=(
   "CLAUDE.md"
   "AGENTS.md"
   "GOVERNANCE.md"
+  "GOVERNANCE_PERFORMANCE.md"
+  "OPERATION_ROUTING.md"
   "PROJECT_MEMORY.md"
   "CURRENT_STATE.md"
   "AI_HANDOFF.md"
@@ -359,9 +361,138 @@ grep -Fq "TRACEABILITY_MATRIX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md doe
 grep -Fq "SPECS/SPEC_INDEX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference SPECS/SPEC_INDEX.md"
 grep -Fq "memory/ai/SHARED_AGENT_RULES.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference memory/ai/SHARED_AGENT_RULES.md"
 grep -Fq "memory/ai/ROLE_*.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference memory/ai/ROLE_*.md"
+grep -Fq "OPERATION_ROUTING.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference OPERATION_ROUTING.md"
+grep -Fq "OPERATION_ROUTING.md" memory/ai/SHARED_AGENT_RULES.md || fail "shared agent rules do not reference OPERATION_ROUTING.md"
+grep -Fq "OPERATION_ROUTING.md" GOVERNANCE.md || fail "GOVERNANCE.md does not reference OPERATION_ROUTING.md"
 grep -Fq "Default mode is orientation-only" SCRIPTS/start-claude.sh || fail "SCRIPTS/start-claude.sh does not document default orientation-only behavior"
 grep -Fq "default orientation-only mode" CLAUDE.md || fail "CLAUDE.md does not document default orientation-only behavior"
 grep -Fq "default orientation-only" BOOTSTRAP_USAGE.md || fail "BOOTSTRAP_USAGE.md does not document default orientation-only behavior"
+
+for section in \
+  "## Operation Profiles" \
+  "## Escalation Precedence" \
+  "## Protected Artifacts" \
+  "## Read Tiers" \
+  "## Token Budgets" \
+  "## Write Plan" \
+  "## Impact Map" \
+  "## Validation Modes" \
+  "## Evidence Envelope" \
+  "## Handoff And Current State" \
+  "## Claim Evidence" \
+  "## Measurement"; do
+  grep -Fq "$section" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing section: $section"
+done
+
+for profile in \
+  "review-only" \
+  "docs-trivial" \
+  "docs-non-authoritative" \
+  "docs-public-claim" \
+  "state-sync" \
+  "planning-governance" \
+  "strict-protected"; do
+  grep -Fq "\`$profile\`" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing operation profile: $profile"
+done
+
+for mode in fast standard strict; do
+  grep -Eq "\| $mode \|" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing validation mode: $mode"
+done
+
+for field in \
+  "Operation profile:" \
+  "Target files:" \
+  "Protected files touched:" \
+  "Expected risk:" \
+  "Branch requirement:" \
+  "Required validation:" \
+  "Required review:" \
+  "Traceability impact:" \
+  "Registry impact:" \
+  "Handoff/state impact:" \
+  "Dirty worktree status:" \
+  "Escalation triggers checked:"; do
+  grep -Fq "$field" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing pre-change field: $field"
+done
+
+for field in \
+  "Classification confidence:" \
+  "Files read:" \
+  "Files changed:" \
+  "Files intentionally not read:" \
+  "Artifacts not impacted:" \
+  "Validation run:" \
+  "Validation skipped:" \
+  "Review required:" \
+  "Next safe action:"; do
+  grep -Fq "$field" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing evidence envelope field: $field"
+done
+
+grep -Fq "Pre-Change Classification" AI_HANDOFF.md || fail "AI_HANDOFF.md missing pre-change classification record"
+grep -Fq "Operation profile:" AI_HANDOFF.md || fail "AI_HANDOFF.md missing operation profile evidence"
+grep -Fq "OPERATION_ROUTING.md" REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md || fail "PR review package template missing operation routing section"
+grep -Fq "Operation Routing Review" REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md || fail "adversarial review template missing operation routing review"
+
+while IFS='|' read -r kind section; do
+  [[ -z "$kind" ]] && continue
+  case "$kind" in
+    strict) fail "AI_HANDOFF.md protected mechanics classification must be strict-protected: $section" ;;
+    planning) fail "AI_HANDOFF.md protected planning classification must be planning-governance or strict-protected: $section" ;;
+  esac
+done < <(awk '
+  function trim(value) {
+    gsub(/^[ \t]+|[ \t]+$/, "", value)
+    return value
+  }
+  function evaluate() {
+    if (!in_classification) {
+      return
+    }
+    if (target_body ~ /(SCRIPTS\/|\.github\/workflows|\.githooks\/|memory\/ai\/|PR_REVIEW_POLICY\.md|PR_MERGE_POLICY\.md|RISK_MODEL\.md|BRANCH_AND_WORKTREE_GUIDE\.md|GOVERNANCE\.md|OPERATION_ROUTING\.md|CONTEXT_PACKS\/|COMMANDS\/|REVIEWS\/templates\/|SPECS\/templates\/|ADR\/templates\/|BACKLOG\/templates\/)/ && profile != "strict-protected") {
+      print "strict|" section
+    } else if (target_body ~ /(SPECS\/|BACKLOG\.md|BACKLOG\/|TRACEABILITY_MATRIX\.md|ARTIFACT_REGISTRY\.md|ADR\/|02_requirements\/|TESTS\/ACCEPTANCE_CRITERIA_MAP\.md)/ && profile !~ /^(planning-governance|strict-protected)$/) {
+      print "planning|" section
+    }
+    checked_first = 1
+  }
+  /^## / {
+    evaluate()
+    if (checked_first) {
+      exit
+    }
+    section = trim(substr($0, 4))
+    in_classification = ($0 ~ /Pre-Change Classification/)
+    profile = ""
+    body = ""
+    target_body = ""
+    in_target = 0
+    next
+  }
+  in_classification {
+    body = body "\n" $0
+    if ($0 ~ /Target files:/) {
+      in_target = 1
+    }
+    if ($0 ~ /Protected files touched:/) {
+      in_target = 0
+    }
+    if (in_target) {
+      target_body = target_body "\n" $0
+    }
+    if ($0 ~ /Operation profile:/) {
+      if (match($0, /`[^`]+`/)) {
+        profile = substr($0, RSTART + 1, RLENGTH - 2)
+      } else {
+        split($0, profile_parts, "Operation profile:")
+        profile = trim(profile_parts[2])
+        sub(/[[:space:]].*$/, "", profile)
+      }
+    }
+  }
+  END {
+    evaluate()
+  }
+' AI_HANDOFF.md)
 
 for path in "${required_files[@]}"; do
   grep -Fq "\`$path\`" ARTIFACT_REGISTRY.md || fail "ARTIFACT_REGISTRY.md does not register $path"

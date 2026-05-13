@@ -2,12 +2,12 @@ artifact_id: ART-COMMAND-TEMPLATE
 title: Command Template
 type: command-template
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: SPEC-BOOT-002 and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -29,6 +29,7 @@ Name the primary `memory/ai/ROLE_*.md` file.
 - `memory/ai/SHARED_AGENT_RULES.md`
 - selected role file
 - `CONTEXT_INDEX.md`
+- `OPERATION_ROUTING.md`
 - task-specific source-of-truth files
 
 ## Inputs
@@ -39,6 +40,8 @@ Name the primary `memory/ai/ROLE_*.md` file.
 ## Outputs
 
 - changed artifacts or review output expected from this workflow
+- durable operation classification and final evidence envelope when the command
+  changes repository artifacts
 
 ## Stop Conditions
 
@@ -49,6 +52,7 @@ Name the primary `memory/ai/ROLE_*.md` file.
 
 ## Validation
 
+- validation mode from `OPERATION_ROUTING.md`
 - `bash SCRIPTS/validate-bootstrap.sh`
 - task-specific checks defined by the active spec or backlog item
 
@@ -56,5 +60,5 @@ Name the primary `memory/ai/ROLE_*.md` file.
 
 This command is a workflow shortcut. It cannot override repository governance,
 approved or active specs, accepted ADRs, `CONTEXT_INDEX.md`, selected role
-files, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, or
-`AI_HANDOFF.md`.
+files, `OPERATION_ROUTING.md`, `ARTIFACT_REGISTRY.md`,
+`TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, or `AI_HANDOFF.md`.

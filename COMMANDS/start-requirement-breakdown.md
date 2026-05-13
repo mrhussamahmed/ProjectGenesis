@@ -2,12 +2,12 @@ artifact_id: ART-COMMAND-START-REQUIREMENT-BREAKDOWN
 title: Start Requirement Breakdown
 type: command
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request on 2026-05-13 and SPEC-BOOT-002 command framework
-linked_specs: [SPEC-BOOT-002]
+source: User request on 2026-05-13, SPEC-BOOT-002 command framework, and SPEC-BOOT-003 routing
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -57,6 +57,7 @@ Always read:
 - selected role file
 - `AI_PROJECT_BOOTSTRAP.md`
 - `CONTEXT_INDEX.md`
+- `OPERATION_ROUTING.md`
 - `BOOTSTRAP_USAGE.md`
 - `CURRENT_STATE.md`
 - `AI_HANDOFF.md`
@@ -110,6 +111,11 @@ Also inspect:
 - Treat repository files as source of truth and chat history as
   non-authoritative context.
 - Run `git status --short --branch`.
+- Classify the operation using `OPERATION_ROUTING.md` before source-of-truth
+  edits. Intake normally starts as `planning-governance`; escalate to
+  `strict-protected` if the command changes validators, roles, context-pack
+  authority, command-framework rules, CI, hooks, security, release, review
+  policy, or source-of-truth hierarchy.
 - If on `main`, create or switch to a task branch before source-of-truth edits
   unless the user explicitly authorizes direct-main work.
 - If the branch changes, immediately update `CURRENT_STATE.md` and

@@ -2,12 +2,12 @@ artifact_id: ART-CONTEXT-PACKS-README
 title: Context Packs Guide
 type: context-pack-index
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: SPEC-BOOT-002 and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -16,8 +16,9 @@ authoritative: true
 
 # Context Packs
 
-Context packs reduce repeated reading for common tasks. They are routing aids,
-not source-of-truth governance.
+Context packs reduce repeated reading for common tasks. They are routing aids
+that must be used with the read tiers and impact rules in
+`OPERATION_ROUTING.md`.
 
 ## Available Packs
 
@@ -32,7 +33,7 @@ not source-of-truth governance.
 
 ## Authority Limit
 
-Context packs are subordinate to `CONTEXT_INDEX.md`,
+Context packs are subordinate to `CONTEXT_INDEX.md`, `OPERATION_ROUTING.md`,
 `memory/ai/SHARED_AGENT_RULES.md`, selected role files, approved or active
 specs, accepted ADRs, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
 `CURRENT_STATE.md`, and `AI_HANDOFF.md`.

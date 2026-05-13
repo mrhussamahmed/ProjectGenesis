@@ -2,12 +2,12 @@ artifact_id: ART-REVIEW-002
 title: PR Merge Policy
 type: merge-policy
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request
-linked_specs: []
+source: User request and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -20,6 +20,8 @@ A PR may be merged only when:
 
 - it links to an approved or active spec
 - it links to a backlog item or ticket
+- durable operation classification and final evidence envelope exist for
+  meaningful work
 - acceptance criteria are satisfied or explicitly deferred with approval
 - required tests pass or failures are documented and accepted
 - traceability matrix is updated
@@ -61,6 +63,7 @@ The PR package or merge note must include:
 - tests run and results
 - review findings and resolutions
 - risk classification
+- operation profile and validation mode
 - rollout and rollback notes
 - traceability row updates
 - artifact registry updates

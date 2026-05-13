@@ -38,6 +38,8 @@ light | standard | deep | adversarial deep | multi-role review
 
 - Review package:
 - PR diff or local diff:
+- Operation classification:
+- Final evidence envelope:
 - Specs:
 - Backlog items or tickets:
 - ADRs:
@@ -51,6 +53,14 @@ light | standard | deep | adversarial deep | multi-role review
 | Severity | File | Evidence | Finding | Required Change |
 |----------|------|----------|---------|-----------------|
 | P0/P1/P2/P3 |  |  |  |  |
+
+## Operation Routing Review
+
+- Profile correctness:
+- Escalation precedence:
+- Protected artifacts:
+- Skipped validation rationale:
+- Handoff and evidence durability:
 
 ## Required Changes
 
@@ -70,4 +80,3 @@ light | standard | deep | adversarial deep | multi-role review
 ## Re-Review Conditions
 
 - 
-

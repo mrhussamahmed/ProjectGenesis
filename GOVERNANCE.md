@@ -2,12 +2,12 @@ artifact_id: ART-GOV-001
 title: Governance
 type: governance
 status: authoritative
-version: v1.2
+version: v1.3
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, and SPEC-BOOT-002
-linked_specs: [SPEC-BOOT-002]
+source: User request, reference repository audit, SPEC-BOOT-002, and SPEC-BOOT-003
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -34,12 +34,27 @@ authoritative: true
 10. Minimize interruption: ask only when missing information blocks progress or
     creates major risk.
 11. No over-engineering: keep governance practical and local checks fast.
+12. Adaptive routing: use `OPERATION_ROUTING.md` to match effort, reads,
+    writes, validation, and review to verified impact.
 
 ## Source-Of-Truth Enforcement
 
 Use the hierarchy in `AI_PROJECT_BOOTSTRAP.md`. If lower-priority sources
 conflict with higher-priority sources, follow the higher source and document the
 conflict.
+
+## Operation Routing
+
+Before meaningful file edits, classify the operation using
+`OPERATION_ROUTING.md`. The classification must be durable for meaningful work
+and must identify touched protected artifacts, dirty worktree state, required
+validation, required review, traceability impact, registry impact, and
+handoff/state impact.
+
+Adaptive routing can reduce reading, writing, and repeated validation only when
+the operation record proves limited impact. It cannot skip required
+understanding, hide evidence, weaken review, or make chat history
+authoritative.
 
 ## Artifact Lifecycle
 
