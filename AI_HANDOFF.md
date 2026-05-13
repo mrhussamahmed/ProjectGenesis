@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.3
+version: v3.4
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, and BOOT-017 validation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, and BOOT-017 PR creation
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -47,7 +47,7 @@ project work.
 
 BOOT-017 README positioning and tooling prerequisite update. Fresh-context
 review findings are addressed, narrow re-review approved, final validation
-passed, and PR creation is pending.
+passed, and PR #2 is open.
 
 ## Files Changed
 
@@ -133,6 +133,7 @@ passed, and PR creation is pending.
 - BOOT-017 is governed by active `SPEC-BOOT-002` as a compatible documentation
   follow-up to the scaffold command framework, source-of-truth hierarchy, and
   external ticket evidence rules.
+- BOOT-017 PR is open at `https://github.com/mrhussamahmed/ProjectGenesis/pull/2`.
 
 ## Assumptions Made
 
@@ -237,6 +238,10 @@ passed, and PR creation is pending.
   SCRIPTS/validate-bootstrap-red-checks.sh` - passed after BOOT-017 review
   record and source-of-truth updates.
 - Placeholder scan with `rg` - passed with no matches.
+- `git push -u origin codex/readme-tooling-prereqs` - passed; pre-push hook
+  passed.
+- `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head
+  codex/readme-tooling-prereqs` - passed and opened PR #2.
 
 ## Tests Not Run
 
@@ -266,11 +271,11 @@ outside BOOT-017.
 
 ## Untracked Files
 
-- None expected after staging and commit.
+- None.
 
 ## Next Recommended Action
 
-Open a reviewable BOOT-017 PR and merge after review.
+Review and merge BOOT-017 PR #2 after required checks and approvals.
 
 ## What The Next AI Must Read First
 
@@ -299,4 +304,4 @@ to `main`, and GitHub branch protection now requires PR review plus the
 `validate` status check. Bootstrap Validation uses `actions/checkout@v5`.
 BOOT-017 README positioning and tooling prerequisite update is in progress on
 `codex/readme-tooling-prereqs`; independent narrow re-review approved with no
-remaining P0/P1/P2 blockers and final validation passed.
+remaining P0/P1/P2 blockers, final validation passed, and PR #2 is open.

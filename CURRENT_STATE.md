@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.2
+version: v3.3
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, and BOOT-017 validation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, and BOOT-017 PR creation
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -46,6 +46,7 @@ authoritative: false
   files were restored, BOOT-017 now links consistently to active `SPEC-BOOT-002`,
   and narrow re-review approved with no remaining P0, P1, or P2 blockers.
 - BOOT-017 validation passed after review record and state updates.
+- BOOT-017 PR is open at `https://github.com/mrhussamahmed/ProjectGenesis/pull/2`.
 - Public GitHub publication work under BOOT-016 is merged. PR
   `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` merged into `main`
   at merge commit `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`.
@@ -120,7 +121,7 @@ authoritative: false
 
 - No product-specific input has been provided for a downstream software
   project.
-- BOOT-017 is pending PR and merge.
+- BOOT-017 PR #2 is pending review/merge.
 
 ## Current Source-Of-Truth Files
 
@@ -144,7 +145,7 @@ authoritative: false
 
 ## Next Recommended Action
 
-Open a reviewable BOOT-017 PR and merge after review.
+Review and merge BOOT-017 PR #2 after required checks and approvals.
 
 ## Latest Validation
 
