@@ -2,12 +2,12 @@ artifact_id: ART-CTX-001
 title: Context Index
 type: guide
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request and reference repository audit
-linked_specs: []
+source: User request, reference repository audit, and SPEC-BOOT-002
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -50,10 +50,17 @@ define project truth.
 ## Product Intake
 
 - `BOOTSTRAP_USAGE.md`
+- `00_intake/INTAKE_INDEX.md`
+- `00_intake/SOURCE_REGISTRY.md`
 - `OPEN_QUESTIONS.md`
-- product input files under `INPUT/`, if present
+- product input files under `00_intake/raw/`, if present
+- compatibility input files under `INPUT/`, if present
 - `SPECS/templates/SPEC_TEMPLATE.md`
 - `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`
+
+`00_intake/raw/` is the canonical raw intake folder. `INPUT/` remains a legacy
+alias during migration and must point agents back to the canonical intake
+registry.
 
 ## Implementation
 

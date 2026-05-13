@@ -2,12 +2,12 @@ artifact_id: ART-AI-ROLE-PRODUCT-ANALYST
 title: Role - Product Analyst
 type: agent-role
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request
-linked_specs: []
+source: User request and SPEC-BOOT-002
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -30,8 +30,10 @@ rough ideas, or documents.
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 
-Also read source input files under `INPUT/` or other user-specified locations
-when present.
+Also read source input files under canonical `00_intake/raw/` or other
+user-specified locations when present. `INPUT/` is a legacy alias during
+migration; if files are found there, register or move their source references
+through `00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
 
 ## Responsibilities
 

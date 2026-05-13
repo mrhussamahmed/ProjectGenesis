@@ -2,12 +2,12 @@ artifact_id: ART-BOOT-002
 title: Bootstrap Usage Guide
 type: guide
 status: authoritative
-version: v1.2
+version: v1.3
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: User request and reference repository audit
-linked_specs: []
+source: User request, reference repository audit, and SPEC-BOOT-002
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -19,19 +19,24 @@ authoritative: true
 Use this package by copying its files into a new project root or by creating a
 new repository from this folder.
 
+For the shortest path, start with `GETTING_STARTED.md` and then use
+`NEW_PROJECT_INITIALIZATION.md` inside the downstream project.
+
 ## Start From A Product Idea
 
-1. Put the idea in `INPUT/` or paste it into the current AI session.
-2. Tell the AI: "Read `AI_PROJECT_BOOTSTRAP.md` and scaffold this project from
+1. Put the idea in `00_intake/raw/` or paste it into the current AI session.
+2. Register the idea in `00_intake/SOURCE_REGISTRY.md` when it is stored as a
+   file.
+3. Tell the AI: "Read `AI_PROJECT_BOOTSTRAP.md` and scaffold this project from
    the product idea."
-3. The AI must read `CONTEXT_INDEX.md`, run the repository scan, and create:
+4. The AI must read `CONTEXT_INDEX.md`, run the repository scan, and create:
    specs, architecture, ADRs where needed, backlog, test strategy,
    traceability, artifact registry, and current state.
-4. Implementation must wait until the first task satisfies Definition of Ready.
+5. Implementation must wait until the first task satisfies Definition of Ready.
 
 ## Start From A PRD
 
-1. Place the PRD in the repository, preferably under `INPUT/`.
+1. Place the PRD in the repository, preferably under `00_intake/raw/`.
 2. The Product Analyst role extracts product requirements, user journeys,
    constraints, assumptions, and open questions.
 3. The Spec Author creates one or more specs under `SPECS/`.
@@ -40,13 +45,20 @@ new repository from this folder.
 
 ## Start From An Excel File Or Feature List
 
-1. Place the file under `INPUT/`.
+1. Place the file under `00_intake/raw/`.
 2. The AI must inspect sheets, columns, feature labels, priorities, owners,
    dependencies, notes, and unclear values.
 3. The AI should normalize rows into requirements, assumptions, open questions,
    spikes, and backlog items.
 4. If any spreadsheet value is ambiguous or conflicting, record it in
    `OPEN_QUESTIONS.md` instead of inventing intent.
+
+## Legacy Input Path
+
+`INPUT/` remains as a legacy alias for older prompts. New source material should
+use `00_intake/raw/`. If an agent finds files under `INPUT/`, it must register
+them in `00_intake/SOURCE_REGISTRY.md` and treat `INPUT/README.md` as the
+compatibility guide.
 
 ## Ask Claude To Use The Bootstrap
 

@@ -30,6 +30,16 @@ draft
 
 - 
 
+## Linked Requirements
+
+-
+
+## Source Evidence
+
+| Evidence | Source IDs | Confidence | Notes |
+|----------|------------|------------|-------|
+|  |  |  |  |
+
 ## Linked Backlog Items
 
 - 
@@ -45,6 +55,13 @@ downstream blockers, and why the decision is needed now.
 |--------|---------|------|------|----------|
 | A |  |  |  |  |
 | B |  |  |  |  |
+
+## Decision Impact
+
+- High-impact decision: yes/no
+- Impact areas: irreversible, external integration, security, deployment, API,
+  persistence, data, dependency, cost, blast radius
+- Required reviewers:
 
 ## Decision
 
@@ -82,4 +99,3 @@ later evidence invalidates it.
 | Version | Date | Change | Author |
 |---------|------|--------|--------|
 | v0.1 |  | Initial draft. |  |
-

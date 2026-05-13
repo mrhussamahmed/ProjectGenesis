@@ -2,12 +2,12 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.0
+version: v1.5
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-13
 owner: AI Bootstrap Maintainers
 source: Initial bootstrap scaffold
-linked_specs: []
+linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -31,12 +31,34 @@ under `BACKLOG/`.
 | BOOT-006 | Create implementation-ready backlog | Convert specs and architecture into sequenced tasks and Linear-ready items. | P1 | medium | medium | BOOT-004, BOOT-005 | blocked | may parallelize item authoring after boundaries are stable | Backlog Planner |
 | BOOT-007 | Define test strategy for first slice | Map acceptance criteria to automated and manual tests. | P1 | medium | medium | BOOT-004 | blocked | can run beside backlog planning | Test and QA Agent |
 | BOOT-008 | Prepare first implementation branch | Create branch/worktree only after the first task meets Definition of Ready. | P2 | low | low | BOOT-004, BOOT-006, BOOT-007 | blocked | sequential | Implementation Agent |
+| BOOT-009 | Review scaffold intake and governance spec | Review and approve or request changes on `SPEC-BOOT-002` before implementation. | P0 | medium | high | SPEC-BOOT-002 | done | sequential | Adversarial PR Reviewer |
+| BOOT-010 | Implement intake migration and source registry | Add canonical intake folders and migrate `INPUT/` to a legacy alias. | P1 | medium | medium | BOOT-009 | done | sequential | Documentation Curator |
+| BOOT-011 | Implement product context and requirements control | Add product context files plus requirement, assumption, and risk registers. | P1 | medium | high | BOOT-010 | done | sequential | Product Analyst, Spec Author |
+| BOOT-012 | Update workflow policy, templates, and traceability | Add the narrow direct-`main` documentation exception plus evidence, assumption, readiness, and test mapping fields. | P1 | medium | high | BOOT-011 | done | sequential | Spec Author, Architect |
+| BOOT-013 | Improve validator with red-check examples | Define and implement validator checks for evidence, assumptions, commands, sources, and handoff consistency. | P1 | medium | high | BOOT-012 | done | sequential | QA Reviewer |
+| BOOT-014 | Add context packs and command prompt framework | Add subordinate context packs and safe command prompt scaffolding after validator rules can check authority limits. | P2 | medium | medium | BOOT-013 | done | can parallelize after validator boundaries are stable | Documentation Curator |
+| BOOT-015 | Migrate onboarding RTF files | Convert useful RTF content to Markdown and register legacy lifecycle status. | P2 | medium | medium | BOOT-009 | done | can parallelize after spec approval | Documentation Curator |
 
-## Linear Workflow
+## External Ticket Workflow
 
-If Linear is available, use local backlog items as drafts until tickets are
-actually created. Do not claim Linear tickets exist unless the integration
-confirms them.
+If Linear, GitHub Issues, or another external tracker is available, use local
+backlog items as drafts until tickets are actually created. Markdown remains
+authoritative until ticket existence is confirmed.
+
+Tracker availability requires all of:
+
+- the user authorizes tracker use
+- an integration, CLI, or API is installed and usable
+- the agent can read or create tickets with command or tool evidence
+
+Ticket confirmation requires one of:
+
+- a real ticket ID or URL returned by the integration
+- successful CLI or API output
+- an authoritative repository artifact recording confirmed ticket evidence
+
+Do not claim external tickets exist from draft titles, planned descriptions, or
+chat claims alone.
 
 Each Linear-ready backlog item should include:
 
@@ -59,4 +81,3 @@ Each Linear-ready backlog item should include:
 - definition of done
 - parallelization status
 - file ownership boundaries
-
