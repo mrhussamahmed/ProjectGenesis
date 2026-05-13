@@ -2,12 +2,12 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.9
+version: v1.12
 created: 2026-05-09
 updated: 2026-05-13
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, and BOOT-017 merge
-linked_specs: [SPEC-BOOT-002]
+source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, and SPEC-BOOT-003 approval
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -40,6 +40,13 @@ under `BACKLOG/`.
 | BOOT-015 | Migrate onboarding RTF files | Convert useful RTF content to Markdown and register legacy lifecycle status. | P2 | medium | medium | BOOT-009 | done | can parallelize after spec approval | Documentation Curator |
 | BOOT-016 | Publish ProjectGenesis public repository | Add public README, AGPLv3 license, Code Owners, GitHub branch protection guidance, and a reviewable publication PR. | P1 | low | medium | origin repository access | done | sequential | Documentation Curator, DevOps Release Reviewer |
 | BOOT-017 | Improve README positioning and tooling prerequisites | Clarify ProjectGenesis capabilities, audience fit, Linear backlog storage, Linear setup, optional Spec Kit use, and other supported tooling before downstream project work starts. | P2 | low | low | BOOT-016 | done | sequential | Documentation Curator, DevOps Release Reviewer |
+| BOOT-018 | Create adaptive governance routing spec | Create approved `SPEC-BOOT-003` as the governing policy-only spec for operation profiles, escalation, durable evidence, and protected-artifact routing. | P0 | medium | high | user-approved plan | approved; ready for merge | sequential | Spec Author |
+| BOOT-019 | Define operation profile policy | After `SPEC-BOOT-003` is approved or activated, update governance-facing docs with approved operation profiles, risk mapping, branch rules, validation, and review requirements. | P1 | medium | high | BOOT-018 approved and merged | blocked pending merge and separate work authorization | sequential | Documentation Curator |
+| BOOT-020 | Define artifact impact map | After `SPEC-BOOT-003` is approved or activated and BOOT-019 is complete, add reviewed impact mapping so changed files determine required reads, writes, validation, review, and not-impacted artifacts. | P1 | medium | high | BOOT-019; SPEC-BOOT-003 approved or active | blocked | sequential | Documentation Curator, QA Reviewer |
+| BOOT-021 | Define validation modes and evidence envelope | After `SPEC-BOOT-003` is approved or activated and BOOT-020 is complete, add approved guidance for fast, standard, and strict validation modes plus durable operation evidence records. | P1 | medium | high | BOOT-020; SPEC-BOOT-003 approved or active | blocked | sequential | QA Reviewer, Documentation Curator |
+| BOOT-022 | Update current-state and handoff policy | After `SPEC-BOOT-003` is approved or activated and BOOT-021 is complete, add reviewed policy for compact current truth, durable evidence references, and handoff compression without losing active operational facts. | P1 | medium | high | BOOT-021; SPEC-BOOT-003 approved or active | blocked | sequential | Documentation Curator |
+| BOOT-023 | Add structural validator support | Add path/profile structural validator checks and red-check fixtures only after `SPEC-BOOT-003` is approved or activated and impact/evidence rules are stable. | P1 | medium | high | BOOT-021, BOOT-022; SPEC-BOOT-003 approved or active | blocked | sequential | QA Reviewer |
+| BOOT-024 | Measure governance routing performance | After `SPEC-BOOT-003` is approved or activated and BOOT-019 through BOOT-023 are complete, benchmark representative small and medium operations to confirm time and token savings without new review, traceability, or handoff regressions. | P2 | medium | medium | BOOT-019 through BOOT-023; SPEC-BOOT-003 approved or active | blocked | sequential | QA Reviewer, Documentation Curator |
 
 ## External Ticket Workflow
 
