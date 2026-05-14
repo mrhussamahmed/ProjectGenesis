@@ -146,13 +146,6 @@ Important folders and files include:
 7. Do not start implementation until the relevant task satisfies Definition of
    Ready in `AI_PROJECT_BOOTSTRAP.md`.
 
-## Public Launch And Examples
-
-- `examples/simple-saas-demo/` shows an illustrative small SaaS intake.
-- `docs/demo/60-second-demo-script.md` provides a short screen-recording script.
-- `docs/public_launch_checklist.md` lists manual GitHub launch steps.
-- `docs/token_efficiency_guidance.md` explains scoped context use without
-  bypassing governance.
 
 ## The Main Intake Command
 
