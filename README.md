@@ -1,18 +1,3 @@
-artifact_id: ART-README
-title: ProjectGenesis README
-type: public-readme
-status: active
-version: v1.3
-created: 2026-05-13
-updated: 2026-05-13
-owner: ProjectGenesis Maintainers
-source: Public repository publication request, tooling prerequisite documentation update, public positioning update, and public launch asset links
-linked_specs: [SPEC-BOOT-002]
-linked_tickets: []
-linked_adrs: []
-replaces:
-replaced_by:
-authoritative: true
 
 # ProjectGenesis
 
