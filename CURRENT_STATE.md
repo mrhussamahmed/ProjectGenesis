@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.13
+version: v3.14
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, and public launch readiness packaging
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, and BOOT-025 push validation
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -45,7 +45,8 @@ authoritative: false
 ## Active Implementation Phase
 
 - Public launch readiness and adoption packaging under `SPEC-BOOT-004` and
-  `BOOT-025` is merged locally to `main` and awaiting push. This work is
+  `BOOT-025` is merged and pushed to `main` at commit
+  `dfe8a07a80518e75c44d13a25abcbf742bc2ae76`. This work is
   additive and creates launch, demo, example, issue-template,
   token-efficiency, release-note, seed-issue, and roadmap proposal assets
   without changing product behavior or governance mechanics.
@@ -191,8 +192,7 @@ authoritative: false
 
 ## Next Recommended Action
 
-Push `main`, then perform manual GitHub launch items from
-`docs/public_launch_checklist.md`.
+Perform manual GitHub launch items from `docs/public_launch_checklist.md`.
 
 ## Latest Validation
 
@@ -342,3 +342,8 @@ Push `main`, then perform manual GitHub launch items from
   placeholder scan passed on 2026-05-14. An initial red-check run failed
   because a new handoff heading interfered with fixture targeting; the heading
   was fixed and red checks passed.
+- BOOT-025 merge and push validation:
+  pre-commit validation passed for branch commit `b6be660` and merge commit
+  `dfe8a07`; pre-push validation passed; GitHub Actions `Bootstrap Validation`
+  run `25848520440` passed on `main` for commit
+  `dfe8a07a80518e75c44d13a25abcbf742bc2ae76`.

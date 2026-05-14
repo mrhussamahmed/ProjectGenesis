@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.14
+version: v3.15
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, and public launch readiness packaging
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, and BOOT-025 push validation
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -38,17 +38,15 @@ Documentation Curator
 
 ## Last Completed Task
 
-Created public launch readiness and adoption packaging assets on
-`codex/public-launch-assets`, completed fresh-context adversarial review and
-fix loop, and merged the branch locally to `main` pending push.
+Created public launch readiness and adoption packaging assets, completed the
+fresh-context adversarial review and fix loop, merged to `main`, pushed to
+`origin/main`, and confirmed GitHub Actions `Bootstrap Validation` passed for
+commit `dfe8a07a80518e75c44d13a25abcbf742bc2ae76`.
 
 ## Current In-Progress Task
 
-Public launch readiness and adoption packaging is merged locally to `main` and
-pending push. The task is additive documentation and repository
-community-template work: launch checklist, public alpha release notes draft,
-demo/example material, social drafts, GitHub issue templates, seed issue
-drafts, token-efficiency guidance, and minimal CLI/bootstrap proposal.
+No active ProjectGenesis implementation task is in progress. BOOT-025 public
+launch readiness packaging is merged and pushed to `main`.
 
 ## Public Launch Assets Operation Classification
 
@@ -468,8 +466,8 @@ drafts, token-efficiency guidance, and minimal CLI/bootstrap proposal.
 
 ## Dirty Worktree Status
 
-Dirty files are expected only for local post-merge state sync before completing
-the merge commit. No unrelated dirty files are known.
+Dirty files are expected only for this post-push state sync before its cleanup
+commit. No unrelated dirty files are known.
 
 ## Untracked Files
 
@@ -477,8 +475,8 @@ the merge commit. No unrelated dirty files are known.
 
 ## Next Recommended Action
 
-Complete the merge commit on `main`, run validation, push `main`, then perform
-manual GitHub launch steps.
+Commit and push this post-push state sync, then perform manual GitHub launch
+steps from `docs/public_launch_checklist.md`.
 
 ## What The Next AI Must Read First
 
@@ -509,4 +507,4 @@ validated and merged. BOOT-016 publication, BOOT-017 README/tooling update,
 BOOT-018 `SPEC-BOOT-003` policy approval, and BOOT-019 through BOOT-024
 adaptive governance mechanics are merged to `main`, with post-merge state
 cleanup recorded. Public launch readiness assets are prepared on
-`main` locally and awaiting push.
+`main`, pushed to `origin/main`, and validated by GitHub Actions.
