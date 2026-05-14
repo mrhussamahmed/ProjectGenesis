@@ -2,12 +2,12 @@ artifact_id: ART-TRACE-001
 title: Traceability Matrix
 type: traceability
 status: authoritative
-version: v2.17
+version: v2.18
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, and BOOT-019 through BOOT-024 merge
-linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
+source: User request, initial scaffold, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, and public launch readiness packaging
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -65,6 +65,7 @@ instead of a product spec. Product implementation must not use this exception.
 | Public ProjectGenesis GitHub publication with AGPLv3 license, public README, Code Owners, branch protection guidance, and reviewable publication PR | User publication request, 2026-05-13; `origin/main` initial AGPLv3 license | none | BOOT-016 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-projectgenesis-publication.md`; `REVIEWS/REVIEW-2026-05-13-projectgenesis-publication.md`; merged PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/1` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; GitHub auth and repo checks; branch protection API verification; GitHub Actions `validate` | Merged to `main` at `0bc1f3f209f712aeef8f0ed976aba68ef0ee7406`; branch protection requires PR review, Code Owner review, conversation resolution, and `validate` status check |
 | README public positioning and tooling prerequisites for ProjectGenesis capabilities, Linear backlog storage, Linear setup, optional Spec Kit use, GitHub controls, and document conversion tooling | User request, 2026-05-13; official Linear docs; official GitHub Spec Kit docs | SPEC-BOOT-002 | BOOT-017 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-readme-tooling-prereqs.md`; `REVIEWS/REVIEW-2026-05-13-readme-tooling-prereqs.md`; merged PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/2` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; validator shell syntax checks; placeholder scan; pre-commit hook; pre-push hook; GitHub Actions `validate` | Merged to `main` at `7a4e3140d1c029ced05f5938a64e223cec0e2011` |
 | Adaptive governance routing for operation profiles, deterministic escalation, durable pre-change classification, durable evidence envelopes, protected artifacts, dirty worktree handling, handoff compression safety, claim evidence, and CI/manual validation boundaries | User request and repository performance analysis on 2026-05-13 | SPEC-BOOT-003 | BOOT-018 through BOOT-024 | `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`; `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md`; merged PR `https://github.com/mrhussamahmed/ProjectGenesis/pull/3` | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; fresh-context adversarial re-review; GitHub Actions `validate` | Merged to `main` at `2e4c3480181f8b6b395e48588b5c3c99cc52aee8`; mechanics changes require separate reviewed follow-up slices |
+| Public launch readiness and adoption packaging with launch checklist, release notes draft, demo script, social drafts, issue templates, seed issues, token guidance, minimal CLI proposal, and illustrative example | User request, 2026-05-14 | SPEC-BOOT-004 | BOOT-025 | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-public-launch-readiness.md`; `REVIEWS/REVIEW-2026-05-14-public-launch-readiness.md` | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; placeholder scan; explicit new-file trailing-whitespace scan | Merged locally to `main` and awaiting push; fresh-context final re-review approved with no P0/P1/blocking P2 findings |
 
 ## Adaptive Governance Routing Requirement Mapping
 

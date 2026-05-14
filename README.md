@@ -2,11 +2,11 @@ artifact_id: ART-README
 title: ProjectGenesis README
 type: public-readme
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-13
 updated: 2026-05-13
 owner: ProjectGenesis Maintainers
-source: Public repository publication request, tooling prerequisite documentation update, and public positioning update
+source: Public repository publication request, tooling prerequisite documentation update, public positioning update, and public launch asset links
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -160,6 +160,14 @@ Important folders and files include:
    to create external tickets.
 7. Do not start implementation until the relevant task satisfies Definition of
    Ready in `AI_PROJECT_BOOTSTRAP.md`.
+
+## Public Launch And Examples
+
+- `examples/simple-saas-demo/` shows an illustrative small SaaS intake.
+- `docs/demo/60-second-demo-script.md` provides a short screen-recording script.
+- `docs/public_launch_checklist.md` lists manual GitHub launch steps.
+- `docs/token_efficiency_guidance.md` explains scoped context use without
+  bypassing governance.
 
 ## The Main Intake Command
 

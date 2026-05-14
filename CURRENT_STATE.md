@@ -2,12 +2,12 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.12
+version: v3.13
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, and BOOT-019 through BOOT-024 merge
-linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, and public launch readiness packaging
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -26,6 +26,8 @@ authoritative: false
 - `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md` is approved at v1.0.
   It is the governing spec for adaptive governance routing. BOOT-019 through
   BOOT-024 are implemented, reviewed, merged, and synced to `main`.
+- `SPECS/SPEC-BOOT-004-public-launch-readiness.md` is approved at v1.0. It is
+  the governing spec for additive public launch packaging under BOOT-025.
 
 ## Proposed Specs
 
@@ -42,6 +44,11 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- Public launch readiness and adoption packaging under `SPEC-BOOT-004` and
+  `BOOT-025` is merged locally to `main` and awaiting push. This work is
+  additive and creates launch, demo, example, issue-template,
+  token-efficiency, release-note, seed-issue, and roadmap proposal assets
+  without changing product behavior or governance mechanics.
 - BOOT-018 is merged to `main` through PR
   `https://github.com/mrhussamahmed/ProjectGenesis/pull/3` at merge commit
   `2e4c3480181f8b6b395e48588b5c3c99cc52aee8`. This first slice created the
@@ -140,6 +147,8 @@ authoritative: false
 
 ## Active Backlog Focus
 
+- Public launch readiness and adoption packaging for ProjectGenesis discovery
+  and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
   `SPEC-BOOT-002`.
 - Downstream project readiness using the published ProjectGenesis scaffold.
@@ -182,9 +191,8 @@ authoritative: false
 
 ## Next Recommended Action
 
-ProjectGenesis bootstrap improvement work is complete. The next action is to
-provide downstream product input and run `Start requirement breakdown` when
-ready to use the scaffold for a real project.
+Push `main`, then perform manual GitHub launch items from
+`docs/public_launch_checklist.md`.
 
 ## Latest Validation
 
@@ -328,3 +336,9 @@ ready to use the scaffold for a real project.
   `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
   shell syntax checks for validator, red-check helper, Claude helper, and hooks
   passed on `main` after state cleanup updates.
+- Public launch readiness packaging validation:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
+  placeholder scan passed on 2026-05-14. An initial red-check run failed
+  because a new handoff heading interfered with fixture targeting; the heading
+  was fixed and red checks passed.

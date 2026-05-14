@@ -2,12 +2,12 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v1.34
+version: v1.35
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 validation, and BOOT-019 through BOOT-024 post-merge state cleanup
-linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, post-merge CI cleanup, checkout action maintenance, final maintenance validation, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 validation, BOOT-019 through BOOT-024 post-merge state cleanup, and public launch readiness packaging
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -77,6 +77,8 @@ authoritative: false
 | 2026-05-14 | BOOT-019 through BOOT-024 review-fix validation | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; shell syntax checks for validator, red-check helper, Claude helper, and hooks | passed | Validation passed after addressing initial fresh-context review findings for final evidence envelope, BOOT-024 baseline measurement records, protected-path misclassification red checks, and complete review-package changed-file evidence. GitHub Actions `validate` remains pending until PR creation. |
 | 2026-05-14 | BOOT-019 through BOOT-024 PR #4 merge | `.githooks/pre-commit`; `.githooks/pre-push`; `gh pr create --repo mrhussamahmed/ProjectGenesis --base main --head codex/boot-019-024-adaptive-governance`; GitHub Actions `validate`; `gh pr merge 4 --repo mrhussamahmed/ProjectGenesis --merge --admin --delete-branch`; `git fetch origin && git switch main && git merge --ff-only origin/main` | passed | Commit `822654f` pushed, PR #4 opened, GitHub Actions `validate` passed, normal merge was blocked by missing GitHub-hosted review approval, admin merge succeeded, remote branch was deleted, and local `main` fast-forwarded to merge commit `45ce424e9f92d460f1b7b1bc5e2cee5a2d0dc359`. |
 | 2026-05-14 | BOOT-019 through BOOT-024 post-merge state cleanup | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; shell syntax checks for validator, red-check helper, Claude helper, and hooks | passed | Post-merge state cleanup records PR #4 merge status across current state, handoff, backlog, traceability, acceptance map, spec index, registry, test results, and worklog. GitHub Actions `validate` runs after the cleanup commit is pushed to `main`. |
+| 2026-05-14 | Public launch readiness packaging | `git diff --check`; placeholder scan with `rg`; `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | passed after fix | Bootstrap validation and diff checks passed. First red-check run failed because a new handoff heading reused `Pre-Change Classification` and interfered with the red-check fixture target; the heading was renamed and red checks passed. |
+| 2026-05-14 | Public launch readiness review fixes and final re-review | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check`; explicit trailing-whitespace scan over new launch files | passed | Fresh-context review requested changes for merge-readiness linkage, review package, issue-template metadata, stale state, social links, and untracked-file whitespace. Fixes were applied and final fresh-context re-review approved with no P0/P1/blocking P2 findings. |
 
 ## Rules
 
