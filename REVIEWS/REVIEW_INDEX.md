@@ -2,12 +2,12 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v2.7
+version: v2.8
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, and BOOT-019 through BOOT-024 initial review
-linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
+source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, and public launch readiness review
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -34,6 +34,7 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-13-readme-tooling-prereqs | README positioning and tooling prerequisites | request changes, addressed; narrow re-review approved | medium | independent fresh-context reviewer | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-readme-tooling-prereqs.md` | active |
 | REVIEW-2026-05-13-spec-boot-003-adaptive-governance | SPEC-BOOT-003 adaptive governance routing | request changes, addressed; re-review approved with minor comments; final narrow review approved | high | fresh-context subagents | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md` | active; no P0/P1/P2/P3 findings remain |
 | REVIEW-2026-05-14-adaptive-governance-implementation | BOOT-019 through BOOT-024 adaptive governance implementation | request changes, addressed; re-review approved with minor comments | high | fresh-context subagent | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | active; no blocking P0/P1/P2 findings remain |
+| REVIEW-2026-05-14-public-launch-readiness | SPEC-BOOT-004 public launch readiness | request changes, addressed; final re-review approved | high | fresh-context subagents | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-public-launch-readiness.md` | active; no P0/P1/blocking P2 findings remain |
 
 ## Review Packages
 
@@ -45,6 +46,7 @@ Review records and review packages live in this folder.
 | PR-PACKAGE-2026-05-13-readme-tooling-prereqs | README positioning and tooling prerequisites | Review package for public positioning, capability explanation, Linear backlog storage, Linear setup, optional Spec Kit use, and supported tooling README updates | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-readme-tooling-prereqs.md` | active |
 | PR-PACKAGE-2026-05-13-spec-boot-003-adaptive-governance | SPEC-BOOT-003 adaptive governance routing | Review package for the BOOT-018 policy-only adaptive governance routing proposal and review fixes | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md` | active |
 | PR-PACKAGE-2026-05-14-adaptive-governance-implementation | BOOT-019 through BOOT-024 adaptive governance implementation | Review package for operation routing mechanics, impact map, validation modes, handoff rules, validator support, CI checks, and performance measurement | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-adaptive-governance-implementation.md` | active |
+| PR-PACKAGE-2026-05-14-public-launch-readiness | SPEC-BOOT-004 public launch readiness | Review package for public launch and adoption packaging assets | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-public-launch-readiness.md` | active |
 
 ## Rules
 

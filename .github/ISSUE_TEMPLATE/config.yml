@@ -1,0 +1,21 @@
+# artifact_id: ART-GITHUB-ISSUE-TEMPLATE-CONFIG
+# title: Issue Template Config
+# type: issue-template-config
+# status: active
+# version: v1.0
+# created: 2026-05-14
+# updated: 2026-05-14
+# owner: ProjectGenesis Maintainers
+# source: Public launch readiness and adoption packaging task
+# linked_specs: [SPEC-BOOT-004]
+# linked_tickets: []
+# linked_adrs: []
+# replaces:
+# replaced_by:
+# authoritative: false
+
+blank_issues_enabled: false
+contact_links:
+  - name: ProjectGenesis repository setup
+    url: https://github.com/mrhussamahmed/ProjectGenesis
+    about: Read the repository README and setup guidance before opening an issue.

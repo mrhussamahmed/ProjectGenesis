@@ -2,12 +2,12 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.15
+version: v1.16
 created: 2026-05-09
 updated: 2026-05-14
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, and BOOT-019 through BOOT-024 merge
-linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
+source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, and public launch readiness packaging
+linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -47,6 +47,7 @@ under `BACKLOG/`.
 | BOOT-022 | Update current-state and handoff policy | After `SPEC-BOOT-003` is approved or activated and BOOT-021 is complete, add reviewed policy for compact current truth, durable evidence references, and handoff compression without losing active operational facts. | P1 | medium | high | BOOT-021; SPEC-BOOT-003 approved or active | done | sequential | Documentation Curator |
 | BOOT-023 | Add structural validator support | Add path/profile structural validator checks and red-check fixtures only after `SPEC-BOOT-003` is approved or activated and impact/evidence rules are stable. | P1 | medium | high | BOOT-021, BOOT-022; SPEC-BOOT-003 approved or active | done | sequential | QA Reviewer |
 | BOOT-024 | Measure governance routing performance | After `SPEC-BOOT-003` is approved or activated and BOOT-019 through BOOT-023 are complete, benchmark representative small and medium operations to confirm time and token savings without new review, traceability, or handoff regressions. | P2 | medium | medium | BOOT-019 through BOOT-023; SPEC-BOOT-003 approved or active | done | sequential | QA Reviewer, Documentation Curator |
+| BOOT-025 | Package public launch readiness assets | Add additive launch checklist, release-note draft, example/demo assets, social drafts, issue templates, seed issue drafts, token-efficiency guidance, minimal CLI proposal, and required review/state records without changing product behavior or governance mechanics. | P1 | medium | medium | SPEC-BOOT-004 | in-review | sequential | Documentation Curator, Adversarial PR Reviewer |
 
 ## External Ticket Workflow
 
