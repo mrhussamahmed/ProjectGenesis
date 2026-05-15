@@ -30,7 +30,7 @@ Implementation Agent
 
 ## Current Branch
 
-`claude/festive-ride-eadc67`
+`main`
 
 ## Current Worktree
 
