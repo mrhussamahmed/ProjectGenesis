@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.16
+version: v1.17
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, and public launch readiness packaging
+source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, and BOOT-026 / BOOT-027 / BOOT-028 added for PR #5 Phase 0
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []

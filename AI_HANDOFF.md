@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.19
+version: v3.20
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), and BOOT-028 supplement adding classification, envelope, and registry version bumps
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, and BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -38,35 +38,45 @@ Implementation Agent
 
 ## Last Completed Task
 
-BOOT-028 initial state-sync commit `f6eb339` committed and pushed to
+BOOT-028 supplement commit `4178b0a` committed and pushed to
 `origin/claude/festive-ride-eadc67`. Two GitHub Actions `validate` runs
-passed on `f6eb339` (31s and 30s). PR #5 now has five commits total:
-`d518a6e` (BOOT-026), `b27bb3c` (BOOT-027), `acdff16` (Codex review record),
-`068783d` (BOOT-026/BOOT-027 evidence-package merge), and `f6eb339`
-(BOOT-028 initial state-sync). Codex's third review pass surfaced three
-remaining P1 items: (1) records still naming `068783d` rather than
-`f6eb339` as current head, (2) BOOT-028 itself lacking a durable
-classification and final evidence envelope, (3) `ARTIFACT_REGISTRY.md`
-out of sync with the actual file versions (`CURRENT_STATE.md` v3.17,
-`AI_HANDOFF.md` v3.18). This BOOT-028 supplement commit addresses all
-three.
+passed on `4178b0a` (30s and 24s). PR #5 now has six committed commits
+total: `d518a6e` (BOOT-026), `b27bb3c` (BOOT-027), `acdff16` (Codex review
+record), `068783d` (BOOT-026/BOOT-027 evidence-package merge), `f6eb339`
+(BOOT-028 initial state-sync), and `4178b0a` (BOOT-028 supplement adding
+classification + envelope + seven registry version bumps). Codex's
+fourth review pass surfaced five remaining P1 items: (1) ARTIFACT_REGISTRY
+rows were bumped without bumping the underlying file metadata blocks
+(five files); (2) CURRENT_STATE.md and AI_HANDOFF.md described BOOT-028
+supplement as the next commit when it had become `4178b0a`; (3) missing
+TEST_RESULTS and WORKLOG entries for `f6eb339` and `4178b0a`; (4) PR 5
+Phase 0 Implementation Final Evidence Envelope's Validation run was
+stale, missing `f6eb339` and `4178b0a`; (5) REVIEW_INDEX undercredited
+the addressing-set to `068783d` alone. Two P2: TRACEABILITY CI list
+stale; review-index `068783d` mis-attribution. One P3: `d518a6e` CI
+attribution incorrect (no standalone run; `b27bb3c` was the first head
+to trigger CI). This BOOT-028 supplement-2 commit addresses all eight
+findings.
 
 ## Current In-Progress Task
 
-BOOT-028 supplement on `claude/festive-ride-eadc67`. The initial state-sync
-commit `f6eb339` shipped corrections to pre-push wording but was itself
-flagged by Codex's third review for three remaining P1 issues:
-(1) `CURRENT_STATE.md` and other records still named `068783d` as
-current head when it had become `f6eb339`; (2) BOOT-028 had no durable
-Pre-Change Classification or Final Evidence Envelope block in
-`AI_HANDOFF.md`; (3) `ARTIFACT_REGISTRY.md` rows for `CURRENT_STATE.md`
-(v3.15) and `AI_HANDOFF.md` (v3.16) had not been bumped to match the
-actual files (v3.17 and v3.18 respectively). This supplement adds the
-BOOT-028 classification + envelope blocks, bumps seven registry rows
-(`ART-STATE-002`, `ART-STATE-003`, `ART-BACKLOG-001`, `ART-TEST-003`,
-`ART-TRACE-001`, `ART-WORKLOG-INDEX`, `ART-REVIEW-INDEX`) with BOOT-028
-source notes, and corrects all current-head references to point at the
-appropriate commits.
+BOOT-028 supplement-2 on `claude/festive-ride-eadc67`. The BOOT-028
+supplement commit `4178b0a` bumped seven `ART-*` registry rows but did
+not bump the underlying file metadata blocks for five of them
+(`BACKLOG.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+`REVIEWS/REVIEW_INDEX.md`, `WORKLOG/WORKLOG_INDEX.md`), inverting the
+drift it was meant to resolve. Records in `CURRENT_STATE.md` and
+`AI_HANDOFF.md` written inside `4178b0a` also described that commit as
+not-yet-made, repeating the recursive stale-state pattern. Codex's
+fourth review pass surfaced these plus three other findings. This
+supplement-2 bumps the five file metadata blocks to match the registry,
+adds the missing TEST_RESULTS and WORKLOG rows for `f6eb339` and
+`4178b0a`, corrects the `d518a6e` CI mis-attribution, refreshes the PR
+5 Phase 0 Implementation Final Evidence Envelope's Validation run and
+Next safe action, updates REVIEW_INDEX to credit all four corrective
+commits, and updates current-head wording everywhere to enumerate the
+six committed commits and eight green CI runs across four CI-bearing
+SHAs.
 
 ## PR 5 Review Pre-Change Classification
 
@@ -235,19 +245,23 @@ appropriate commits.
   pass (16 existing + 3 new: `case_research_dir_does_not_trip_validator`,
   `case_claude_worktree_does_not_trip_validator`,
   `case_protected_planning_misclassified_in_second_block`).
-  GitHub Actions `validate` passed on `d518a6e` (32s), `b27bb3c` (30s),
-  and on the evidence-package merge commit `068783d` (32s and 58s).
-  `git diff --check` is clean. Pre-commit hook and pre-push hook passed
-  on each commit and on the merge push.
+  GitHub Actions `validate` has passed on four CI-bearing SHAs across
+  eight green runs: `b27bb3c` (32s + 30s), `068783d` (32s + 58s),
+  `f6eb339` (31s + 30s), and `4178b0a` (30s + 24s). `d518a6e` was bundled
+  into the same initial push as `b27bb3c` and did not trigger a separate
+  run. `git diff --check` is clean. Pre-commit hook and pre-push hook
+  passed on each commit and on the merge push.
 - Validation skipped: stack-specific product tests because no product
   runtime code changed.
 - Review required: Codex completed fresh-context adversarial review on
   2026-05-15 and recorded two P1 and one P2 findings; this evidence-package
   commit addresses all three. Re-review requested after this commit lands.
 - Next safe action: request a fresh re-review on PR #5 (evidence-package
-  merge commit `068783d` is already committed and pushed). Do not start
-  scaffold-extract, seeded-defect benchmark, or other backlog work until
-  PR #5 merges.
+  merge commit `068783d`, BOOT-028 initial state-sync `f6eb339`, BOOT-028
+  supplement `4178b0a`, and BOOT-028 supplement-2 (this commit) are all
+  on the PR branch with green GitHub Actions `validate` runs). Do not
+  start scaffold-extract, seeded-defect benchmark, or other backlog work
+  until PR #5 merges.
 
 ## PR 5 Phase 0 State-Sync (BOOT-028) Pre-Change Classification
 
@@ -810,12 +824,15 @@ break validation.
 
 ## Next Recommended Action
 
-Commit and push this BOOT-028 supplement (it adds the BOOT-028 Pre-Change
-Classification + Final Evidence Envelope blocks, bumps seven registry
-rows to match the actual file versions, and corrects current-head
-references). Then request fresh-context re-review on PR #5. Do not
-start scaffold-extract, seeded-defect benchmark, or other backlog work
-until PR #5 merges.
+Commit and push this BOOT-028 supplement-2 (it bumps the five file
+metadata blocks to match the seven registry rows from `4178b0a`, adds
+the missing TEST_RESULTS and WORKLOG rows for `f6eb339` and `4178b0a`,
+corrects the `d518a6e` CI mis-attribution, refreshes the PR 5 Phase 0
+Implementation Final Evidence Envelope's Validation run with `f6eb339`
+and `4178b0a` runs, and updates current-head wording everywhere).
+Then request fresh-context re-review on PR #5. Do not start
+scaffold-extract, seeded-defect benchmark, or other backlog work until
+PR #5 merges.
 
 ## What The Next AI Must Read First
 
@@ -856,9 +873,11 @@ red-check fixtures) committed as `d518a6e` and `b27bb3c`. Local validator
 and red-checks pass; GitHub `validate` passes on both commits.
 
 Adversarial review of PR #5: completed by Codex on `codex/pr-5-adversarial-
-review` (commit `acdff16c`); two P1 findings (missing strict-protected
-evidence package; AI_HANDOFF beyond branch-line fix is stale) and one P2
-(artifact-registry drift for README/validator versions). All three findings
-addressed in evidence-package merge commit `068783d` on
-`claude/festive-ride-eadc67`, which is committed and pushed. GitHub
-Actions `validate` is green on all four PR commits. Re-review pending.
+review` (commit `acdff16c`) and three subsequent fresh-context review
+passes. The corrective work spans four commits on
+`claude/festive-ride-eadc67`: `068783d` (evidence package addressing
+the initial review), `f6eb339` (initial state-sync addressing pass 2),
+`4178b0a` (BOOT-028 supplement addressing pass 3), and BOOT-028
+supplement-2 (this commit, addressing pass 4). All four committed
+commits have green GitHub Actions `validate` runs; this supplement-2
+will trigger a fifth pair after push. Pass 5 re-review pending.
