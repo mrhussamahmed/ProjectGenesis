@@ -35,7 +35,7 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-13-spec-boot-003-adaptive-governance | SPEC-BOOT-003 adaptive governance routing | request changes, addressed; re-review approved with minor comments; final narrow review approved | high | fresh-context subagents | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md` | active; no P0/P1/P2/P3 findings remain |
 | REVIEW-2026-05-14-adaptive-governance-implementation | BOOT-019 through BOOT-024 adaptive governance implementation | request changes, addressed; re-review approved with minor comments | high | fresh-context subagent | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | active; no blocking P0/P1/P2 findings remain |
 | REVIEW-2026-05-14-public-launch-readiness | SPEC-BOOT-004 public launch readiness | request changes, addressed; final re-review approved | high | fresh-context subagents | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-public-launch-readiness.md` | active; no P0/P1/blocking P2 findings remain |
-| REVIEW-2026-05-15-pr-5-phase-0-validator-scope | PR #5 Phase 0 validator scope and AWK first-block fix | request changes | high | Codex adversarial review | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md` | active; P1 evidence, handoff, and registry findings must be addressed before merge |
+| REVIEW-2026-05-15-pr-5-phase-0-validator-scope | PR #5 Phase 0 validator scope and AWK first-block fix | request changes, addressed in commit `068783d` | high | Codex adversarial review | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md` | active; P1 evidence/handoff and P2 registry findings addressed; fresh-context re-review pending before merge |
 
 ## Review Packages
 

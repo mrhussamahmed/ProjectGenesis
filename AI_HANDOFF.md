@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.17
+version: v3.18
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, and PR #5 Phase 0 evidence-package implementation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, and PR #5 Phase 0 post-push state-sync (BOOT-028)
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -38,25 +38,31 @@ Implementation Agent
 
 ## Last Completed Task
 
-Codex completed a fresh-context adversarial review of ProjectGenesis PR #5
-(`claude/festive-ride-eadc67`) on `codex/pr-5-adversarial-review` and recorded
-request-changes findings in
-`REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md`. Two P1 findings
-(missing strict-protected evidence package; stale AI_HANDOFF beyond the
-branch-line fix) and one P2 (artifact-registry drift for README v1.4 and
-validator script versions) were raised.
+PR #5 evidence-package merge commit `068783d` committed and pushed to
+`origin/claude/festive-ride-eadc67`. Two GitHub Actions `validate` runs
+passed on `068783d` (32s and 58s) in addition to the earlier passes on
+`d518a6e` (32s) and `b27bb3c` (30s). The merge brought in Codex's review
+record file (commit `acdff16`) from `origin/codex/pr-5-adversarial-review`
+and resolved one `AI_HANDOFF.md` `## Current Branch` conflict. Codex's
+three findings from the prior fresh-context adversarial review
+(`REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md`) — missing
+strict-protected evidence package, stale handoff beyond branch-line fix,
+and artifact-registry drift for README v1.4 and validator script versions
+— are all addressed.
 
 ## Current In-Progress Task
 
-Addressing Codex's PR #5 adversarial review findings on
-`claude/festive-ride-eadc67` by merging `origin/codex/pr-5-adversarial-review`
-and adding the strict-protected evidence package on top: BOOT-026 and
-BOOT-027 backlog rows, full handoff classification/envelope for the
-implementation, traceability rows, registry version bumps for README and
-validator scripts, and test-result/worklog entries. Phase 0 mechanic patches
-already landed on this branch as commits `d518a6e` (BOOT-026) and `b27bb3c`
-(BOOT-027); local validator and red-checks pass; GitHub `validate` passes on
-both commits.
+Source-of-truth state-sync after the PR #5 evidence-package push on
+`claude/festive-ride-eadc67`. The evidence-package merge commit `068783d`
+is already committed and pushed; GitHub Actions `validate` is green on
+all four PR commits (`d518a6e`, `b27bb3c`, `acdff16`, `068783d`).
+Codex's third review surfaced that the records authored inside the
+evidence-package commit were written pre-push and went stale once
+`068783d` was published. This state-sync corrects `CURRENT_STATE.md`,
+`AI_HANDOFF.md`, `TRACEABILITY_MATRIX.md`, `REVIEWS/REVIEW_INDEX.md`,
+`TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md` to describe the
+actual current state and adds the `068783d` GitHub Actions runs to the
+test-result ledger.
 
 ## PR 5 Review Pre-Change Classification
 
@@ -225,16 +231,19 @@ both commits.
   pass (16 existing + 3 new: `case_research_dir_does_not_trip_validator`,
   `case_claude_worktree_does_not_trip_validator`,
   `case_protected_planning_misclassified_in_second_block`).
-  GitHub Actions `validate` passed on both `d518a6e` (32s) and `b27bb3c`
-  (30s). `git diff --check` is clean.
+  GitHub Actions `validate` passed on `d518a6e` (32s), `b27bb3c` (30s),
+  and on the evidence-package merge commit `068783d` (32s and 58s).
+  `git diff --check` is clean. Pre-commit hook and pre-push hook passed
+  on each commit and on the merge push.
 - Validation skipped: stack-specific product tests because no product
   runtime code changed.
 - Review required: Codex completed fresh-context adversarial review on
   2026-05-15 and recorded two P1 and one P2 findings; this evidence-package
   commit addresses all three. Re-review requested after this commit lands.
-- Next safe action: push the evidence-package commit, then request a fresh
-  re-review on PR #5. Do not start scaffold-extract, seeded-defect benchmark,
-  or other backlog work until PR #5 merges.
+- Next safe action: request a fresh re-review on PR #5 (evidence-package
+  merge commit `068783d` is already committed and pushed). Do not start
+  scaffold-extract, seeded-defect benchmark, or other backlog work until
+  PR #5 merges.
 
 ## Public Launch Assets Operation Classification
 
@@ -569,18 +578,38 @@ Merged from `origin/codex/pr-5-adversarial-review`:
 - `WORKLOG/WORKLOG_INDEX.md` (Codex's review session)
 - `AI_HANDOFF.md` (Codex's review handoff blocks, merged into this snapshot)
 
-Added in this evidence-package commit:
-- `AI_HANDOFF.md` (this snapshot — header fixed to Claude/Implementation,
-  PR 5 Phase 0 Implementation classification + envelope blocks added,
-  Files Changed / Tests Run / Next Action sections updated)
+Added in evidence-package merge commit `068783d`:
+- `AI_HANDOFF.md` (header fixed to Claude/Implementation, PR 5 Phase 0
+  Implementation classification + envelope blocks added, Files Changed /
+  Tests Run / Next Action sections updated)
 - `BACKLOG.md` (BOOT-026 and BOOT-027 rows)
-- `BACKLOG/BACKLOG_INDEX.md` (BOOT-026 and BOOT-027 entries)
 - `ARTIFACT_REGISTRY.md` (README v1.3 → v1.4, validator v1.6 → v1.7,
   red-check v1.2 → v1.3)
 - `CURRENT_STATE.md` (PR #5 implementation state)
 - `TRACEABILITY_MATRIX.md` (BOOT-026 and BOOT-027 rows)
 - `TEST_RESULTS.md` (PR #5 validation runs from this worktree)
 - `WORKLOG/WORKLOG_INDEX.md` (PR #5 implementation session row)
+- `SCRIPTS/validate-bootstrap-red-checks.sh` (perl substitution in
+  `case_protected_planning_misclassified` anchored to BOOT-019-024 block
+  for multi-block correctness)
+
+Edited in this state-sync commit (BOOT-028) to correct pre-push wording:
+- `CURRENT_STATE.md` (Active Implementation Phase, Active Branch, Active
+  Worktree, Next Recommended Action, Latest Validation updated to
+  describe post-push state with `068783d` as current head; metadata
+  bumped to v3.17)
+- `AI_HANDOFF.md` (Last Completed Task, Current In-Progress Task, Files
+  Changed, Dirty Worktree Status, Next Recommended Action, Implementation
+  Status, and the PR 5 Phase 0 Implementation Final Evidence Envelope's
+  Validation run and Next safe action all updated to describe `068783d`
+  as committed and pushed; metadata bumped to v3.18)
+- `TRACEABILITY_MATRIX.md` (PR #5 review row's current-status updated to
+  drop "pending" wording now that the evidence-package merge commit is
+  pushed and CI green)
+- `REVIEWS/REVIEW_INDEX.md` (PR #5 review record entry updated to
+  "addressed in commit 068783d; pending re-review")
+- `TEST_RESULTS.md` (new row for `068783d` GitHub Actions runs)
+- `WORKLOG/WORKLOG_INDEX.md` (new state-sync session row)
 
 ## Specs Changed
 
@@ -681,11 +710,14 @@ Added in this evidence-package commit:
 
 ## Dirty Worktree Status
 
-The evidence-package commit edits are dirty before commit. Untracked
+Clean except for source-of-truth-update edits in this state-sync commit
+(BOOT-026/BOOT-027 evidence-package commit `068783d` is already committed
+and pushed). Untracked
 `.claude/worktrees/festive-ride-eadc67/` (the Claude Code worktree storage)
 and `research/project-scientific-review/2026-05-15-review-run-01/` (the
-disposable scientific review output) remain. After Phase 0, both are
-excluded from validator traversal via `-prune`.
+disposable scientific review output) remain visible from the main repo root.
+Phase 0 `-prune` excludes both from validator traversal so they do not
+break validation.
 
 ## Untracked Files
 
@@ -697,11 +729,14 @@ excluded from validator traversal via `-prune`.
 
 ## Next Recommended Action
 
-Commit this evidence-package on `claude/festive-ride-eadc67` (single
-commit referencing BOOT-026 + BOOT-027), push to origin, then request
-fresh-context re-review on PR #5 to address Codex's three findings.
-Do not start scaffold-extract, seeded-defect benchmark, or other backlog
-work until PR #5 merges.
+Commit and push this source-of-truth state-sync (it updates records that
+were authored at evidence-package write-time and went stale after commit
+`068783d` was pushed and CI ran green). Then request fresh-context
+re-review on PR #5. Codex's three findings are already addressed by
+commit `068783d`; this state-sync only corrects pre-push wording in
+`CURRENT_STATE.md`, `AI_HANDOFF.md`, `TRACEABILITY_MATRIX.md`, and
+`REVIEWS/REVIEW_INDEX.md`. Do not start scaffold-extract, seeded-defect
+benchmark, or other backlog work until PR #5 merges.
 
 ## What The Next AI Must Read First
 
@@ -745,4 +780,6 @@ Adversarial review of PR #5: completed by Codex on `codex/pr-5-adversarial-
 review` (commit `acdff16c`); two P1 findings (missing strict-protected
 evidence package; AI_HANDOFF beyond branch-line fix is stale) and one P2
 (artifact-registry drift for README/validator versions). All three findings
-addressed in this evidence-package commit. Re-review pending.
+addressed in evidence-package merge commit `068783d` on
+`claude/festive-ride-eadc67`, which is committed and pushed. GitHub
+Actions `validate` is green on all four PR commits. Re-review pending.
