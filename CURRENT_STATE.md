@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.20
+version: v3.21
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, and BOOT-028 supplement-3 addressing pass 5 P2 findings (Next Recommended Action and current-head wording)
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, and PR #5 post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,31 +44,22 @@ authoritative: false
 
 ## Active Implementation Phase
 
-- PR #5 (`https://github.com/mrhussamahmed/ProjectGenesis/pull/5`) on branch
-  `claude/festive-ride-eadc67` carries seven committed commits as of head
-  `b20c666` (BOOT-028 supplement-2 fixing registry-vs-file version drift
-  on five files plus current-head and CI-attribution corrections):
-  `d518a6e` (BOOT-026 restore validator-passing state), `b27bb3c`
-  (BOOT-027 Phase 0 validator scope and AWK first-block fix), `acdff16`
-  (Codex review record merged from `origin/codex/pr-5-adversarial-review`),
-  `068783d` (BOOT-026 + BOOT-027 evidence-package merge commit), `f6eb339`
-  (BOOT-028 initial state-sync), `4178b0a` (BOOT-028 supplement adding
-  classification, envelope, and registry version bumps), and `b20c666`
-  (BOOT-028 supplement-2). Codex's five review passes on 2026-05-15 are
-  all addressed across the corrective commits: pass 1 → `068783d`;
-  pass 2 → `f6eb339`; pass 3 → `4178b0a`; pass 4 → `b20c666`; pass 5
-  flagged two P2 (Next Recommended Action prose and current-head wording
-  still describing `4178b0a` as head when `b20c666` was current) and
-  one P3 (ARTIFACT_REGISTRY's own version metadata not bumped); pass 5
-  P2 findings are addressed by the supplement-3 continuation that follows
-  this state record. Validator, red-checks, `git diff --check`, pre-commit
-  hook, pre-push hook, and GitHub Actions `validate` pass on every
-  committed commit; ten green `validate` runs to date across five
-  CI-bearing SHAs: `b27bb3c` (32s + 30s), `068783d` (32s + 58s), `f6eb339`
-  (31s + 30s), `4178b0a` (30s + 24s), and `b20c666` (33s + 29s). `d518a6e`
-  was bundled into the same initial push as `b27bb3c` and did not trigger
-  an independent workflow run. PR #5 is pending fresh-context re-review
-  (pass 6) before merge.
+- No PR is currently in an active implementation phase. PR #5
+  (`https://github.com/mrhussamahmed/ProjectGenesis/pull/5`) is merged into
+  `main` at merge commit `b7bf2eb2ba19dca82588e276781905bfc4b6961d`; the
+  remote branch `claude/festive-ride-eadc67` was deleted. The PR branch
+  included eight implementation/review/state-sync commits: `d518a6e`
+  (BOOT-026 restore validator-passing state), `b27bb3c` (BOOT-027 Phase 0
+  validator scope and AWK first-block fix), `acdff16` (Codex review record),
+  `068783d` (BOOT-026/BOOT-027 evidence-package merge), `f6eb339` (BOOT-028
+  initial state-sync), `4178b0a` (BOOT-028 supplement), `b20c666`
+  (BOOT-028 supplement-2), and `0233b0e` (BOOT-028 supplement-3).
+  Fresh-context review pass 6 approved PR #5 before merge. The merge commit
+  `b7bf2eb` initially failed GitHub Actions `validate` because the singular
+  `AI_HANDOFF.md` branch field still named the feature branch after merge;
+  post-merge cleanup commit `0dc510933bd2903844a25db4f9d0c448d4f0915e`
+  corrected `AI_HANDOFF.md` `## Current Branch` to `main`, and GitHub Actions
+  `Bootstrap Validation` passed on `0dc5109`. Phase 0 is complete on `main`.
 - Public launch readiness and adoption packaging under `SPEC-BOOT-004` and
   `BOOT-025` is merged and pushed to `main` at commit
   `dfe8a07a80518e75c44d13a25abcbf742bc2ae76`. This work is
@@ -165,10 +156,8 @@ authoritative: false
 
 ## Active Branch
 
-- `claude/festive-ride-eadc67` (PR #5 head; most recent committed head
-  is `b20c666`). `codex/pr-5-adversarial-review` exists on origin only as
-  the source for the merged review record `acdff16`; no further work is
-  planned on it.
+- `main`. `origin/main` includes PR #5 merge commit `b7bf2eb` and
+  post-merge cleanup commit `0dc5109`.
 
 ## Active Worktree
 
@@ -176,8 +165,8 @@ authoritative: false
 
 ## Active Backlog Focus
 
-- Review and merge-readiness correction for PR #5 Phase 0 validator-scope and
-  AWK first-block fix.
+- Phase 1 bootstrap follow-up candidates can start on separate branches:
+  scaffold extraction, seeded-defect benchmark, and SRC/SPEC validation work.
 - Public launch readiness and adoption packaging for ProjectGenesis discovery
   and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
@@ -190,13 +179,9 @@ authoritative: false
 
 ## Current Blockers
 
-- PR #5 review findings addressed 2026-05-15 in the evidence-package commit
-  on `claude/festive-ride-eadc67`: BOOT-026 and BOOT-027 backlog rows added,
-  PR 5 Phase 0 Implementation classification and Final Evidence Envelope
-  blocks added to `AI_HANDOFF.md`, README v1.4 and validator v1.7 /
-  red-check v1.3 registry version bumps applied, new traceability rows
-  added, and test-result/worklog/current-state entries added. PR #5 is
-  pending fresh-context re-review before merge.
+- No active PR #5 blockers remain. The Phase 0 validator-scope and AWK
+  first-block fixes are merged to `main`; post-merge branch-state cleanup
+  has passed CI on `0dc5109`.
 - No product-specific input has been provided for a downstream software
   project.
 - No active bootstrap publication blockers.
@@ -227,14 +212,26 @@ authoritative: false
 
 ## Next Recommended Action
 
-Request fresh-context re-review on PR #5. Five prior review passes are
-all addressed; CI is green on every CI-bearing SHA. If pass 6 approves,
-merge PR #5 to `main` (admin merge may be required per PR #3 and PR #4
-precedent). Do not start scaffold-extract, seeded-defect benchmark, or
-other backlog work until PR #5 merges.
+Start the next Phase 1 item on a new branch after confirming the latest
+`main` validation remains green. Candidate next items include IB-P0-01
+scaffold extraction, IB-P1-15 seeded-defect benchmark, and IB-P1-01
+SRC/SPEC validation.
 
 ## Latest Validation
 
+- PR #5 merge and post-merge validation on 2026-05-15: pass 6 fresh-context
+  review approved PR #5; PR #5 merged at `b7bf2eb`; merge-commit GitHub
+  Actions `validate` failed because `AI_HANDOFF.md` still named the deleted
+  feature branch; post-merge cleanup commit `0dc5109` corrected the branch
+  field to `main`; GitHub Actions `Bootstrap Validation` passed on `0dc5109`.
+- PR #5 final branch validation on 2026-05-15: GitHub Actions `validate`
+  passed on six CI-bearing PR SHAs across twelve green runs: `b27bb3c`
+  (32s + 30s), `068783d` (32s + 58s), `f6eb339` (31s + 30s), `4178b0a`
+  (30s + 24s), `b20c666` (33s + 29s), and `0233b0e` (two green runs).
+- Post-merge source-of-truth cleanup validation on 2026-05-15:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main..HEAD` passed locally on `main`.
 - PR #5 evidence-package validation on 2026-05-15: `bash -n` passed for
   both validator scripts; `bash SCRIPTS/validate-bootstrap.sh` exits 0 on
   `claude/festive-ride-eadc67` after the merge of
