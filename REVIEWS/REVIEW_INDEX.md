@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v2.18
+version: v2.20
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update, PR #5 Phase 0 validator-scope review addressed across five corrective commits update, PR #5 pass 6 approval, PR #5 post-merge cleanup, Phase 1 execution planning review package, PR #6 Phase 1 execution planning review, PR #6 review-fix response, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, and BOOT-030 scaffold extraction checklist review package
+source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update, PR #5 Phase 0 validator-scope review addressed across five corrective commits update, PR #5 pass 6 approval, PR #5 post-merge cleanup, Phase 1 execution planning review package, PR #6 Phase 1 execution planning review, PR #6 review-fix response, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist review package, and PR #7 BOOT-030 adversarial review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -37,6 +37,7 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-14-public-launch-readiness | SPEC-BOOT-004 public launch readiness | request changes, addressed; final re-review approved | high | fresh-context subagents | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-public-launch-readiness.md` | active; no P0/P1/blocking P2 findings remain |
 | REVIEW-2026-05-15-pr-5-phase-0-validator-scope | PR #5 Phase 0 validator scope and AWK first-block fix | request changes, addressed; pass 6 approved before merge | high | Codex adversarial review (initial pass), with five subsequent fresh-context review passes escalating and then clearing recursive stale-state and registry-drift findings | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md` | merged to `main` at `b7bf2eb`; post-merge cleanup `0dc5109` fixed the singular handoff branch field and passed GitHub Actions; no remaining PR #5 blocking findings |
 | REVIEW-2026-05-15-pr-6-phase-1-execution-plan | PR #6 Phase 1 execution planning | request changes, addressed; re-review approved with minor comments | high | Codex adversarial review | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-6-phase-1-execution-plan.md` | merged to `main` at `f650367e983895f967ac3e6ce574d6d0d270136d`; follow-up fixes resolved the P1 assumption claims and P2 current-state blocker drift; only non-blocking P3 traceability polish remains |
+| REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist | PR #7 BOOT-030 scaffold extraction checklist | request changes, addressed | high | Codex adversarial review | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md` | active; P1 checklist clean-state contradiction and P2 handoff dirty-state inconsistency fixed in follow-up; fresh-context Codex re-review pending |
 
 ## Review Packages
 

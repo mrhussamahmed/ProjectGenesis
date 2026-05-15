@@ -395,13 +395,32 @@ extraction is reviewable.
 - Metadata block matches the framework artifact rules.
 - `version: v1.0`.
 - Bootstrap baseline requirements REQ-BOOT-001 through REQ-BOOT-013 are
-  kept; they describe the framework, not the ProjectGenesis instance.
+  kept; they describe the framework, not the ProjectGenesis instance, and
+  they map to `BOOT-001` (generic scaffold-bringup) rather than to any
+  removed ProjectGenesis spec.
 - `## Proposed Bootstrap Improvements Under Review` is reset to an empty
   table with the header row only.
-- `## Adaptive Governance Routing Requirement Mapping` and
-  `## Scaffold Improvement Requirement Mapping` are kept as-is because
-  they map framework requirements to framework specs that ship with the
-  scaffold.
+- `## Adaptive Governance Routing Requirement Mapping` is reset to an
+  empty table with the header row only, because every row in that
+  section cites `SPEC-BOOT-003` and BOOT-018 through BOOT-024 — all of
+  which are removed by the spec and backlog reset above. The live
+  framework behavior they described continues to ship through
+  `OPERATION_ROUTING.md`, `GOVERNANCE.md`, `BRANCH_AND_WORKTREE_GUIDE.md`,
+  `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `RISK_MODEL.md`,
+  `CI_CD_GUIDE.md`, and `HOOKS_AND_GUARDRAILS.md`, which remain framework
+  files.
+- `## Scaffold Improvement Requirement Mapping` is reset to an empty
+  table with the header row only, because every row in that section
+  cites `SPEC-BOOT-002` and BOOT-009 through BOOT-015 — all of which are
+  removed by the spec and backlog reset above. The live framework
+  behavior they described continues to ship through `BOOTSTRAP_USAGE.md`,
+  `00_intake/`, `01_context/`, `02_requirements/`, `CONTEXT_PACKS/`,
+  `COMMANDS/`, `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, the templates set, and
+  `GETTING_STARTED.md` / `NEW_PROJECT_INITIALIZATION.md`, which remain
+  framework files.
+- Downstream projects rebuild their own product-specific requirement
+  mapping sections as their own specs and backlog items are created.
 
 ### `BACKLOG.md`
 

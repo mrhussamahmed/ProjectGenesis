@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.28
+version: v3.30
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, and BOOT-030 scaffold extraction checklist implementation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, and PR #7 BOOT-030 adversarial review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,7 +44,7 @@ authoritative: false
 
 ## Active Implementation Phase
 
-- Phase 1A / BOOT-030 scaffold extraction checklist is in implementation on
+- Phase 1A / BOOT-030 scaffold extraction checklist is in review on
   branch `claude/boot-030-scaffold-extract-checklist` from green `main`
   (`22c79f8`). The branch adds the new authoritative
   `SCAFFOLD_FORK_CHECKLIST.md` and updates `ARTIFACT_REGISTRY.md`,
@@ -55,8 +55,15 @@ authoritative: false
   `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`.
   No scaffold extraction scripts, validators, hooks, CI workflow, role
   files, ADRs, command files, context packs, templates, or runtime
-  mechanics are changed. BOOT-031 (scaffold extraction tool) remains
-  blocked until BOOT-030 is reviewed and merged.
+  mechanics are changed. Fresh-context Codex adversarial review of PR #7
+  requested changes for one P1 checklist clean-state contradiction and one
+  P2 handoff dirty-state evidence inconsistency; both findings have been
+  addressed in follow-up edits (TRACEABILITY_MATRIX clean-state now resets
+  the AGR/SBG mapping sections to align with the spec/backlog reset, and
+  the BOOT-030 pre-edit baseline row in `AI_HANDOFF.md` `## Tests Run` was
+  reconciled with the consistent clean-state observation). Fresh-context
+  Codex re-review is pending. BOOT-031 (scaffold extraction tool) remains
+  blocked until BOOT-030 is re-reviewed and merged.
 - Phase 1 execution planning is merged to `main` through PR #6
   (`https://github.com/mrhussamahmed/ProjectGenesis/pull/6`) at merge commit
   `f650367e983895f967ac3e6ce574d6d0d270136d`. Initial review requested changes
@@ -208,8 +215,11 @@ authoritative: false
 
 ## Current Blockers
 
+- BOOT-030 PR #7 has a request-changes review. The P1 checklist contradiction
+  and P2 AI_HANDOFF dirty-state evidence inconsistency must be corrected before
+  merge.
 - BOOT-031 (scaffold extraction tool) remains blocked until BOOT-030 is
-  reviewed and merged.
+  corrected, re-reviewed, and merged.
 - BOOT-032 (seeded-defect benchmark) and BOOT-033 (SRC/SPEC validation)
   remain queued by the Phase 1 sequence; BOOT-032 research may be prepared
   in parallel with BOOT-030 only if it does not edit shared source-of-truth
@@ -233,6 +243,7 @@ authoritative: false
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md`
 - `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
+- `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`
 - `ARCHITECTURE.md`
 - `BACKLOG.md`
 - `BRANCH_AND_WORKTREE_GUIDE.md`
@@ -247,14 +258,27 @@ authoritative: false
 
 ## Next Recommended Action
 
-Commit BOOT-030 work on `claude/boot-030-scaffold-extract-checklist`, push,
-open the PR against `main`, wait for GitHub `validate` to be green, request
-fresh-context Codex adversarial review via the installed plugin, iterate on
-any findings, then merge. Do not start BOOT-031 script work until BOOT-030 is
-merged.
+Commit the PR #7 review fixes (the P1 checklist clean-state contradiction and
+the P2 `AI_HANDOFF.md` dirty-worktree evidence inconsistency), push, wait for
+GitHub `validate` to be green, then request fresh-context Codex re-review.
+Do not start BOOT-031 script work until BOOT-030 is re-reviewed and merged.
 
 ## Latest Validation
 
+- PR #7 BOOT-030 review-fix validation on 2026-05-15:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` pass locally on
+  `claude/boot-030-scaffold-extract-checklist` after addressing the P1
+  checklist clean-state spec/traceability contradiction and the P2
+  `AI_HANDOFF.md` dirty-worktree evidence inconsistency.
+- PR #7 BOOT-030 adversarial review on 2026-05-15:
+  `gh pr diff 7 --repo mrhussamahmed/ProjectGenesis` was attempted but failed
+  due local network/API connectivity. Local review used
+  `git diff 22c79f8...HEAD`; `bash SCRIPTS/validate-bootstrap.sh` and
+  `git diff --check 22c79f8...HEAD` pass before review artifact writes.
+  After review artifact writes, `bash SCRIPTS/validate-bootstrap.sh` and
+  `git diff --check` pass. Review decision is request changes.
 - BOOT-030 scaffold extraction checklist on 2026-05-15:
   `bash SCRIPTS/validate-bootstrap.sh`,
   `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
