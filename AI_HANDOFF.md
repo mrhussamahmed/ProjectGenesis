@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.33
+version: v3.34
 created: 2026-05-09
-updated: 2026-05-15
+updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, and PR #7 merge/post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, and BOOT-031 scaffold extraction tool implementation
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -18,7 +18,7 @@ authoritative: false
 
 ## Current Date
 
-2026-05-15
+2026-05-16
 
 ## Active Agent
 
@@ -26,38 +26,155 @@ Claude
 
 ## Current Role
 
-DevOps Release Reviewer
+Implementation Agent
 
 ## Current Branch
 
-`main`
+`claude/boot-031-scaffold-extract-tool`
 
 ## Current Worktree
 
-`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/festive-ride-eadc67`
+`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/trusting-haslett-23f476`
 
 ## Last Completed Task
 
 PR #7 / BOOT-030 merged to `main` at merge commit
-`90668945bfd24f547ee6ea7f6d1996e7f36c083e` on 2026-05-15 after the
-fresh-context Codex adversarial re-review approved. The remote feature
-branch `claude/boot-030-scaffold-extract-checklist` was deleted at merge.
-GitHub Actions `Bootstrap Validation` on the merge commit failed with the
-known singular-`AI_HANDOFF.md` branch-mismatch issue
-(`claude/boot-030-scaffold-extract-checklist != main`); this post-merge
-cleanup commit corrects the branch field on `main`, mirroring the
-post-merge cleanup pattern applied to PR #5 (`0dc5109`) and PR #6
-(`22c79f8`).
+`90668945bfd24f547ee6ea7f6d1996e7f36c083e` and the singular branch
+handoff cleanup landed at `9e21ce9` on 2026-05-15. Latest green main is
+`9e21ce9`.
 
 ## Current In-Progress Task
 
-PR #7 post-merge source-of-truth cleanup on `main`. The cleanup records
-the observed merge, corrects the singular branch handoff field, marks
-BOOT-030 done, makes BOOT-031 the next executable Phase 1 slice (still
-blocked-by-policy until separately planned and reviewed), and keeps
-BOOT-032 and BOOT-033 sequenced as later PRs. No scaffold extraction
-scripts, validators, hooks, CI workflow, role files, ADRs, command files,
-context packs, templates, or runtime mechanics change in this cleanup.
+BOOT-031 scaffold extraction tool implementation on
+`claude/boot-031-scaffold-extract-tool`. The branch adds
+`SCRIPTS/scaffold-extract.sh`, registers it as
+`ART-SCAFFOLD-EXTRACT-SCRIPT`, includes it in the bootstrap validator's
+required-files list, and adds four new red-check fixtures
+(`case_scaffold_extract_golden_validates`,
+`case_scaffold_extract_dry_run_writes_nothing`,
+`case_scaffold_extract_refuses_source_as_target`,
+`case_scaffold_extract_refuses_nonempty_without_force`). The script is
+dry-run by default, requires an explicit target directory, refuses to
+overwrite a non-empty target without `--force`, refuses targets that
+equal or live inside the source repository, never modifies the source
+repository, and runs `bash SCRIPTS/validate-bootstrap.sh` inside the
+extracted target after `--apply`. Source-of-truth records have been
+updated. Next step is local validation, commit, push, PR open, GitHub
+`validate` check, and fresh-context Codex review.
+
+## BOOT-031 Pre-Change Classification
+
+- Operation profile: `strict-protected`
+- Target files: `SCRIPTS/scaffold-extract.sh`,
+  `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-031-scaffold-extract-tool.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-031-scaffold-extract-tool.md`.
+- Protected files touched: yes; the new `SCRIPTS/scaffold-extract.sh`
+  is a script, `SCRIPTS/validate-bootstrap.sh` gains a required-file
+  entry, and `SCRIPTS/validate-bootstrap-red-checks.sh` gains four new
+  fixtures; the registry, traceability, current state, handoff,
+  backlog, backlog index, BOOT-031 item, test results, worklog, and
+  review index are also protected.
+- Expected risk: high, because validator and script mechanics change
+  and the extracted scaffold must validate end-to-end.
+- Branch requirement: branch required; using
+  `claude/boot-031-scaffold-extract-tool` cut from latest green `main`
+  (`9e21ce9`).
+- Required validation: `bash -n SCRIPTS/scaffold-extract.sh`,
+  `bash -n SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, manual dry-run
+  inspection, manual `--apply` extraction into a temporary target
+  with in-target `bash SCRIPTS/validate-bootstrap.sh`, and
+  `git diff --check origin/main...HEAD`.
+- Required review: fresh-context Codex adversarial review through the
+  installed plugin once the PR is open and GitHub `validate` is green.
+- Traceability impact: required because BOOT-031 advances from blocked
+  to in-review with a new evidence row.
+- Registry impact: required because the new
+  `ART-SCAFFOLD-EXTRACT-SCRIPT` artifact is added and impacted
+  source-of-truth artifact versions advance.
+- Handoff/state impact: required because the active branch, role,
+  task, validation evidence, and next safe action change.
+- Dirty worktree status: before the BOOT-031 edits, the worktree
+  was clean against `origin/main` (`9e21ce9`); the worktree is
+  expected to remain clean apart from the BOOT-031 changes during
+  this session.
+- Escalation triggers checked: validator/red-check/CI/hook/role/
+  command/context-pack/template/ADR change list; the only changes are
+  the new script, validator required-files addition, four new red
+  checks, and registry/traceability/state/handoff/backlog/test
+  results/worklog/review index updates; no hooks, CI workflow, shared
+  rules, role files, command files, context packs, templates, or ADRs
+  change.
+
+## BOOT-031 Final Evidence Envelope
+
+- Operation profile: `strict-protected`.
+- Classification confidence: high.
+- Escalation triggers checked: source-of-truth hierarchy, operation
+  routing, protected-artifact list, branch policy, validation modes,
+  claim evidence, registry rules, traceability rules, BOOT-030 stop
+  conditions in `SCAFFOLD_FORK_CHECKLIST.md`, and BOOT-031 backlog
+  acceptance criteria.
+- Files read: `memory/ai/SHARED_AGENT_RULES.md`,
+  `memory/ai/ROLE_IMPLEMENTATION_AGENT.md`,
+  `memory/ai/ROLE_QA_REVIEWER.md`, `AI_PROJECT_BOOTSTRAP.md`,
+  `CONTEXT_INDEX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`,
+  `TRACEABILITY_MATRIX.md`, `GOVERNANCE.md`,
+  `BRANCH_AND_WORKTREE_GUIDE.md`, `OPERATION_ROUTING.md`,
+  `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-031-scaffold-extract-tool.md`,
+  `BACKLOG/BOOT-032-seeded-defect-benchmark.md`,
+  `BACKLOG/BOOT-033-src-spec-cross-validation.md`,
+  `SCAFFOLD_FORK_CHECKLIST.md`, `IMPLEMENTATION_PLAN.md`,
+  `PARALLEL_EXECUTION_PLAN.md`, `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `SCRIPTS/start-claude.sh`.
+- Files changed: `SCRIPTS/scaffold-extract.sh` (new),
+  `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-031-scaffold-extract-tool.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-031-scaffold-extract-tool.md`
+  (new).
+- Files intentionally not read: older historical reviews and
+  ProjectGenesis-specific spec bodies not relevant to BOOT-031's
+  scope; `SCAFFOLD_FORK_CHECKLIST.md` is the authoritative reset and
+  extraction policy and was read in full.
+- Artifacts not impacted: `.githooks/*`,
+  `.github/workflows/bootstrap-validation.yml`, `memory/ai/*`,
+  `COMMANDS/*`, `CONTEXT_PACKS/*`, `SPECS/*`, `ADR/*`, templates,
+  `GOVERNANCE.md`, `OPERATION_ROUTING.md`,
+  `BRANCH_AND_WORKTREE_GUIDE.md`, `PR_REVIEW_POLICY.md`,
+  `PR_MERGE_POLICY.md`, `RISK_MODEL.md`,
+  `SCAFFOLD_FORK_CHECKLIST.md`, `IMPLEMENTATION_PLAN.md`, and
+  `PARALLEL_EXECUTION_PLAN.md`; these were read or referenced only
+  and not changed by this slice.
+- Validation run: `bash -n SCRIPTS/scaffold-extract.sh`,
+  `bash -n SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, manual dry-run
+  inspection of `/tmp/scaffold-dry-run`, manual `--apply` extraction
+  into `/tmp/scaffold-test` followed by in-target
+  `bash SCRIPTS/validate-bootstrap.sh`, and
+  `git diff --check origin/main...HEAD` pass locally on the BOOT-031
+  branch.
+- Validation skipped: stack-specific product tests because no product
+  runtime code exists.
+- Review required: fresh-context Codex adversarial review after push.
+- Next safe action: commit the BOOT-031 changes, push, wait for GitHub
+  `validate` to be green, request fresh-context Codex review, iterate
+  if findings remain, merge after approval, then post-merge
+  state-sync cleanup mirroring PR #5/PR #6/PR #7.
 
 ## PR 7 Post-Merge Cleanup Classification
 
@@ -1435,6 +1552,39 @@ context packs, templates, or runtime mechanics change in this cleanup.
 
 ## Files Changed
 
+BOOT-031 scaffold extraction tool implementation on
+`claude/boot-031-scaffold-extract-tool`:
+
+- `SCRIPTS/scaffold-extract.sh` — new dry-run-first scaffold extraction
+  tool. Implements `SCAFFOLD_FORK_CHECKLIST.md`: rsync mirror with
+  framework-only exclusions, BOOT-009+ backlog cleanup pass, clean-state
+  resets for shared-state files, and optional in-target validator run.
+- `SCRIPTS/validate-bootstrap.sh` — adds `SCRIPTS/scaffold-extract.sh`
+  to the `required_files` list.
+- `SCRIPTS/validate-bootstrap-red-checks.sh` — adds four new fixtures
+  (`case_scaffold_extract_golden_validates`,
+  `case_scaffold_extract_dry_run_writes_nothing`,
+  `case_scaffold_extract_refuses_source_as_target`,
+  `case_scaffold_extract_refuses_nonempty_without_force`).
+- `ARTIFACT_REGISTRY.md` — registers `ART-SCAFFOLD-EXTRACT-SCRIPT` and
+  bumps versions for impacted source-of-truth artifacts.
+- `TRACEABILITY_MATRIX.md` — adds the BOOT-031 implementation row.
+- `CURRENT_STATE.md` — records active BOOT-031 branch, new artifact,
+  active phase, blockers, and latest local validation.
+- `AI_HANDOFF.md` — records BOOT-031 Pre-Change Classification, Final
+  Evidence Envelope, and updated branch/role/task/files-changed sections.
+- `BACKLOG.md` and `BACKLOG/BACKLOG_INDEX.md` — mark BOOT-031 as
+  in-review.
+- `BACKLOG/BOOT-031-scaffold-extract-tool.md` — moves from blocked to
+  in-review with refreshed readiness evidence and Definition of Done.
+- `TEST_RESULTS.md` — records BOOT-031 local validation evidence.
+- `WORKLOG/WORKLOG_INDEX.md` — adds the BOOT-031 implementation session
+  row.
+- `REVIEWS/REVIEW_INDEX.md` — registers the new BOOT-031 PR review
+  package pending Codex adversarial review.
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-031-scaffold-extract-tool.md`
+  — new durable review package for the BOOT-031 PR.
+
 PR #7 BOOT-030 adversarial review:
 
 - `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`
@@ -1564,6 +1714,21 @@ BOOT-030 scaffold extraction checklist on
 
 ## Tests Run
 
+- BOOT-031 local validation on
+  `claude/boot-031-scaffold-extract-tool` cut from latest green `main`
+  (`9e21ce9`):
+  - `bash -n SCRIPTS/scaffold-extract.sh` — passed.
+  - `bash -n SCRIPTS/validate-bootstrap-red-checks.sh` — passed.
+  - `bash SCRIPTS/validate-bootstrap.sh` — passes (the new
+    `SCRIPTS/scaffold-extract.sh` is registered and present).
+  - `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes all 23
+    cases (19 existing plus 4 new BOOT-031 fixtures).
+  - Manual dry-run inspection of `/tmp/scaffold-dry-run` — no files
+    written; rsync exclusions exercised; phase log printed.
+  - Manual `--apply` extraction into `/tmp/scaffold-test` followed by
+    in-target `bash SCRIPTS/validate-bootstrap.sh` — passed.
+  - `git diff --check origin/main...HEAD` — clean.
+
 - PR #7 review:
   `gh pr diff 7 --repo mrhussamahmed/ProjectGenesis` attempted and failed due
   local `api.github.com` connectivity; `git diff 22c79f8...HEAD` used as the
@@ -1649,6 +1814,16 @@ prior worktrees is not present in this worktree.
   this BOOT-030 PR and added in this commit).
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
   (new BOOT-030 PR review package, expected and added in this commit).
+
+## BOOT-031 Next Recommended Action
+
+Commit BOOT-031 changes, push the `claude/boot-031-scaffold-extract-tool`
+branch, open the PR, wait for GitHub `validate` to be green, request
+fresh-context Codex adversarial review through the installed plugin,
+address P0/P1 findings and blocking P2 findings, merge after approval,
+then perform post-merge source-of-truth state-sync cleanup mirroring
+PR #5/PR #6/PR #7. Do not start BOOT-032 until BOOT-031 is merged and
+latest `main` GitHub Actions is green.
 
 ## Next Recommended Action
 

@@ -107,6 +107,7 @@ required_files=(
   "SCRIPTS/start-claude.sh"
   "SCRIPTS/validate-bootstrap.sh"
   "SCRIPTS/validate-bootstrap-red-checks.sh"
+  "SCRIPTS/scaffold-extract.sh"
   ".githooks/pre-commit"
   ".githooks/commit-msg"
   ".githooks/pre-push"

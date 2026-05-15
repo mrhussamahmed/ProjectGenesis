@@ -330,6 +330,102 @@ EOF
   expect_failure "protected planning misclassified in second block" "protected planning classification must be planning-governance or strict-protected" "$dir"
 }
 
+case_scaffold_extract_golden_validates() {
+  # Golden fixture: extracting the scaffold into a fresh temp target and then
+  # running `bash SCRIPTS/validate-bootstrap.sh` inside the target must exit 0.
+  # This is the BOOT-031 acceptance check that the extracted scaffold is a
+  # valid downstream starting point.
+  local target="$tmp_root/scaffold-extract-golden"
+  rm -rf "$target"
+  local output
+  set +e
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply "$target" 2>&1)"
+  local status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: scaffold-extract.sh --apply did not exit 0:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  set +e
+  output="$(cd "$target" && bash SCRIPTS/validate-bootstrap.sh 2>&1)"
+  status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: extracted scaffold did not validate:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+case_scaffold_extract_dry_run_writes_nothing() {
+  # Default behavior is dry-run; the script must not create the target
+  # directory when invoked without --apply.
+  local target="$tmp_root/scaffold-extract-dry-run"
+  rm -rf "$target"
+  set +e
+  ( cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh "$target" >/dev/null 2>&1 )
+  local status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: scaffold-extract.sh dry-run exited non-zero" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  if [[ -e "$target" ]]; then
+    echo "FAIL: scaffold-extract.sh dry-run created target directory: $target" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+case_scaffold_extract_refuses_source_as_target() {
+  # Safety: the script must refuse when the target equals the source root.
+  local output
+  set +e
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply "$repo_root" 2>&1)"
+  local status=$?
+  set -e
+  if [[ "$status" -eq 0 ]]; then
+    echo "FAIL: scaffold-extract.sh accepted source as target" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  if ! grep -Fq "target equals source repository" <<<"$output"; then
+    echo "FAIL: scaffold-extract.sh refused source-as-target for wrong reason:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+case_scaffold_extract_refuses_nonempty_without_force() {
+  # Safety: the script must refuse to overwrite a non-empty target unless
+  # --force is passed.
+  local target="$tmp_root/scaffold-extract-nonempty"
+  rm -rf "$target"
+  mkdir -p "$target"
+  printf 'existing\n' >"$target/keepme.txt"
+  local output
+  set +e
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply "$target" 2>&1)"
+  local status=$?
+  set -e
+  if [[ "$status" -eq 0 ]]; then
+    echo "FAIL: scaffold-extract.sh accepted non-empty target without --force" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  if ! grep -Fq "target directory exists and is non-empty" <<<"$output"; then
+    echo "FAIL: scaffold-extract.sh refused non-empty target for wrong reason:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+  if [[ ! -f "$target/keepme.txt" ]]; then
+    echo "FAIL: scaffold-extract.sh modified the non-empty target before refusing" >&2
+    failures=$((failures + 1))
+  fi
+}
+
 case_approved_spec_missing_source
 case_approved_spec_empty_source
 case_active_backlog_missing_spec
@@ -349,6 +445,10 @@ case_protected_planning_misclassified
 case_research_dir_does_not_trip_validator
 case_claude_worktree_does_not_trip_validator
 case_protected_planning_misclassified_in_second_block
+case_scaffold_extract_golden_validates
+case_scaffold_extract_dry_run_writes_nothing
+case_scaffold_extract_refuses_source_as_target
+case_scaffold_extract_refuses_nonempty_without_force
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2
