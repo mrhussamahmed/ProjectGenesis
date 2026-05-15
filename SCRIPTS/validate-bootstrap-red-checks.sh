@@ -47,6 +47,23 @@ expect_failure() {
   fi
 }
 
+expect_no_failure_mentioning() {
+  local name="$1"
+  local dir="$2"
+  local needle="$3"
+  local output
+
+  set +e
+  output="$(cd "$dir" && bash SCRIPTS/validate-bootstrap.sh 2>&1)"
+  set -e
+
+  if grep -Fq "$needle" <<<"$output"; then
+    echo "FAIL: $name — validator output mentioned '$needle' (it should not):" >&2
+    grep -F "$needle" <<<"$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
 case_approved_spec_missing_source() {
   local dir
   dir="$(copy_repo approved-spec-missing-source)"
@@ -262,10 +279,55 @@ case_protected_planning_misclassified() {
   local dir
   dir="$(copy_repo protected-planning-misclassified)"
   perl -0pi -e '
-    s/Operation profile: `strict-protected`/Operation profile: `docs-trivial`/;
+    s/(## BOOT-019-024 Pre-Change Classification\n[^#]*?Operation profile: `)strict-protected/$1docs-trivial/s;
     s/`CURRENT_STATE\.md`, `AI_HANDOFF\.md`, `BACKLOG\.md`,\n  `ARTIFACT_REGISTRY\.md`, `TRACEABILITY_MATRIX\.md`, `TEST_RESULTS\.md`,\n  `WORKLOG\/WORKLOG_INDEX\.md`, `GOVERNANCE\.md`,\n  `BRANCH_AND_WORKTREE_GUIDE\.md`, `RISK_MODEL\.md`,\n  `PR_REVIEW_POLICY\.md`, `PR_MERGE_POLICY\.md`, `CONTEXT_INDEX\.md`,\n  `AI_PROJECT_BOOTSTRAP\.md`, `SPECS\/SPEC_INDEX\.md`,\n  `SPECS\/SPEC-BOOT-003-adaptive-governance-routing\.md`,\n  `SCRIPTS\/validate-bootstrap\.sh`, `SCRIPTS\/validate-bootstrap-red-checks\.sh`,\n  `\.github\/workflows\/bootstrap-validation\.yml`, relevant context packs,\n  command\/template\/review artifacts, and any new registered governance artifact\n  required by the implementation\./`SPECS\/SPEC_INDEX.md`, `BACKLOG.md`, `TRACEABILITY_MATRIX.md`, and `ARTIFACT_REGISTRY.md`./;
   ' "$dir/AI_HANDOFF.md"
   expect_failure "protected planning misclassified" "protected planning classification must be planning-governance or strict-protected" "$dir"
+}
+
+case_research_dir_does_not_trip_validator() {
+  local dir
+  dir="$(copy_repo research-dir-ignored)"
+  mkdir -p "$dir/research/phase-0-fixture"
+  cat >"$dir/research/phase-0-fixture/note.md" <<'EOF'
+# Research Note
+
+This file deliberately has no metadata block and contains a placeholder
+token like TODO to verify the validator does not trip on `research/`
+contents. After Phase 0, validation must not mention this path.
+EOF
+  expect_no_failure_mentioning "research dir does not trip validator" "$dir" "research/phase-0-fixture/note.md"
+}
+
+case_claude_worktree_does_not_trip_validator() {
+  local dir
+  dir="$(copy_repo claude-worktree-ignored)"
+  mkdir -p "$dir/.claude/worktrees/phase-0-fixture"
+  cat >"$dir/.claude/worktrees/phase-0-fixture/note.md" <<'EOF'
+# Worktree Note
+
+This file deliberately has no metadata block and contains a placeholder
+token like FIXME to verify the validator does not trip on `.claude/`
+contents. After Phase 0, validation must not mention this path.
+EOF
+  expect_no_failure_mentioning ".claude worktree does not trip validator" "$dir" ".claude/worktrees/phase-0-fixture/note.md"
+}
+
+case_protected_planning_misclassified_in_second_block() {
+  local dir
+  dir="$(copy_repo protected-planning-misclassified-second-block)"
+  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+
+## Pre-Change Classification (red-check fixture second block)
+
+- Operation profile: `docs-trivial`
+- Target files: `SPECS/`, `BACKLOG.md`, `TRACEABILITY_MATRIX.md`,
+  `ARTIFACT_REGISTRY.md`
+- Protected files touched: false
+- Reason: Red-check fixture second block; this profile should escalate
+  to planning-governance because target_files include planning artifacts.
+EOF
+  expect_failure "protected planning misclassified in second block" "protected planning classification must be planning-governance or strict-protected" "$dir"
 }
 
 case_approved_spec_missing_source
@@ -284,6 +346,9 @@ case_operation_routing_missing_validation_mode
 case_operation_routing_missing_context_reference
 case_protected_mechanics_misclassified
 case_protected_planning_misclassified
+case_research_dir_does_not_trip_validator
+case_claude_worktree_does_not_trip_validator
+case_protected_planning_misclassified_in_second_block
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2

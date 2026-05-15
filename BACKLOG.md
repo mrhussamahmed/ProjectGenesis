@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.16
+version: v1.17
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, and public launch readiness packaging
+source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, and BOOT-026 / BOOT-027 / BOOT-028 added for PR #5 Phase 0
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -48,6 +48,9 @@ under `BACKLOG/`.
 | BOOT-023 | Add structural validator support | Add path/profile structural validator checks and red-check fixtures only after `SPEC-BOOT-003` is approved or activated and impact/evidence rules are stable. | P1 | medium | high | BOOT-021, BOOT-022; SPEC-BOOT-003 approved or active | done | sequential | QA Reviewer |
 | BOOT-024 | Measure governance routing performance | After `SPEC-BOOT-003` is approved or activated and BOOT-019 through BOOT-023 are complete, benchmark representative small and medium operations to confirm time and token savings without new review, traceability, or handoff regressions. | P2 | medium | medium | BOOT-019 through BOOT-023; SPEC-BOOT-003 approved or active | done | sequential | QA Reviewer, Documentation Curator |
 | BOOT-025 | Package public launch readiness assets | Add additive launch checklist, release-note draft, example/demo assets, social drafts, issue templates, seed issue drafts, token-efficiency guidance, minimal CLI proposal, and required review/state records without changing product behavior or governance mechanics. | P1 | medium | medium | SPEC-BOOT-004 | done | sequential | Documentation Curator, Adversarial PR Reviewer |
+| BOOT-026 | Restore validator-passing state on the PR #5 branch | Re-add the 15-line metadata block on `README.md` that was removed in `9de53e0` and update `AI_HANDOFF.md` `## Current Branch` to match the actual worktree branch so the bootstrap validator exits 0 and the Phase 0 mechanic commit can land. | P1 | low | low | SPEC-BOOT-002 | done | sequential | Implementation Agent |
+| BOOT-027 | Phase 0 validator scope and AWK first-block fix | Update `SCRIPTS/validate-bootstrap.sh` find commands to `-prune` `.claude/` and `research/` so generated agent state and disposable research output are not scanned. Remove the `checked_first = 1; exit` pair in the AWK so every `## Pre-Change Classification` block in `AI_HANDOFF.md` is inspected. Add three red-check fixtures (`case_research_dir_does_not_trip_validator`, `case_claude_worktree_does_not_trip_validator`, `case_protected_planning_misclassified_in_second_block`) plus a new `expect_no_failure_mentioning` helper. | P0 | low | medium | SPEC-BOOT-003 | done | sequential | Implementation Agent, Adversarial PR Reviewer |
+| BOOT-028 | Source-of-truth state-sync after PR #5 evidence-package push | Correct pre-push wording in `CURRENT_STATE.md`, `AI_HANDOFF.md`, `TRACEABILITY_MATRIX.md`, `REVIEWS/REVIEW_INDEX.md`, `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md` after evidence-package merge commit `068783d` was pushed to `origin/claude/festive-ride-eadc67` and GitHub Actions `validate` ran green on the merge head. Records were authored inside commit `068783d` and went stale once the push completed; this state-sync brings them current. | P2 | low | low | SPEC-BOOT-003 | done | sequential | Implementation Agent |
 
 ## External Ticket Workflow
 
