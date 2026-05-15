@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-030
 title: BOOT-030 Scaffold Extraction Checklist
 type: backlog-item
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and PR #6 merge/post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -54,8 +54,9 @@ Out of scope:
   before implementation and the durable Phase 1 candidate list in
   `CURRENT_STATE.md`.
 - Approved assumptions: none
-- Planning rationale: checklist-first sequencing is proposed by BOOT-029 and
-  remains subject to PR #6 review and merge before implementation.
+- Planning rationale: checklist-first sequencing was approved through PR #6;
+  BOOT-030 is the next executable Phase 1 slice after latest `main` validation
+  is confirmed green.
 - Open questions: whether later script needs per-artifact metadata
 - Related ADR: none
 - Related external ticket: none
@@ -105,7 +106,7 @@ P0
 
 ## Readiness Status
 
-ready after BOOT-029
+ready
 
 ## Readiness Evidence
 
@@ -119,7 +120,7 @@ ready after BOOT-029
   validator behavior changes.
 - Branch/worktree plan: separate branch from `main`.
 - Required reviewers: fresh-context review before merge.
-- Blocked until: BOOT-029 merged.
+- Blocked until: none; BOOT-029 merged through PR #6 on 2026-05-15.
 
 ## Test Expectations
 

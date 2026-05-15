@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.26
+version: v3.27
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, and PR #6 re-review approval
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, and PR #6 merge/post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,18 +44,19 @@ authoritative: false
 
 ## Active Implementation Phase
 
-- Phase 1 execution planning is approved with minor comments on PR #6
-  (`https://github.com/mrhussamahmed/ProjectGenesis/pull/6`) on branch
-  `codex/phase-1-execution-plan`. Initial review requested changes for unregistered
-  `Approved assumptions` claims in BOOT-029 through BOOT-033 and contradictory
-  current-state blocker wording. Follow-up edits on this branch replace the
+- Phase 1 execution planning is merged to `main` through PR #6
+  (`https://github.com/mrhussamahmed/ProjectGenesis/pull/6`) at merge commit
+  `f650367e983895f967ac3e6ce574d6d0d270136d`. Initial review requested changes
+  for unregistered `Approved assumptions` claims in BOOT-029 through BOOT-033
+  and contradictory current-state blocker wording. Follow-up edits replaced the
   assumption claims with explicit `Approved assumptions: none` plus
   source-backed facts, dependency facts, planning rationale, or open questions,
-  and remove the contradictory blocker statement. Fresh re-review approved with
-  minor comments on 2026-05-15; the only remaining P3 is clarity around
+  and removed the contradictory blocker statement. Fresh re-review approved
+  with minor comments on 2026-05-15; the only remaining P3 is clarity around
   research-only `IB-*` planning-input labels in `IMPLEMENTATION_PLAN.md`. The
-  branch remains planning-only and does not implement scaffold extraction,
-  benchmark scripts, or validator mechanics.
+  merged branch was planning-only and did not implement scaffold extraction,
+  benchmark scripts, validator mechanics, hooks, CI, role files, ADRs, or
+  product runtime.
 - No PR is currently in an active implementation phase. PR #5
   (`https://github.com/mrhussamahmed/ProjectGenesis/pull/5`) is merged into
   `main` at merge commit `b7bf2eb2ba19dca82588e276781905bfc4b6961d`; the
@@ -170,7 +171,7 @@ authoritative: false
 
 ## Active Branch
 
-- `codex/phase-1-execution-plan`.
+- `main`.
 
 ## Active Worktree
 
@@ -178,10 +179,10 @@ authoritative: false
 
 ## Active Backlog Focus
 
-- Phase 1 bootstrap follow-up planning: BOOT-029 execution plan, then
-  BOOT-030 scaffold extraction checklist, BOOT-031 scaffold extraction tool,
-  BOOT-032 seeded-defect benchmark, and BOOT-033 SRC/SPEC validation work as
-  separate PRs.
+- Phase 1 bootstrap follow-up implementation: BOOT-030 scaffold extraction
+  checklist is next, followed by BOOT-031 scaffold extraction tool, BOOT-032
+  seeded-defect benchmark, and BOOT-033 SRC/SPEC validation work as separate
+  PRs.
 - Public launch readiness and adoption packaging for ProjectGenesis discovery
   and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
@@ -194,10 +195,12 @@ authoritative: false
 
 ## Current Blockers
 
-- BOOT-030 through BOOT-033 implementation is blocked until BOOT-029 is
-  reviewed and merged.
-- PR #6 fresh re-review approved with minor comments. PR #6 still must be
-  merged before BOOT-030 starts.
+- No PR #6 blocker remains for BOOT-030; start it from latest green `main` as
+  a separate PR.
+- BOOT-031 is blocked until BOOT-030 is reviewed and merged.
+- BOOT-032 and BOOT-033 remain queued by the Phase 1 sequence; BOOT-032
+  research may be prepared in parallel with BOOT-030 only if it does not edit
+  shared source-of-truth files.
 - No active PR #5 blockers remain. The Phase 0 validator-scope and AWK
   first-block fixes are merged to `main`; post-merge branch-state cleanup
   has passed CI on `0dc5109`.
@@ -230,11 +233,23 @@ authoritative: false
 
 ## Next Recommended Action
 
-Merge PR #6 after normal repository merge requirements are satisfied. Do not
-start BOOT-030 implementation until the planning branch is merged.
+After any PR #6 post-merge cleanup commit is pushed and latest `main` GitHub
+Actions status is green, start BOOT-030 scaffold extraction checklist on a new
+branch from green `main`.
 
 ## Latest Validation
 
+- PR #6 merge and post-merge cleanup on 2026-05-15: PR #6 merged to `main` at
+  `f650367e983895f967ac3e6ce574d6d0d270136d`; the feature branch
+  `codex/phase-1-execution-plan` was deleted. Local release-session validation
+  before merge passed with `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD`. GitHub Actions on the merge commit
+  failed because `AI_HANDOFF.md` still named `codex/phase-1-execution-plan`
+  while the branch was `main`. Post-merge cleanup validation passes locally on
+  `main` with `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main..HEAD`.
 - PR #6 fresh-context re-review on 2026-05-15: original P1/P2 findings are
   resolved and the decision is approve with minor comments. The only remaining
   P3 is optional traceability polish for research-only `IB-*` planning-input

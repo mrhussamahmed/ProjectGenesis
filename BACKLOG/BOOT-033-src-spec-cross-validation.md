@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-033
 title: BOOT-033 SRC And SPEC Cross-Validation
 type: backlog-item
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and PR #6 merge/post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -107,7 +107,7 @@ P1
 
 ## Readiness Status
 
-ready after BOOT-029
+queued after BOOT-032
 
 ## Readiness Evidence
 
@@ -121,7 +121,8 @@ ready after BOOT-029
 - Branch/worktree plan: separate branch from `main`.
 - Required reviewers: fresh-context adversarial review because validator
   mechanics change.
-- Blocked until: BOOT-029 merged.
+- Blocked until: BOOT-032 complete unless the Phase 1 sequence is explicitly
+  re-planned.
 
 ## Test Expectations
 

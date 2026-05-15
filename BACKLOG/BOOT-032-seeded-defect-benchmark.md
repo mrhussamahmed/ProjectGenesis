@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-032
 title: BOOT-032 Seeded-Defect Benchmark
 type: backlog-item
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and PR #6 merge/post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -106,7 +106,7 @@ P0
 
 ## Readiness Status
 
-ready after BOOT-029
+queued after BOOT-031; research-only prep allowed if isolated
 
 ## Readiness Evidence
 
@@ -120,7 +120,9 @@ ready after BOOT-029
   validator behavior changes, benchmark dry run.
 - Branch/worktree plan: separate branch from `main`.
 - Required reviewers: QA-focused fresh-context review.
-- Blocked until: BOOT-029 merged; extraction ordering confirmed.
+- Blocked until: BOOT-030 and BOOT-031 complete for implementation edits;
+  research-only preparation may run beside BOOT-030 only if it does not edit
+  shared source-of-truth files.
 
 ## Test Expectations
 

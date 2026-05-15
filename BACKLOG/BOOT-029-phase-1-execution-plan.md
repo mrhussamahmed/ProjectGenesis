@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-029
 title: BOOT-029 Phase 1 Execution Plan
 type: backlog-item
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: User instruction to plan before implementation, CURRENT_STATE.md Phase 1 candidates, and PR #6 review fix
+source: User instruction to plan before implementation, CURRENT_STATE.md Phase 1 candidates, PR #6 review fix, and PR #6 merge/post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -106,7 +106,7 @@ P0
 
 ## Readiness Status
 
-ready for review
+done
 
 ## Readiness Evidence
 
@@ -116,9 +116,10 @@ ready for review
 - Dependencies: PR #5 complete on `main`.
 - Architecture impact: none.
 - Test expectations: bootstrap validator, red checks, and diff whitespace check.
-- Branch/worktree plan: `codex/phase-1-execution-plan`.
-- Required reviewers: fresh-context reviewer before merge.
-- Blocked until: fresh-context review and merge complete.
+- Branch/worktree plan: merged to `main` through PR #6.
+- Required reviewers: fresh-context review completed; durable review approved
+  with minor comments.
+- Blocked until: none; PR #6 merged on 2026-05-15.
 
 ## Test Expectations
 
