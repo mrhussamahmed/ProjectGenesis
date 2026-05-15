@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.28
+version: v3.32
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, and PR #6 merge/post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, and PR #7 BOOT-030 re-review approval
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -26,31 +26,335 @@ Codex
 
 ## Current Role
 
-DevOps Release Reviewer
+Adversarial PR Reviewer
 
 ## Current Branch
 
-`main`
+`claude/boot-030-scaffold-extract-checklist`
 
 ## Current Worktree
 
-`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/festive-ride-eadc67`
+`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/brave-elbakyan-be49a2`
 
 ## Last Completed Task
 
-PR #6 Phase 1 execution planning merged to `main` at merge commit
-`f650367e983895f967ac3e6ce574d6d0d270136d` on 2026-05-15 after the durable
-repository review approved with minor comments. The remote feature branch
-`codex/phase-1-execution-plan` was deleted.
+Fresh-context Codex re-review of PR #7 / BOOT-030 completed on
+`claude/boot-030-scaffold-extract-checklist` at head
+`b6f3104d00d75d2eb2d8c6d180c78d177dcfd32e`. Decision: approve. The prior
+P1 checklist clean-state contradiction and P2 `AI_HANDOFF.md` dirty-worktree
+evidence inconsistency are resolved.
 
 ## Current In-Progress Task
 
-This handoff records the PR #6 post-merge source-of-truth cleanup on `main`.
-The cleanup records the observed merge, corrects the singular branch handoff field,
-marks BOOT-029 complete, makes BOOT-030 the next executable Phase 1 slice, and
-keeps BOOT-031 through BOOT-033 sequenced as separate later PRs. No scaffold
-extraction, benchmark, validator, hook, CI, role, ADR, source-of-truth
-hierarchy, or product runtime mechanics are changed.
+PR #7 / BOOT-030 is approved by fresh-context Codex re-review. Current
+in-progress action is merge readiness only: merge PR #7 after normal
+repository gates remain satisfied. BOOT-031 remains blocked until BOOT-030 is
+merged.
+
+## PR 7 BOOT-030 Re-Review Pre-Change Classification
+
+- Operation profile: `planning-governance`
+- Target files: `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Protected files touched: yes; the review record, review index, registry,
+  traceability, current state, handoff, test results, and worklog are protected
+  review/source-of-truth artifacts.
+- Expected risk: high, because this is a formal re-review of a
+  planning-governance PR that gates later strict-protected BOOT-031 work.
+- Branch requirement: branch required; using
+  `claude/boot-030-scaffold-extract-checklist`.
+- Required validation: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check 22c79f8...HEAD`.
+- Required review: this is the requested fresh-context Codex re-review.
+- Traceability impact: required because the BOOT-030 row must reflect the
+  approved re-review outcome.
+- Registry impact: required because the review record advances to v1.2 and
+  impacted source-of-truth artifact versions advance.
+- Handoff/state impact: required because the review decision and next safe
+  action change from pending re-review to approved/pending merge.
+- Dirty worktree status: before re-review record edits, `git status --short
+  --branch` showed the PR branch tracking origin with no local uncommitted
+  changes.
+- Escalation triggers checked: no validator scripts, hooks, CI workflow,
+  shared rules, role files, command files, context packs, ADRs, templates,
+  security, release, branch policy, PR/merge policy, risk model, or runtime
+  product mechanics changed by this re-review operation.
+
+## PR 7 BOOT-030 Re-Review Final Evidence Envelope
+
+- Operation profile: `planning-governance`.
+- Classification confidence: high.
+- Escalation triggers checked: user-requested narrow scope, PR review policy,
+  operation routing rules, protected-artifact list, branch policy, validation
+  modes, changed-file scope, and BOOT-031/032/033 readiness gates.
+- Files read: `memory/ai/SHARED_AGENT_RULES.md`,
+  `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md`, `AI_PROJECT_BOOTSTRAP.md`,
+  `CONTEXT_INDEX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`, `TRACEABILITY_MATRIX.md`,
+  `GOVERNANCE.md`, `BRANCH_AND_WORKTREE_GUIDE.md`, `PR_REVIEW_POLICY.md`,
+  `PR_MERGE_POLICY.md`, `RISK_MODEL.md`, `OPERATION_ROUTING.md`,
+  `TEST_RESULTS.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-030-scaffold-extract-checklist.md`,
+  `SCAFFOLD_FORK_CHECKLIST.md`, and the PR #7 review record.
+- Files changed: `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Files intentionally not read: older historical reviews and implementation
+  artifacts outside the two requested fixes and required state records.
+- Artifacts not impacted: `SCAFFOLD_FORK_CHECKLIST.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`, `SCRIPTS/**`, `.githooks/**`,
+  `.github/workflows/**`, `memory/ai/**`, `COMMANDS/**`, `CONTEXT_PACKS/**`,
+  templates, ADRs, specs, and runtime files were read or checked only and not
+  changed by this re-review.
+- Validation run: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check 22c79f8...HEAD` pass locally before re-review record
+  writes. After the durable record writes, `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check`
+  also pass locally.
+- Validation skipped: stack-specific product tests because no product runtime
+  code changed.
+- Review required: complete for this re-review; decision is approve.
+- Next safe action: merge PR #7 after normal repository gates remain
+  satisfied; do not start BOOT-031 until BOOT-030 is merged.
+
+## PR 7 BOOT-030 Review-Fix Pre-Change Classification
+
+- Operation profile: `planning-governance`
+- Target files: `SCAFFOLD_FORK_CHECKLIST.md`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
+  `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `TEST_RESULTS.md`, and
+  `WORKLOG/WORKLOG_INDEX.md`.
+- Protected files touched: yes; the checklist artifact, registry,
+  traceability, current state, handoff, review record, review index, test
+  results, and worklog are protected planning and source-of-truth
+  artifacts.
+- Expected risk: high, because the checklist is the policy that gates
+  future strict-protected BOOT-031 work and must be internally consistent.
+- Branch requirement: branch required;
+  `claude/boot-030-scaffold-extract-checklist` is still active.
+- Required validation: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check`.
+- Required review: fresh-context Codex re-review through the installed
+  plugin after the fix commit lands and GitHub `validate` is green.
+- Traceability impact: required because the BOOT-030 row must reflect
+  review-fix state and the link to the addressed Codex review record.
+- Registry impact: required because impacted artifact versions advance.
+- Handoff/state impact: required because the active role, task, validation
+  evidence, and next safe action change from review to review-fix.
+- Dirty worktree status: before fix edits, `git status --short --branch`
+  showed the PR branch with the Codex review writes already applied
+  (`AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`, `CURRENT_STATE.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `TEST_RESULTS.md`, `TRACEABILITY_MATRIX.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, and the new review record file). The fix
+  edits build on top of those review writes and do not revert them.
+- Escalation triggers checked: no validator scripts, hooks, CI workflow,
+  shared rules, role files, command files, context packs, ADRs, templates,
+  security, release, branch policy, PR/merge policy, risk model, or
+  runtime product mechanics changed by the fix edits. The fix only edits
+  the documentation checklist's clean-state expectation text and the
+  handoff dirty-state narrative.
+
+## PR 7 BOOT-030 Review-Fix Final Evidence Envelope
+
+- Operation profile: `planning-governance`.
+- Classification confidence: high.
+- Escalation triggers checked: PR review policy, operation routing rules,
+  protected-artifact list, claim-evidence rules, branch policy, validation
+  modes, and source-of-truth hierarchy.
+- Files read: the Codex review record
+  `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`,
+  `SCAFFOLD_FORK_CHECKLIST.md`, `AI_HANDOFF.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, `REVIEWS/REVIEW_INDEX.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  and `OPERATION_ROUTING.md` sections 140-153 and 232-234 cited in the
+  review.
+- Files changed: `SCAFFOLD_FORK_CHECKLIST.md`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
+  `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`
+  (Fix Response section added), `REVIEWS/REVIEW_INDEX.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Files intentionally not read: large historical specs and reviews not
+  relevant to the two surfaced findings.
+- Artifacts not impacted: `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `.githooks/*`,
+  `.github/workflows/*`, `memory/ai/*`, `COMMANDS/*`, `CONTEXT_PACKS/*`,
+  `SPECS/*`, `ADR/*`, `BACKLOG/templates/*`, `REVIEWS/templates/*`,
+  governance/policy files (read only), `BACKLOG.md` (no readiness change),
+  `BACKLOG/BACKLOG_INDEX.md` (no readiness change), and runtime code.
+- Validation run: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` pass locally after the fix edits.
+- Validation skipped: stack-specific product tests because no product
+  runtime code changed.
+- Review required: fresh-context Codex re-review after push.
+- Next safe action: commit the fix edits, push, wait for GitHub `validate`
+  to be green, request fresh-context Codex re-review via the installed
+  plugin, iterate if findings remain, then merge after approval.
+
+## PR 7 BOOT-030 Review Pre-Change Classification
+
+- Operation profile: `planning-governance`
+- Target files: `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Protected files touched: yes; the review record, review index, registry,
+  traceability, current state, handoff, test results, and worklog are protected
+  review/source-of-truth artifacts.
+- Expected risk: high, because the review writes protected source-of-truth
+  artifacts and the checklist gates future strict-protected BOOT-031 script
+  work.
+- Branch requirement: branch required for durable review/state artifacts; using
+  the PR branch `claude/boot-030-scaffold-extract-checklist`.
+- Required validation: `bash SCRIPTS/validate-bootstrap.sh` and
+  `git diff --check` after review artifact writes.
+- Required review: this is the requested fresh-context adversarial review.
+- Traceability impact: required because the BOOT-030 row must link the review
+  record and request-changes decision.
+- Registry impact: required because the new review record is registered and
+  impacted artifact versions advance.
+- Handoff/state impact: required because review decision and next safe action
+  change.
+- Dirty worktree status: before review artifact edits, `git status --short
+  --branch` showed the PR branch and no local uncommitted changes.
+- Escalation triggers checked: no script, validator, hook, CI workflow, shared
+  rule, role file, command file, context pack, template, ADR, security/release
+  policy, source-of-truth hierarchy mechanic, or runtime code was changed by
+  this review operation.
+
+## PR 7 BOOT-030 Review Final Evidence Envelope
+
+- Operation profile: `planning-governance`.
+- Classification confidence: high.
+- Escalation triggers checked: PR review policy, operation routing, changed-file
+  set, BOOT-030 backlog item, review package, checklist, registry,
+  traceability, current state, handoff, test results, worklog, and local diff.
+- Files read: all files requested in the PR #7 review prompt, plus local diff
+  output from `git diff 22c79f8...HEAD`.
+- Files changed: `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Files intentionally not read: none from the user-requested Step 1 list; all
+  listed files existed and were read.
+- Artifacts not impacted: scripts, validators, hooks, CI workflows, shared
+  rules, role files, command files, context packs, templates, ADRs,
+  security/release policy, runtime code, and BOOT-031/BOOT-032/BOOT-033
+  implementation artifacts.
+- Validation run: `bash SCRIPTS/validate-bootstrap.sh` passed before review
+  artifact writes; `git diff --check 22c79f8...HEAD` passed before review
+  artifact writes. After the review artifact writes, `bash
+  SCRIPTS/validate-bootstrap.sh` and `git diff --check` passed.
+- Validation skipped: GitHub PR diff/check verification via `gh` could not be
+  completed because the local environment could not connect to `api.github.com`.
+- Review required: complete for this pass; decision is request changes.
+- Next safe action: fix the P1 checklist contradiction and P2 dirty-worktree
+  evidence inconsistency, rerun validation/diff checks, then request fresh
+  re-review. Do not start BOOT-031 until BOOT-030 is corrected, re-reviewed,
+  and merged.
+
+## BOOT-030 Pre-Change Classification
+
+- Operation profile: `planning-governance`
+- Target files: `SCAFFOLD_FORK_CHECKLIST.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-030-scaffold-extract-checklist.md`, `CURRENT_STATE.md`,
+  `AI_HANDOFF.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`.
+- Protected files touched: yes; the registry, traceability, backlog,
+  backlog index, the new BOOT-030 item, current state, handoff, test
+  results, worklog, review index, and the new review package are protected
+  planning and source-of-truth artifacts. `SCAFFOLD_FORK_CHECKLIST.md` is a
+  new authoritative reset-policy artifact being introduced and registered.
+- Expected risk: high because the new checklist gates future
+  strict-protected BOOT-031 scaffold extraction script work.
+- Branch requirement: branch required;
+  `claude/boot-030-scaffold-extract-checklist` was created from green `main`
+  (`22c79f8`).
+- Required validation: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check`.
+- Required review: fresh-context adversarial Codex review through the
+  installed plugin once the PR is open and GitHub checks are green.
+- Traceability impact: required because BOOT-030 changes from planned to
+  implemented-with-checklist and registers a new artifact.
+- Registry impact: required because a new authoritative artifact
+  (`ART-SCAFFOLD-FORK-CHECKLIST`) is added and several source-of-truth
+  artifact versions advance.
+- Handoff/state impact: required because the active branch, role, task,
+  validation evidence, and next safe action change.
+- Dirty worktree status: before edits, `git status --short --branch` on
+  `claude/boot-030-scaffold-extract-checklist` was clean against
+  `origin/main` (HEAD `22c79f8`); no untracked files in this worktree.
+  The untracked `research/` directory from prior worktrees is not present
+  here.
+- Escalation triggers checked: no validator scripts, hooks, CI workflow,
+  shared rules, role files, command files, context packs, ADRs, templates,
+  security, release, branch policy, PR/merge policy, risk model, or runtime
+  product mechanics changed. The checklist is documentation; it does not
+  add new metadata fields or new validator structural checks.
+
+## BOOT-030 Final Evidence Envelope
+
+- Operation profile: `planning-governance`.
+- Classification confidence: high.
+- Escalation triggers checked: source-of-truth hierarchy, operation routing,
+  protected artifact list, branch policy, validation modes, claim evidence,
+  registry rules, traceability rules, parallel execution plan, backlog
+  sequencing, and BOOT-030 backlog entry.
+- Files read: `memory/ai/SHARED_AGENT_RULES.md`,
+  `memory/ai/ROLE_DOCUMENTATION_CURATOR.md`, `AI_PROJECT_BOOTSTRAP.md`,
+  `CONTEXT_INDEX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`,
+  `TRACEABILITY_MATRIX.md`, `GOVERNANCE.md`,
+  `BRANCH_AND_WORKTREE_GUIDE.md`, `OPERATION_ROUTING.md`,
+  `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-030-scaffold-extract-checklist.md`,
+  `IMPLEMENTATION_PLAN.md`, `PARALLEL_EXECUTION_PLAN.md`,
+  `SCRIPTS/validate-bootstrap.sh`, `REVIEWS/REVIEW_INDEX.md`,
+  `REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md`,
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-phase-1-execution-plan.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Files changed: `SCAFFOLD_FORK_CHECKLIST.md` (new),
+  `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-030-scaffold-extract-checklist.md`, `CURRENT_STATE.md`,
+  `AI_HANDOFF.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
+  (new).
+- Files intentionally not read: large historical PR review records before
+  the BOOT-018/SPEC-BOOT-003 work because they predate the current
+  operation routing rules and the existing review index, registry, and
+  state files already summarize the relevant outcomes.
+- Artifacts not impacted: `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `.githooks/*`,
+  `.github/workflows/bootstrap-validation.yml`, `memory/ai/ROLE_*.md`
+  files other than `ROLE_DOCUMENTATION_CURATOR.md` already read,
+  `COMMANDS/*`, `CONTEXT_PACKS/*`, `SPECS/templates/*`,
+  `ADR/templates/*`, `BACKLOG/templates/*`, `REVIEWS/templates/*`,
+  `SECURITY_AND_PRIVACY.md`, `OBSERVABILITY.md`, `CI_CD_GUIDE.md`,
+  `RELEASE_READINESS.md`, `RISK_MODEL.md`, `HOOKS_AND_GUARDRAILS.md`,
+  `OPERATION_ROUTING.md` (read only), `PR_REVIEW_POLICY.md` (read only),
+  `PR_MERGE_POLICY.md` (read only), `GOVERNANCE.md` (read only), and
+  product runtime files (none exist in this scaffold-only repository).
+- Validation run: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` pass locally on
+  `claude/boot-030-scaffold-extract-checklist` before commit.
+- Validation skipped: stack-specific product tests because no product
+  runtime code exists in this repository.
+- Review required: fresh-context Codex adversarial review through the
+  installed plugin after the PR is open and GitHub `validate` checks are
+  green.
+- Next safe action: commit, push, open PR against `main`, wait for GitHub
+  `validate` to be green, then request the formal Codex adversarial review.
 
 ## PR 6 Post-Merge Cleanup Classification
 
@@ -1051,191 +1355,228 @@ hierarchy, or product runtime mechanics are changed.
 
 ## Files Changed
 
-Post-merge source-of-truth cleanup on `main`:
+PR #7 BOOT-030 adversarial review:
 
-- `CURRENT_STATE.md` — marks PR #5 merged, `main` active, Phase 0 complete,
-  and next work as Phase 1 on a new branch.
-- `AI_HANDOFF.md` — sets active agent/role to Codex Documentation Curator,
-  records post-merge cleanup classification/evidence, and removes pending
-  PR #5 merge instructions from current handoff state.
-- `ARTIFACT_REGISTRY.md` — aligns registry versions/notes for the state,
-  handoff, traceability, test-result, review-index, worklog, and registry
-  artifacts.
-- `TRACEABILITY_MATRIX.md` — marks PR #5 and BOOT-028 merged to `main`.
-- `TEST_RESULTS.md` — records pass 6 approval, PR #5 merge, merge-commit
-  CI failure, `0dc5109` cleanup CI success, and local cleanup validation.
-- `WORKLOG/WORKLOG_INDEX.md` — adds this post-merge cleanup session.
-- `REVIEWS/REVIEW_INDEX.md` — marks PR #5 review loop as approved/merged.
+- `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`
+  — new durable request-changes review record with one P1 and one P2 finding.
+- `REVIEWS/REVIEW_INDEX.md` — adds the PR #7 review row.
+- `ARTIFACT_REGISTRY.md` — registers the new review artifact and advances
+  versions for impacted source-of-truth artifacts.
+- `TRACEABILITY_MATRIX.md` — links BOOT-030 to the PR #7 review record and
+  records the request-changes decision.
+- `CURRENT_STATE.md` — records PR #7 review decision and next safe action.
+- `AI_HANDOFF.md` — records this review classification, final evidence
+  envelope, decision, and next safe action.
+- `TEST_RESULTS.md` — records this review session and validation outcome.
+- `WORKLOG/WORKLOG_INDEX.md` — adds this review session row.
+
+BOOT-030 scaffold extraction checklist on
+`claude/boot-030-scaffold-extract-checklist`:
+
+- `SCAFFOLD_FORK_CHECKLIST.md` — new authoritative reset-policy artifact
+  defining framework files to keep, ProjectGenesis instance/history files to
+  reset or remove, examples/demo files, templates, generated/temporary
+  files, clean-state expectations for source-of-truth records, manual
+  extraction validation, and explicit stop conditions for BOOT-031 script
+  work.
+- `ARTIFACT_REGISTRY.md` — registers
+  `ART-SCAFFOLD-FORK-CHECKLIST` and the new BOOT-030 PR review package, and
+  advances source-of-truth artifact versions for state, handoff,
+  traceability, registry, backlog, backlog index, BOOT-030 backlog item,
+  review index, test results, and worklog.
+- `TRACEABILITY_MATRIX.md` — adds a new row for BOOT-030 mapping the
+  checklist to `SPEC-BOOT-002`/`SPEC-BOOT-003` evidence and the PR review
+  package.
+- `BACKLOG.md` and `BACKLOG/BACKLOG_INDEX.md` — mark BOOT-030 as in-review,
+  keep BOOT-031 through BOOT-033 sequenced as separate later PRs.
+- `BACKLOG/BOOT-030-scaffold-extract-checklist.md` — updates status,
+  evidence, and Definition of Done to point at the merged checklist.
+- `CURRENT_STATE.md` — records active BOOT-030 branch, new artifact, BOOT-030
+  in-review, BOOT-031 still blocked, and latest local validation.
+- `AI_HANDOFF.md` — sets active agent/role to Claude Documentation Curator,
+  records BOOT-030 Pre-Change Classification and Final Evidence Envelope,
+  and replaces the prior PR #6 post-merge handoff narrative with BOOT-030
+  state.
+- `TEST_RESULTS.md` — records BOOT-030 local validation evidence.
+- `WORKLOG/WORKLOG_INDEX.md` — adds the BOOT-030 session row.
+- `REVIEWS/REVIEW_INDEX.md` — registers the new BOOT-030 PR review package
+  pending Codex adversarial review.
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
+  — new durable review package for the BOOT-030 PR.
 
 ## Specs Changed
 
-- None. PR #5 maps to `SPEC-BOOT-002` (Scaffold Intake and Governance) and
-  `SPEC-BOOT-003` (Adaptive Governance Routing). Both remain at their
-  current versions; this is a maintenance fix to validator behavior governed
-  by those specs.
+- None. BOOT-030 maps to `SPEC-BOOT-002` (Scaffold Intake and Governance)
+  and `SPEC-BOOT-003` (Adaptive Governance Routing). Both remain at their
+  current versions; this is a documentation/source-of-truth addition
+  governed by those specs.
 
 ## Artifacts Changed
 
-- `README.md` v1.3 → v1.4 (metadata restored after `9de53e0` regression).
-- `SCRIPTS/validate-bootstrap.sh` v1.6 → v1.7 (find prune + AWK fix).
-- `SCRIPTS/validate-bootstrap-red-checks.sh` v1.2 → v1.3 (three new fixtures
-  and `expect_no_failure_mentioning` helper).
-- `CURRENT_STATE.md` v3.20 → v3.21 (post-merge PR #5 state).
-- `AI_HANDOFF.md` v3.21 → v3.22 (post-merge handoff).
-- `ARTIFACT_REGISTRY.md` v3.16 → v3.17 (post-merge artifact alignment).
-- `TRACEABILITY_MATRIX.md` v2.21 → v2.22 (PR #5 merged status).
-- `TEST_RESULTS.md` v1.39 → v1.40 (merge and cleanup validation evidence).
-- `WORKLOG/WORKLOG_INDEX.md` v3.18 → v3.19 (cleanup session row).
-- `REVIEWS/REVIEW_INDEX.md` v2.11 → v2.12 (PR #5 approved/merged status).
-- New registered artifact: `ART-REVIEW-PR-5-PHASE-0-VALIDATOR-SCOPE` for the
-  Codex review record file.
-- New backlog items registered: `BOOT-026`, `BOOT-027`.
-- New traceability rows: `BOOT-026`, `BOOT-027` mapped to validator scope
-  fix, AWK fix, red-check fixtures, and the Codex review record.
+- New artifact: `ART-SCAFFOLD-FORK-CHECKLIST` v1.0 (`SCAFFOLD_FORK_CHECKLIST.md`).
+- New artifact: `ART-PR-PACKAGE-BOOT-030-SCAFFOLD-EXTRACT-CHECKLIST` v1.0
+  (`REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`).
+- `ARTIFACT_REGISTRY.md` v3.23 → v3.24 (registers BOOT-030 artifacts and
+  bumps source-of-truth rows).
+- `TRACEABILITY_MATRIX.md` v2.27 → v2.28 (adds BOOT-030 row).
+- `CURRENT_STATE.md` v3.27 → v3.28 (BOOT-030 active).
+- `AI_HANDOFF.md` v3.28 → v3.29 (BOOT-030 handoff).
+- `BACKLOG.md` v1.20 → v1.21 (BOOT-030 in-review).
+- `BACKLOG/BACKLOG_INDEX.md` v1.2 → v1.3 (BOOT-030 in-review).
+- `BACKLOG/BOOT-030-scaffold-extract-checklist.md` v1.2 → v1.3
+  (implementation evidence linked).
+- `TEST_RESULTS.md` v1.46 → v1.47 (BOOT-030 validation evidence).
+- `WORKLOG/WORKLOG_INDEX.md` v3.24 → v3.25 (BOOT-030 session row).
+- `REVIEWS/REVIEW_INDEX.md` v2.17 → v2.18 (registers BOOT-030 review
+  package).
+- `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`
+  v1.0 created.
+- `ARTIFACT_REGISTRY.md` v3.24 → v3.25 (registers PR #7 review and bumps
+  review-state artifacts).
+- `TRACEABILITY_MATRIX.md` v2.28 → v2.29 (links PR #7 review).
+- `CURRENT_STATE.md` v3.28 → v3.29 (records request-changes decision).
+- `AI_HANDOFF.md` v3.29 → v3.30 (records review classification/evidence).
+- `TEST_RESULTS.md` v1.47 → v1.48 (records review validation).
+- `WORKLOG/WORKLOG_INDEX.md` v3.25 → v3.26 (records review session).
+- `REVIEWS/REVIEW_INDEX.md` v2.18 → v2.19 (adds review row).
 
 ## Decisions Made
 
-- PR #5 implementation work classifies as `strict-protected` because
-  `SCRIPTS/validate-bootstrap.sh` and
-  `SCRIPTS/validate-bootstrap-red-checks.sh` are scaffold mechanics.
-- The validator's `find` command uses `-prune`, not `-not -path`, to skip
-  traversal of `.claude/` and `research/` (not just filter results).
-- The AWK rewrite removes the `checked_first = 1; exit` pair entirely; the
-  existing `print` + `for ... read` consumer pattern already supports
-  multiple per-block failures, so no `failure_count` array refactor was
-  needed.
-- A new `expect_no_failure_mentioning` helper was added to the red-checks
-  to assert specific path absence in validator output (rather than overall
-  exit code), because the fixture base copy carries pre-existing
-  README/AI_HANDOFF drift unrelated to Phase 0.
-- BOOT-026 (restore validator-passing state) and BOOT-027 (Phase 0 patches)
-  are separate backlog items linked to `SPEC-BOOT-002` and `SPEC-BOOT-003`.
+- BOOT-030 work classifies as `planning-governance` because it touches
+  protected planning and source-of-truth artifacts (registry, traceability,
+  backlog, state, handoff) but does not change validators, hooks, CI,
+  shared rules, role files, command files, context packs, templates, ADRs,
+  or runtime mechanics.
+- `SCAFFOLD_FORK_CHECKLIST.md` lives at the repository root so it is
+  visible alongside other authoritative source-of-truth files and is easy
+  to discover by downstream forkers.
+- The checklist intentionally defines categories and clean-state
+  expectations only; it does not script the reset, modify validators, or
+  introduce new artifact metadata fields. BOOT-031 will use the checklist
+  as the authoritative reset policy for a dry-run-first script.
+- BOOT-031 script work, BOOT-032 benchmark, and BOOT-033 SRC/SPEC
+  cross-validation remain explicitly out of scope for this PR.
+- PR #7 review decision is request changes because the checklist's
+  spec-removal and traceability-keep instructions conflict, and the handoff
+  dirty-worktree evidence is internally inconsistent.
 
 ## Assumptions Made
 
-- `main` is the correct active branch after PR #5 merge and branch deletion.
-- Codex's review-record file on `origin/codex/pr-5-adversarial-review` is
-  the authoritative adversarial review for PR #5.
-- The AI_HANDOFF `Current Branch` merge-time mismatch was resolved by
-  post-merge cleanup commit `0dc5109`; the per-branch state issue remains a
-  known structural limitation for future parallel work.
-- ART-README v1.4, ART-SCRIPT-VALIDATE v1.7, and ART-SCRIPT-VALIDATE-RED
-  v1.3 are correct successor version numbers given prior history in the
-  registry.
+- `main` at `22c79f8` is the correct green base for BOOT-030 work.
+- Adding `SCAFFOLD_FORK_CHECKLIST.md` as a new authoritative artifact does
+  not require updating the validator's required-files list, because the
+  validator only requires registered metadata for any `*.md` file that is
+  not a template and the new file is registered in `ARTIFACT_REGISTRY.md`.
+- The checklist defines a manual extraction policy now; future automation
+  in BOOT-031 may add a dry-run script but should not change the policy.
 
 ## Open Questions
 
-- Should `research/` (the disposable scientific-review output) be committed
-  as a separate planning artifact PR, or left untracked indefinitely? Not
-  blocking PR #5.
+- Whether later BOOT-031 script work will require new per-artifact metadata
+  fields to flag instance-history vs framework-only content; the checklist
+  notes this as a known open question rather than committing to schema
+  changes now.
+- Whether `research/` (the disposable scientific-review output) should be
+  committed as a separate planning artifact PR, or left untracked
+  indefinitely. Not blocking BOOT-030.
+- No open question blocks the PR #7 review decision; the P1/P2 findings are
+  concrete corrections required before merge or re-review.
 
 ## Tests Run
 
+- PR #7 review:
+  `gh pr diff 7 --repo mrhussamahmed/ProjectGenesis` attempted and failed due
+  local `api.github.com` connectivity; `git diff 22c79f8...HEAD` used as the
+  local PR diff. `bash SCRIPTS/validate-bootstrap.sh` and
+  `git diff --check 22c79f8...HEAD` passed before review artifact writes.
+  After review artifact writes, `bash SCRIPTS/validate-bootstrap.sh` and
+  `git diff --check` passed.
+- BOOT-030 pre-edit baseline:
+  `git status --short --branch` on
+  `claude/boot-030-scaffold-extract-checklist` was clean against
+  `origin/main` (`22c79f8`) with no untracked files in this worktree (the
+  disposable `research/` directory from prior worktrees is not present
+  here); HEAD matched `origin/main` before edits.
+- BOOT-030 local validation:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` pass locally before commit.
 - PR #6 merge/release verification: `gh pr view 6 --repo
   mrhussamahmed/ProjectGenesis --json ...` confirmed PR #6 merged at
   `f650367e983895f967ac3e6ce574d6d0d270136d`.
-- PR #6 post-merge cleanup: `git fetch origin --prune`, `git switch main`,
-  and `git pull --ff-only origin main` fast-forwarded this worktree to the
-  PR #6 merge commit.
-- GitHub Actions `Bootstrap Validation` on PR #6 merge commit `f650367e` —
-  failed because `AI_HANDOFF.md` still named `codex/phase-1-execution-plan`
-  while the branch was `main`; this cleanup corrects that branch field.
-- PR #6 pre-merge verification in this release session:
-  `bash SCRIPTS/validate-bootstrap.sh`,
-  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
-  `git diff --check origin/main...HEAD` passed on
-  `codex/phase-1-execution-plan` before merge.
 - PR #6 post-merge cleanup validation:
   `bash SCRIPTS/validate-bootstrap.sh`,
   `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
   `git diff --check origin/main..HEAD` pass locally on `main`.
-- PR #6 review: `gh pr view 6 --repo mrhussamahmed/ProjectGenesis --json ...`
-  confirmed PR #6 is open on `codex/phase-1-execution-plan` with two green
-  `validate` checks on commit `854e94d`.
-- PR #6 review: `git diff origin/main...HEAD`,
-  `bash SCRIPTS/validate-bootstrap.sh`,
-  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
-  `git diff --check origin/main...HEAD` passed before review artifact edits.
-- PR #6 review artifact validation: `bash SCRIPTS/validate-bootstrap.sh`,
-  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
-  a trailing-whitespace scan of
-  `REVIEWS/REVIEW-2026-05-15-pr-6-phase-1-execution-plan.md` passed after
-  review artifact/state updates.
-- `bash SCRIPTS/validate-bootstrap.sh` — exits 0 on `main`.
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` — exits 0; all 19 cases pass.
-- `git diff --check origin/main..HEAD` — clean for this cleanup.
-- GitHub Actions `Bootstrap Validation` on `0dc5109` — pass.
-- GitHub Actions `Bootstrap Validation` on `b7bf2eb` — failed due to the
-  expected singular-handoff branch mismatch later fixed by `0dc5109`.
-- `bash -n SCRIPTS/validate-bootstrap.sh` — clean.
-- `bash -n SCRIPTS/validate-bootstrap-red-checks.sh` — clean.
+- GitHub Actions `Bootstrap Validation` on PR #6 merge commit `f650367e` —
+  failed because `AI_HANDOFF.md` still named `codex/phase-1-execution-plan`
+  while the branch was `main`; the post-merge cleanup commit `22c79f8`
+  corrected that branch field.
 - `bash SCRIPTS/validate-bootstrap.sh` — exits 0 on
-  `claude/festive-ride-eadc67`.
+  `claude/boot-030-scaffold-extract-checklist`.
 - `bash SCRIPTS/validate-bootstrap-red-checks.sh` — exits 0; all 19 cases
-  pass (16 existing + 3 new fixtures).
-- `git diff --check` — clean.
-- GitHub Actions `validate` on commit `d518a6e` (BOOT-026) — pass, 32s.
-- GitHub Actions `validate` on commit `b27bb3c` (BOOT-027) — pass, 30s.
-- Pre-commit hook on `d518a6e` and `b27bb3c` — pass.
-- Pre-push hook on push of `claude/festive-ride-eadc67` to origin — pass.
+  pass.
+- `git diff --check origin/main...HEAD` — clean before commit.
 
 ## Tests Not Run
 
-- Stack-specific product tests were not run for PR #6 review because no
-  product runtime code exists and the PR changes planning/source-of-truth
+- Stack-specific product tests were not run for BOOT-030 because no product
+  runtime code exists and this work creates documentation/source-of-truth
   records only.
-- Stack-specific product tests were not run for PR #5 because it changed
-  scaffold mechanics (`SCRIPTS/`) and source-of-truth state, not product
-  runtime code.
+- Red-check validator behavior changes are not required for BOOT-030; the
+  validator already inspects every classification block and every Markdown
+  file's metadata, and the new file is registered.
 
 ## Known Failures
 
-- Merge commit `f650367e` failed GitHub Actions `validate` because
-  `AI_HANDOFF.md` still named `codex/phase-1-execution-plan` after the merge
-  to `main`. This post-merge cleanup corrects the branch field to `main` and
-  records BOOT-029 as merged.
-- Merge commit `b7bf2eb` failed GitHub Actions `validate` because
-  `AI_HANDOFF.md` still named `claude/festive-ride-eadc67` after the merge
-  to `main`. Post-merge cleanup commit `0dc5109` corrected the branch field
-  and passed CI.
-- Codex's review branch `codex/pr-5-adversarial-review` could not pass its
-  own validator because it intentionally did not include PR #5's Phase 0
-  patches; the user pushed it with hooks bypassed. Detailed in
-  `TEST_RESULTS.md`. Not a regression on PR #5 itself.
+- PR #7 review could not fetch the GitHub-hosted diff through `gh pr diff`
+  because the local environment could not connect to `api.github.com`; the
+  local branch head and base SHAs matched the requested PR details.
+- None for BOOT-030 to date. The known structural issue that
+  `AI_HANDOFF.md` `## Current Branch` is singular and can drift during merge
+  remains; per-stream handoff files are deferred to a later phase.
+- Historical: merge commit `f650367e` failed GitHub Actions `validate`
+  because `AI_HANDOFF.md` still named `codex/phase-1-execution-plan` after
+  the merge to `main`. PR #6 post-merge cleanup (`22c79f8`) corrected the
+  branch field.
 
 ## Known Risks
 
-- The singular `AI_HANDOFF.md` branch field can drift during future branch
-  merges; per-stream handoff files remain the longer-term structural fix.
-- The Codex review record block in this AI_HANDOFF.md classifies the
-  review session as `planning-governance`; that block remains as a
-  historical record. After Phase 0, the validator inspects all
-  classification blocks, so any future misclassification would surface
-  immediately.
-- The per-branch handoff structural issue (`AI_HANDOFF.md` is singular)
-  remains; IB-P1-13 (per-stream handoff files) is the longer-term fix and
-  is deferred until parallel work becomes routine.
+- BOOT-030 must not merge until the P1 checklist clean-state contradiction is
+  fixed or explicitly accepted with documented rationale. BOOT-031 remains
+  blocked.
+- The singular `AI_HANDOFF.md` `## Current Branch` field can drift when
+  this BOOT-030 PR is merged to `main`; per-stream handoff files remain
+  the longer-term structural fix. Plan for a small post-merge cleanup
+  commit on `main` if GitHub Actions reports the same drift.
+- If BOOT-030 review surfaces a need for new artifact metadata or a
+  validator structural check, BOOT-030 will stop and the change will be
+  re-planned rather than expanding scope into BOOT-031, BOOT-032, or
+  BOOT-033 work.
 
 ## Dirty Worktree Status
 
-Before PR #6 post-merge cleanup edits, `git status --short --branch` on
-`main` showed only untracked `research/`. The cleanup edits are limited to
-source-of-truth state files that record the observed PR #6 merge and next
-Phase 1 action. Phase 0 `-prune` excludes `research/` from validator traversal
-so it does not break validation.
+Before BOOT-030 edits, `git status --short --branch` on
+`claude/boot-030-scaffold-extract-checklist` was clean against
+`origin/main` (HEAD `22c79f8`). The BOOT-030 edits are limited to the new
+checklist artifact, the new review package, and source-of-truth state
+files that record the work. The disposable `research/` directory from
+prior worktrees is not present in this worktree.
 
 ## Untracked Files
 
-- `research/project-scientific-review/2026-05-15-review-run-01/` (18-file
-  scientific-review output from the multi-pass adversarial review process;
-  disposable, not part of PR #6).
+- `SCAFFOLD_FORK_CHECKLIST.md` (new authoritative artifact, expected by
+  this BOOT-030 PR and added in this commit).
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
+  (new BOOT-030 PR review package, expected and added in this commit).
 
 ## Next Recommended Action
 
-After any PR #6 post-merge cleanup commit is pushed, verify latest `main`
-GitHub Actions status. Start BOOT-030 scaffold extraction checklist on a new
-branch from green `main`; do not start BOOT-031 script work until BOOT-030 is
-reviewed and merged.
+Fix the PR #7 review findings: reconcile the checklist's spec removal versus
+traceability-keep instructions, and align the BOOT-030 dirty-worktree evidence
+in `AI_HANDOFF.md`. Re-run validation and diff checks, then request
+fresh-context re-review. Do not start BOOT-031 script work until BOOT-030 is
+corrected, re-reviewed, and merged.
 
 ## What The Next AI Must Read First
 
@@ -1263,35 +1604,25 @@ product-specific specs, backlog, architecture updates, and test plans.
 
 Bootstrap scaffold: baseline exists. `SPEC-BOOT-002` v1.2 implementation is
 validated and merged. BOOT-016 publication, BOOT-017 README/tooling update,
-BOOT-018 `SPEC-BOOT-003` policy approval, and BOOT-019 through BOOT-024
-adaptive governance mechanics are merged to `main`, with post-merge state
-cleanup recorded. Public launch readiness assets (BOOT-025) are prepared on
-`main`, pushed to `origin/main`, and validated by GitHub Actions.
+BOOT-018 `SPEC-BOOT-003` policy approval, BOOT-019 through BOOT-024
+adaptive governance mechanics, and BOOT-025 public launch readiness assets
+are merged to `main`.
 
-Phase 0 / PR #5 is complete on `main`. The PR delivered BOOT-026
-(`README.md` metadata restoration and handoff branch correction), BOOT-027
-(validator `find` scope pruning for `.claude/` and `research/`, AWK
-multi-block classification evaluation, and three red-check fixtures), the
-Codex review record (`acdff16c`), and BOOT-028 source-of-truth state-sync
-commits (`068783d`, `f6eb339`, `4178b0a`, `b20c666`, `0233b0e`).
+Phase 0 / PR #5 is complete on `main` (BOOT-026, BOOT-027, BOOT-028).
+Phase 1 planning / PR #6 / BOOT-029 is merged to `main` at
+`f650367e983895f967ac3e6ce574d6d0d270136d` with post-merge source-of-truth
+cleanup recorded at `22c79f8`.
 
-Fresh-context review pass 6 approved PR #5. The PR merged to `main` at
-`b7bf2eb2ba19dca82588e276781905bfc4b6961d`; post-merge cleanup commit
-`0dc510933bd2903844a25db4f9d0c448d4f0915e` corrected `AI_HANDOFF.md`
-`## Current Branch` to `main` and passed GitHub Actions validation. No PR #5
-review or merge work remains active.
+Phase 1A / BOOT-030 scaffold extraction checklist work is in review on
+branch `claude/boot-030-scaffold-extract-checklist` from green `main`
+(`22c79f8`). This work creates `SCAFFOLD_FORK_CHECKLIST.md` as a new
+authoritative reset-policy artifact and updates registry, traceability,
+backlog, state, handoff, test results, worklog, review index, and the new
+review package. No scaffold extraction scripts, validators, hooks, CI,
+shared rules, role files, command files, context packs, templates, ADRs,
+or runtime mechanics change. PR #7 fresh-context review requested changes
+for a P1 checklist contradiction and P2 handoff evidence inconsistency.
 
-Phase 1 / BOOT-029 planning is merged to `main` through PR #6 at
-`f650367e983895f967ac3e6ce574d6d0d270136d`. The merged work is planning-only:
-it adds BOOT-029 through BOOT-033 backlog records, sequences implementation,
-creates the review package, and keeps implementation work split into separate
-PRs.
-
-PR #6 review follow-up removed the unregistered approved-assumption claims in
-BOOT-029 through BOOT-033 and removed the contradictory current-state
-no-blockers statement. Durable re-review approved with minor comments before
-merge. The only remaining P3 is optional traceability polish for research-only
-`IB-*` planning-input labels in `IMPLEMENTATION_PLAN.md`; the tracked BOOT
-records now carry the durable implementation authority. BOOT-030 scaffold
-extraction checklist is the next executable Phase 1 slice after latest `main`
-validation is confirmed green.
+BOOT-031 (scaffold extraction tool), BOOT-032 (seeded-defect benchmark),
+and BOOT-033 (SRC/SPEC cross-validation) remain queued in the approved
+Phase 1 sequence and are explicitly out of scope for this PR.

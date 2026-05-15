@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.27
+version: v3.31
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, and PR #6 merge/post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, and PR #7 BOOT-030 re-review approval
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,6 +44,23 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- Phase 1A / BOOT-030 scaffold extraction checklist is in review on
+  branch `claude/boot-030-scaffold-extract-checklist` from green `main`
+  (`22c79f8`). The branch adds the new authoritative
+  `SCAFFOLD_FORK_CHECKLIST.md` and updates `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-030-scaffold-extract-checklist.md`, `CURRENT_STATE.md`,
+  `AI_HANDOFF.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and the new
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`.
+  No scaffold extraction scripts, validators, hooks, CI workflow, role
+  files, ADRs, command files, context packs, templates, or runtime
+  mechanics are changed. Fresh-context Codex adversarial review of PR #7
+  initially requested changes for one P1 checklist clean-state contradiction
+  and one P2 handoff dirty-state evidence inconsistency. Follow-up commit
+  `b6f3104d00d75d2eb2d8c6d180c78d177dcfd32e` resolved both findings, and
+  fresh-context Codex re-review approved PR #7. BOOT-031 (scaffold extraction
+  tool) remains blocked until BOOT-030 is merged.
 - Phase 1 execution planning is merged to `main` through PR #6
   (`https://github.com/mrhussamahmed/ProjectGenesis/pull/6`) at merge commit
   `f650367e983895f967ac3e6ce574d6d0d270136d`. Initial review requested changes
@@ -171,18 +188,18 @@ authoritative: false
 
 ## Active Branch
 
-- `main`.
+- `claude/boot-030-scaffold-extract-checklist` from green `main`
+  (`22c79f8`).
 
 ## Active Worktree
 
-- `/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/festive-ride-eadc67`
+- `/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/brave-elbakyan-be49a2`
 
 ## Active Backlog Focus
 
-- Phase 1 bootstrap follow-up implementation: BOOT-030 scaffold extraction
-  checklist is next, followed by BOOT-031 scaffold extraction tool, BOOT-032
-  seeded-defect benchmark, and BOOT-033 SRC/SPEC validation work as separate
-  PRs.
+- BOOT-030 scaffold extraction checklist (in review on its own branch);
+  followed by BOOT-031 scaffold extraction tool, BOOT-032 seeded-defect
+  benchmark, and BOOT-033 SRC/SPEC validation work as separate later PRs.
 - Public launch readiness and adoption packaging for ProjectGenesis discovery
   and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
@@ -195,15 +212,16 @@ authoritative: false
 
 ## Current Blockers
 
-- No PR #6 blocker remains for BOOT-030; start it from latest green `main` as
-  a separate PR.
-- BOOT-031 is blocked until BOOT-030 is reviewed and merged.
-- BOOT-032 and BOOT-033 remain queued by the Phase 1 sequence; BOOT-032
-  research may be prepared in parallel with BOOT-030 only if it does not edit
-  shared source-of-truth files.
-- No active PR #5 blockers remain. The Phase 0 validator-scope and AWK
-  first-block fixes are merged to `main`; post-merge branch-state cleanup
-  has passed CI on `0dc5109`.
+- BOOT-030 PR #7 has a request-changes review. The P1 checklist contradiction
+  and P2 AI_HANDOFF dirty-state evidence inconsistency must be corrected before
+  merge.
+- BOOT-031 (scaffold extraction tool) remains blocked until BOOT-030 is
+  corrected, re-reviewed, and merged.
+- BOOT-032 (seeded-defect benchmark) and BOOT-033 (SRC/SPEC validation)
+  remain queued by the Phase 1 sequence; BOOT-032 research may be prepared
+  in parallel with BOOT-030 only if it does not edit shared source-of-truth
+  files.
+- No active PR #5 or PR #6 blockers remain; both are merged to `main`.
 - No product-specific input has been provided for a downstream software
   project.
 - No active bootstrap publication blockers.
@@ -221,11 +239,15 @@ authoritative: false
 - `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md`
 - `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
+- `REVIEWS/REVIEW-2026-05-15-pr-7-boot-030-scaffold-extract-checklist.md`
 - `ARCHITECTURE.md`
 - `BACKLOG.md`
 - `BRANCH_AND_WORKTREE_GUIDE.md`
 - `PR_REVIEW_POLICY.md`
 - `RISK_MODEL.md`
+- `OPERATION_ROUTING.md`
+- `SCAFFOLD_FORK_CHECKLIST.md`
 
 ## Known Stale Or Superseded Files
 
@@ -233,12 +255,45 @@ authoritative: false
 
 ## Next Recommended Action
 
-After any PR #6 post-merge cleanup commit is pushed and latest `main` GitHub
-Actions status is green, start BOOT-030 scaffold extraction checklist on a new
-branch from green `main`.
+Merge PR #7 after normal repository merge gates remain satisfied. Do not start
+BOOT-031 script work until BOOT-030 is merged.
 
 ## Latest Validation
 
+- PR #7 BOOT-030 re-review validation on 2026-05-15:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check 22c79f8...HEAD` pass locally on
+  `claude/boot-030-scaffold-extract-checklist` at head
+  `b6f3104d00d75d2eb2d8c6d180c78d177dcfd32e`. Re-review approved after
+  confirming P1 resolved at `SCAFFOLD_FORK_CHECKLIST.md:393-423`, P2
+  resolved at `AI_HANDOFF.md:228-232` and `AI_HANDOFF.md:1431-1436`, no
+  forbidden scope changes, and BOOT-031/032/033 readiness unchanged. User
+  provided CI context says GitHub `validate` is green on both runs for
+  `b6f3104`.
+- PR #7 BOOT-030 review-fix validation on 2026-05-15:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` pass locally on
+  `claude/boot-030-scaffold-extract-checklist` after addressing the P1
+  checklist clean-state spec/traceability contradiction and the P2
+  `AI_HANDOFF.md` dirty-worktree evidence inconsistency.
+- PR #7 BOOT-030 adversarial review on 2026-05-15:
+  `gh pr diff 7 --repo mrhussamahmed/ProjectGenesis` was attempted but failed
+  due local network/API connectivity. Local review used
+  `git diff 22c79f8...HEAD`; `bash SCRIPTS/validate-bootstrap.sh` and
+  `git diff --check 22c79f8...HEAD` pass before review artifact writes.
+  After review artifact writes, `bash SCRIPTS/validate-bootstrap.sh` and
+  `git diff --check` pass. Review decision is request changes.
+- BOOT-030 scaffold extraction checklist on 2026-05-15:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` pass locally on
+  `claude/boot-030-scaffold-extract-checklist` before commit. The branch
+  creates `SCAFFOLD_FORK_CHECKLIST.md` and updates source-of-truth records
+  only; no scaffold extraction scripts, validators, hooks, CI workflow,
+  shared rules, role files, command files, context packs, templates, ADRs,
+  or runtime mechanics change.
 - PR #6 merge and post-merge cleanup on 2026-05-15: PR #6 merged to `main` at
   `f650367e983895f967ac3e6ce574d6d0d270136d`; the feature branch
   `codex/phase-1-execution-plan` was deleted. Local release-session validation
@@ -246,10 +301,8 @@ branch from green `main`.
   `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
   `git diff --check origin/main...HEAD`. GitHub Actions on the merge commit
   failed because `AI_HANDOFF.md` still named `codex/phase-1-execution-plan`
-  while the branch was `main`. Post-merge cleanup validation passes locally on
-  `main` with `bash SCRIPTS/validate-bootstrap.sh`,
-  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
-  `git diff --check origin/main..HEAD`.
+  while the branch was `main`. Post-merge cleanup commit `22c79f8`
+  corrected the branch field; local cleanup validation passes on `main`.
 - PR #6 fresh-context re-review on 2026-05-15: original P1/P2 findings are
   resolved and the decision is approve with minor comments. The only remaining
   P3 is optional traceability polish for research-only `IB-*` planning-input
