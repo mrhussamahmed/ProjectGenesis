@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-8-BOOT-031-SCAFFOLD-EXTRACT-TOOL
 title: PR 8 BOOT-031 Scaffold Extraction Tool Review
 type: pr-review
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review of ProjectGenesis PR #8 and implementer review-fix response
+source: Fresh-context Codex adversarial review of ProjectGenesis PR #8, implementer review-fix response, and Codex adversarial re-review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -141,3 +141,28 @@ Post-fix validation on `claude/boot-031-scaffold-extract-tool`:
 
 Fresh-context Codex re-review pending after the fix commit is pushed and
 GitHub `validate` is green again.
+
+## Re-Review Outcome (v1.2)
+
+- Date: 2026-05-16
+- Reviewer: Codex (adversarial re-review)
+- Head reviewed: `914e1b2` on `claude/boot-031-scaffold-extract-tool`
+- Decision: approve
+
+| Finding | Resolution | Evidence |
+|---------|------------|----------|
+| P1-a extracted registry coverage | RESOLVED | `SCRIPTS/scaffold-extract.sh:1161-1164` emits backtick-wrapped rows for `README.md`, `GITHUB_REPOSITORY_SETUP.md`, `.github/CODEOWNERS`, and `.gitignore`; `SCRIPTS/scaffold-extract.sh:1183` emits `GOVERNANCE_PERFORMANCE.md`; `SCRIPTS/scaffold-extract.sh:1256-1260` emits `COMMANDS/start-requirement-breakdown.md`, `00_intake/raw/.gitkeep`, `00_intake/summaries/.gitkeep`, `ARTIFACTS/.gitkeep`, and `ARTIFACTS/ARCHIVE/.gitkeep`. The rsync exclusions at `SCRIPTS/scaffold-extract.sh:166-210` do not exclude `GOVERNANCE_PERFORMANCE.md`. |
+| P1-b reset-file shapes | RESOLVED | `SCRIPTS/scaffold-extract.sh:830-863` emits `STALE_ITEMS.md` with a `## Current Stale Items` header-only table at `SCRIPTS/scaffold-extract.sh:853-856` and no fallback bullet-list body. `SCRIPTS/scaffold-extract.sh:913-938` emits `ADR/ADR_INDEX.md` with only the ADR table header and separator at `SCRIPTS/scaffold-extract.sh:936-937`. `SCRIPTS/scaffold-extract.sh:940-964` emits `HANDOFFS/HANDOFF_INDEX.md` with only the handoff table header and separator at `SCRIPTS/scaffold-extract.sh:962-963`. These match `SCAFFOLD_FORK_CHECKLIST.md:494-504`. |
+| P2 red-check fixture coverage | RESOLVED | `SCRIPTS/validate-bootstrap-red-checks.sh:429-464` adds `case_scaffold_extract_registry_includes_kept_framework_paths`; `SCRIPTS/validate-bootstrap-red-checks.sh:466-506` adds `case_scaffold_extract_reset_files_use_header_only_tables`; both are invoked at `SCRIPTS/validate-bootstrap-red-checks.sh:531-532`. The script contains 25 case definitions at `SCRIPTS/validate-bootstrap-red-checks.sh:67-466` and 25 case invocations at `SCRIPTS/validate-bootstrap-red-checks.sh:508-532`. Phase 0 red-check run passed. |
+| P3 usage text accuracy | RESOLVED | `SCRIPTS/scaffold-extract.sh:27-31` now describes mirroring governance including `GOVERNANCE_PERFORMANCE.md`, README, GitHub repository setup guide, CODEOWNERS, and `.gitignore`; it no longer says the script skips the governance performance log. |
+
+New findings: none.
+
+Additional verification:
+
+- Forbidden-scope check: `git diff --name-only origin/main...HEAD` shows no changes under hooks, `.github/workflows`, `memory/ai/ROLE_*.md`, `COMMANDS/`, context packs, templates, ADRs, `GOVERNANCE.md`, `OPERATION_ROUTING.md`, branch policy, PR/merge policy, risk model, or runtime mechanics.
+- BOOT-032/BOOT-033 readiness: no `BACKLOG/BOOT-032*` or `BACKLOG/BOOT-033*` files are changed; only existing sequencing text in `BACKLOG.md` metadata context mentions BOOT-032/BOOT-033.
+- Manual smoke: `bash SCRIPTS/scaffold-extract.sh --apply /tmp/pr8-rereview-scaffold.*/target` passed, in-target `bash SCRIPTS/validate-bootstrap.sh` passed, and the temporary target was removed.
+- Whitespace: `git diff --check origin/main...HEAD` passed.
+
+Final disposition: approve. All four original findings are resolved and no new P1/P2 issues surfaced.

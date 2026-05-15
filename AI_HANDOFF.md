@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.36
+version: v3.37
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, and PR #8 BOOT-031 review-fix response
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, and PR #8 BOOT-031 Codex re-review approval
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -26,7 +26,7 @@ Codex
 
 ## Current Role
 
-Implementation Agent
+Adversarial PR Reviewer
 
 ## Current Branch
 
@@ -38,29 +38,35 @@ Implementation Agent
 
 ## Last Completed Task
 
-PR #8 / BOOT-031 review-fix applied locally on 2026-05-16. The fix
-addresses all four Codex findings (two P1, one P2, one P3) and adds two
-additional red-check fixtures.
+PR #8 / BOOT-031 Codex adversarial re-review completed on 2026-05-16
+with decision approve. All original findings are resolved and no new
+P1/P2 issues surfaced.
 
 ## Current In-Progress Task
 
-PR #8 / BOOT-031 review-fix on `claude/boot-031-scaffold-extract-tool`.
-The fix expands `SCRIPTS/scaffold-extract.sh` to register every kept
-framework path (including `README.md`, `GITHUB_REPOSITORY_SETUP.md`,
-`GOVERNANCE_PERFORMANCE.md`, `.github/CODEOWNERS`, `.gitignore`,
-`COMMANDS/start-requirement-breakdown.md`, `00_intake/raw/.gitkeep`,
-`00_intake/summaries/.gitkeep`, `ARTIFACTS/.gitkeep`, and
-`ARTIFACTS/ARCHIVE/.gitkeep`) in the extracted `ARTIFACT_REGISTRY.md`,
-rewrites the extracted `STALE_ITEMS.md`, `ADR/ADR_INDEX.md`, and
-`HANDOFFS/HANDOFF_INDEX.md` as header-only tables matching the
-checklist, removes the inaccurate "governance performance log" mention
-from the usage text (the script keeps `GOVERNANCE_PERFORMANCE.md`),
-adds `case_scaffold_extract_registry_includes_kept_framework_paths`
-and `case_scaffold_extract_reset_files_use_header_only_tables` to
-`SCRIPTS/validate-bootstrap-red-checks.sh`, and updates source-of-truth
-records. Next safe action is to commit, push, wait for GitHub
-`validate` to be green again, request fresh-context Codex re-review,
-and merge after approval.
+PR #8 / BOOT-031 is approved by fresh-context Codex re-review on
+`claude/boot-031-scaffold-extract-tool`. Next safe action is to merge
+after normal PR/CI gates, then run the established post-merge
+source-of-truth cleanup. Do not start BOOT-032 until BOOT-031 is merged.
+
+## PR 8 BOOT-031 Codex Re-Review Evidence
+
+- Decision: approve.
+- Findings resolved: P1-a registry coverage, P1-b reset-file shapes, P2
+  red-check coverage, and P3 usage text accuracy.
+- New findings: none.
+- Baseline validation before re-review state edits: `bash
+  SCRIPTS/validate-bootstrap.sh` passed; `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` passed with 25 cases.
+- Manual smoke: `bash SCRIPTS/scaffold-extract.sh --apply
+  /tmp/pr8-rereview-scaffold.*/target` passed; in-target `bash
+  SCRIPTS/validate-bootstrap.sh` passed; temp target cleaned.
+- Diff checks: `git diff --check origin/main...HEAD` passed before state
+  edits; forbidden-scope check found no hooks, workflows, role files,
+  command files, context packs, templates, ADRs, governance/policy files,
+  risk model, or runtime mechanics changed.
+- BOOT-032/BOOT-033 readiness: no BOOT-032 or BOOT-033 files changed;
+  those slices remain queued after BOOT-031.
 
 ## PR 8 BOOT-031 Review-Fix Pre-Change Classification
 

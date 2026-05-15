@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.35
+version: v3.36
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, and PR #8 BOOT-031 review-fix response
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, and PR #8 BOOT-031 Codex re-review approval
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -49,20 +49,24 @@ authoritative: false
   (`9e21ce9`). The branch adds dry-run-first
   `SCRIPTS/scaffold-extract.sh`, registers it as
   `ART-SCAFFOLD-EXTRACT-SCRIPT`, adds it to the bootstrap validator's
-  required-files list, and adds four new red-check fixtures
+  required-files list, and adds six BOOT-031 red-check fixtures
   (`case_scaffold_extract_golden_validates`,
   `case_scaffold_extract_dry_run_writes_nothing`,
   `case_scaffold_extract_refuses_source_as_target`,
-  `case_scaffold_extract_refuses_nonempty_without_force`). The script
-  follows `SCAFFOLD_FORK_CHECKLIST.md` clean-state expectations,
+  `case_scaffold_extract_refuses_nonempty_without_force`,
+  `case_scaffold_extract_registry_includes_kept_framework_paths`, and
+  `case_scaffold_extract_reset_files_use_header_only_tables`). Codex
+  adversarial re-review v1.2 approved PR #8 after confirming all four
+  original findings are resolved and no new P1/P2 issues surfaced. The
+  script follows `SCAFFOLD_FORK_CHECKLIST.md` clean-state expectations,
   never modifies the source repository, refuses overlapping or
   non-empty targets without `--force`, and runs the in-target
   bootstrap validator after a successful apply. No governance, hook,
   CI workflow, role file, ADR, command file, context pack, template,
   or runtime product mechanic changes ship with this slice beyond the
-  new script and four new red checks. BOOT-031 is the active Phase 1
-  slice; BOOT-032 (seeded-defect benchmark) and BOOT-033 (SRC/SPEC
-  validation) remain sequenced after this PR.
+  new script and red checks. BOOT-031 is approved for merge after
+  normal PR/CI gates; BOOT-032 (seeded-defect benchmark) and BOOT-033
+  (SRC/SPEC validation) remain sequenced after this PR.
 - Phase 1A / BOOT-030 scaffold extraction checklist is merged to `main`
   through PR #7
   (`https://github.com/mrhussamahmed/ProjectGenesis/pull/7`) at merge
@@ -276,16 +280,15 @@ authoritative: false
 
 ## Next Recommended Action
 
-PR #8 BOOT-031 review-fix has been applied locally: the extracted
-`ARTIFACT_REGISTRY.md` now covers every kept framework and GitHub config
-path; `STALE_ITEMS.md`, `ADR/ADR_INDEX.md`, and
-`HANDOFFS/HANDOFF_INDEX.md` are emitted as header-only tables; two new
-red-check fixtures enforce both contracts; and the script's usage text
-no longer claims to skip `GOVERNANCE_PERFORMANCE.md`. Commit the fix,
-push, wait for GitHub `validate` to be green again, then request a
-fresh-context Codex re-review. Merge after approval and run the
-established post-merge state-sync cleanup. Do not begin BOOT-032 until
-BOOT-031 is approved and merged.
+PR #8 BOOT-031 Codex adversarial re-review approved the review-fix on
+2026-05-16. All original findings are resolved: the extracted
+`ARTIFACT_REGISTRY.md` covers every kept framework and GitHub config path;
+`STALE_ITEMS.md`, `ADR/ADR_INDEX.md`, and `HANDOFFS/HANDOFF_INDEX.md` are
+emitted as header-only tables; two red-check fixtures enforce both
+contracts; and the script's usage text no longer claims to skip
+`GOVERNANCE_PERFORMANCE.md`. Next safe action is to merge PR #8 after
+normal PR/CI gates, then run the established post-merge state-sync cleanup.
+Do not begin BOOT-032 until BOOT-031 is merged.
 
 ## Latest Validation
 
@@ -298,6 +301,12 @@ BOOT-031 is approved and merged.
   validation, and `git diff --check origin/main...HEAD` pass locally
   on `claude/boot-031-scaffold-extract-tool` after addressing the
   Codex P1/P2/P3 findings.
+- PR #8 BOOT-031 Codex adversarial re-review on 2026-05-16:
+  Phase 0 `bash SCRIPTS/validate-bootstrap.sh` passed and `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` passed with 25 cases;
+  manual `--apply` smoke extraction to `/tmp/pr8-rereview-scaffold.*/target`
+  passed with in-target `bash SCRIPTS/validate-bootstrap.sh`; `git diff
+  --check origin/main...HEAD` passed. Decision: approve.
 - PR #8 BOOT-031 adversarial review on 2026-05-16:
   `gh pr diff 8 --repo mrhussamahmed/ProjectGenesis` failed because
   this environment could not connect to `api.github.com`; local diff
