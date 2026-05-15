@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-030
 title: BOOT-030 Scaffold Extraction Checklist
 type: backlog-item
 status: active
-version: v1.3
+version: v1.4
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, PR #6 merge/post-merge source-of-truth cleanup, and BOOT-030 implementation evidence linked
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 implementation evidence linked, PR #7 Codex adversarial review and re-review approval, and PR #7 merge/post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -106,7 +106,7 @@ P0
 
 ## Readiness Status
 
-in-review
+done
 
 ## Readiness Evidence
 
@@ -141,19 +141,25 @@ in-review
 
 - [x] Spec linked (`SPEC-BOOT-002`, `SPEC-BOOT-003`).
 - [x] Acceptance criteria satisfied — `SCAFFOLD_FORK_CHECKLIST.md`
-  registered in `ARTIFACT_REGISTRY.md` and reviewable before any script
-  work.
+  registered in `ARTIFACT_REGISTRY.md` and merged.
 - [x] Tests added or updated, or justified — bootstrap validation, red
   checks, and diff check are the only required tests; stack-specific tests
   are not applicable because no product runtime code exists.
-- [x] Traceability updated — new BOOT-030 row added to
-  `TRACEABILITY_MATRIX.md`.
+- [x] Traceability updated — BOOT-030 row in `TRACEABILITY_MATRIX.md`
+  links to the checklist, the PR review package, and the approved Codex
+  review record.
 - [x] Artifact registry updated — `ART-SCAFFOLD-FORK-CHECKLIST` and
   `ART-PR-PACKAGE-BOOT-030-SCAFFOLD-EXTRACT-CHECKLIST` registered;
-  source-of-truth versions advanced.
-- [x] Handoff updated — `AI_HANDOFF.md` now records BOOT-030 Pre-Change
-  Classification and Final Evidence Envelope.
-- [ ] Review complete — pending fresh-context Codex adversarial review.
+  source-of-truth versions advanced through the merge and post-merge
+  cleanup.
+- [x] Handoff updated — `AI_HANDOFF.md` records the BOOT-030 work,
+  Codex review, fix response, re-review approval, merge, and post-merge
+  cleanup.
+- [x] Review complete — fresh-context Codex adversarial review requested
+  changes for one P1 and one P2 finding; both resolved in follow-up
+  commit `b6f3104`; fresh-context Codex re-review approved at head
+  `9c8d65c`. PR #7 merged to `main` at
+  `90668945bfd24f547ee6ea7f6d1996e7f36c083e`.
 
 ## Parallelization
 
