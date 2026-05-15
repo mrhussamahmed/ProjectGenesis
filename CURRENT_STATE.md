@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.14
+version: v3.15
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, and BOOT-025 push validation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, and PR #5 Phase 0 validator-scope review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,6 +44,13 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- PR #5 (`https://github.com/mrhussamahmed/ProjectGenesis/pull/5`) was
+  reviewed from fresh context on branch `codex/pr-5-adversarial-review`.
+  Review decision is request changes. The validator and red-check mechanics
+  pass local and GitHub validation, but the PR is not merge-ready because
+  strict-protected evidence, complete handoff, registry, traceability,
+  test-result, worklog, review-index, and backlog/source-of-truth updates are
+  missing.
 - Public launch readiness and adoption packaging under `SPEC-BOOT-004` and
   `BOOT-025` is merged and pushed to `main` at commit
   `dfe8a07a80518e75c44d13a25abcbf742bc2ae76`. This work is
@@ -140,7 +147,7 @@ authoritative: false
 
 ## Active Branch
 
-- `main`
+- `codex/pr-5-adversarial-review`
 
 ## Active Worktree
 
@@ -148,6 +155,8 @@ authoritative: false
 
 ## Active Backlog Focus
 
+- Review and merge-readiness correction for PR #5 Phase 0 validator-scope and
+  AWK first-block fix.
 - Public launch readiness and adoption packaging for ProjectGenesis discovery
   and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
@@ -160,6 +169,10 @@ authoritative: false
 
 ## Current Blockers
 
+- PR #5 must address review findings before merge: add strict-protected
+  operation evidence, complete handoff/current-state updates, registry and
+  traceability alignment, test-result and worklog records, review-index
+  linkage, and backlog/source-of-truth mapping for BOOT-026 and BOOT-027.
 - No product-specific input has been provided for a downstream software
   project.
 - No active bootstrap publication blockers.
@@ -192,10 +205,22 @@ authoritative: false
 
 ## Next Recommended Action
 
-Perform manual GitHub launch items from `docs/public_launch_checklist.md`.
+Ask the PR #5 implementer to address
+`REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md`, then re-review
+the updated PR before merge.
 
 ## Latest Validation
 
+- PR #5 review validation on 2026-05-15: `bash -n` passed for
+  `SCRIPTS/validate-bootstrap.sh` and
+  `SCRIPTS/validate-bootstrap-red-checks.sh`; `git diff --check
+  origin/main...HEAD`, `bash SCRIPTS/validate-bootstrap.sh`, and
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` passed in the PR worktree;
+  GitHub PR #5 had two successful `validate` checks.
+- Review artifact branch validation on 2026-05-15: `git diff --check` passed;
+  `bash SCRIPTS/validate-bootstrap.sh` is blocked on this branch by the known
+  current-`main` README metadata issue and untracked `.claude/`/`research/`
+  scanning that PR #5 is intended to fix.
 - `bash SCRIPTS/validate-bootstrap.sh` passed on 2026-05-09.
 - `.githooks/pre-commit` passed on 2026-05-09.
 - `.githooks/pre-push` passed on 2026-05-09.
