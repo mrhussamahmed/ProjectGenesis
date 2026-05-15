@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v2.12
+version: v2.13
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update, PR #5 Phase 0 validator-scope review addressed across five corrective commits update, PR #5 pass 6 approval, and PR #5 post-merge cleanup
+source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update, PR #5 Phase 0 validator-scope review addressed across five corrective commits update, PR #5 pass 6 approval, PR #5 post-merge cleanup, and Phase 1 execution planning review package
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -48,6 +48,7 @@ Review records and review packages live in this folder.
 | PR-PACKAGE-2026-05-13-spec-boot-003-adaptive-governance | SPEC-BOOT-003 adaptive governance routing | Review package for the BOOT-018 policy-only adaptive governance routing proposal and review fixes | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-13-spec-boot-003-adaptive-governance.md` | active |
 | PR-PACKAGE-2026-05-14-adaptive-governance-implementation | BOOT-019 through BOOT-024 adaptive governance implementation | Review package for operation routing mechanics, impact map, validation modes, handoff rules, validator support, CI checks, and performance measurement | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-adaptive-governance-implementation.md` | active |
 | PR-PACKAGE-2026-05-14-public-launch-readiness | SPEC-BOOT-004 public launch readiness | Review package for public launch and adoption packaging assets | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-14-public-launch-readiness.md` | active |
+| PR-PACKAGE-2026-05-15-phase-1-execution-plan | Phase 1 execution planning | Review package for BOOT-029 planning-only PR that sequences BOOT-030 through BOOT-033 before implementation | `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-phase-1-execution-plan.md` | active |
 
 ## Rules
 

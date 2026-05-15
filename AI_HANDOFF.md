@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.22
+version: v3.24
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, and PR #5 post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, and Phase 1 execution planning validation
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -26,11 +26,11 @@ Codex
 
 ## Current Role
 
-Documentation Curator
+Backlog Planner
 
 ## Current Branch
 
-`main`
+`codex/phase-1-execution-plan`
 
 ## Current Worktree
 
@@ -38,20 +38,86 @@ Documentation Curator
 
 ## Last Completed Task
 
-PR #5 Phase 0 is merged and stabilized on `main`. PR #5 merged at
-`b7bf2eb2ba19dca82588e276781905bfc4b6961d`; the feature branch
-`claude/festive-ride-eadc67` was deleted on origin. The merge-commit
-GitHub Actions `validate` run failed because `AI_HANDOFF.md` still named
-the feature branch after merge; post-merge cleanup commit
-`0dc510933bd2903844a25db4f9d0c448d4f0915e` changed `## Current Branch`
-to `main`, and GitHub Actions `Bootstrap Validation` passed on `0dc5109`.
+PR #5 Phase 0 is merged and stabilized on `main`. The follow-up
+source-of-truth cleanup commit `5389b15` pushed to `origin/main`, and
+GitHub Actions `Bootstrap Validation` passed on that commit.
 
 ## Current In-Progress Task
 
-None. This handoff has been updated for post-merge source-of-truth cleanup:
-PR #5 is complete, `main` is the active branch, and
-the next work should start as a separate Phase 1 branch after confirming the
-latest `main` validation remains green.
+BOOT-029 Phase 1 execution planning on branch
+`codex/phase-1-execution-plan` is locally validated. The branch turns the
+selected Phase 1 candidates into sequenced backlog and plan records without
+implementing scaffold-extract, benchmark, or validator mechanics.
+
+## Phase 1 Execution Planning Pre-Change Classification
+
+- Operation profile: `planning-governance`
+- Target files: `IMPLEMENTATION_PLAN.md`, `PARALLEL_EXECUTION_PLAN.md`,
+  `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`, new detailed backlog files under
+  `BACKLOG/`, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-phase-1-execution-plan.md`, and
+  `REVIEWS/REVIEW_INDEX.md`.
+- Protected files touched: yes; the work updates implementation plan,
+  backlog, registry, traceability, current state, handoff, test-results,
+  worklog, review-package, and review-index artifacts.
+- Expected risk: medium to high, because it sets the sequencing and readiness
+  gates for the next protected scaffold changes.
+- Branch requirement: branch required; active branch is
+  `codex/phase-1-execution-plan`.
+- Required validation: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check`.
+- Required review: fresh-context review before merge because this changes
+  protected planning records for upcoming scaffold mechanics.
+- Traceability impact: required because new Phase 1 backlog items map to
+  `SPEC-BOOT-002` and `SPEC-BOOT-003`.
+- Registry impact: required because plan, backlog, index, state, handoff,
+  traceability, test-results, worklog, review-package, review-index, and new
+  backlog-item artifacts change.
+- Handoff/state impact: required because the active branch, active task,
+  next safe action, and file ownership plan change.
+- Dirty worktree status: before branch creation, `git status --short --branch`
+  on `main` showed only untracked `research/`; it remains untracked and is
+  used only as non-authoritative planning input.
+- Escalation triggers checked: no validator, hook, CI, role, security,
+  release, command, context-pack, ADR, or product-runtime changes in this
+  branch. Future implementation slices may become `strict-protected`, but this
+  branch is planning only.
+
+## Phase 1 Execution Planning Final Evidence Envelope
+
+- Operation profile: `planning-governance`.
+- Classification confidence: high.
+- Escalation triggers checked: protected planning artifacts, backlog records,
+  registry, traceability, current state, handoff, test results, worklog, review
+  package, review index, dirty worktree, branch status, and validation mode.
+- Files read: `memory/ai/SHARED_AGENT_RULES.md`,
+  `memory/ai/ROLE_BACKLOG_PLANNER.md`, `AI_PROJECT_BOOTSTRAP.md`,
+  `CONTEXT_INDEX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`, `TRACEABILITY_MATRIX.md`,
+  `GOVERNANCE.md`, `BRANCH_AND_WORKTREE_GUIDE.md`, `IMPLEMENTATION_PLAN.md`,
+  `PARALLEL_EXECUTION_PLAN.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`,
+  and selected untracked `research/` planning inputs.
+- Files changed: `IMPLEMENTATION_PLAN.md`, `PARALLEL_EXECUTION_PLAN.md`,
+  `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-029-phase-1-execution-plan.md`,
+  `BACKLOG/BOOT-030-scaffold-extract-checklist.md`,
+  `BACKLOG/BOOT-031-scaffold-extract-tool.md`,
+  `BACKLOG/BOOT-032-seeded-defect-benchmark.md`,
+  `BACKLOG/BOOT-033-src-spec-cross-validation.md`,
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-phase-1-execution-plan.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Validation run: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check`
+  passed locally on `codex/phase-1-execution-plan`.
+- Validation skipped: stack-specific product tests, because this branch changes
+  bootstrap planning/source-of-truth records only.
+- Next safe action: request fresh-context review for BOOT-029; after review and
+  merge, start BOOT-030 scaffold extraction checklist on a new branch.
 
 ## PR 5 Post-Merge Source-Of-Truth Cleanup Classification
 
@@ -825,10 +891,9 @@ so it does not break validation.
 
 ## Next Recommended Action
 
-Start the next Phase 1 item on a new branch after confirming the latest
-`main` validation remains green. Candidate next items include IB-P0-01
-scaffold extraction, IB-P1-15 seeded-defect benchmark, and IB-P1-01
-SRC/SPEC validation.
+Request fresh-context review for BOOT-029 on
+`codex/phase-1-execution-plan`. Do not start BOOT-030 until this planning
+branch is reviewed and merged.
 
 ## What The Next AI Must Read First
 
@@ -873,3 +938,9 @@ Fresh-context review pass 6 approved PR #5. The PR merged to `main` at
 `0dc510933bd2903844a25db4f9d0c448d4f0915e` corrected `AI_HANDOFF.md`
 `## Current Branch` to `main` and passed GitHub Actions validation. No PR #5
 review or merge work remains active.
+
+Phase 1 / BOOT-029 planning is locally validated on
+`codex/phase-1-execution-plan`. The branch is planning-only: it adds BOOT-029
+through BOOT-033 backlog records, sequences implementation, creates the review
+package, and keeps BOOT-030 through BOOT-033 implementation blocked until the
+plan is reviewed and merged.

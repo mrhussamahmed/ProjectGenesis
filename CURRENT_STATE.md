@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.21
+version: v3.23
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, and PR #5 post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, and Phase 1 execution planning validation
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,6 +44,14 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- Phase 1 execution planning is ready for review on branch
+  `codex/phase-1-execution-plan`. This planning branch adds BOOT-029 through
+  BOOT-033 and updates the implementation and parallel execution plans. It does
+  not implement scaffold extraction, benchmark scripts, or validator
+  mechanics. After review/merge, implementation should proceed as separate
+  PRs in this order: BOOT-030 scaffold extraction checklist, BOOT-031
+  scaffold extraction tool, BOOT-032 seeded-defect benchmark, and BOOT-033
+  SRC/SPEC cross-validation.
 - No PR is currently in an active implementation phase. PR #5
   (`https://github.com/mrhussamahmed/ProjectGenesis/pull/5`) is merged into
   `main` at merge commit `b7bf2eb2ba19dca82588e276781905bfc4b6961d`; the
@@ -59,7 +67,9 @@ authoritative: false
   `AI_HANDOFF.md` branch field still named the feature branch after merge;
   post-merge cleanup commit `0dc510933bd2903844a25db4f9d0c448d4f0915e`
   corrected `AI_HANDOFF.md` `## Current Branch` to `main`, and GitHub Actions
-  `Bootstrap Validation` passed on `0dc5109`. Phase 0 is complete on `main`.
+  `Bootstrap Validation` passed on `0dc5109`. Follow-up source-of-truth
+  finalization commit `5389b15` is on `origin/main` and also passed GitHub
+  Actions. Phase 0 is complete on `main`.
 - Public launch readiness and adoption packaging under `SPEC-BOOT-004` and
   `BOOT-025` is merged and pushed to `main` at commit
   `dfe8a07a80518e75c44d13a25abcbf742bc2ae76`. This work is
@@ -156,8 +166,7 @@ authoritative: false
 
 ## Active Branch
 
-- `main`. `origin/main` includes PR #5 merge commit `b7bf2eb` and
-  post-merge cleanup commit `0dc5109`.
+- `codex/phase-1-execution-plan`.
 
 ## Active Worktree
 
@@ -165,8 +174,10 @@ authoritative: false
 
 ## Active Backlog Focus
 
-- Phase 1 bootstrap follow-up candidates can start on separate branches:
-  scaffold extraction, seeded-defect benchmark, and SRC/SPEC validation work.
+- Phase 1 bootstrap follow-up planning: BOOT-029 execution plan, then
+  BOOT-030 scaffold extraction checklist, BOOT-031 scaffold extraction tool,
+  BOOT-032 seeded-defect benchmark, and BOOT-033 SRC/SPEC validation work as
+  separate PRs.
 - Public launch readiness and adoption packaging for ProjectGenesis discovery
   and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
@@ -179,6 +190,8 @@ authoritative: false
 
 ## Current Blockers
 
+- BOOT-030 through BOOT-033 implementation is blocked until BOOT-029 is
+  reviewed and merged.
 - No active PR #5 blockers remain. The Phase 0 validator-scope and AWK
   first-block fixes are merged to `main`; post-merge branch-state cleanup
   has passed CI on `0dc5109`.
@@ -212,13 +225,21 @@ authoritative: false
 
 ## Next Recommended Action
 
-Start the next Phase 1 item on a new branch after confirming the latest
-`main` validation remains green. Candidate next items include IB-P0-01
-scaffold extraction, IB-P1-15 seeded-defect benchmark, and IB-P1-01
-SRC/SPEC validation.
+Request fresh-context review for BOOT-029 on
+`codex/phase-1-execution-plan`. Do not start BOOT-030 implementation until
+the planning branch is reviewed and merged.
 
 ## Latest Validation
 
+- BOOT-029 Phase 1 execution planning validation on 2026-05-15:
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check`
+  passed locally on `codex/phase-1-execution-plan`. The branch changes
+  planning/source-of-truth records only; no scaffold extraction, benchmark,
+  validator, hook, CI, role, ADR, or runtime product mechanics changed.
+- PR #5 final source-of-truth validation on 2026-05-15: follow-up commit
+  `5389b15` is on `origin/main` and passed GitHub Actions `Bootstrap
+  Validation`; it is the current base for `codex/phase-1-execution-plan`.
 - PR #5 merge and post-merge validation on 2026-05-15: pass 6 fresh-context
   review approved PR #5; PR #5 merged at `b7bf2eb`; merge-commit GitHub
   Actions `validate` failed because `AI_HANDOFF.md` still named the deleted
