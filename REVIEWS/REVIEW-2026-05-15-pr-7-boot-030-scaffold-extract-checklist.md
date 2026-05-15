@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-7-BOOT-030-SCAFFOLD-EXTRACT-CHECKLIST
 title: PR 7 BOOT-030 Scaffold Extraction Checklist Review
 type: pr-review
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-15
 updated: 2026-05-15
 owner: Codex
-source: Fresh-context adversarial review of ProjectGenesis PR #7 and implementer review-fix response
+source: Fresh-context adversarial review of ProjectGenesis PR #7, implementer review-fix response, and Codex re-review approval
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: [BOOT-030]
 linked_adrs: []
@@ -203,3 +203,31 @@ Both findings are addressed; fresh-context Codex re-review is required.
 ### Status
 
 `request changes, addressed; pending fresh-context Codex re-review`.
+
+## Re-Review
+
+- Re-reviewed PR: https://github.com/mrhussamahmed/ProjectGenesis/pull/7
+- Re-reviewed head SHA:
+  `b6f3104d00d75d2eb2d8c6d180c78d177dcfd32e`
+- Base SHA: `22c79f8d239dd0fa7df500ab9863513500901da7`
+- P1 verdict: resolved. `SCAFFOLD_FORK_CHECKLIST.md:393-423` now says the
+  `TRACEABILITY_MATRIX.md` clean-state expectation keeps bootstrap baseline
+  mappings but resets `## Proposed Bootstrap Improvements Under Review`,
+  `## Adaptive Governance Routing Requirement Mapping`, and
+  `## Scaffold Improvement Requirement Mapping` to header-only tables because
+  the removed specs/backlog rows would otherwise leave stale citations.
+- P2 verdict: resolved. `AI_HANDOFF.md:228-232` records the BOOT-030
+  pre-change worktree as clean against `origin/main` (`22c79f8`) with no
+  untracked files, and `AI_HANDOFF.md:1431-1436` records the same clean
+  pre-edit baseline in `## Tests Run`.
+- Scope verdict: clean. `git diff --name-only 22c79f8...HEAD` shows no
+  changes under `SCRIPTS/`, `.githooks/`, `.github/workflows/`, `memory/ai/`,
+  `COMMANDS/`, `CONTEXT_PACKS/`, templates, ADRs, or runtime files. BOOT-031,
+  BOOT-032, and BOOT-033 readiness remains unchanged at `BACKLOG.md:56-58`
+  and `BACKLOG/BACKLOG_INDEX.md:27-29`.
+- Validation outcomes:
+  `bash SCRIPTS/validate-bootstrap.sh` passed locally;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` passed locally;
+  `git diff --check 22c79f8...HEAD` passed locally. User-provided CI context
+  says GitHub `validate` is green on both runs for `b6f3104`.
+- Decision: approve.
