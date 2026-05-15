@@ -426,6 +426,85 @@ case_scaffold_extract_refuses_nonempty_without_force() {
   fi
 }
 
+case_scaffold_extract_registry_includes_kept_framework_paths() {
+  # Coverage: the extracted ARTIFACT_REGISTRY.md must mention every kept
+  # framework/GitHub config path that the validator does not already check.
+  # This guards against silent registry drift relative to
+  # SCAFFOLD_FORK_CHECKLIST.md "Framework Files To Keep".
+  local target="$tmp_root/scaffold-extract-registry-coverage"
+  rm -rf "$target"
+  local output
+  set +e
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply --no-validate "$target" 2>&1)"
+  local status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: scaffold-extract.sh --apply did not exit 0 during registry coverage check:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  local path
+  for path in \
+    "README.md" \
+    "GITHUB_REPOSITORY_SETUP.md" \
+    "GOVERNANCE_PERFORMANCE.md" \
+    ".github/CODEOWNERS" \
+    ".gitignore" \
+    "COMMANDS/start-requirement-breakdown.md" \
+    "00_intake/raw/.gitkeep" \
+    "00_intake/summaries/.gitkeep" \
+    "ARTIFACTS/.gitkeep" \
+    "ARTIFACTS/ARCHIVE/.gitkeep"; do
+    if ! grep -Fq "\`$path\`" "$target/ARTIFACT_REGISTRY.md"; then
+      echo "FAIL: extracted ARTIFACT_REGISTRY.md does not register kept framework path: $path" >&2
+      failures=$((failures + 1))
+    fi
+  done
+}
+
+case_scaffold_extract_reset_files_use_header_only_tables() {
+  # Coverage: the extracted shared-state reset files must match the
+  # SCAFFOLD_FORK_CHECKLIST.md header-only table contract for STALE_ITEMS.md,
+  # ADR/ADR_INDEX.md, and HANDOFFS/HANDOFF_INDEX.md.
+  local target="$tmp_root/scaffold-extract-reset-shapes"
+  rm -rf "$target"
+  local output
+  set +e
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply --no-validate "$target" 2>&1)"
+  local status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: scaffold-extract.sh --apply did not exit 0 during reset-shape check:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  # STALE_ITEMS.md: header table row but no body row.
+  if ! grep -Fq "| Item | Type | Detected | Status | Resolution |" "$target/STALE_ITEMS.md"; then
+    echo "FAIL: STALE_ITEMS.md missing header-only stale-items table header" >&2
+    failures=$((failures + 1))
+  fi
+  if grep -Eq '^\| [^|]+\| [^|]+\| [^|]+\| [^|]+\| [^|]+\|$' "$target/STALE_ITEMS.md" \
+       | grep -v "Item " | grep -v "----" >/dev/null 2>&1; then
+    : # placeholder so set -e does not trip
+  fi
+  # ADR/ADR_INDEX.md: table header but no body row (no `none none` row).
+  if grep -Fq "| none | none | none |" "$target/ADR/ADR_INDEX.md"; then
+    echo "FAIL: ADR/ADR_INDEX.md still contains a 'none' body row instead of header-only table" >&2
+    failures=$((failures + 1))
+  fi
+  if ! grep -Fq "| ADR ID | Title | File | Status | Date | Owner | Linked Specs | Linked Backlog Items | Supersedes | Superseded By |" "$target/ADR/ADR_INDEX.md"; then
+    echo "FAIL: ADR/ADR_INDEX.md missing ADR table header row" >&2
+    failures=$((failures + 1))
+  fi
+  # HANDOFFS/HANDOFF_INDEX.md: must contain a header-only handoff table.
+  if ! grep -Fq "| Date | Agent | Role | Branch | Worktree | File |" "$target/HANDOFFS/HANDOFF_INDEX.md"; then
+    echo "FAIL: HANDOFFS/HANDOFF_INDEX.md missing header-only handoff table header" >&2
+    failures=$((failures + 1))
+  fi
+}
+
 case_approved_spec_missing_source
 case_approved_spec_empty_source
 case_active_backlog_missing_spec
@@ -449,6 +528,8 @@ case_scaffold_extract_golden_validates
 case_scaffold_extract_dry_run_writes_nothing
 case_scaffold_extract_refuses_source_as_target
 case_scaffold_extract_refuses_nonempty_without_force
+case_scaffold_extract_registry_includes_kept_framework_paths
+case_scaffold_extract_reset_files_use_header_only_tables
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2

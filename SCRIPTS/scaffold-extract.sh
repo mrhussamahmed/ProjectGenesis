@@ -25,12 +25,13 @@ Flags:
   -h, --help      Show this help and exit.
 
 The script follows SCAFFOLD_FORK_CHECKLIST.md:
-  1. Mirror framework files (governance, roles, templates, validation, hooks,
-     CI workflow, intake, context, requirements, context packs, commands,
-     licensing).
+  1. Mirror framework files (governance including GOVERNANCE_PERFORMANCE.md,
+     roles, templates, validation, hooks, CI workflow, intake, context,
+     requirements, context packs, commands, licensing, README, GitHub
+     repository setup guide, CODEOWNERS, .gitignore).
   2. Skip ProjectGenesis-specific files (SPEC-BOOT-*, dated PR reviews,
      BOOT-009+ per-item backlog files, legacy RTFs, examples, launch/demo/
-     roadmap docs, ProjectGenesis issue templates, governance performance log).
+     roadmap docs, ProjectGenesis issue templates).
   3. Reset shared state files (CURRENT_STATE.md, AI_HANDOFF.md,
      TRACEABILITY_MATRIX.md, BACKLOG.md, SPECS/SPEC_INDEX.md,
      ARTIFACT_REGISTRY.md, and the rest of the shared-state set) to
@@ -851,7 +852,8 @@ backlog items, and files that need review before reuse.
 
 ## Current Stale Items
 
-- No current stale items.
+| Item | Type | Detected | Status | Resolution |
+|------|------|----------|--------|------------|
 
 ## Rules
 
@@ -933,7 +935,6 @@ Architecture Decision Records live in this folder.
 
 | ADR ID | Title | File | Status | Date | Owner | Linked Specs | Linked Backlog Items | Supersedes | Superseded By |
 |--------|-------|------|--------|------|-------|--------------|----------------------|------------|---------------|
-| none | none | none | none | none | none | none | none | none | none |
 EOF
 
 emit "HANDOFFS/HANDOFF_INDEX.md" <<EOF
@@ -957,6 +958,9 @@ authoritative: false
 
 \`AI_HANDOFF.md\` is the current handoff. Historical handoff snapshots can be
 stored in this folder when needed.
+
+| Date | Agent | Role | Branch | Worktree | File |
+|------|-------|------|--------|----------|------|
 EOF
 
 emit "IMPLEMENTATION_PLAN.md" <<EOF
@@ -1154,6 +1158,10 @@ Common fields for all entries below unless stated otherwise:
 | ART-AGENT-CLAUDE | agent-instructions | Claude Instructions | \`CLAUDE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Short Claude entrypoint. |
 | ART-AGENT-GENERIC | agent-instructions | Codex And Generic Agent Instructions | \`AGENTS.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Short generic agent entrypoint. |
 | ART-LICENSE | license | License | \`LICENSE\` | authoritative | v1.0 | extracted scaffold | none | none | true | Project license. Downstream forkers must keep or replace per their own license requirements. |
+| ART-README | public-readme | README | \`README.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Project README inherited from ProjectGenesis. Downstream forkers should rewrite project-specific text (name, claims, owner, links) before publishing. |
+| ART-GITHUB-REPOSITORY-SETUP | repository-setup | GitHub Repository Setup | \`GITHUB_REPOSITORY_SETUP.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Repository publication, branch protection, and maintainer-review setup guide inherited from ProjectGenesis. Downstream forkers should rewrite project-specific text before publishing. |
+| ART-GITHUB-CODEOWNERS | github-config | Code Owners | \`.github/CODEOWNERS\` | active | v1.0 | extracted scaffold | none | none | false | Code Owners file inherited from ProjectGenesis. Downstream forkers should replace the owner handle before publishing. |
+| ART-GITIGNORE | config | Git Ignore | \`.gitignore\` | active | v1.0 | extracted scaffold | none | none | false | Generic generated-file and secret-adjacent ignores. |
 | ART-AI-SHARED-RULES | agent-rules | Shared Agent Rules | \`memory/ai/SHARED_AGENT_RULES.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Shared behavior rules for all coding agents. |
 | ART-AI-ROLE-PRODUCT-ANALYST | agent-role | Product Analyst Role | \`memory/ai/ROLE_PRODUCT_ANALYST.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Product discovery role definition. |
 | ART-AI-ROLE-SPEC-AUTHOR | agent-role | Spec Author Role | \`memory/ai/ROLE_SPEC_AUTHOR.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Spec creation and maintenance role definition. |
@@ -1245,6 +1253,11 @@ Common fields for all entries below unless stated otherwise:
 | ART-CONTEXT-PACK-RESUME | context-pack | Resume Context Pack | \`CONTEXT_PACKS/resume.md\` | active | v1.0 | extracted scaffold | none | none | true | Resume context pack. |
 | ART-COMMAND-INDEX | command-index | Command Index | \`COMMANDS/COMMAND_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | true | Command index. |
 | ART-COMMAND-TEMPLATE | template | Command Template | \`COMMANDS/COMMAND_TEMPLATE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Command authoring template. |
+| ART-COMMAND-START-REQUIREMENT-BREAKDOWN | command | Start Requirement Breakdown | \`COMMANDS/start-requirement-breakdown.md\` | active | v1.0 | extracted scaffold | none | none | false | Reusable downstream project intake and requirement breakdown workflow command triggered by \`Start requirement breakdown\`. |
+| ART-INTAKE-RAW-DIR | input-directory | Raw Intake Directory | \`00_intake/raw/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the canonical raw intake directory present. |
+| ART-INTAKE-SUMMARIES-DIR | input-directory | Intake Summaries Directory | \`00_intake/summaries/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the intake summaries directory present. |
+| ART-ARTIFACTS-DIR | input-directory | Artifacts Directory | \`ARTIFACTS/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the artifacts directory present. |
+| ART-ARTIFACTS-ARCHIVE-DIR | input-directory | Artifacts Archive Directory | \`ARTIFACTS/ARCHIVE/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the artifacts archive directory present. |
 | ART-VALIDATOR-SCRIPT | guide | Validator Script | \`SCRIPTS/validate-bootstrap.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Bootstrap validator. |
 | ART-VALIDATOR-RED-CHECKS | guide | Validator Red Checks | \`SCRIPTS/validate-bootstrap-red-checks.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Validator red-check fixtures. |
 | ART-START-CLAUDE | guide | Claude Startup Helper | \`SCRIPTS/start-claude.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Claude startup helper. |

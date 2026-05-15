@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.33
+version: v3.35
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, and BOOT-031 scaffold extraction tool implementation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, and PR #8 BOOT-031 review-fix response
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -276,15 +276,41 @@ authoritative: false
 
 ## Next Recommended Action
 
-After local validation passes on `claude/boot-031-scaffold-extract-tool`,
-push the branch, open the BOOT-031 PR, wait for GitHub `validate` to be
-green, request fresh-context Codex adversarial review through the
-installed plugin, address P0/P1 findings and blocking P2 findings, and
-merge after approval. After merge, perform the standard post-merge
-state-sync cleanup and then begin BOOT-032 on its own branch.
+PR #8 BOOT-031 review-fix has been applied locally: the extracted
+`ARTIFACT_REGISTRY.md` now covers every kept framework and GitHub config
+path; `STALE_ITEMS.md`, `ADR/ADR_INDEX.md`, and
+`HANDOFFS/HANDOFF_INDEX.md` are emitted as header-only tables; two new
+red-check fixtures enforce both contracts; and the script's usage text
+no longer claims to skip `GOVERNANCE_PERFORMANCE.md`. Commit the fix,
+push, wait for GitHub `validate` to be green again, then request a
+fresh-context Codex re-review. Merge after approval and run the
+established post-merge state-sync cleanup. Do not begin BOOT-032 until
+BOOT-031 is approved and merged.
 
 ## Latest Validation
 
+- PR #8 BOOT-031 review-fix on 2026-05-16:
+  `bash -n SCRIPTS/scaffold-extract.sh`,
+  `bash -n SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` (25 cases pass),
+  manual `--apply` extraction into `/tmp/scaffold-test` with in-target
+  validation, and `git diff --check origin/main...HEAD` pass locally
+  on `claude/boot-031-scaffold-extract-tool` after addressing the
+  Codex P1/P2/P3 findings.
+- PR #8 BOOT-031 adversarial review on 2026-05-16:
+  `gh pr diff 8 --repo mrhussamahmed/ProjectGenesis` failed because
+  this environment could not connect to `api.github.com`; local diff
+  `9e21ce9...HEAD` was reviewed instead. `bash
+  SCRIPTS/validate-bootstrap.sh`, `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check
+  origin/main...HEAD` passed before review state edits. Manual
+  extraction to `/tmp/pr8-review-scaffold` passed in-target bootstrap
+  validation but exposed P1 checklist mismatches in the generated
+  registry and reset-file shapes. Post-write `bash
+  SCRIPTS/validate-bootstrap.sh`, `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check`
+  passed after review record and state updates.
 - BOOT-031 scaffold extraction tool implementation on 2026-05-16:
   `bash -n SCRIPTS/scaffold-extract.sh`, `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh`,
