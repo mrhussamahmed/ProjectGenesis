@@ -30,7 +30,7 @@ Documentation Curator
 
 ## Current Branch
 
-`main`
+`claude/festive-ride-eadc67`
 
 ## Current Worktree
 
