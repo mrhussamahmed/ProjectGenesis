@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v2.13
+version: v2.15
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update, PR #5 Phase 0 validator-scope review addressed across five corrective commits update, PR #5 pass 6 approval, PR #5 post-merge cleanup, and Phase 1 execution planning review package
+source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update, PR #5 Phase 0 validator-scope review addressed across five corrective commits update, PR #5 pass 6 approval, PR #5 post-merge cleanup, Phase 1 execution planning review package, PR #6 Phase 1 execution planning review, and PR #6 review-fix response
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -36,6 +36,7 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-14-adaptive-governance-implementation | BOOT-019 through BOOT-024 adaptive governance implementation | request changes, addressed; re-review approved with minor comments | high | fresh-context subagent | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | active; no blocking P0/P1/P2 findings remain |
 | REVIEW-2026-05-14-public-launch-readiness | SPEC-BOOT-004 public launch readiness | request changes, addressed; final re-review approved | high | fresh-context subagents | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-public-launch-readiness.md` | active; no P0/P1/blocking P2 findings remain |
 | REVIEW-2026-05-15-pr-5-phase-0-validator-scope | PR #5 Phase 0 validator scope and AWK first-block fix | request changes, addressed; pass 6 approved before merge | high | Codex adversarial review (initial pass), with five subsequent fresh-context review passes escalating and then clearing recursive stale-state and registry-drift findings | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md` | merged to `main` at `b7bf2eb`; post-merge cleanup `0dc5109` fixed the singular handoff branch field and passed GitHub Actions; no remaining PR #5 blocking findings |
+| REVIEW-2026-05-15-pr-6-phase-1-execution-plan | PR #6 Phase 1 execution planning | request changes, addressed pending re-review | high | Codex adversarial review | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-6-phase-1-execution-plan.md` | follow-up fixes applied for P1 assumption claims and P2 current-state blocker drift; fresh re-review required before merge |
 
 ## Review Packages
 

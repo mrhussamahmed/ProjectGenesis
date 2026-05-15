@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-032
 title: BOOT-032 Seeded-Defect Benchmark
 type: backlog-item
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: IB-P1-15 planning input promoted into tracked backlog after Phase 0 merge
+source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -48,9 +48,12 @@ Out of scope:
   coverage scripts report metrics on the current scaffold.
 - Linked requirements: claim evidence, fresh review effectiveness,
   traceability coverage
-- Source IDs: none; planning input promoted from research package
-- Approved assumptions: first benchmark is baseline evidence, not proof of
-  general model performance
+- Source IDs: none; source evidence is the current user instruction to plan
+  before implementation and the durable Phase 1 candidate list in
+  `CURRENT_STATE.md`.
+- Approved assumptions: none
+- Scope constraint: the first benchmark may record baseline evidence only; it
+  must not claim general model performance without later reviewable evidence.
 - Open questions: CI gate threshold after baseline
 - Related ADR: none
 - Related external ticket: none
@@ -107,7 +110,8 @@ ready after BOOT-029
 
 ## Readiness Evidence
 
-- Source evidence: IB-P1-15 planning input and current-state candidate list.
+- Source evidence: current user instruction to plan first, current-state Phase
+  1 candidates, and BOOT-029 sequencing.
 - Spec status: `SPEC-BOOT-003` approved.
 - Acceptance criteria: scripts and benchmark produce explicit metrics.
 - Dependencies: BOOT-029; extraction sequence preferred first.

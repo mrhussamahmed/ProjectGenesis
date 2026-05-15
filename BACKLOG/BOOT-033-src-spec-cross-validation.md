@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-033
 title: BOOT-033 SRC And SPEC Cross-Validation
 type: backlog-item
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: IB-P1-01 planning input promoted into tracked backlog after Phase 0 merge
+source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -49,10 +49,15 @@ Out of scope:
 - Linked acceptance criteria: validator fails on unregistered source/spec IDs
   and passes on registered IDs.
 - Linked requirements: source evidence, anti-hallucination, spec linkage
-- Source IDs: none; planning input promoted from research package
-- Approved assumptions: empty registers are acceptable until product input
-  exists if cited IDs are not present
-- Open questions: exact provisional syntax
+- Source IDs: none; source evidence is the current user instruction to plan
+  before implementation and the durable Phase 1 candidate list in
+  `CURRENT_STATE.md`.
+- Approved assumptions: none
+- Source-backed fact: no downstream product input exists yet; validator
+  behavior for empty registers and provisional IDs must be defined in BOOT-033
+  before implementation.
+- Open questions: exact provisional syntax and how empty registers should be
+  handled for artifacts with no cited IDs
 - Related ADR: none
 - Related external ticket: none
 
@@ -106,7 +111,8 @@ ready after BOOT-029
 
 ## Readiness Evidence
 
-- Source evidence: IB-P1-01 planning input and current-state candidate list.
+- Source evidence: current user instruction to plan first, current-state Phase
+  1 candidates, and BOOT-029 sequencing.
 - Spec status: `SPEC-BOOT-002` active; `SPEC-BOOT-003` approved.
 - Acceptance criteria: red checks prove missing ID detection.
 - Dependencies: BOOT-029.

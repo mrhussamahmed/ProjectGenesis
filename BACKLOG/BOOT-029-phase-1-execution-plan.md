@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-029
 title: BOOT-029 Phase 1 Execution Plan
 type: backlog-item
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: User instruction to plan before implementation, CURRENT_STATE.md Phase 1 candidates, and research planning input promoted into tracked backlog
+source: User instruction to plan before implementation, CURRENT_STATE.md Phase 1 candidates, and PR #6 review fix
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -50,8 +50,12 @@ Out of scope:
   `IMPLEMENTATION_PLAN.md`
 - Linked requirements: scaffold reuse, anti-hallucination evidence, source ID
   validation
-- Source IDs: none; bootstrap planning input, current-state candidate list
-- Approved assumptions: no external tracker is required for this plan
+- Source IDs: none; source evidence is the current user instruction to plan
+  before implementation and the durable Phase 1 candidate list in
+  `CURRENT_STATE.md`.
+- Approved assumptions: none
+- Source-backed planning facts: BOOT-029 uses repository backlog records only;
+  no external ticket is created or required for this planning PR.
 - Open questions: none blocking
 - Related ADR: none
 - Related external ticket: none

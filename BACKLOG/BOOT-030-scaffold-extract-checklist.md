@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-030
 title: BOOT-030 Scaffold Extraction Checklist
 type: backlog-item
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: IB-P0-01 planning input promoted into tracked backlog after Phase 0 merge
+source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -50,8 +50,12 @@ Out of scope:
 - Linked acceptance criteria: `SCAFFOLD_FORK_CHECKLIST.md` exists and is
   registered; extraction policy is reviewable before script work.
 - Linked requirements: scaffold reuse, source-of-truth reset safety
-- Source IDs: none; planning input promoted from research package
-- Approved assumptions: checklist-first reduces script-risk
+- Source IDs: none; source evidence is the current user instruction to plan
+  before implementation and the durable Phase 1 candidate list in
+  `CURRENT_STATE.md`.
+- Approved assumptions: none
+- Planning rationale: checklist-first sequencing is proposed by BOOT-029 and
+  remains subject to PR #6 review and merge before implementation.
 - Open questions: whether later script needs per-artifact metadata
 - Related ADR: none
 - Related external ticket: none
@@ -105,8 +109,8 @@ ready after BOOT-029
 
 ## Readiness Evidence
 
-- Source evidence: current-state Phase 1 candidates and IB-P0-01 planning
-  input.
+- Source evidence: current user instruction to plan first, current-state Phase
+  1 candidates, and BOOT-029 sequencing.
 - Spec status: `SPEC-BOOT-002` active; `SPEC-BOOT-003` approved.
 - Acceptance criteria: checklist records reset/exclude/archive behavior.
 - Dependencies: BOOT-029 plan merged.

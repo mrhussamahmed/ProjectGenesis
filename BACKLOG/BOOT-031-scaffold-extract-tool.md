@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-031
 title: BOOT-031 Scaffold Extraction Tool
 type: backlog-item
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: IB-P0-01 planning input promoted into tracked backlog after Phase 0 merge
+source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -49,8 +49,12 @@ Out of scope:
 - Linked acceptance criteria: extracted target validates and contains reset
   source-of-truth state.
 - Linked requirements: scaffold reuse, clean downstream initialization
-- Source IDs: none; planning input promoted from research package
-- Approved assumptions: script follows BOOT-030 policy
+- Source IDs: none; source evidence is the current user instruction to plan
+  before implementation and the durable Phase 1 candidate list in
+  `CURRENT_STATE.md`.
+- Approved assumptions: none
+- Dependency fact: BOOT-031 must follow the extraction policy created by
+  BOOT-030 and remains blocked until BOOT-030 is reviewed and merged.
 - Open questions: exact fixture location to be decided in BOOT-031
 - Related ADR: none expected
 - Related external ticket: none
