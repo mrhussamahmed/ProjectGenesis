@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v2.10
+version: v2.11
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, and PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update
+source: Initial bootstrap scaffold, final adversarial review, narrow re-review, start requirement breakdown plan review, public repository publication request, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-018 review, BOOT-018 re-review approval, BOOT-018 final approval, BOOT-019 through BOOT-024 review package, BOOT-019 through BOOT-024 initial review, public launch readiness review, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 validator-scope review addressed-in-multiple-commits update, and PR #5 Phase 0 validator-scope review addressed across five corrective commits update
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -35,7 +35,7 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-13-spec-boot-003-adaptive-governance | SPEC-BOOT-003 adaptive governance routing | request changes, addressed; re-review approved with minor comments; final narrow review approved | high | fresh-context subagents | 2026-05-13 | `REVIEWS/REVIEW-2026-05-13-spec-boot-003-adaptive-governance.md` | active; no P0/P1/P2/P3 findings remain |
 | REVIEW-2026-05-14-adaptive-governance-implementation | BOOT-019 through BOOT-024 adaptive governance implementation | request changes, addressed; re-review approved with minor comments | high | fresh-context subagent | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-adaptive-governance-implementation.md` | active; no blocking P0/P1/P2 findings remain |
 | REVIEW-2026-05-14-public-launch-readiness | SPEC-BOOT-004 public launch readiness | request changes, addressed; final re-review approved | high | fresh-context subagents | 2026-05-14 | `REVIEWS/REVIEW-2026-05-14-public-launch-readiness.md` | active; no P0/P1/blocking P2 findings remain |
-| REVIEW-2026-05-15-pr-5-phase-0-validator-scope | PR #5 Phase 0 validator scope and AWK first-block fix | request changes, addressed across commits `068783d`, `f6eb339`, `4178b0a`, and BOOT-028 supplement-2 | high | Codex adversarial review (initial pass), with three subsequent fresh-context review passes (passes 2, 3, and 4) escalating stale-state and registry-drift findings | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md` | active; P1 evidence/handoff/registry findings addressed across four corrective commits; fresh-context re-review (pass 5) pending before merge |
+| REVIEW-2026-05-15-pr-5-phase-0-validator-scope | PR #5 Phase 0 validator scope and AWK first-block fix | request changes, addressed across commits `068783d`, `f6eb339`, `4178b0a`, `b20c666`, and BOOT-028 supplement-3 | high | Codex adversarial review (initial pass), with four subsequent fresh-context review passes (passes 2, 3, 4, and 5) escalating recursive stale-state and registry-drift findings | 2026-05-15 | `REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md` | active; P1 evidence/handoff/registry findings addressed; pass 5 P2 findings (stale current-head wording + Next Recommended Action prose) addressed in supplement-3; pass 5 P3 (registry self-bump) treated as cosmetic; fresh-context re-review (pass 6) pending before merge |
 
 ## Review Packages
 
