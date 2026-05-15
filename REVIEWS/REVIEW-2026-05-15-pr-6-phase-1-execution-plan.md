@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-6-PHASE-1-EXECUTION-PLAN
 title: PR 6 Phase 1 Execution Plan Review
 type: pr-review
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review of ProjectGenesis PR #6 and implementer review-fix response
+source: Fresh-context Codex adversarial review of ProjectGenesis PR #6, implementer review-fix response, and re-review approval
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: [BOOT-029, BOOT-030, BOOT-031, BOOT-032, BOOT-033]
 linked_adrs: []
@@ -18,7 +18,7 @@ authoritative: false
 
 ## Review Decision
 
-request changes
+approve with minor comments
 
 ## Risk Level
 
@@ -99,7 +99,31 @@ adversarial deep
   active ProjectGenesis bootstrap implementation blockers remain while PR #6
   still blocks BOOT-030 through BOOT-033. It now records the PR #6 follow-up
   fixes and keeps fresh re-review as the remaining merge gate.
-- Fresh re-review is still required before merge.
+- Fresh re-review completed on 2026-05-15 and approves PR #6 with minor
+  comments.
+
+## Re-Review Decision
+
+approve with minor comments
+
+## Re-Review Findings
+
+| Severity | File | Evidence | Finding | Required Change |
+|----------|------|----------|---------|-----------------|
+| P3 | `IMPLEMENTATION_PLAN.md` | The Phase 1 table still names planning inputs `IB-P0-01`, `IB-P1-15`, and `IB-P1-01`, while those labels only resolve in untracked `research/` artifacts. The tracked BOOT-030 through BOOT-033 records now carry the durable purpose, scope, source evidence, dependencies, and readiness gates. | This is a minor traceability polish issue, not a merge blocker. Future readers can follow the BOOT items without the untracked research package, but the table would be clearer if it used tracked BOOT item titles or durable source wording instead of research-only labels. | Optional before or after merge: replace the `Planning Input` cells with tracked backlog item titles or source-backed phrases, or add a tracked mapping if the `IB-*` labels remain useful. |
+
+## Re-Review Resolution
+
+- Original P1 resolved: live BOOT-029 through BOOT-033 backlog records no
+  longer claim approved assumptions; each says `Approved assumptions: none`.
+- Original P2 resolved: `CURRENT_STATE.md` no longer contains the blanket
+  no-blockers statement that contradicted the PR #6 merge gate.
+- The PR remains planning-only. No scaffold extraction, benchmark, validator,
+  hook, CI, role, ADR, source-of-truth hierarchy, or runtime product mechanics
+  changed.
+- Local bootstrap validation, red checks, diff whitespace checks, targeted
+  drift scans, and GitHub PR #6 `validate` checks are green on the reviewed
+  branch state.
 
 ## Optional Improvements
 
@@ -123,13 +147,12 @@ adversarial deep
 
 ## Final Recommendation
 
-Do not merge PR #6 as-is. Request changes, then re-review after the assumption
-evidence and current-state blocker drift are corrected.
+Merge PR #6 after normal repository merge requirements are satisfied. Start
+BOOT-030 only after PR #6 is merged to `main`; keep BOOT-031, BOOT-032, and
+BOOT-033 as separate reviewed PRs unless a later reviewed plan narrows a safe
+combined slice.
 
 ## Re-Review Conditions
 
-- Show updated backlog records and assumption evidence, or remove the
-  `Approved assumptions` claims.
-- Show a consistent `CURRENT_STATE.md` blocker section.
-- Re-run bootstrap validation, red checks, and diff whitespace check after the
-  fixes.
+- Original re-review conditions are satisfied as of the 2026-05-15 re-review.
+- Remaining P3 comment does not block merge.
