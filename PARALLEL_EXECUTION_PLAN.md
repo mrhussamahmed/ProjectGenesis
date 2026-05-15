@@ -2,12 +2,12 @@ artifact_id: ART-PAR-001
 title: Parallel Execution Plan
 type: execution-plan
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
 updated: 2026-05-09
 owner: AI Bootstrap Maintainers
-source: User request and reference repository audit
-linked_specs: []
+source: User request, reference repository audit, and Phase 1 execution planning
+linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -26,6 +26,20 @@ No product implementation streams are currently approved for parallel work.
 | Stream | Backlog Items | Branch | Worktree | Owner Agent | File Ownership | Status | Merge Order |
 |--------|---------------|--------|----------|-------------|----------------|--------|-------------|
 | none | none | none | none | none | none | not approved | none |
+
+## Phase 1 Bootstrap Follow-Up Decision
+
+Phase 1 implementation is sequential by default:
+
+1. BOOT-030 scaffold extraction checklist.
+2. BOOT-031 scaffold extraction tool.
+3. BOOT-032 seeded-defect benchmark and coverage metrics.
+4. BOOT-033 SRC/SPEC ID cross-validation.
+
+BOOT-032 research may be prepared in parallel with BOOT-030 only if it is
+read-only or writes to a separate research branch with no edits to shared
+source-of-truth files, scripts, validators, tests, registry, traceability,
+current state, or handoff. No parallel implementation stream is approved yet.
 
 ## Parallel Work Is Allowed Only When
 
@@ -80,4 +94,3 @@ When approving parallel work, add a row with:
 - merge conflict risk
 - integration test strategy
 - stop conditions
-
