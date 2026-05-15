@@ -159,7 +159,9 @@ while IFS= read -r file; do
   grep -Eq '^status: .+' "$file" || fail "$file missing status metadata"
   grep -Eq '^version: .+' "$file" || fail "$file missing version metadata"
   grep -Eq '^authoritative: (true|false)$' "$file" || fail "$file missing authoritative metadata"
-done < <(find . -type f -name '*.md' -not -path './.git/*' -print)
+done < <(find . \
+  \( -path './.git' -o -path './.claude' -o -path './research' \) -prune \
+  -o -type f -name '*.md' -print)
 
 for section in \
   "## Current Date" \
@@ -192,7 +194,9 @@ while IFS= read -r file; do
     fail "$file contains unresolved placeholder-like text"
   fi
   rm -f /tmp/bootstrap-placeholder-hit.$$
-done < <(find . -type f -name '*.md' -not -path './.git/*' -print | sed 's#^\./##')
+done < <(find . \
+  \( -path './.git' -o -path './.claude' -o -path './research' \) -prune \
+  -o -type f -name '*.md' -print | sed 's#^\./##')
 
 while IFS= read -r file; do
   if grep -Eq '^status: (approved|active)$' "$file"; then
@@ -453,13 +457,9 @@ done < <(awk '
     } else if (target_body ~ /(SPECS\/|BACKLOG\.md|BACKLOG\/|TRACEABILITY_MATRIX\.md|ARTIFACT_REGISTRY\.md|ADR\/|02_requirements\/|TESTS\/ACCEPTANCE_CRITERIA_MAP\.md)/ && profile !~ /^(planning-governance|strict-protected)$/) {
       print "planning|" section
     }
-    checked_first = 1
   }
   /^## / {
     evaluate()
-    if (checked_first) {
-      exit
-    }
     section = trim(substr($0, 4))
     in_classification = ($0 ~ /Pre-Change Classification/)
     profile = ""
