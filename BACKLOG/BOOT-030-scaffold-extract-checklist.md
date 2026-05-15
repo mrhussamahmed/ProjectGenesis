@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-030
 title: BOOT-030 Scaffold Extraction Checklist
 type: backlog-item
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-15
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and PR #6 merge/post-merge source-of-truth cleanup
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, PR #6 merge/post-merge source-of-truth cleanup, and BOOT-030 implementation evidence linked
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -106,37 +106,54 @@ P0
 
 ## Readiness Status
 
-ready
+in-review
 
 ## Readiness Evidence
 
-- Source evidence: current user instruction to plan first, current-state Phase
-  1 candidates, and BOOT-029 sequencing.
+- Source evidence: current user instruction to execute BOOT-030
+  autonomously, current-state Phase 1 candidates, and BOOT-029 sequencing
+  merged through PR #6 on 2026-05-15.
 - Spec status: `SPEC-BOOT-002` active; `SPEC-BOOT-003` approved.
-- Acceptance criteria: checklist records reset/exclude/archive behavior.
+- Acceptance criteria: `SCAFFOLD_FORK_CHECKLIST.md` records artifact
+  categories, clean-state expectations, manual extraction validation, and
+  explicit stop conditions for BOOT-031.
 - Dependencies: BOOT-029 plan merged.
-- Architecture impact: none unless later script introduces new metadata.
-- Test expectations: bootstrap validation and diff check; red checks only if
-  validator behavior changes.
-- Branch/worktree plan: separate branch from `main`.
-- Required reviewers: fresh-context review before merge.
-- Blocked until: none; BOOT-029 merged through PR #6 on 2026-05-15.
+- Architecture impact: none; no new metadata fields or validator
+  structural checks are introduced.
+- Test expectations: bootstrap validation and diff check pass; red checks
+  not required because validator behavior does not change.
+- Branch/worktree plan: branch `claude/boot-030-scaffold-extract-checklist`
+  from green `main` (`22c79f8`).
+- Required reviewers: fresh-context Codex adversarial review through the
+  installed plugin once the PR is open and GitHub `validate` checks are
+  green.
+- Blocked until: none.
 
 ## Test Expectations
 
 - `bash SCRIPTS/validate-bootstrap.sh`
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh`
 - `git diff --check`
-- Red checks not required unless validator behavior changes.
+- Red checks not required unless validator behavior changes; running them
+  on this branch is a sanity check only.
 
 ## Definition Of Done
 
-- [ ] Spec linked.
-- [ ] Acceptance criteria satisfied.
-- [ ] Tests added or updated, or justified.
-- [ ] Traceability updated.
-- [ ] Artifact registry updated.
-- [ ] Handoff updated.
-- [ ] Review complete or pending review recorded.
+- [x] Spec linked (`SPEC-BOOT-002`, `SPEC-BOOT-003`).
+- [x] Acceptance criteria satisfied — `SCAFFOLD_FORK_CHECKLIST.md`
+  registered in `ARTIFACT_REGISTRY.md` and reviewable before any script
+  work.
+- [x] Tests added or updated, or justified — bootstrap validation, red
+  checks, and diff check are the only required tests; stack-specific tests
+  are not applicable because no product runtime code exists.
+- [x] Traceability updated — new BOOT-030 row added to
+  `TRACEABILITY_MATRIX.md`.
+- [x] Artifact registry updated — `ART-SCAFFOLD-FORK-CHECKLIST` and
+  `ART-PR-PACKAGE-BOOT-030-SCAFFOLD-EXTRACT-CHECKLIST` registered;
+  source-of-truth versions advanced.
+- [x] Handoff updated — `AI_HANDOFF.md` now records BOOT-030 Pre-Change
+  Classification and Final Evidence Envelope.
+- [ ] Review complete — pending fresh-context Codex adversarial review.
 
 ## Parallelization
 
@@ -145,4 +162,24 @@ ready
   source-of-truth records only.
 - Shared files requiring coordination: registry, traceability, state, handoff,
   test results, worklog.
-- Stop conditions: script or validator changes become necessary.
+- Stop conditions: script or validator changes become necessary; in that
+  case stop and record the blocker in `OPEN_QUESTIONS.md` or
+  `STALE_ITEMS.md` rather than expanding BOOT-030 scope.
+
+## Implementation Evidence
+
+- Branch: `claude/boot-030-scaffold-extract-checklist` from green `main`
+  (`22c79f8`).
+- Worktree:
+  `/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/brave-elbakyan-be49a2`
+- New artifact: `SCAFFOLD_FORK_CHECKLIST.md` v1.0
+  (`ART-SCAFFOLD-FORK-CHECKLIST`).
+- New artifact: `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
+  v1.0 (`ART-PR-PACKAGE-BOOT-030-SCAFFOLD-EXTRACT-CHECKLIST`).
+- Updated source-of-truth records: `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`, this
+  backlog item, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, and `REVIEWS/REVIEW_INDEX.md`.
+- Local validation: `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` pass before commit.
