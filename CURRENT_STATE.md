@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.17
+version: v3.18
 created: 2026-05-09
 updated: 2026-05-15
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, and PR #5 Phase 0 post-push state-sync (BOOT-028)
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), and BOOT-028 supplement adding classification, envelope, and registry version bumps
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -45,18 +45,26 @@ authoritative: false
 ## Active Implementation Phase
 
 - PR #5 (`https://github.com/mrhussamahmed/ProjectGenesis/pull/5`) on branch
-  `claude/festive-ride-eadc67` carries four commits: `d518a6e` (BOOT-026
-  restore validator-passing state), `b27bb3c` (BOOT-027 Phase 0 validator
-  scope and AWK first-block fix), `acdff16` (Codex review record merged from
-  `origin/codex/pr-5-adversarial-review`), and `068783d` (BOOT-026 +
-  BOOT-027 evidence-package merge commit). Codex's fresh-context adversarial
-  review on 2026-05-15 raised two P1 and one P2 finding (missing
-  strict-protected evidence package, stale handoff beyond branch-line fix,
-  artifact-registry drift). All three findings are addressed in commit
-  `068783d`. Validator, red-checks, `git diff --check`, pre-commit hook,
-  pre-push hook, and four GitHub Actions `validate` runs (on `d518a6e`,
-  `b27bb3c`, `068783d` head, and the merge-commit head) pass. PR #5 is
-  pending fresh-context re-review before merge.
+  `claude/festive-ride-eadc67` currently carries five commits: `d518a6e`
+  (BOOT-026 restore validator-passing state), `b27bb3c` (BOOT-027 Phase 0
+  validator scope and AWK first-block fix), `acdff16` (Codex review record
+  merged from `origin/codex/pr-5-adversarial-review`), `068783d` (BOOT-026 +
+  BOOT-027 evidence-package merge commit), and `f6eb339` (BOOT-028 initial
+  source-of-truth state-sync after push). A BOOT-028 supplement commit
+  follows this update to add the BOOT-028 classification + final evidence
+  envelope and to correct registry version drift for `CURRENT_STATE.md`,
+  `AI_HANDOFF.md`, `BACKLOG.md`, `TEST_RESULTS.md`, `TRACEABILITY_MATRIX.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and `WORKLOG/WORKLOG_INDEX.md`. Codex's three
+  review passes on 2026-05-15 are all addressed: (1) two P1 + one P2 in
+  the initial review (resolved by `068783d`); (2) one P1 stale-state in
+  the second review (resolved by `f6eb339`); (3) three P1s in the third
+  review (registry drift, missing BOOT-028 evidence envelope, current-head
+  mis-naming) — resolved by this BOOT-028 supplement commit. Validator,
+  red-checks, `git diff --check`, pre-commit hook, pre-push hook, and
+  GitHub Actions `validate` pass on every commit; six green `validate`
+  runs to date (on `d518a6e` 32s, `b27bb3c` 30s, `068783d` 32s + 58s,
+  `f6eb339` 31s + 30s). PR #5 is pending fresh-context re-review before
+  merge.
 - Public launch readiness and adoption packaging under `SPEC-BOOT-004` and
   `BOOT-025` is merged and pushed to `main` at commit
   `dfe8a07a80518e75c44d13a25abcbf742bc2ae76`. This work is
@@ -215,10 +223,12 @@ authoritative: false
 
 ## Next Recommended Action
 
-Request fresh-context re-review on PR #5 (current head is merge commit
-`068783d`). Codex's prior findings are addressed; CI is green on all four
-PR commits. Do not start scaffold-extract, seeded-defect benchmark, or
-other backlog work until PR #5 merges to `main`.
+Push this BOOT-028 supplement commit, then request a fresh-context
+re-review on PR #5 (current head will be the BOOT-028 supplement commit;
+prior head is `f6eb339`). Codex's three prior review passes are all
+addressed; CI is green on all PR commits to date. Do not start
+scaffold-extract, seeded-defect benchmark, or other backlog work until
+PR #5 merges to `main`.
 
 ## Latest Validation
 
@@ -229,8 +239,10 @@ other backlog work until PR #5 merges to `main`.
   `bash SCRIPTS/validate-bootstrap-red-checks.sh` exits 0 with all 19 cases
   passing (16 existing + 3 new fixtures). `git diff --check` is clean.
 - PR #5 GitHub Actions validation on 2026-05-15: `validate` workflow passed
-  on commit `d518a6e` (32s), commit `b27bb3c` (30s), and on the evidence-
-  package merge commit `068783d` (two runs: 32s and 58s).
+  on commit `d518a6e` (32s), commit `b27bb3c` (30s), on the evidence-
+  package merge commit `068783d` (two runs: 32s and 58s), and on the
+  BOOT-028 state-sync commit `f6eb339` (two runs: 31s and 30s). Six green
+  `validate` runs to date.
 - PR #5 review validation on 2026-05-15: `bash -n` passed for both validator
   scripts; `git diff --check origin/main...HEAD`,
   `bash SCRIPTS/validate-bootstrap.sh`, and
