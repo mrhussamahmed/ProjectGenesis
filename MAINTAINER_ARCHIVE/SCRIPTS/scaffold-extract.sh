@@ -113,7 +113,15 @@ if ! command -v rsync >/dev/null 2>&1; then
 fi
 
 script_dir="$(cd "$(dirname "$0")" && pwd)"
-source_root="$(cd "$script_dir/.." && pwd)"
+# Slice 2 relocated this script to MAINTAINER_ARCHIVE/SCRIPTS/. Use git
+# toplevel for source_root so it resolves to the repo root regardless of
+# script depth; fall back to parent-of-script-dir for non-git checkouts.
+if source_root="$(git -C "$script_dir" rev-parse --show-toplevel 2>/dev/null)" \
+   && [[ -n "$source_root" ]]; then
+  :
+else
+  source_root="$(cd "$script_dir/.." && pwd)"
+fi
 
 if [[ -d "$target" ]]; then
   target_abs="$(cd "$target" && pwd)"
