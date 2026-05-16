@@ -30,7 +30,7 @@ Reviewer / Merge Steward
 
 ## Current Branch
 
-`main`
+`claude/slice-4-fast-path-validation`
 
 ## Current Worktree
 
@@ -85,7 +85,9 @@ current `main` before merge review.
 
 ## Dirty Worktree Status
 
-Post-merge cleanup on `main`.
+In progress on `claude/slice-4-fast-path-validation`. Slices 2 and 3 are
+already merged to `main` (at `b2c8649` after the BOOT-036 post-merge
+cleanup).
 
 ## Next Recommended Action
 

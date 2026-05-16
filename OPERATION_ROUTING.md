@@ -26,6 +26,45 @@ Existing stricter rules still win. If this file conflicts with
 spec, or current user instruction, follow the stricter or higher-priority rule
 and record the conflict.
 
+## Fast-Path Validator Discipline (Slice 4)
+
+Slice 4 wires the operation profile recorded in `AI_HANDOFF.md`'s most
+recent `Pre-Change Classification` section into the validator and the
+git hooks so small changes get a proportionally small validator pass:
+
+1. `SCRIPTS/operation-profile.sh` extracts the recorded `Operation profile:`
+   value and maps it to a validator level:
+   - `docs-trivial` and `process-light-exception` → `shape-only`
+   - any other profile (including missing or unrecognized) → `strict`
+2. `.githooks/pre-commit` and `.githooks/pre-push` read this mapping and
+   export `BOOTSTRAP_VALIDATE_PROFILE`. They also enforce a strict-gate
+   override: if the staged or pushed file set touches any of `SCRIPTS/`,
+   `.github/workflows/`, `.githooks/`, `memory/ai/`, the policy files
+   (`PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `RISK_MODEL.md`,
+   `BRANCH_AND_WORKTREE_GUIDE.md`, `GOVERNANCE.md`,
+   `OPERATION_ROUTING.md`), the context packs, the commands, the reusable
+   templates under `*/templates/`, `TEMPLATE_MANIFEST.md`,
+   `TEMPLATE_STARTERS/`, `HOOKS_AND_GUARDRAILS.md`,
+   `SECURITY_AND_PRIVACY.md`, `CI_CD_GUIDE.md`, or `MAINTAINER_ARCHIVE/`,
+   the hook forces the validator back to `strict` regardless of the
+   recorded profile.
+3. `SCRIPTS/validate-bootstrap.sh` honors `BOOTSTRAP_VALIDATE_PROFILE`.
+   In `shape-only` mode it runs only the required-files,
+   required-dirs, and YAML metadata checks, then exits early with a
+   passing message. In `strict` mode (default) it runs every check.
+
+The default everywhere remains strict, so a missing or unset profile
+never weakens validation. The fast path is opt-in via an explicit
+docs-trivial or process-light-exception Operation profile in
+`AI_HANDOFF.md`, AND the hook layer must agree (no strict-gate paths
+touched) before the lighter check actually runs.
+
+This implements the "small changes avoid heavyweight validation and
+review ceremony" goal of the approved Clean Scaffold Boundary And
+Faster AI Development plan without weakening the strict gates for
+validators, CI, security, merge/release, governance, role
+instructions, or template/export behavior.
+
 ## Operating Rule
 
 Every meaningful operation must be classified before target file edits.

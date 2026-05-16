@@ -1261,6 +1261,7 @@ Common fields for all entries below unless stated otherwise:
 | ART-VALIDATOR-SCRIPT | guide | Validator Script | \`SCRIPTS/validate-bootstrap.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Bootstrap validator. |
 | ART-VALIDATOR-RED-CHECKS | guide | Validator Red Checks | \`SCRIPTS/validate-bootstrap-red-checks.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Validator red-check fixtures. |
 | ART-START-CLAUDE | guide | Claude Startup Helper | \`SCRIPTS/start-claude.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Claude startup helper. |
+| ART-OPERATION-PROFILE | guide | Operation Profile Extractor | \`SCRIPTS/operation-profile.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Slice 4 adaptive-routing extractor: reads AI_HANDOFF.md Operation profile and maps to validator level. |
 | ART-PRECOMMIT-HOOK | guide | Pre-Commit Hook | \`.githooks/pre-commit\` | authoritative | v1.0 | extracted scaffold | none | none | true | Pre-commit local hook. |
 | ART-COMMITMSG-HOOK | guide | Commit Message Hook | \`.githooks/commit-msg\` | authoritative | v1.0 | extracted scaffold | none | none | true | Commit message local hook. |
 | ART-PREPUSH-HOOK | guide | Pre-Push Hook | \`.githooks/pre-push\` | authoritative | v1.0 | extracted scaffold | none | none | true | Pre-push local hook. |

@@ -1,7 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Slice 4 adaptive routing: pre-push reads the same profile signal as
+# pre-commit. Push validation defaults to strict; a docs-trivial or
+# process-light-exception profile only relaxes pre-push checks when the
+# pushed branch contains no strict-gate path changes vs origin/main.
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+cd "$repo_root"
+
+validator_level="strict"
+if [[ -x SCRIPTS/operation-profile.sh ]]; then
+  validator_level="$(bash SCRIPTS/operation-profile.sh --validator-level)"
+fi
+
+strict_gate_pattern='^(SCRIPTS/|\.github/workflows/|\.githooks/|memory/ai/|PR_REVIEW_POLICY\.md|PR_MERGE_POLICY\.md|RISK_MODEL\.md|BRANCH_AND_WORKTREE_GUIDE\.md|GOVERNANCE\.md|OPERATION_ROUTING\.md|CONTEXT_PACKS/|COMMANDS/|REVIEWS/templates/|SPECS/templates/|ADR/templates/|BACKLOG/templates/|TEMPLATE_MANIFEST\.md|TEMPLATE_STARTERS/|HOOKS_AND_GUARDRAILS\.md|SECURITY_AND_PRIVACY\.md|CI_CD_GUIDE\.md|MAINTAINER_ARCHIVE/)'
+
+if [[ "$validator_level" != "strict" ]]; then
+  changed_files=""
+  if git rev-parse --verify origin/main >/dev/null 2>&1; then
+    changed_files="$(git diff --name-only origin/main...HEAD 2>/dev/null || true)"
+  fi
+  if [[ -n "$changed_files" ]] && echo "$changed_files" | grep -Eq "$strict_gate_pattern"; then
+    echo "pre-push: strict gate touched on branch; forcing BOOTSTRAP_VALIDATE_PROFILE=strict regardless of recorded Operation profile ($validator_level)." >&2
+    validator_level="strict"
+  fi
+fi
+
+export BOOTSTRAP_VALIDATE_PROFILE="$validator_level"
 bash SCRIPTS/validate-bootstrap.sh
 
-echo "pre-push checks passed"
-
+echo "pre-push checks passed (validator profile: $validator_level)"
