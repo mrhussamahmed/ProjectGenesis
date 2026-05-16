@@ -22,33 +22,30 @@ authoritative: false
 
 ## Active Agent
 
-Claude
+Codex
 
 ## Current Role
 
-Implementation
+Reviewer / Merge Steward
 
 ## Current Branch
 
-`claude/slice-3-shrink-required-reading`
+`main`
 
 ## Current Worktree
 
-`.claude/worktrees/hungry-cannon-369742`
+repository root
 
 ## Last Completed Task
 
-Slice 2 - relocated ProjectGenesis maintainer history into `MAINTAINER_ARCHIVE/`
-(the slice 2 PR, commit `8076133`).
+Slice 3 - shrink required-reading files - merged to `main` through PR #18 at
+merge commit `c2e223e57cfbf20a9bd08efdfcaf7b8bda302a8b`.
 
 ## Current In-Progress Task
 
-Slice 3 - shrink required-reading files. Accumulated AI_HANDOFF.md,
-CURRENT_STATE.md, ARTIFACT_REGISTRY.md, TRACEABILITY_MATRIX.md, TEST_RESULTS.md,
-IMPLEMENTATION_PLAN.md, BACKLOG.md, BACKLOG/BACKLOG_INDEX.md,
-REVIEWS/REVIEW_INDEX.md, WORKLOG/WORKLOG_INDEX.md, and SPECS/SPEC_INDEX.md
-history is being moved into `MAINTAINER_ARCHIVE/snapshots/` so the active
-versions are small, current, and project-neutral.
+No active implementation task on `main`. Slice 4 - fast-path validation
+discipline - is the next stacked follow-on slice and must be rebased onto
+current `main` before merge review.
 
 ## Files Changed
 
@@ -67,8 +64,10 @@ versions are small, current, and project-neutral.
 
 ## Tests Run
 
-- `bash SCRIPTS/validate-bootstrap.sh` (expected to pass except the obsolete
-  `AI_HANDOFF.md` branch-field check on a non-main branch).
+- PR #18 pull_request and push `Bootstrap Validation` CI passed before merge.
+- Post-merge `main` CI initially failed only because this active handoff still
+  named the slice 3 branch; this cleanup resets the active branch field to
+  `main`.
 
 ## Tests Not Run
 
@@ -86,12 +85,12 @@ versions are small, current, and project-neutral.
 
 ## Dirty Worktree Status
 
-In progress on `claude/slice-3-shrink-required-reading`. Slice 2 already
-committed and pushed on `claude/slice-2-clean-raw-root` (the slice 2 PR).
+Post-merge cleanup on `main`.
 
 ## Next Recommended Action
 
-Complete slice 3 trim, run validator, request Codex review, push PR.
+Verify post-merge `main` CI is green, then rebase slice 4 onto current
+`main`.
 
 ## What The Next AI Must Read First
 
@@ -105,8 +104,8 @@ Complete slice 3 trim, run validator, request Codex review, push PR.
 ## Implementation Status
 
 Slice 1: TEMPLATE_MANIFEST.md and TEMPLATE_STARTERS/ - done (merged to main).
-Slice 2: MAINTAINER_ARCHIVE/ relocation - done (the slice 2 PR, awaiting merge).
-Slice 3: required-reading shrink - in progress.
+Slice 2: MAINTAINER_ARCHIVE/ relocation - done (merged to main).
+Slice 3: required-reading shrink - done (merged to main through PR #18).
 Slice 4: fast-path validation discipline - pending.
 
 ## Slice 3 Pre-Change Classification
@@ -130,6 +129,7 @@ Slice 4: fast-path validation discipline - pending.
   `MAINTAINER_ARCHIVE/snapshots/`.
 - Operation profile: `planning-governance`
 - Validation skipped: none beyond the documented process-light exception.
-- Review required: fresh-context Codex adversarial review.
+- Review required: fresh-context Codex adversarial review completed before
+  merge.
 - Next safe action: completed by slice 3 trim; the prior envelope above
   records the current state.

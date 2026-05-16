@@ -37,15 +37,16 @@ decision.
 
 ## Active Implementation Phase
 
-Clean scaffold boundary follow-on slices 2-4 (this branch).
+Clean scaffold boundary follow-on slices 1-3 are merged. Slice 4 remains
+pending and must be rebased onto current `main`.
 
 ## Active Branch
 
-`claude/slice-3-shrink-required-reading`
+`main`
 
 ## Active Worktree
 
-`.claude/worktrees/hungry-cannon-369742`
+repository root
 
 ## Active Backlog Focus
 
@@ -73,10 +74,11 @@ None. Prior staleness tracking lives in `MAINTAINER_ARCHIVE/STALE_ITEMS.md`.
 
 ## Next Recommended Action
 
-Complete slice 3 trim, request Codex review, open PR; then start slice 4
-(fast-path validation discipline).
+Verify post-merge `main` CI after this branch-field cleanup, then rebase slice
+4 (fast-path validation discipline) onto current `main`.
 
 ## Latest Validation
 
-`bash SCRIPTS/validate-bootstrap.sh` passes after slice 3 trim (except the
-obsolete branch-field check on the slice 3 branch).
+PR #18 pull_request and push `Bootstrap Validation` CI passed before merge.
+Post-merge `main` CI initially failed only because `AI_HANDOFF.md` still named
+the slice 3 branch; this cleanup resets active state to `main`.
