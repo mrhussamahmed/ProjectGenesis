@@ -2,11 +2,11 @@ artifact_id: ART-README
 title: ProjectGenesis README
 type: public-readme
 status: active
-version: v1.4
+version: v1.5
 created: 2026-05-13
-updated: 2026-05-15
+updated: 2026-05-17
 owner: ProjectGenesis Maintainers
-source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, and Phase 0 validator-scope restoration
+source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, Phase 0 validator-scope restoration, and v0.2.0 public alpha release notes
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -22,6 +22,14 @@ ProjectGenesis is a reusable, AI-native software delivery scaffold for founders,
 solo builders, vibe coders, product teams, and engineering teams who want AI
 agents to help plan and build software without turning rough ideas into
 unverifiable guesses.
+
+Latest release: [ProjectGenesis v0.2.0 Public Alpha](https://github.com/mrhussamahmed/ProjectGenesis/releases/tag/v0.2.0-public-alpha).
+This release adds a clean scaffold boundary, moves maintainer history out of
+the active required-reading path, shrinks inherited AI context, and adds an
+adaptive fast-path validator for small process-light changes while keeping
+strict checks for protected files.
+
+See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
 
 Drop messy notes, rough product ideas, customer feedback, screenshots, research,
 or early specs into the scaffold. ProjectGenesis gives your AI agent a governed
@@ -139,26 +147,32 @@ Important folders and files include:
 | `REVIEWS/` | Review records and PR review packages. |
 | `TESTS/` | Acceptance maps and manual validation checklists. |
 | `memory/ai/` | Shared role definitions for AI agents. |
+| `TEMPLATE_MANIFEST.md` | Defines which files are copied, reset, excluded, or treated as maintainer archive when creating a clean scaffold. |
+| `TEMPLATE_STARTERS/` | Starter-reset content for new downstream projects. |
+| `MAINTAINER_ARCHIVE/` | ProjectGenesis maintainer history kept out of the active required-reading path. |
+| `RELEASE_NOTES.md` | Release history and operational changes. |
 
 ## Quick Start
 
 1. Copy this scaffold into a new project repository or use this repository as a
    template.
-2. Put rough project material under `00_intake/raw/`.
-3. Ask your AI agent:
+2. For a clean downstream scaffold, follow `TEMPLATE_MANIFEST.md` so starter
+   state replaces ProjectGenesis maintainer state.
+3. Put rough project material under `00_intake/raw/`.
+4. Ask your AI agent:
 
    ```text
    Start requirement breakdown.
    ```
 
-4. The agent should resolve that phrase through `COMMANDS/COMMAND_INDEX.md` and
+5. The agent should resolve that phrase through `COMMANDS/COMMAND_INDEX.md` and
    run `COMMANDS/start-requirement-breakdown.md`.
-5. Review the generated product context, requirements, assumptions, risks, open
+6. Review the generated product context, requirements, assumptions, risks, open
    questions, backlog candidates, draft specs, and readiness classification.
-6. If you want backlog items stored in Linear, complete the Linear setup in
+7. If you want backlog items stored in Linear, complete the Linear setup in
    [External Backlog Storage](#external-backlog-storage) before asking an agent
    to create external tickets.
-7. Do not start implementation until the relevant task satisfies Definition of
+8. Do not start implementation until the relevant task satisfies Definition of
    Ready in `AI_PROJECT_BOOTSTRAP.md`.
 
 

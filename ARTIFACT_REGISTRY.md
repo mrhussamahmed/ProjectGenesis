@@ -4,7 +4,7 @@ type: registry
 status: authoritative
 version: v4.0
 created: 2026-05-09
-updated: 2026-05-16
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/ARTIFACT_REGISTRY.md-2026-05-16-pre-slice-3.md)
 linked_specs: []
@@ -21,7 +21,7 @@ temporary, superseded, deprecated, cancelled, and archived artifacts. Do not
 use superseded, deprecated, cancelled, or archived artifacts as current truth.
 
 Common fields for all entries below unless stated otherwise: created
-2026-05-09; updated 2026-05-16; owner AI Bootstrap Maintainers; source
+2026-05-09; updated 2026-05-17; owner AI Bootstrap Maintainers; source
 ProjectGenesis bootstrap scaffold.
 
 ## Operating Model And Required-Reading
@@ -57,6 +57,7 @@ ProjectGenesis bootstrap scaffold.
 | ART-RISK-MODEL | governance | Risk Model | `RISK_MODEL.md` | active | v4.0 | false | Risk classification. |
 | ART-HOOKS-GUARDRAILS | governance | Hooks And Guardrails | `HOOKS_AND_GUARDRAILS.md` | active | v4.0 | false | Pre-commit/pre-push hooks. |
 | ART-RELEASE-READINESS | governance | Release Readiness | `RELEASE_READINESS.md` | active | v4.0 | false | Release gates. |
+| ART-RELEASE-NOTES | release-notes | Release Notes | `RELEASE_NOTES.md` | active | v1.0 | true | Public release history. |
 | ART-SECURITY-PRIVACY | governance | Security And Privacy | `SECURITY_AND_PRIVACY.md` | active | v4.0 | false | Security/privacy guidance. |
 | ART-OBSERVABILITY | governance | Observability | `OBSERVABILITY.md` | active | v4.0 | false | Observability guidance. |
 | ART-CI-CD-GUIDE | governance | CI/CD Guide | `CI_CD_GUIDE.md` | active | v4.0 | false | CI/CD guidance. |
