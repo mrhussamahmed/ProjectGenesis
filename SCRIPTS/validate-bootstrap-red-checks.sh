@@ -405,19 +405,47 @@ case_operation_routing_missing_context_reference() {
 }
 
 case_protected_mechanics_misclassified() {
+  # Slice 3 trimmed AI_HANDOFF.md to active state only, so the old in-place
+  # perl substitution had no source to mutate. Append a self-contained
+  # fixture classification block that mimics the misclassification we want
+  # the validator to flag.
   local dir
   dir="$(copy_repo protected-mechanics-misclassified)"
-  perl -0pi -e 's/Operation profile: `strict-protected`/Operation profile: `planning-governance`/' "$dir/AI_HANDOFF.md"
+  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+
+## Pre-Change Classification (red-check fixture mechanics misclassified)
+
+- Target files: `SCRIPTS/validate-bootstrap.sh`, `.githooks/pre-commit`,
+  `memory/ai/SHARED_AGENT_RULES.md`, `GOVERNANCE.md`,
+  `OPERATION_ROUTING.md`
+- Operation profile: `planning-governance`
+- Protected files touched: true
+- Reason: Red-check fixture mechanics misclassified; touching validator,
+  hooks, role files, governance, and routing should escalate to
+  strict-protected.
+EOF
   expect_failure "protected mechanics misclassified" "protected mechanics classification must be strict-protected" "$dir"
 }
 
 case_protected_planning_misclassified() {
+  # Slice 3 trimmed AI_HANDOFF.md's old BOOT-019-024 classification block
+  # away. Append a self-contained fixture block that mimics the
+  # misclassification we want the validator to flag (planning artifacts
+  # touched, but profile lower than planning-governance).
   local dir
   dir="$(copy_repo protected-planning-misclassified)"
-  perl -0pi -e '
-    s/(## BOOT-019-024 Pre-Change Classification\n[^#]*?Operation profile: `)strict-protected/$1docs-trivial/s;
-    s/`CURRENT_STATE\.md`, `AI_HANDOFF\.md`, `BACKLOG\.md`,\n  `ARTIFACT_REGISTRY\.md`, `TRACEABILITY_MATRIX\.md`, `TEST_RESULTS\.md`,\n  `WORKLOG\/WORKLOG_INDEX\.md`, `GOVERNANCE\.md`,\n  `BRANCH_AND_WORKTREE_GUIDE\.md`, `RISK_MODEL\.md`,\n  `PR_REVIEW_POLICY\.md`, `PR_MERGE_POLICY\.md`, `CONTEXT_INDEX\.md`,\n  `AI_PROJECT_BOOTSTRAP\.md`, `SPECS\/SPEC_INDEX\.md`,\n  `SPECS\/SPEC-BOOT-003-adaptive-governance-routing\.md`,\n  `SCRIPTS\/validate-bootstrap\.sh`, `SCRIPTS\/validate-bootstrap-red-checks\.sh`,\n  `\.github\/workflows\/bootstrap-validation\.yml`, relevant context packs,\n  command\/template\/review artifacts, and any new registered governance artifact\n  required by the implementation\./`SPECS\/SPEC_INDEX.md`, `BACKLOG.md`, `TRACEABILITY_MATRIX.md`, and `ARTIFACT_REGISTRY.md`./;
-  ' "$dir/AI_HANDOFF.md"
+  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+
+## Pre-Change Classification (red-check fixture planning misclassified)
+
+- Target files: `SPECS/SPEC_INDEX.md`, `BACKLOG.md`,
+  `TRACEABILITY_MATRIX.md`, `ARTIFACT_REGISTRY.md`
+- Operation profile: `docs-trivial`
+- Protected files touched: false
+- Reason: Red-check fixture planning misclassified; touching specs,
+  backlog, traceability, and registry should escalate to
+  planning-governance.
+EOF
   expect_failure "protected planning misclassified" "protected planning classification must be planning-governance or strict-protected" "$dir"
 }
 
