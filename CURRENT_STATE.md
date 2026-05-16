@@ -318,8 +318,8 @@ authoritative: false
 
 ## Active Branch
 
-- `claude/boot-034-next-safe-action-staleness-guard` at BOOT-034
-  implementation in-review; branched from green `main` at `f116f85`.
+- `main` at BOOT-034 post-merge cleanup; PR #13 merged at
+  `0a8c7003009a89417ff4d569bad6bfab27b54df9`.
 
 ## Active Worktree
 
@@ -405,12 +405,9 @@ authoritative: false
 
 ## Next Recommended Action
 
-Confirm both PR #13 `validate` CI runs (push and pull_request) are green
-on the v1.6 head, request a brief fresh-context Codex re-review of the
-v1.6 copy_repo fix, admin-merge PR #13 once approved, and confirm latest
-`main` GitHub Actions `Bootstrap Validation` is green after merge plus
-apply post-merge cleanup if the singular handoff branch field flags on
-`main` CI.
+Push the BOOT-034 post-merge cleanup commit to `main` and confirm the
+latest `main` GitHub Actions `Bootstrap Validation` run is green before
+choosing the next Phase 2 item.
 
 ## Latest Validation
 

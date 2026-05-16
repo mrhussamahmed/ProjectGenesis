@@ -30,7 +30,7 @@ Implementation Agent
 
 ## Current Branch
 
-`claude/boot-034-next-safe-action-staleness-guard`
+`main`
 
 ## Current Worktree
 
@@ -38,35 +38,31 @@ Implementation Agent
 
 ## Last Completed Task
 
-BOOT-035 post-merge cleanup commit `f116f85` was pushed to `main` and GitHub
-Actions `Bootstrap Validation` run `25960081829` succeeded on 2026-05-16,
-restoring `main` CI to green. PR #12 / BOOT-035 branch-aware handoff
-admin-merged to `main` at merge commit
-`100fe77f0f1971290407651761a3d92964979d27` on 2026-05-16. The remote branch
-`codex/boot-035-branch-aware-handoff` was deleted.
+BOOT-034 next safe action staleness guard merged to `main` through PR #13
+at merge commit `0a8c7003009a89417ff4d569bad6bfab27b54df9` on 2026-05-16.
+PR #13 had a v1.0 through v1.6 fresh-context Codex adversarial review
+cycle; v1.5 and v1.6 were APPROVED with no remaining P0/P1/blocking P2
+findings. Both PR `validate` CI runs (push and pull_request) passed green
+on the v1.6 head. The remote branch
+`claude/boot-034-next-safe-action-staleness-guard` was deleted at merge.
 
 ## Current In-Progress Task
 
-BOOT-034 next safe action staleness guard PR #13 v1.6 copy_repo
-detached-HEAD CI fix. The fresh-context Codex v1.5 re-review at head
-`244d6d7` **APPROVED** the PR with no remaining P0/P1/blocking P2
-findings (only one non-blocking P3 about a stale historical sentence
-in `CURRENT_STATE.md:210`). However, the GitHub Actions PR check
-failed on the `pull_request` event (run `25963680867`) even though
-the `push` event run (`25963679909`) succeeded. The pull_request
-checkout is in detached HEAD, so `copy_repo` in
-`SCRIPTS/validate-bootstrap-red-checks.sh` produced empty
-`current_branch`, then `git symbolic-ref HEAD refs/heads/` failed and
-the temp repo defaulted to `master`. Every BOOT-034 pass fixture that
-uses `copy_repo` + `expect_success` then tripped on
-`AI_HANDOFF.md branch does not match git branch: <branch> != master`.
-v1.6 fixes `copy_repo` to fall back to reading the current branch
-from `AI_HANDOFF.md` (the validator's source-of-truth for branch),
-then defaults to `main`, and adds regression fixture
-`case_copy_repo_recovers_handoff_branch_when_source_is_detached` that
-creates a fresh detached clone and asserts `copy_repo` recovers the
-handoff branch. No validator-script changes; only the red-check
-infrastructure helper and a regression fixture in v1.6.
+BOOT-034 post-merge cleanup is active on `main`. PR #13 merge to `main`
+succeeded, but GitHub Actions main run `25965020663` failed with eight
+inner red-check `AI_HANDOFF.md branch does not match git branch` errors.
+The BOOT-035 branch-aware handoff exception fires on the OUTER validator
+on the merge commit (parseable merge subject matches the deleted feature
+branch named in handoff) but does not propagate into the INNER red-check
+temp repos that the BOOT-034 `expect_success` fixtures spin up; the temp
+repos are single-parent commits on `main` whose copied AI_HANDOFF still
+named the feature branch, so the inner branch check tripped. This cleanup
+follows the established post-merge cleanup pattern (PR #5 `0dc5109`,
+PR #6 `22c79f8`, PR #7 `9e21ce9`, PR #8 `a460dbf`, PR #9 `08260d4`,
+PR #10 `bdc8b19`, PR #11 `36738a8`, PR #12 `f116f85`): reset the singular
+`AI_HANDOFF.md ## Current Branch` to `main`, mark BOOT-034 done across
+backlog/state/registry/traceability records, and update versions for the
+cleanup commit.
 
 ## BOOT-034 Pre-Change Classification
 

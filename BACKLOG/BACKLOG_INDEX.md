@@ -27,7 +27,7 @@ Detailed backlog items can be stored in this folder.
 | BOOT-031 | Scaffold Extraction Tool | `BACKLOG/BOOT-031-scaffold-extract-tool.md` | done | P0 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
 | BOOT-032 | Seeded-Defect Benchmark | `BACKLOG/BOOT-032-seeded-defect-benchmark.md` | done | P0 | medium | high | SPEC-BOOT-003 | sequential |
 | BOOT-033 | SRC And SPEC Cross-Validation | `BACKLOG/BOOT-033-src-spec-cross-validation.md` | done | P1 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
-| BOOT-034 | Next Safe Action Staleness Guard | `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md` | in-review | P1 | medium | medium | SPEC-BOOT-003 | sequential |
+| BOOT-034 | Next Safe Action Staleness Guard | `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md` | done | P1 | medium | medium | SPEC-BOOT-003 | sequential |
 | BOOT-035 | Branch-Aware Handoff Model | `BACKLOG/BOOT-035-branch-aware-handoff-model.md` | done | P0 | medium | high | SPEC-BOOT-003 | sequential |
 
 ## Rules
