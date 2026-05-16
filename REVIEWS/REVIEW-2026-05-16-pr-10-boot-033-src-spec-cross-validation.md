@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-10-BOOT-033-SRC-SPEC-CROSS-VALIDATION
 title: PR 10 BOOT-033 SRC And SPEC Cross-Validation Review
 type: pr-review
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review and re-review of ProjectGenesis PR #10 at heads 5bbdab4 and 9402401
+source: Fresh-context Codex adversarial review and re-review of ProjectGenesis PR #10 at heads 5bbdab4, 9402401, and e0d63b7
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -19,6 +19,94 @@ authoritative: false
 ## Review Decision
 
 request changes
+
+## Confirmation Re-Review Outcome
+
+Decision: request changes.
+
+Head reviewed: `e0d63b7ba06bd31b64cb75c77c0a918aee07c757`
+(`e0d63b7`).
+
+Pre-write validation commands and outputs:
+
+- `bash SCRIPTS/validate-bootstrap.sh` exited 0 and printed
+  `Bootstrap validation passed.`
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` exited 0 and printed
+  `Bootstrap red checks passed.`
+- `git diff --check origin/main...HEAD` exited 0 with no output.
+- `gh pr view 10 --repo mrhussamahmed/ProjectGenesis --json
+  headRefOid,baseRefOid,state,url,statusCheckRollup` exited 1 with
+  `error connecting to api.github.com` and the GitHub status/connectivity
+  hint.
+- `gh pr checks 10 --repo mrhussamahmed/ProjectGenesis` exited 1 with
+  `error connecting to api.github.com` and the GitHub status/connectivity
+  hint.
+- `git diff 9402401..HEAD -- SCRIPTS/validate-bootstrap.sh
+  SCRIPTS/validate-bootstrap-red-checks.sh` exited 0 with no output.
+
+Post-write validation commands and outputs:
+
+- `bash SCRIPTS/validate-bootstrap.sh` exited 0 and printed
+  `Bootstrap validation passed.`
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` exited 0 and printed
+  `Bootstrap red checks passed.`
+- `git diff --check origin/main...HEAD` exited 0 with no output.
+
+P1-b resolution evaluation:
+
+- Partially resolved. `CURRENT_STATE.md:47-62` now describes the v1.2
+  verdict, the implementer P1-b state-coherence fix, aligned metadata,
+  unchanged validator/red-check scripts, and pending confirmation
+  re-review. `CURRENT_STATE.md:337-345` says the residual P1-b finding is
+  addressed and the next action is a fresh-context confirmation re-review.
+- Partially resolved. `ARTIFACT_REGISTRY.md:90-91`, `ARTIFACT_REGISTRY.md:96`,
+  `ARTIFACT_REGISTRY.md:116`, `ARTIFACT_REGISTRY.md:131`, and
+  `ARTIFACT_REGISTRY.md:152` record state/handoff/test/review/worklog
+  artifacts with P1-b state-coherence-fix descriptions pending
+  confirmation re-review.
+- Partially resolved. `TRACEABILITY_MATRIX.md:76` records the v1.2 P1-b
+  state-coherence fix and confirmation re-review state. `TEST_RESULTS.md:21-24`
+  includes BOOT-033 local validation, PR #10 review-fix validation, v1.2
+  re-review validation, and v1.2 P1-b state-coherence fix validation.
+  `WORKLOG/WORKLOG_INDEX.md:25` records the implementer P1-b fix session.
+  `REVIEWS/REVIEW_INDEX.md:43` says the P1-b state-coherence fix is
+  applied pending confirmation re-review. This review record contains the
+  Implementer P1-b Resolution Note at lines 106-117 before this v1.3
+  update.
+- Not resolved in `AI_HANDOFF.md`: before this v1.3 review-state update,
+  `AI_HANDOFF.md:44-54` still said P1-b remained unresolved and the next
+  safe action was to apply and push a state-coherence fix. The v1.2
+  re-review final evidence envelope also still said to apply and push the
+  P1-b fix at `AI_HANDOFF.md:150-154`. That is a circular stale
+  instruction at the new head, not a confirmation-re-review-ready handoff.
+
+Scope-creep evaluation:
+
+- `git diff --name-only origin/main...HEAD` contains the expected BOOT-033
+  validator/red-check additions plus source-of-truth and review artifacts.
+- A forbidden-scope scan returned no `.githooks/*`, `.github/workflows/*`,
+  `memory/ai/*`, `COMMANDS/*`, `CONTEXT_PACKS/*`, `SPECS/*`, `ADR/*`,
+  governance/policy files, prior scaffold/metric scripts, or runtime
+  mechanics. The only script changes in the PR are the BOOT-033 validator
+  additions and BOOT-033 red-check fixtures; `git diff 9402401..HEAD --`
+  for both validator scripts is empty.
+
+GitHub PR metadata and check rollup:
+
+- Not independently fetched in this environment. Both required GitHub CLI
+  commands failed with `error connecting to api.github.com`.
+- Local head is `e0d63b7ba06bd31b64cb75c77c0a918aee07c757`; local base
+  `origin/main` is `08260d4496e13acc3c7553091ccebb7a19a1cd87`.
+
+New findings:
+
+| Severity | File | Evidence | Finding | Required Change |
+|----------|------|----------|---------|-----------------|
+| P1 | `AI_HANDOFF.md` | Before this v1.3 review-state update, `AI_HANDOFF.md:44-54` still instructed the next agent to apply and push the P1-b state-coherence fix, and `AI_HANDOFF.md:150-154` repeated the same stale next safe action in the v1.2 final evidence envelope. | P1-b is not fully resolved at `e0d63b7` because the handoff remains circular: it asks for the P1-b fix that this head is supposed to have already applied. | Update `AI_HANDOFF.md` so `Last Completed Task`, `Current In-Progress Task`, and the relevant PR #10 re-review evidence describe the P1-b fix as applied at `e0d63b7`, this v1.3 confirmation re-review as request-changes, and the next safe action as fixing the residual handoff stale instructions before another confirmation re-review. |
+
+Final recommendation: requires more changes. Do not merge PR #10 until the
+residual handoff state-coherence issue is fixed and a fresh confirmation
+re-review approves.
 
 ## Re-Review Outcome
 
