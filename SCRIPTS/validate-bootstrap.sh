@@ -478,16 +478,40 @@ fi
 # The check is narrow and fail-closed:
 #
 # - It scans only `AI_HANDOFF.md` and `CURRENT_STATE.md`.
-# - It only matches lines that include `next safe action:` (case
-#   insensitive) as a structured envelope field. Section headings such as
-#   `## Next Recommended Action` start with `#` and are skipped.
-# - A `Next safe action:` line is "marked" (historical) when its payload
-#   contains one of `completed`, `superseded`, `historical`, or
-#   `delegated` as a whole word. Empty payloads are also treated as
-#   marked.
+# - It only matches Markdown list-item bullets that start (after optional
+#   leading whitespace) with `-` or `*`, then `Next safe action:` (case
+#   insensitive). Section headings such as `## Next Recommended Action`
+#   start with `#` and are skipped. Narrative prose mentioning
+#   `Next safe action:` inside backticks is skipped because it does not
+#   begin with a list bullet.
+# - Multiline bullets are stitched together: any indented continuation
+#   line is appended to the bullet's payload until the next bullet,
+#   blank line, or section heading.
+# - Lines inside fenced code blocks (` ``` ` or `~~~`) are ignored so
+#   illustrative `Next safe action:` examples in code fences do not trip
+#   the rule.
+# - A bullet is "marked" (historical) when its trimmed payload starts
+#   with one of the canonical marker words (`completed`, `superseded`,
+#   `historical`, `delegated`) or with a leading parenthetical such as
+#   `(historical)` containing one of those words. The marker must be at
+#   the start of the payload; marker words appearing later in the
+#   payload (for example, "confirm delegated authority" or "ensure work
+#   is completed before merge") do NOT count as marked, so the rule
+#   stays fail-closed on legitimately active instructions that happen to
+#   mention a marker word.
+# - Empty payloads (a bullet with `Next safe action:` and no content on
+#   the same line or any continuation line) count as unmarked. They
+#   indicate a structurally incomplete envelope and should be flagged.
 # - At most one unmarked `Next safe action:` field is allowed per file.
 #   That single line represents the current/active envelope. All other
-#   envelopes are historical and must carry one of the explicit markers.
+#   envelopes are historical and must carry one of the explicit markers
+#   at the start of the payload.
+#
+# The marker set is intentionally small: `completed`, `superseded`,
+# `historical`, `delegated`. If a maintainer wants to describe a
+# different historical state (for example a merged PR), the canonical
+# pattern is `Next safe action: completed by PR #N merge; ...` which
+# already matches the `completed` marker.
 #
 # The rule deliberately does not police general prose; it only inspects
 # the structured `Next safe action:` envelope field used by
@@ -497,29 +521,58 @@ count_unmarked_next_safe_actions() {
   local target="$1"
   [[ -f "$target" ]] || { echo 0; return; }
   awk '
-    function has_marker(payload,    lower) {
+    function has_start_marker(payload,    lower) {
       lower = tolower(payload)
-      if (lower ~ /(^|[^a-z])completed([^a-z]|$)/) return 1
-      if (lower ~ /(^|[^a-z])superseded([^a-z]|$)/) return 1
-      if (lower ~ /(^|[^a-z])historical([^a-z]|$)/) return 1
-      if (lower ~ /(^|[^a-z])delegated([^a-z]|$)/) return 1
+      sub(/^[ \t]+/, "", lower)
+      if (lower == "") return 0
+      # Parenthetical marker at the very start, optionally with extra
+      # text inside the parens: e.g. "(historical)", "(completed; see X)".
+      if (lower ~ /^\([^)]*(completed|superseded|historical|delegated)[^)]*\)/) return 1
+      # Direct marker word at the very start of the payload, terminated
+      # by a non-letter (whitespace, punctuation, end of line).
+      if (lower ~ /^(completed|superseded|historical|delegated)([^a-z]|$)/) return 1
       return 0
     }
-    # Match only structured envelope fields. A field line starts (after
-    # optional leading whitespace) with a `-` or `*` list bullet, then
-    # `Next safe action:` (case insensitive). This skips section
-    # headings such as `## Next Recommended Action` and skips general
-    # prose like "stale `Next safe action:` line" inside paragraphs.
-    /^[ \t]*[-*][ \t]+[Nn][Ee][Xx][Tt][ \t]+[Ss][Aa][Ff][Ee][ \t]+[Aa][Cc][Tt][Ii][Oo][Nn]:/ {
-      lower_line = tolower($0)
-      idx = index(lower_line, "next safe action:")
-      payload = substr($0, idx + length("next safe action:"))
+    function finalize(    payload) {
+      if (!in_bullet) return
+      payload = bullet_payload
       gsub(/^[ \t]+|[ \t]+$/, "", payload)
-      if (payload == "") next
-      if (has_marker(payload)) next
-      count += 1
+      # Empty payloads are structurally incomplete -- count as unmarked
+      # so the staleness guard flags them.
+      if (!has_start_marker(payload)) count += 1
+      in_bullet = 0
+      bullet_payload = ""
     }
-    END { print count + 0 }
+    BEGIN {
+      in_fence = 0
+      in_bullet = 0
+      bullet_payload = ""
+    }
+    # Toggle Markdown fence state on lines starting with ``` or ~~~.
+    /^[ \t]*(```|~~~)/ {
+      finalize()
+      in_fence = !in_fence
+      next
+    }
+    in_fence { next }
+    # Section headings end any open bullet.
+    /^#/ { finalize(); next }
+    # Blank lines end any open bullet.
+    /^[ \t]*$/ { finalize(); next }
+    # New list bullet (either a new `Next safe action:` field or a
+    # different bullet). Finalize the previous bullet first.
+    /^[ \t]*[-*][ \t]/ {
+      finalize()
+      if (tolower($0) ~ /^[ \t]*[-*][ \t]+next safe action:/) {
+        idx = index(tolower($0), "next safe action:")
+        bullet_payload = substr($0, idx + length("next safe action:"))
+        in_bullet = 1
+      }
+      next
+    }
+    # Continuation line for the open bullet.
+    in_bullet { bullet_payload = bullet_payload " " $0 }
+    END { finalize(); print count + 0 }
   ' "$target"
 }
 

@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-034
 title: BOOT-034 Next Safe Action Staleness Guard
 type: backlog-item
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 closeout coherence verification, PR #10 BOOT-033 review-loop lesson, and BOOT-034 validator-backed implementation
+source: Phase 1 closeout coherence verification, PR #10 BOOT-033 review-loop lesson, BOOT-034 validator-backed implementation, and BOOT-034 PR #13 v1.2 review-fix addressing the fresh-context Codex adversarial review findings
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []

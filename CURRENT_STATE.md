@@ -2,7 +2,7 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.60
+version: v3.61
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -46,21 +46,27 @@ authoritative: false
 
 - BOOT-034 next safe action staleness guard is in-review on
   `claude/boot-034-next-safe-action-staleness-guard` from green `main` at
-  `f116f85`. The implementation adds a fail-closed `count_unmarked_next_safe_actions`
-  helper in `SCRIPTS/validate-bootstrap.sh` that scans `AI_HANDOFF.md` and
-  `CURRENT_STATE.md` for structured `- Next safe action:` envelope fields and
-  fails when more than one is unmarked. `completed`, `superseded`,
-  `historical`, and `delegated` are accepted as whole-word historical markers
-  on the same line. Eight new red-check fixtures cover stale-fail on both
-  state files, four marked-pass cases (one per marker), the live
-  `## Next Recommended Action` section heading not being over-matched, and
-  narrative prose mentioning `Next safe action:` inside backticks not being
-  over-matched. To bring existing committed evidence into compliance, the 25
+  `f116f85`. PR #13 v1.0 fresh-context Codex adversarial review at head
+  `9d93250` requested changes for two P1 findings (validator undercount and
+  `ARTIFACT_REGISTRY.md` version drift) and three P2 findings (fenced code
+  blocks not excluded, marker-pass fixtures using
+  `expect_no_failure_mentioning` instead of `expect_success`, and
+  `AI_HANDOFF.md` "proposed to done" wording). The v1.2 review-fix tightens
+  `count_unmarked_next_safe_actions` to stitch multiline bullets, skip
+  fenced code blocks, require markers at the start of the payload
+  (parenthetical or word), and treat empty payloads as unmarked. The eight
+  pass fixtures now use `expect_success`. Four new fixtures cover
+  marker-mid-payload, empty payload, multiline-marked, and fenced-code
+  cases (49 red-check cases total, up from 45). Registry rows for
+  `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and `WORKLOG/WORKLOG_INDEX.md` are aligned to
+  file metadata, and the AI_HANDOFF wording is corrected. The 25
   previously unmarked historical `Next safe action:` envelope fields in
-  `AI_HANDOFF.md` were bulk-marked with `(historical)` prefixes; the two
-  pre-existing markers (`completed; superseded` and `superseded`) were
-  preserved. Local validation, red checks, and `git diff --check` pass.
-  Awaiting fresh-context Codex adversarial review.
+  `AI_HANDOFF.md` remain bulk-marked with `(historical)` prefixes; the two
+  pre-existing markers and the now-superseded BOOT-034 v1.0 Final Evidence
+  Envelope `Next safe action:` are also marked. Local validation, red
+  checks, and `git diff --check` pass. Awaiting fresh-context Codex
+  re-review at the v1.2 head.
 - BOOT-035 branch-aware handoff model is merged through PR #12 at merge commit
   `100fe77f0f1971290407651761a3d92964979d27` with `main` GitHub Actions
   `Bootstrap Validation` run `25960081829` succeeding at `f116f85` after the
@@ -402,13 +408,28 @@ authoritative: false
 
 ## Next Recommended Action
 
-Open the BOOT-034 next safe action staleness guard PR for fresh-context Codex
-adversarial review, then iterate on Codex findings until approval, merge, and
-confirm latest `main` GitHub Actions `Bootstrap Validation` is green after
-merge.
+Request fresh-context Codex re-review of BOOT-034 PR #13 at the v1.2
+review-fix head, iterate on any remaining findings until Codex approves with
+no P0/P1/blocking P2 findings, admin-merge once GitHub Actions on the PR is
+green, and confirm latest `main` GitHub Actions `Bootstrap Validation` is
+green after merge plus apply post-merge cleanup if the singular handoff
+branch field flags on `main` CI.
 
 ## Latest Validation
 
+- BOOT-034 PR #13 v1.2 review-fix on 2026-05-16: `bash -n
+  SCRIPTS/validate-bootstrap.sh` passes; `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.`;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red
+  checks passed.` with 49 cases (45 prior + 4 new BOOT-034 review-fix
+  fixtures); `git diff --check` exits 0. An awk probe against Codex's edge
+  cases confirmed mid-payload marker words (e.g., "confirm delegated
+  authority"), empty payloads, and fenced code examples are now correctly
+  treated as unmarked or ignored, and that same-line `completed`/
+  `(historical)` markers still pass. The previous BOOT-034 v1.0 Final
+  Evidence Envelope `Next safe action:` is now marked as superseded by the
+  v1.2 envelope above.
 - BOOT-034 next safe action staleness guard implementation on 2026-05-16:
   `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash

@@ -2,7 +2,7 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v2.47
+version: v2.48
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -43,6 +43,7 @@ Review records and review packages live in this folder.
 | REVIEW-2026-05-16-pr-10-boot-033-src-spec-cross-validation | PR #10 BOOT-033 SRC and SPEC cross-validation | approve | high | Codex adversarial review and re-review | 2026-05-16 | `REVIEWS/REVIEW-2026-05-16-pr-10-boot-033-src-spec-cross-validation.md` | merged to `main` at `a9c5b5954198fce9391f7c278889f29487a09c84`; v1.5 third confirmation re-review approved at `5a06127` after confirming all BOOT-033 `AI_HANDOFF.md` `Next safe action:` lines are non-circular and no new P1/P2 issue surfaced. Validator and red-check scripts unchanged from `9402401` and `8cfdae9`. Merge-commit GitHub Actions failed on the known singular handoff branch mismatch and is corrected by this post-merge cleanup commit. |
 | REVIEW-2026-05-16-pr-11-phase-1-closeout-coherence | PR #11 Phase 1 closeout coherence | approve | high | fresh-context Codex subagents | 2026-05-16 | `REVIEWS/REVIEW-2026-05-16-pr-11-phase-1-closeout-coherence.md` | Merged to `main` at `a55aa2070c07255a4704d3ca7b11e27c535b3b3e`; initial review requested changes for a missing PR review package, stale `AI_HANDOFF.md` next safe action, and active-branch summary omitting BOOT-035. Fix response addressed all findings; fresh-context re-review approved at `dd3fcbb` with no P0/P1/P2/P3 findings. Merge-commit GitHub Actions failed on the known singular handoff branch mismatch and is corrected by this post-merge cleanup commit. |
 | REVIEW-2026-05-16-boot-035-branch-aware-handoff | BOOT-035 branch-aware handoff | approve | high | fresh-context Codex reviewer | 2026-05-16 | `REVIEWS/REVIEW-2026-05-16-boot-035-branch-aware-handoff.md` | Initial implementation review requested changes for one P2 stale current-state sentence. Fix response corrected the PR #11 historical paragraph; narrow re-review approved with no P0/P1/P2 findings. |
+| REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard | PR #13 BOOT-034 next safe action staleness guard | request changes; v1.2 review-fix applied; re-review pending | high | fresh-context Codex adversarial review | 2026-05-16 | `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md` | v1.0 review at head `9d93250` requested changes for two P1 findings (validator undercount; ARTIFACT_REGISTRY version drift across six rows) and three P2 findings (fenced code blocks not excluded; marker-pass fixtures using wrong assertion helper; AI_HANDOFF.md "proposed to done" wording). v1.2 review-fix tightens the validator, aligns registry rows, strengthens fixtures, adds four new fixtures, corrects wording, and documents the marker set. Awaiting fresh-context Codex re-review at the v1.2 head. |
 
 ## Review Packages
 

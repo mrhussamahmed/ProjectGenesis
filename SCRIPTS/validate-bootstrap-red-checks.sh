@@ -830,8 +830,8 @@ EOF
 
 case_next_safe_action_marked_completed_passes() {
   # BOOT-034: a historical envelope whose `Next safe action:` payload
-  # contains `completed` is treated as marked and must not contribute
-  # to the unmarked count. The validator must still pass.
+  # starts with `completed` is treated as marked. Validator must still
+  # exit 0 overall.
   local dir
   dir="$(copy_repo next-safe-action-marked-completed-passes)"
   cat >>"$dir/AI_HANDOFF.md" <<'EOF'
@@ -840,11 +840,11 @@ case_next_safe_action_marked_completed_passes() {
 
 - Next safe action: completed by PR #12 merge; superseded by the active envelope above.
 EOF
-  expect_no_failure_mentioning "next safe action marked completed passes" "$dir" "unmarked 'Next safe action:' entries"
+  expect_success "next safe action marked completed passes" "$dir"
 }
 
 case_next_safe_action_marked_superseded_passes() {
-  # BOOT-034: `superseded` as a payload word also marks an envelope
+  # BOOT-034: `superseded` at the start of payload marks an envelope
   # as historical.
   local dir
   dir="$(copy_repo next-safe-action-marked-superseded-passes)"
@@ -854,12 +854,12 @@ case_next_safe_action_marked_superseded_passes() {
 
 - Next safe action: superseded by the post-merge cleanup envelope below.
 EOF
-  expect_no_failure_mentioning "next safe action marked superseded passes" "$dir" "unmarked 'Next safe action:' entries"
+  expect_success "next safe action marked superseded passes" "$dir"
 }
 
 case_next_safe_action_marked_historical_passes() {
-  # BOOT-034: `historical` (either as parenthetical or word) also
-  # marks an envelope as no longer forward-looking.
+  # BOOT-034: a `(historical)` parenthetical at the start of the
+  # payload marks an envelope as no longer forward-looking.
   local dir
   dir="$(copy_repo next-safe-action-marked-historical-passes)"
   cat >>"$dir/AI_HANDOFF.md" <<'EOF'
@@ -868,11 +868,12 @@ case_next_safe_action_marked_historical_passes() {
 
 - Next safe action: (historical) commit the fix, push, and request fresh-context Codex review.
 EOF
-  expect_no_failure_mentioning "next safe action marked historical passes" "$dir" "unmarked 'Next safe action:' entries"
+  expect_success "next safe action marked historical passes" "$dir"
 }
 
 case_next_safe_action_marked_delegated_passes() {
-  # BOOT-034: `delegated` is the fourth explicit marker.
+  # BOOT-034: `delegated` at the start of payload marks an envelope
+  # as historical.
   local dir
   dir="$(copy_repo next-safe-action-marked-delegated-passes)"
   cat >>"$dir/AI_HANDOFF.md" <<'EOF'
@@ -881,7 +882,7 @@ case_next_safe_action_marked_delegated_passes() {
 
 - Next safe action: delegated to the BOOT-035 post-merge cleanup envelope below.
 EOF
-  expect_no_failure_mentioning "next safe action marked delegated passes" "$dir" "unmarked 'Next safe action:' entries"
+  expect_success "next safe action marked delegated passes" "$dir"
 }
 
 case_next_recommended_action_heading_passes() {
@@ -889,7 +890,8 @@ case_next_recommended_action_heading_passes() {
   # in `CURRENT_STATE.md` is the canonical live next-action location
   # and must not be consumed by the structured-field staleness check.
   # Appending such a heading plus narrative prose into a fresh
-  # CURRENT_STATE.md section must not trip the validator.
+  # CURRENT_STATE.md section must not trip the validator and the
+  # validator must exit 0 overall.
   local dir
   dir="$(copy_repo next-recommended-action-heading-passes)"
   cat >>"$dir/CURRENT_STATE.md" <<'EOF'
@@ -900,7 +902,7 @@ Confirm the latest `main` GitHub Actions `Bootstrap Validation` is green,
 then proceed with the next Phase 2 backlog item. The validator must not
 treat this active heading as a stale `Next safe action:` envelope field.
 EOF
-  expect_no_failure_mentioning "next recommended action heading passes" "$dir" "unmarked 'Next safe action:' entries"
+  expect_success "next recommended action heading passes" "$dir"
 }
 
 case_next_safe_action_prose_not_overmatched() {
@@ -923,7 +925,7 @@ It is also legal to write `Next safe action:` inside inline code without
 the list bullet, since reviewers commonly reference the field name when
 they describe what they checked.
 EOF
-  expect_no_failure_mentioning "next safe action prose not over-matched" "$dir" "unmarked 'Next safe action:' entries"
+  expect_success "next safe action prose not over-matched" "$dir"
 }
 
 case_current_state_stale_next_safe_action_fails() {
@@ -939,6 +941,94 @@ case_current_state_stale_next_safe_action_fails() {
 - Next safe action: push the cleanup commit and confirm CI is green.
 EOF
   expect_failure "current state stale next safe action fails" "unmarked 'Next safe action:' entries" "$dir"
+}
+
+case_marker_word_mid_payload_is_not_marker() {
+  # BOOT-034: marker words appearing later in the payload (not at the
+  # start of the trimmed payload and not in a leading parenthetical)
+  # MUST NOT count as marked. This guards against false negatives like
+  # "Next safe action: confirm delegated authority before pushing" or
+  # "Next safe action: ensure work is completed before merge", which
+  # are legitimate active instructions that happen to mention a marker
+  # word in unrelated context. Two such bullets must trip the staleness
+  # guard because they are both unmarked.
+  local dir
+  dir="$(copy_repo marker-word-mid-payload-is-not-marker)"
+  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+
+## Marker Word Mid-Payload Fixture A
+
+- Next safe action: confirm delegated authority before pushing.
+
+## Marker Word Mid-Payload Fixture B
+
+- Next safe action: ensure work is completed before merge.
+EOF
+  expect_failure "marker word mid payload is not marker" "unmarked 'Next safe action:' entries" "$dir"
+}
+
+case_empty_next_safe_action_payload_is_unmarked() {
+  # BOOT-034: a bullet with `Next safe action:` and an empty payload
+  # (no continuation lines either) is structurally incomplete and
+  # must count as unmarked. Two such bullets must trip the staleness
+  # guard.
+  local dir
+  dir="$(copy_repo empty-next-safe-action-payload-is-unmarked)"
+  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+
+## Empty Payload Fixture A
+
+- Next safe action:
+
+## Empty Payload Fixture B
+
+- Next safe action:
+EOF
+  expect_failure "empty next safe action payload is unmarked" "unmarked 'Next safe action:' entries" "$dir"
+}
+
+case_multiline_marked_next_safe_action_passes() {
+  # BOOT-034: multiline bullets where the marker is on the first line
+  # (typical case) must still pass. The validator stitches
+  # continuation lines into the same payload, but marker detection
+  # looks only at the start of the trimmed payload, which is the
+  # marker word here.
+  local dir
+  dir="$(copy_repo multiline-marked-next-safe-action-passes)"
+  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+
+## Multiline Marked Fixture
+
+- Next safe action: completed by PR #12 merge; superseded by the
+  active envelope above. Confirmed by GitHub Actions run 25960081829
+  succeeding on `main` at `f116f85`.
+EOF
+  expect_success "multiline marked next safe action passes" "$dir"
+}
+
+case_fenced_code_next_safe_action_ignored() {
+  # BOOT-034: bullets inside fenced Markdown code blocks (``` or ~~~)
+  # are illustrative examples, not real envelope fields. They must
+  # not be counted toward the unmarked-entry total. Two unmarked
+  # bullets inside a code fence plus zero outside must keep the
+  # validator passing.
+  local dir
+  dir="$(copy_repo fenced-code-next-safe-action-ignored)"
+  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+
+## Fenced Code Block Fixture
+
+Documenting examples of the envelope field for reviewers:
+
+```text
+- Next safe action: apply the fix and request re-review.
+- Next safe action: push the cleanup commit and confirm CI is green.
+```
+
+The examples above are illustrative only and must not count as
+unmarked envelope fields.
+EOF
+  expect_success "fenced code next safe action ignored" "$dir"
 }
 
 case_approved_spec_missing_source
@@ -986,6 +1076,10 @@ case_next_safe_action_marked_delegated_passes
 case_next_recommended_action_heading_passes
 case_next_safe_action_prose_not_overmatched
 case_current_state_stale_next_safe_action_fails
+case_marker_word_mid_payload_is_not_marker
+case_empty_next_safe_action_payload_is_unmarked
+case_multiline_marked_next_safe_action_passes
+case_fenced_code_next_safe_action_ignored
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2
