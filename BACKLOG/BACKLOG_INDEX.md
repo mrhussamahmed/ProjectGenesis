@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-INDEX
 title: Backlog Index
 type: backlog-index
 status: active
-version: v1.8
+version: v1.10
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, Phase 1 execution planning, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 in-review status, PR #7 BOOT-030 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark implementation, and PR #10 BOOT-033 merge/post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, Phase 1 execution planning, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 in-review status, PR #7 BOOT-030 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark implementation, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, and BOOT-035 branch-aware handoff planning
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -27,6 +27,8 @@ Detailed backlog items can be stored in this folder.
 | BOOT-031 | Scaffold Extraction Tool | `BACKLOG/BOOT-031-scaffold-extract-tool.md` | done | P0 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
 | BOOT-032 | Seeded-Defect Benchmark | `BACKLOG/BOOT-032-seeded-defect-benchmark.md` | done | P0 | medium | high | SPEC-BOOT-003 | sequential |
 | BOOT-033 | SRC And SPEC Cross-Validation | `BACKLOG/BOOT-033-src-spec-cross-validation.md` | done | P1 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
+| BOOT-034 | Next Safe Action Staleness Guard | `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md` | proposed | P1 | medium | medium | SPEC-BOOT-003 | sequential |
+| BOOT-035 | Branch-Aware Handoff Model | `BACKLOG/BOOT-035-branch-aware-handoff-model.md` | proposed | P0 | medium | high | SPEC-BOOT-003 | sequential |
 
 ## Rules
 
