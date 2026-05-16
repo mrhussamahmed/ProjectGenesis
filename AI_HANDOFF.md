@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.38
+version: v3.39
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, and BOOT-032 seeded-defect benchmark and coverage metrics implementation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, and PR #9 BOOT-032 adversarial review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -22,11 +22,11 @@ authoritative: false
 
 ## Active Agent
 
-Claude
+Codex
 
 ## Current Role
 
-DevOps Release Reviewer
+Adversarial PR Reviewer
 
 ## Current Branch
 
@@ -38,16 +38,47 @@ DevOps Release Reviewer
 
 ## Last Completed Task
 
-PR #8 / BOOT-031 Codex adversarial re-review completed on 2026-05-16
-with decision approve. All original findings are resolved and no new
-P1/P2 issues surfaced.
+PR #9 / BOOT-032 fresh-context Codex adversarial review completed on
+2026-05-16 with decision request changes.
 
 ## Current In-Progress Task
 
-PR #8 / BOOT-031 is approved by fresh-context Codex re-review on
-`claude/boot-031-scaffold-extract-tool`. Next safe action is to merge
-after normal PR/CI gates, then run the established post-merge
-source-of-truth cleanup. Do not start BOOT-032 until BOOT-031 is merged.
+PR #9 / BOOT-032 on `claude/boot-032-seeded-defect-benchmark` has one
+P2 finding: `SCRIPTS/run-seeded-defect-bench.sh` misreports
+`red_check_harness_status` as 0 on nonzero harness exits because it
+captures `$?` inside an inverted `if ! ...` branch. Next safe action is
+to fix the runner, rerun the review conditions, and request re-review.
+
+## PR 9 BOOT-032 Review Evidence
+
+- Decision: request changes.
+- Finding: P2 runner failure-path status-reporting bug in
+  `SCRIPTS/run-seeded-defect-bench.sh`.
+- PR diff fetch: `gh pr diff 9 --repo mrhussamahmed/ProjectGenesis`
+  failed due `api.github.com` connectivity; local
+  `origin/main...HEAD` diff was used.
+- Validation before review-state edits: `bash
+  SCRIPTS/validate-bootstrap.sh` passed; `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` passed with 25 cases;
+  `git diff --check origin/main...HEAD` passed; `bash -n` passed for
+  all four new scripts; all three metric scripts emitted parseable
+  output; `bash SCRIPTS/run-seeded-defect-bench.sh` emitted
+  `seeded_defect_cases: 25`, `seeded_defect_detected: 25`,
+  `seeded_defect_detection_rate: 100%`, and
+  `red_check_harness_status: 0`.
+- Manual extraction: `bash SCRIPTS/scaffold-extract.sh --apply
+  /tmp/pr9-review-scaffold-1.g4kdTN` passed and in-target `bash
+  /tmp/pr9-review-scaffold-1.g4kdTN/SCRIPTS/validate-bootstrap.sh`
+  passed.
+- Scope check: no hooks, CI workflows, role files, command files,
+  context packs, templates, ADRs, governance, operation routing, PR or
+  merge policy, risk model, branch/worktree guide, or runtime product
+  mechanics changed.
+- Files written by review:
+  `REVIEWS/REVIEW-2026-05-16-pr-9-boot-032-seeded-defect-benchmark.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
 
 ## PR 8 BOOT-031 Codex Re-Review Evidence
 

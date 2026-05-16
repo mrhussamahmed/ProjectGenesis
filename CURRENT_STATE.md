@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.38
+version: v3.39
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, and BOOT-032 seeded-defect benchmark and coverage metrics implementation
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, and PR #9 BOOT-032 adversarial review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -247,8 +247,11 @@ authoritative: false
 ## Current Blockers
 
 - BOOT-032 (seeded-defect benchmark and coverage metrics) is in-review
-  on `claude/boot-032-seeded-defect-benchmark` and blocks the rest of
-  Phase 1 until merged.
+  on `claude/boot-032-seeded-defect-benchmark`. Fresh-context Codex
+  adversarial review of PR #9 requested changes for one P2 runner
+  failure-path status-reporting bug; BOOT-032 blocks the rest of Phase
+  1 until the finding is fixed or explicitly accepted and the PR is
+  merged.
 - BOOT-033 (SRC/SPEC validation) follows BOOT-032 in the Phase 1
   sequence.
 - No active PR #5, PR #6, PR #7, or PR #8 blockers remain; all four are
@@ -287,6 +290,7 @@ authoritative: false
 - `SCRIPTS/run-seeded-defect-bench.sh`
 - `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-032-seeded-defect-benchmark.md`
+- `REVIEWS/REVIEW-2026-05-16-pr-9-boot-032-seeded-defect-benchmark.md`
 
 ## Known Stale Or Superseded Files
 
@@ -294,13 +298,15 @@ authoritative: false
 
 ## Next Recommended Action
 
-Commit the BOOT-032 implementation, push the
-`claude/boot-032-seeded-defect-benchmark` branch, open the BOOT-032 PR,
-wait for GitHub `validate` to be green, request a fresh-context Codex
-adversarial review, address P0/P1 findings and blocking P2 findings,
-merge after approval, then run the established post-merge state-sync
-cleanup. After that, begin BOOT-033 SRC/SPEC cross-validation on its
-own branch.
+Address the PR #9 BOOT-032 Codex review finding in
+`SCRIPTS/run-seeded-defect-bench.sh`: `red_check_harness_status` must
+report the real nonzero exit code from
+`SCRIPTS/validate-bootstrap-red-checks.sh` when the harness fails.
+Then rerun the review conditions in
+`REVIEWS/REVIEW-2026-05-16-pr-9-boot-032-seeded-defect-benchmark.md`,
+request re-review, merge only after approval or documented acceptance,
+and run the established post-merge state-sync cleanup. After that,
+begin BOOT-033 SRC/SPEC cross-validation on its own branch.
 
 ## Latest Validation
 
@@ -317,6 +323,13 @@ own branch.
   (25 cases); manual `--apply` extraction into `/tmp/scaffold-test`
   with in-target validation passes; `git diff --check origin/main...HEAD`
   is clean.
+- PR #9 BOOT-032 adversarial review on 2026-05-16: local bootstrap
+  validation, red checks, `git diff --check origin/main...HEAD`,
+  `bash -n` for the four new scripts, all metric scripts, benchmark
+  pass-path output, manual extraction, and in-target validation passed.
+  `gh pr diff 9 --repo mrhussamahmed/ProjectGenesis` failed due
+  `api.github.com` connectivity. Review decision is request changes for
+  one P2 runner failure-path status-reporting bug.
 
 ### Prior Validations
 

@@ -29,9 +29,10 @@ trap 'rm -rf "$tmp_dir"' EXIT
 
 run_log="$tmp_dir/red-checks.log"
 red_status=0
-if ! bash "$red_checks" >"$run_log" 2>&1; then
-  red_status=$?
-fi
+set +e
+bash "$red_checks" >"$run_log" 2>&1
+red_status=$?
+set -e
 
 # The red-check harness invokes each `case_*` function once and records
 # `FAIL: ...` lines for the cases that did not behave as expected. A pass
