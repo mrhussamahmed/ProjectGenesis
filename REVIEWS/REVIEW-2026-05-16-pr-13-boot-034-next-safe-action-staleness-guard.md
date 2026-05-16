@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-13-BOOT-034-NEXT-SAFE-ACTION-STALENESS-GUARD
 title: PR #13 BOOT-034 Next Safe Action Staleness Guard Review
 type: pr-review
 status: active
-version: v1.4
+version: v1.5
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 (v1.0 request changes), Claude review-fix response at v1.2, fresh-context Codex re-review at v1.2 (one new blocking P2 about stale descriptions), Claude v1.3 description alignment response, fresh-context Codex re-review at v1.3 (one new blocking P2 about the review-record registry row plus one P3 about backlog version reference), and Claude v1.4 micro-fix response
+source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 (v1.0 request changes), Claude v1.2 review-fix, fresh-context Codex v1.2 re-review (new blocking P2 on stale descriptions), Claude v1.3 description-alignment, fresh-context Codex v1.3 re-review (new blocking P2 on review-record registry row plus P3 on backlog version), Claude v1.4 micro-fix, fresh-context Codex v1.4 re-review (three new blocking P2 on review-record description, state-file registry row versions, and BOOT-034 traceability row), and Claude v1.5 registry/traceability alignment response
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -222,16 +222,63 @@ Implementer applied two targeted description fixes at v1.4:
 No validator-script, red-check-fixture, design, or scope-of-policy
 changes in v1.4.
 
-## v1.4 Status
+## v1.4 Re-Review Decision
 
-Awaiting fresh-context Codex re-review at the v1.4 head. Local
+Request changes. v1.3 P2 (review-record registry row) and P3 (backlog
+version reference) confirmed resolved. Three new blocking P2 findings:
+
+- P2-A — `ARTIFACT_REGISTRY.md:136` review-record row was bumped to
+  v1.3 in the v1.4 commit but its description still said "Awaiting
+  fresh-context re-review at v1.3 head" with no mention of the v1.4
+  micro-fix.
+- P2-B — state-file registry rows (`ART-REG-001:69`,
+  `ART-STATE-002:90`, `ART-STATE-003:91`, `ART-TEST-003:96`,
+  `ART-REVIEW-INDEX:118`, `ART-WORKLOG-INDEX:160`) still listed old
+  file versions; the corresponding file headers had been bumped to
+  v3.56, v3.63, v3.61, v1.82, v2.50, v3.58 respectively in v1.4 but
+  the registry rows were not updated to match.
+- P2-C — `TRACEABILITY_MATRIX.md:77` BOOT-034 row still described the
+  review record as v1.3 and said it was "awaiting fresh-context
+  re-review at the v1.3 head" with no v1.4 evidence.
+
+## v1.5 Registry/Traceability Alignment Response
+
+Implementer applied the following description-only updates at v1.5:
+
+- Bumped state-file registry rows to match actual file metadata:
+  `ART-REG-001` v3.55 → v3.57; `ART-STATE-002` v3.62 → v3.64;
+  `ART-STATE-003` v3.60 → v3.62; `ART-TEST-003` v1.81 → v1.83;
+  `ART-REVIEW-INDEX` v2.49 → v2.51; `ART-WORKLOG-INDEX` v3.57 → v3.59.
+- Bumped `ART-REVIEW-PR-13-...` review-record row from v1.3 → v1.5
+  with cumulative description including v1.0 request-changes, v1.2
+  review-fix, v1.2 re-review P2, v1.3 description alignment, v1.3
+  re-review P2/P3, v1.4 micro-fix, v1.4 re-review P2-A/B/C, and v1.5
+  alignment response.
+- Updated the `TRACEABILITY_MATRIX.md` BOOT-034 row to include the
+  v1.4 micro-fix and v1.5 alignment in the source notes and description.
+  Bumped `TRACEABILITY_MATRIX.md` from v2.53 → v2.54, with
+  `ART-TRACE-001` registry row bumped to match.
+- Bumped registry itself: `ARTIFACT_REGISTRY.md` v3.56 → v3.57.
+- Bumped state-file file metadata: `AI_HANDOFF.md` v3.61 → v3.62,
+  `CURRENT_STATE.md` v3.63 → v3.64, `TEST_RESULTS.md` v1.82 → v1.83,
+  `WORKLOG/WORKLOG_INDEX.md` v3.58 → v3.59,
+  `REVIEWS/REVIEW_INDEX.md` v2.50 → v2.51, this review record v1.4 →
+  v1.5.
+- Updated the AI_HANDOFF v1.3 envelope `Next safe action:` and the
+  CURRENT_STATE next-recommended-action to point at the v1.5 head.
+
+No validator-script, red-check-fixture, or design changes in v1.5.
+
+## v1.5 Status
+
+Awaiting fresh-context Codex re-review at the v1.5 head. Local
 validation passed:
 
 - `bash -n SCRIPTS/validate-bootstrap.sh` — passes
 - `bash -n SCRIPTS/validate-bootstrap-red-checks.sh` — passes
 - `bash SCRIPTS/validate-bootstrap.sh` — passes
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 49 cases
-  (unchanged from v1.2; v1.3 and v1.4 are description-only)
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 49
+  cases (unchanged from v1.2; v1.3 through v1.5 are description-only)
 - `git diff --check` — clean
 
 ## Out Of Scope

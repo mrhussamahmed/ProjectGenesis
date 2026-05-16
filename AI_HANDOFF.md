@@ -2,7 +2,7 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.61
+version: v3.62
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -47,16 +47,24 @@ admin-merged to `main` at merge commit
 
 ## Current In-Progress Task
 
-BOOT-034 next safe action staleness guard PR #13 v1.4 micro-fix. The
-fresh-context Codex v1.3 re-review at head `4619ac4` confirmed the v1.2
-blocking P2 (stale descriptions) is resolved by the v1.3 description
-alignment, but raised one new blocking P2 and one P3: the
-`ARTIFACT_REGISTRY.md` row for the PR-13 review record itself was not
-bumped from `v1.2` to `v1.3` and still said "Awaiting fresh-context
-re-review at v1.2 head"; the PR review package linked-backlog line
-still referenced backlog item `v1.1` instead of `v1.3`. v1.4 fixes both
-descriptions and bumps state-file/review-record versions accordingly.
-No validator-script, red-check-fixture, or design changes in v1.4.
+BOOT-034 next safe action staleness guard PR #13 v1.5 registry/
+traceability version alignment. The fresh-context Codex v1.4 re-review
+at head `4025d56` confirmed the v1.3 P2 (review-record registry row not
+bumped) and P3 (PR review package backlog version) are resolved by the
+v1.4 micro-fix, but raised three new blocking P2 findings:
+
+- the `ART-REVIEW-PR-13-...` registry row description was bumped to
+  v1.3 but did not mention the v1.4 micro-fix,
+- the state-file registry rows (`ART-REG-001`, `ART-STATE-002`,
+  `ART-STATE-003`, `ART-TEST-003`, `ART-REVIEW-INDEX`,
+  `ART-WORKLOG-INDEX`) were not bumped to match the actual file
+  metadata versions after v1.4, and
+- the `TRACEABILITY_MATRIX.md` BOOT-034 row still said "Awaiting
+  fresh-context re-review at the v1.3 head" without v1.4 history.
+
+v1.5 aligns all those rows with the actual current file metadata and
+includes the v1.4/v1.5 history. No validator-script, red-check-fixture,
+or design changes in v1.5.
 
 ## BOOT-034 Pre-Change Classification
 
@@ -378,11 +386,21 @@ No validator-script, red-check-fixture, or design changes in v1.4.
   raised one new blocking P2 (the `ART-REVIEW-PR-13-...` registry row
   was not bumped to v1.3 in the v1.3 commit) plus one P3 (the PR
   review package linked-backlog line still referenced backlog `v1.1`).
-  v1.4 micro-fix applied in this commit: registry row bumped to v1.3
-  and PR review package linked-backlog line bumped to v1.3; state-file
-  versions bumped accordingly.
+  v1.4 micro-fix applied: registry row bumped to v1.3 and PR review
+  package linked-backlog line bumped to v1.3; state-file versions
+  bumped. v1.4 re-review at head `4025d56` confirmed the v1.3 findings
+  resolved but raised three new blocking P2 findings (review-record row
+  description still said "Awaiting v1.3 re-review" without v1.4
+  mention; state-file registry rows for `ART-REG-001`/`ART-STATE-002`/
+  `ART-STATE-003`/`ART-TEST-003`/`ART-REVIEW-INDEX`/`ART-WORKLOG-INDEX`
+  not bumped to match the v1.4 file metadata; `TRACEABILITY_MATRIX.md`
+  BOOT-034 row not updated for v1.4). v1.5 registry/traceability
+  alignment in this commit: state-file registry rows now match actual
+  file metadata, review-record row updated to v1.5 with cumulative
+  review history, and the BOOT-034 traceability row updated with v1.4
+  and v1.5 history.
 - Next safe action: request fresh-context Codex re-review of PR #13 at
-  the v1.4 head, iterate on any new findings until Codex approves with
+  the v1.5 head, iterate on any new findings until Codex approves with
   no P0/P1/blocking P2 findings, then admin-merge PR #13 once GitHub
   Actions on the PR is green and apply post-merge cleanup if `main` CI
   flags the singular `AI_HANDOFF.md` branch field.
