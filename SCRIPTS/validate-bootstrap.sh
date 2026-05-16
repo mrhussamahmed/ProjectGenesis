@@ -464,6 +464,74 @@ if [[ -d BACKLOG ]]; then
   done < <(find BACKLOG -maxdepth 1 -type f -name 'BOOT-*.md' -print 2>/dev/null)
 fi
 
+# BOOT-034 Next Safe Action Staleness Guard.
+#
+# Committed handoff and state evidence in `AI_HANDOFF.md` and
+# `CURRENT_STATE.md` may carry one or more `Next safe action:` envelope
+# fields. After an envelope's action is complete, the line goes stale and
+# must not keep instructing the next agent to redo work that already
+# happened. The PR #10 / BOOT-033 v1.0 through v1.5 review loop is the
+# canonical incident: successive fresh-context reviews each surfaced an
+# older, unmarked `Next safe action:` line that was misread as still
+# active.
+#
+# The check is narrow and fail-closed:
+#
+# - It scans only `AI_HANDOFF.md` and `CURRENT_STATE.md`.
+# - It only matches lines that include `next safe action:` (case
+#   insensitive) as a structured envelope field. Section headings such as
+#   `## Next Recommended Action` start with `#` and are skipped.
+# - A `Next safe action:` line is "marked" (historical) when its payload
+#   contains one of `completed`, `superseded`, `historical`, or
+#   `delegated` as a whole word. Empty payloads are also treated as
+#   marked.
+# - At most one unmarked `Next safe action:` field is allowed per file.
+#   That single line represents the current/active envelope. All other
+#   envelopes are historical and must carry one of the explicit markers.
+#
+# The rule deliberately does not police general prose; it only inspects
+# the structured `Next safe action:` envelope field used by
+# `OPERATION_ROUTING.md`.
+
+count_unmarked_next_safe_actions() {
+  local target="$1"
+  [[ -f "$target" ]] || { echo 0; return; }
+  awk '
+    function has_marker(payload,    lower) {
+      lower = tolower(payload)
+      if (lower ~ /(^|[^a-z])completed([^a-z]|$)/) return 1
+      if (lower ~ /(^|[^a-z])superseded([^a-z]|$)/) return 1
+      if (lower ~ /(^|[^a-z])historical([^a-z]|$)/) return 1
+      if (lower ~ /(^|[^a-z])delegated([^a-z]|$)/) return 1
+      return 0
+    }
+    # Match only structured envelope fields. A field line starts (after
+    # optional leading whitespace) with a `-` or `*` list bullet, then
+    # `Next safe action:` (case insensitive). This skips section
+    # headings such as `## Next Recommended Action` and skips general
+    # prose like "stale `Next safe action:` line" inside paragraphs.
+    /^[ \t]*[-*][ \t]+[Nn][Ee][Xx][Tt][ \t]+[Ss][Aa][Ff][Ee][ \t]+[Aa][Cc][Tt][Ii][Oo][Nn]:/ {
+      lower_line = tolower($0)
+      idx = index(lower_line, "next safe action:")
+      payload = substr($0, idx + length("next safe action:"))
+      gsub(/^[ \t]+|[ \t]+$/, "", payload)
+      if (payload == "") next
+      if (has_marker(payload)) next
+      count += 1
+    }
+    END { print count + 0 }
+  ' "$target"
+}
+
+for stale_target in AI_HANDOFF.md CURRENT_STATE.md; do
+  if [[ -f "$stale_target" ]]; then
+    unmarked_count="$(count_unmarked_next_safe_actions "$stale_target")"
+    if [[ "$unmarked_count" -gt 1 ]]; then
+      fail "$stale_target has $unmarked_count unmarked 'Next safe action:' entries; only the current envelope may be unmarked. Mark historical entries with one of: completed, superseded, historical, delegated."
+    fi
+  fi
+done
+
 grep -Fq "ARTIFACT_REGISTRY.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference ARTIFACT_REGISTRY.md"
 grep -Fq "TRACEABILITY_MATRIX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference TRACEABILITY_MATRIX.md"
 grep -Fq "SPECS/SPEC_INDEX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference SPECS/SPEC_INDEX.md"

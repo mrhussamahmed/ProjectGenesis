@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-034
 title: BOOT-034 Next Safe Action Staleness Guard
 type: backlog-item
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 closeout coherence verification and PR #10 BOOT-033 review-loop lesson
+source: Phase 1 closeout coherence verification, PR #10 BOOT-033 review-loop lesson, and BOOT-034 validator-backed implementation
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -46,6 +46,29 @@ Out of scope:
 - Changing source-of-truth hierarchy or review policy without a separate
   strict-protected review.
 - Blocking legitimate historical evidence that clearly says it is superseded.
+
+## Implementation Decision
+
+Validator-backed path selected. `SCRIPTS/validate-bootstrap.sh` adds a narrow
+fail-closed check that counts unmarked `Next safe action:` envelope fields in
+`AI_HANDOFF.md` and `CURRENT_STATE.md`. At most one unmarked field per file
+is allowed. Historical envelopes must mark their `Next safe action:` payload
+with `completed`, `superseded`, `historical`, or `delegated` (case
+insensitive, whole-word). `SCRIPTS/validate-bootstrap-red-checks.sh` adds
+eight fixtures covering:
+
+- two unmarked entries trip the guard on `AI_HANDOFF.md`,
+- two unmarked entries trip the guard on `CURRENT_STATE.md`,
+- `completed`, `superseded`, `historical`, and `delegated` are accepted as
+  markers (four fixtures),
+- the live `## Next Recommended Action` section heading is not over-matched,
+- and unrelated narrative prose mentioning `Next safe action:` inside
+  backticks is not over-matched.
+
+Existing historical envelope fields in `AI_HANDOFF.md` were bulk-marked with
+a `(historical)` prefix to satisfy the new rule on the current state. The
+new BOOT-034 envelope retains a single unmarked `Next safe action:` as the
+active current entry.
 
 ## Links
 
@@ -109,7 +132,7 @@ P1
 
 ## Readiness Status
 
-proposed
+in-review
 
 ## Readiness Evidence
 
@@ -117,31 +140,39 @@ proposed
   stale circular next-action wording was fully removed from current evidence.
 - Spec status: `SPEC-BOOT-003` is approved and governs durable evidence,
   state sync, and handoff compression safety.
-- Acceptance criteria: not yet finalized.
-- Dependencies: Phase 1 closeout verification.
-- Architecture impact: none unless validator enforcement is selected.
-- Test expectations: bootstrap validation and diff check for documentation-only
-  convention; red checks and shell syntax checks if validator behavior changes.
-- Branch/worktree plan: separate Phase 2 branch from green `main`.
-- Required reviewers: fresh-context review; adversarial review if validator,
-  template, operation-routing, or policy behavior changes.
-- Blocked until: Phase 2 planning chooses documentation-only, template, or
-  validator enforcement path.
+- Acceptance criteria: validator rule prevents future stale forward-looking
+  `Next safe action:` entries; red-check fixtures cover both failure and
+  success cases; existing committed evidence is brought into compliance.
+- Dependencies: Phase 1 closeout verification complete; BOOT-035 merged and
+  `main` CI green at `f116f85`.
+- Architecture impact: none beyond validator script and red-check fixture
+  additions.
+- Test expectations: bootstrap validation, red checks, and `git diff --check`
+  must pass locally and in CI.
+- Branch/worktree plan: `claude/boot-034-next-safe-action-staleness-guard`
+  from green `main` at `f116f85`.
+- Required reviewers: fresh-context Codex adversarial review because
+  validator mechanics change.
+- Blocked until: Codex adversarial review approves with no P0/P1/blocking P2
+  findings.
 
 ## Test Expectations
 
+- `bash -n SCRIPTS/validate-bootstrap.sh`
+- `bash -n SCRIPTS/validate-bootstrap-red-checks.sh`
 - `bash SCRIPTS/validate-bootstrap.sh`
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` if validator behavior changes
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh`
 - `git diff --check`
+- GitHub Actions `Bootstrap Validation`
 
 ## Definition Of Done
 
-- [ ] Convention chosen and recorded in the appropriate authoritative file.
-- [ ] Templates or validators updated only if the chosen path requires them.
-- [ ] Red-check fixtures added before validator enforcement, if any.
-- [ ] Traceability updated.
-- [ ] Artifact registry updated.
-- [ ] Handoff updated.
+- [x] Convention chosen and recorded in the appropriate authoritative file.
+- [x] Templates or validators updated only if the chosen path requires them.
+- [x] Red-check fixtures added before validator enforcement, if any.
+- [x] Traceability updated.
+- [x] Artifact registry updated.
+- [x] Handoff updated.
 - [ ] Fresh-context review complete before merge.
 
 ## Parallelization

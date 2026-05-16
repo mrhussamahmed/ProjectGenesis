@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.59
+version: v3.60
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #9 merge/post-merge source-of-truth cleanup, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, PR #11 merge/post-merge source-of-truth cleanup, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review validation, BOOT-035 review approval, PR #12 BOOT-035 merge, and BOOT-035 shallow-checkout CI fix
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #9 merge/post-merge source-of-truth cleanup, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, PR #11 merge/post-merge source-of-truth cleanup, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review validation, BOOT-035 review approval, PR #12 BOOT-035 merge, BOOT-035 shallow-checkout CI fix, and BOOT-034 next safe action staleness guard implementation in-review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,20 +44,34 @@ authoritative: false
 
 ## Active Implementation Phase
 
+- BOOT-034 next safe action staleness guard is in-review on
+  `claude/boot-034-next-safe-action-staleness-guard` from green `main` at
+  `f116f85`. The implementation adds a fail-closed `count_unmarked_next_safe_actions`
+  helper in `SCRIPTS/validate-bootstrap.sh` that scans `AI_HANDOFF.md` and
+  `CURRENT_STATE.md` for structured `- Next safe action:` envelope fields and
+  fails when more than one is unmarked. `completed`, `superseded`,
+  `historical`, and `delegated` are accepted as whole-word historical markers
+  on the same line. Eight new red-check fixtures cover stale-fail on both
+  state files, four marked-pass cases (one per marker), the live
+  `## Next Recommended Action` section heading not being over-matched, and
+  narrative prose mentioning `Next safe action:` inside backticks not being
+  over-matched. To bring existing committed evidence into compliance, the 25
+  previously unmarked historical `Next safe action:` envelope fields in
+  `AI_HANDOFF.md` were bulk-marked with `(historical)` prefixes; the two
+  pre-existing markers (`completed; superseded` and `superseded`) were
+  preserved. Local validation, red checks, and `git diff --check` pass.
+  Awaiting fresh-context Codex adversarial review.
 - BOOT-035 branch-aware handoff model is merged through PR #12 at merge commit
-  `100fe77f0f1971290407651761a3d92964979d27`. The remote branch
+  `100fe77f0f1971290407651761a3d92964979d27` with `main` GitHub Actions
+  `Bootstrap Validation` run `25960081829` succeeding at `f116f85` after the
+  shallow-checkout post-merge cleanup commit. The remote branch
   `codex/boot-035-branch-aware-handoff` was deleted. The selected design path
   is a narrow validator exception for GitHub-style merge commits on `main`
   where `AI_HANDOFF.md` `## Current Branch` still names the merged source
-  branch. Initial PR checks passed and local validation on the merge commit
-  passed, but GitHub Actions run `25959334165` failed because the depth-1
-  Actions checkout made `git rev-list --parents` unsuitable for detecting the
-  merge commit's two parents. This cleanup changes the helper to count
-  `parent` headers from the commit object with `git cat-file -p HEAD`, adds a
-  shallow-checkout red-check fixture, and sets the singular handoff branch
-  field back to `main` for the post-merge cleanup commit. BOOT-035 is done
-  after this cleanup is pushed and latest `main` CI is green; BOOT-034 remains
-  proposed only.
+  branch. The post-merge cleanup changed the helper to count `parent` headers
+  from the commit object with `git cat-file -p HEAD` so the depth-1 GitHub
+  Actions checkout works, added a shallow-checkout red-check fixture, and
+  reset the singular handoff branch field back to `main`. BOOT-035 is done.
 - Phase 1 closeout coherence / PR #11 is merged to `main` at merge commit
   `a55aa2070c07255a4704d3ca7b11e27c535b3b3e`. The remote branch
   `codex/phase-1-closeout-coherence` was deleted. The merge records Phase 1
@@ -301,21 +315,23 @@ authoritative: false
 
 ## Active Branch
 
-- `main` at PR #12 post-merge cleanup.
+- `claude/boot-034-next-safe-action-staleness-guard` at BOOT-034
+  implementation in-review; branched from green `main` at `f116f85`.
 
 ## Active Worktree
 
-- `/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/festive-ride-eadc67`
+- `/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/magical-pascal-69c5ea`
 
 ## Active Backlog Focus
 
 - Phase 1 is complete: BOOT-030, BOOT-031, BOOT-032, and BOOT-033 are
-  all done on `main`; GitHub Actions passed on `bdc8b19`.
-- BOOT-034 is a proposed Phase 2 candidate to prevent stale
-  forward-looking `Next safe action:` instructions in committed handoff/state
-  evidence.
-- BOOT-035 branch-aware handoff is merged through PR #12; this cleanup fixes
-  the depth-1 GitHub Actions checkout detector and records final state.
+  all done on `main`; GitHub Actions passed on `bdc8b19` and `f116f85`.
+- BOOT-034 next safe action staleness guard is in-review on its dedicated
+  branch with a validator-backed fail-closed check plus eight new red-check
+  fixtures, and existing historical `Next safe action:` envelope fields have
+  been bulk-marked into compliance.
+- BOOT-035 branch-aware handoff is merged through PR #12; `main` CI is green
+  at `f116f85` after the depth-1 GitHub Actions checkout fix.
 - Public launch readiness and adoption packaging for ProjectGenesis discovery
   and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
@@ -329,12 +345,11 @@ authoritative: false
 ## Current Blockers
 
 - No Phase 1 blockers remain; PR #7, PR #8, PR #9, and PR #10 are merged
-  to `main`, and the latest `main` GitHub Actions run at `bdc8b19`
-  succeeded.
-- BOOT-034 is proposed only; it must be planned and reviewed before any
-  template, validator, or policy implementation.
-- BOOT-035 is not blocked locally; the remaining confirmation is the latest
-  `main` GitHub Actions run after this cleanup push.
+  to `main`, and `main` GitHub Actions is green at `f116f85`.
+- BOOT-034 is blocked on fresh-context Codex adversarial review; local
+  validation, red checks, and `git diff --check` pass on the feature branch.
+- BOOT-035 is done. `main` GitHub Actions `Bootstrap Validation` run
+  `25960081829` succeeded at `f116f85` on 2026-05-16.
 - No product-specific input has been provided for a downstream software
   project.
 - No active bootstrap publication blockers.
@@ -374,6 +389,8 @@ authoritative: false
 - `REVIEWS/REVIEW-2026-05-16-pr-10-boot-033-src-spec-cross-validation.md`
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-phase-1-closeout-coherence.md`
 - `REVIEWS/REVIEW-2026-05-16-pr-11-phase-1-closeout-coherence.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-035-branch-aware-handoff.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`
 - `IMPLEMENTATION_PLAN.md`
 - `BACKLOG/BACKLOG_INDEX.md`
 - `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`
@@ -385,12 +402,24 @@ authoritative: false
 
 ## Next Recommended Action
 
-Confirm latest `main` GitHub Actions `Bootstrap Validation` is green, then
-choose the next Phase 2 item. BOOT-034 remains the proposed follow-up for
-stale forward-looking `Next safe action:` evidence.
+Open the BOOT-034 next safe action staleness guard PR for fresh-context Codex
+adversarial review, then iterate on Codex findings until approval, merge, and
+confirm latest `main` GitHub Actions `Bootstrap Validation` is green after
+merge.
 
 ## Latest Validation
 
+- BOOT-034 next safe action staleness guard implementation on 2026-05-16:
+  `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.` after
+  bulk marking of 25 historical `Next safe action:` envelope fields in
+  `AI_HANDOFF.md` with `(historical)` prefixes; `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red checks
+  passed.` with 45 cases (37 prior + 8 new BOOT-034 fixtures); `git diff
+  --check` exits 0. Before bulk marking, the new validator rule failed as
+  expected with `AI_HANDOFF.md has 25 unmarked 'Next safe action:' entries`,
+  proving the staleness guard activates on the recorded historical drift.
 - BOOT-035 PR #12 merge and shallow-checkout fix on 2026-05-16: PR #12 merged
   to `main` at `100fe77f0f1971290407651761a3d92964979d27`; PR branch checks
   were green. Local validation on the merge commit passed, but GitHub Actions
@@ -402,7 +431,9 @@ stale forward-looking `Next safe action:` evidence.
   SCRIPTS/validate-bootstrap.sh` passed, `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passed, and `bash
   SCRIPTS/validate-bootstrap-red-checks.sh` passed with 37 cases including
-  the new shallow-checkout fixture.
+  the new shallow-checkout fixture. GitHub Actions `Bootstrap Validation` run
+  `25960081829` succeeded on `main` at `f116f85` on 2026-05-16, confirming
+  the shallow-checkout fix on CI.
 - BOOT-035 branch-aware handoff local validation on 2026-05-16:
   `bash -n SCRIPTS/validate-bootstrap.sh` passed; `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passed; `bash
