@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.54
+version: v3.57
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.4 narrow handoff fix, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, and PR #11 merge/post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, PR #11 merge/post-merge source-of-truth cleanup, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review validation, and BOOT-035 review approval
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -26,11 +26,11 @@ Codex
 
 ## Current Role
 
-Documentation Curator
+Implementation Agent
 
 ## Current Branch
 
-`main`
+`codex/boot-035-branch-aware-handoff`
 
 ## Current Worktree
 
@@ -39,21 +39,124 @@ Documentation Curator
 ## Last Completed Task
 
 PR #11 / Phase 1 closeout coherence admin-merged to `main` at merge commit
-`a55aa2070c07255a4704d3ca7b11e27c535b3b3e` on 2026-05-16. The remote
-feature branch `codex/phase-1-closeout-coherence` was deleted at merge. GitHub
-Actions on the merge commit failed with the known singular `AI_HANDOFF.md`
-branch-mismatch issue; this post-merge cleanup corrects `## Current Branch` to
-`main` and records the PR #11 merge evidence.
+`a55aa2070c07255a4704d3ca7b11e27c535b3b3e` on 2026-05-16. Post-merge cleanup
+commit `36738a870cc210eb033d9456fd1b6b3bffec8e62` corrected the known
+singular `AI_HANDOFF.md` branch mismatch on `main`; GitHub Actions run
+`25957951438` passed on that head.
 
 ## Current In-Progress Task
 
-PR #11 is merged to `main`; this post-merge cleanup is in progress on `main`
-to correct the singular branch field and align source-of-truth records. All
-Phase 1 backlog items (BOOT-030, BOOT-031, BOOT-032, BOOT-033) are done on
-`main`, `IMPLEMENTATION_PLAN.md` marks Phase 1 complete, BOOT-034 is proposed
-as a Phase 2 follow-up for the circular next-safe-action review-loop pattern,
-and BOOT-035 is proposed as a separate Phase 2 follow-up for the singular
-`AI_HANDOFF.md` branch-field merge drift. PR #11 does not activate Phase 2.
+BOOT-035 branch-aware handoff work is in-review on
+`codex/boot-035-branch-aware-handoff` from green `main` commit
+`36738a870cc210eb033d9456fd1b6b3bffec8e62`. The implementation adds a narrow
+validator exception for GitHub-style `main` merge commits whose parsed source
+branch exactly matches `AI_HANDOFF.md` `## Current Branch`, plus six
+red-check fixtures proving the allowed merge-source case and fail-closed guard
+cases. Local strict validation passes, and fresh-context implementation
+re-review approved with no P0/P1/P2 findings. Push and PR creation are pending.
+
+## BOOT-035 Pre-Change Classification
+
+- Operation profile: `strict-protected`
+- Target files: `CURRENT_STATE.md`, `AI_HANDOFF.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-035-branch-aware-handoff-model.md`,
+  `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, and review artifacts created for BOOT-035.
+- Protected files touched: yes; the operation will edit validator mechanics,
+  red-check mechanics, and registered source-of-truth state artifacts.
+- Expected risk: high because branch/handoff validation is a merge-safety
+  control. The intended change is narrow: preserve ordinary branch mismatch
+  failures while allowing only GitHub-style merge commits on `main` when the
+  handoff branch equals the merged source branch.
+- Branch requirement: branch required; using
+  `codex/boot-035-branch-aware-handoff` from green `main` at
+  `36738a870cc210eb033d9456fd1b6b3bffec8e62`.
+- Required validation: `bash -n SCRIPTS/validate-bootstrap.sh`, `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh`, `bash
+  SCRIPTS/validate-bootstrap.sh`, `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and GitHub
+  Actions `Bootstrap Validation`.
+- Required review: fresh-context design review before validator changes, then
+  fresh-context adversarial implementation review before merge.
+- Traceability impact: required because BOOT-035 changes validation evidence
+  for `SPEC-BOOT-003` branch/worktree hygiene.
+- Registry impact: required because validator, red-check, state, test, worklog,
+  traceability, backlog, and review artifacts will change.
+- Handoff/state impact: required because the active branch, selected design,
+  validation results, review status, and next action change.
+- Dirty worktree status: before edits, `git status --short --branch` showed
+  `## codex/boot-035-branch-aware-handoff` and `?? research/`; the untracked
+  `research/` directory is pruned by validators and is intentionally untouched.
+- Escalation triggers checked: validator mechanics, red-check mechanics,
+  branch/worktree policy, handoff source-of-truth rules, operation routing,
+  traceability, registry, review policy, CI behavior, and dirty worktree
+  handling. No hooks, role files, command files, context packs, templates,
+  ADRs, security, release, scaffold extraction scripts, metric scripts, or
+  runtime product files are in scope.
+
+## BOOT-035 Final Evidence Envelope
+
+- Operation profile: `strict-protected`
+- Classification confidence: high.
+- Escalation triggers checked: validator mechanics, red-check mechanics,
+  branch/worktree policy, handoff source-of-truth rules, operation routing,
+  traceability, registry, review policy, CI behavior, dirty worktree handling,
+  and long-term per-stream handoff scope. No hooks, CI workflow, role files,
+  command files, context packs, templates, ADRs, PR/merge policy, risk model,
+  branch/worktree guide policy text, security/release docs, scaffold
+  extraction scripts, metric scripts, or runtime product files are changed.
+- Files read: `memory/ai/SHARED_AGENT_RULES.md`,
+  `memory/ai/ROLE_IMPLEMENTATION_AGENT.md`, `AI_PROJECT_BOOTSTRAP.md`,
+  `CONTEXT_INDEX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`,
+  `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`,
+  `TRACEABILITY_MATRIX.md`, `GOVERNANCE.md`,
+  `BRANCH_AND_WORKTREE_GUIDE.md`, `OPERATION_ROUTING.md`, `TEST_PLAN.md`,
+  `TESTS/ACCEPTANCE_CRITERIA_MAP.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-035-branch-aware-handoff-model.md`,
+  `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`, and prior BOOT-033
+  and PR #11 review package/review records for context.
+- Files changed: `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `CURRENT_STATE.md`,
+  `AI_HANDOFF.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-035-branch-aware-handoff-model.md`,
+  `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-035-branch-aware-handoff.md`.
+- Files intentionally not read: older unrelated review records and archived
+  artifacts; BOOT-035 evidence was available from current source-of-truth
+  files, validator scripts, the active backlog item, and the fresh-context
+  design review. The untracked `research/` directory was intentionally not
+  read or edited.
+- Artifacts not impacted: hooks, CI workflows, shared rules, role files,
+  command files, context packs, templates, ADRs, governance policy, operation
+  routing policy, branch/worktree policy, PR/merge policy, risk model,
+  architecture, security, release, public README, scaffold extraction scripts,
+  metric scripts, seeded-defect benchmark plan, and runtime product files.
+- Validation run: `bash -n SCRIPTS/validate-bootstrap.sh` passed; `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passed; `bash
+  SCRIPTS/validate-bootstrap.sh` printed `Bootstrap validation passed.`; `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` printed `Bootstrap red checks
+  passed.` with 36 cases; and `git diff --check` exited 0. Before the
+  validator helper was added, the new
+  `case_main_github_merge_source_handoff_branch_passes` fixture failed as
+  expected, proving the old validator rejected the desired merge-source case.
+- Validation skipped: stack-specific product tests are not applicable because
+  no product runtime exists. GitHub Actions will run after push/PR.
+- Review required: fresh-context design review completed with no P0 blocker
+  and one resolved P1 wording constraint to parse the GitHub merge subject
+  rather than a nonexistent second-parent branch name. Fresh-context
+  adversarial implementation review initially requested one P2 state-coherence
+  fix; the fix was applied and narrow re-review approved with no P0/P1/P2
+  findings.
+- Next safe action: push `codex/boot-035-branch-aware-handoff`, open the PR,
+  confirm GitHub `validate` is green, and merge only after checks pass.
 
 ## Phase 1 Closeout Coherence Pre-Change Classification
 
@@ -2392,6 +2495,28 @@ and BOOT-035 is proposed as a separate Phase 2 follow-up for the singular
 
 ## Files Changed
 
+BOOT-035 branch-aware handoff implementation on
+`codex/boot-035-branch-aware-handoff`:
+
+- `SCRIPTS/validate-bootstrap.sh` — adds a fail-closed
+  `handoff_branch_matches_github_main_merge` helper for the exact
+  GitHub merge-source case on `main`.
+- `SCRIPTS/validate-bootstrap-red-checks.sh` — adds six focused
+  branch-aware handoff fixtures plus helper functions for success fixtures and
+  temporary merge histories.
+- `CURRENT_STATE.md`, `AI_HANDOFF.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-035-branch-aware-handoff-model.md`,
+  `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, and `REVIEWS/REVIEW_INDEX.md` — record
+  BOOT-035 in-review state, validation, traceability, registry, and handoff
+  evidence.
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-035-branch-aware-handoff.md`
+  — new durable review package for the BOOT-035 implementation.
+- `REVIEWS/REVIEW-2026-05-16-boot-035-branch-aware-handoff.md` — new durable
+  fresh-context review record; initial review requested one P2 and narrow
+  re-review approved after the fix.
+
 BOOT-031 scaffold extraction tool implementation on
 `claude/boot-031-scaffold-extract-tool`:
 
@@ -2554,6 +2679,21 @@ BOOT-030 scaffold extraction checklist on
 
 ## Tests Run
 
+- BOOT-035 local validation:
+  - `bash -n SCRIPTS/validate-bootstrap.sh` — passed.
+  - `bash -n SCRIPTS/validate-bootstrap-red-checks.sh` — passed.
+  - `bash SCRIPTS/validate-bootstrap.sh` — passed.
+  - `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passed, 36 cases.
+  - `git diff --check` — clean.
+- BOOT-035 pre-implementation red-check probe:
+  `case_main_github_merge_source_handoff_branch_passes` failed under the old
+  validator, proving the fixture covered the known branch-field merge-drift
+  bug before the validator helper was added.
+- BOOT-035 review-fix validation:
+  `bash SCRIPTS/validate-bootstrap.sh`, `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh`, and `git diff --check` passed
+  after the P2 current-state fix.
+
 - BOOT-031 local validation on
   `claude/boot-031-scaffold-extract-tool` cut from latest green `main`
   (`9e21ce9`):
@@ -2605,6 +2745,12 @@ BOOT-030 scaffold extraction checklist on
 
 ## Tests Not Run
 
+- Stack-specific product tests were not run for BOOT-035 because no product
+  runtime code exists and this work changes only bootstrap validation and
+  source-of-truth records.
+- GitHub Actions were not run locally; they will run after pushing the BOOT-035
+  branch and opening the PR.
+
 - Stack-specific product tests were not run for BOOT-030 because no product
   runtime code exists and this work creates documentation/source-of-truth
   records only.
@@ -2627,6 +2773,15 @@ BOOT-030 scaffold extraction checklist on
 
 ## Known Risks
 
+- BOOT-035 deliberately parses GitHub merge commit subjects. If GitHub changes
+  that first-line subject format, the helper fails closed and `main`
+  merge-commit CI will again report the branch mismatch rather than silently
+  accepting drift.
+- The long-term per-stream handoff model remains out of scope. This PR fixes
+  the repeated merge-commit false failure without introducing a new handoff
+  artifact family.
+- BOOT-035 still requires push, PR creation, and GitHub Actions before merge.
+
 - BOOT-030 must not merge until the P1 checklist clean-state contradiction is
   fixed or explicitly accepted with documented rationale. BOOT-031 remains
   blocked.
@@ -2640,6 +2795,10 @@ BOOT-030 scaffold extraction checklist on
   BOOT-033 work.
 
 ## Dirty Worktree Status
+
+- Current BOOT-035 worktree has tracked edits for the BOOT-035 implementation
+  and source-of-truth records. `research/` remains untracked, is pruned by the
+  validators, and has not been read or edited.
 
 Before BOOT-030 edits, `git status --short --branch` on
 `claude/boot-030-scaffold-extract-checklist` was clean against
@@ -2667,8 +2826,8 @@ latest `main` GitHub Actions is green.
 
 ## Next Recommended Action
 
-Admin-merge PR #10, then run post-merge cleanup mirroring PRs
-#5/#6/#7/#8/#9 and close Phase 1.
+Push `codex/boot-035-branch-aware-handoff`, open the PR, confirm GitHub
+`validate` is green, and merge only after checks pass.
 
 ## What The Next AI Must Read First
 
@@ -2686,6 +2845,9 @@ Admin-merge PR #10, then run post-merge cleanup mirroring PRs
 12. `OPERATION_ROUTING.md`
 13. `docs/public_launch_checklist.md`
 14. `docs/token_efficiency_guidance.md`
+15. `BACKLOG/BOOT-035-branch-aware-handoff-model.md`
+16. `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-035-branch-aware-handoff.md`
+17. `REVIEWS/REVIEW-2026-05-16-boot-035-branch-aware-handoff.md`
 
 ## Warnings About Partial Work
 
@@ -2705,6 +2867,10 @@ Phase 1 planning / PR #6 / BOOT-029 is merged to `main` at
 `f650367e983895f967ac3e6ce574d6d0d270136d` with post-merge source-of-truth
 cleanup recorded at `22c79f8`.
 
-Phase 1A / BOOT-030, Phase 1B / BOOT-031, and Phase 1C / BOOT-032 are merged
-to `main`. Phase 1D / BOOT-033 SRC/SPEC cross-validation is approved for merge
-through PR #10 at head `5a06127`; post-merge cleanup remains after admin merge.
+Phase 1A / BOOT-030, Phase 1B / BOOT-031, Phase 1C / BOOT-032, and Phase 1D /
+BOOT-033 are merged to `main`. Phase 1 is complete.
+
+Phase 1 is now complete on `main`; PR #11 merged and post-merge cleanup passed
+on `main` at `36738a870cc210eb033d9456fd1b6b3bffec8e62`. BOOT-035 is the
+active Phase 2 implementation branch and is in-review locally after strict
+validation passed.

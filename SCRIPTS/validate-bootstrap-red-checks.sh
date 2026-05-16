@@ -47,6 +47,23 @@ expect_failure() {
   fi
 }
 
+expect_success() {
+  local name="$1"
+  local dir="$2"
+  local output
+
+  set +e
+  output="$(cd "$dir" && bash SCRIPTS/validate-bootstrap.sh 2>&1)"
+  local status=$?
+  set -e
+
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: $name unexpectedly failed:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
 expect_no_failure_mentioning() {
   local name="$1"
   local dir="$2"
@@ -150,11 +167,99 @@ EOF
   expect_failure "active backlog missing linked spec" "active backlog item missing linked spec" "$dir"
 }
 
+init_fixture_git_history_on_main() {
+  local dir="$1"
+
+  git -C "$dir" config user.email "bootstrap-red-check@example.invalid"
+  git -C "$dir" config user.name "Bootstrap Red Check"
+  git -C "$dir" symbolic-ref HEAD refs/heads/main
+  git -C "$dir" add -A
+  git -C "$dir" commit -qm "Initial red-check fixture"
+}
+
+set_handoff_branch() {
+  local dir="$1"
+  local handoff_branch="$2"
+
+  HANDOFF_BRANCH="$handoff_branch" perl -0pi -e 's/(## Current Branch\n\n)`[^`]+`/$1 . chr(96) . $ENV{HANDOFF_BRANCH} . chr(96)/e' "$dir/AI_HANDOFF.md"
+}
+
 case_handoff_branch_mismatch() {
   local dir
   dir="$(copy_repo handoff-branch-mismatch)"
-  perl -0pi -e 's/(## Current Branch\n\n)`[^`]+`/${1}`red-mismatch-branch`/' "$dir/AI_HANDOFF.md"
+  set_handoff_branch "$dir" "red-mismatch-branch"
   expect_failure "handoff branch mismatch" "AI_HANDOFF.md branch does not match git branch" "$dir"
+}
+
+create_github_merge_fixture() {
+  local dir="$1"
+  local handoff_branch="$2"
+  local merge_source_branch="$3"
+  local merge_subject="${4:-Merge pull request #999 from red/$merge_source_branch}"
+
+  init_fixture_git_history_on_main "$dir"
+  git -C "$dir" checkout -qb "$handoff_branch"
+  set_handoff_branch "$dir" "$handoff_branch"
+  git -C "$dir" add AI_HANDOFF.md
+  git -C "$dir" commit -qm "Set handoff branch to $handoff_branch"
+  git -C "$dir" checkout -q main
+  git -C "$dir" merge --no-ff "$handoff_branch" -m "$merge_subject" >/dev/null
+}
+
+case_main_non_merge_handoff_branch_mismatch() {
+  local dir
+  dir="$(copy_repo main-non-merge-handoff-branch-mismatch)"
+  init_fixture_git_history_on_main "$dir"
+  set_handoff_branch "$dir" "codex/red-main-stale-branch"
+  expect_failure "main non-merge handoff branch mismatch" "AI_HANDOFF.md branch does not match git branch" "$dir"
+}
+
+case_main_github_merge_source_handoff_branch_passes() {
+  local dir
+  dir="$(copy_repo main-github-merge-source-handoff-branch-passes)"
+  create_github_merge_fixture "$dir" "codex/red-merge-source" "codex/red-merge-source"
+  expect_success "main GitHub merge source handoff branch passes" "$dir"
+}
+
+case_main_github_merge_mismatched_handoff_branch_fails() {
+  local dir
+  dir="$(copy_repo main-github-merge-mismatched-handoff-branch-fails)"
+  create_github_merge_fixture "$dir" "codex/red-merge-handoff" "codex/red-merge-source"
+  expect_failure "main GitHub merge mismatched handoff branch" "AI_HANDOFF.md branch does not match git branch" "$dir"
+}
+
+case_main_unparseable_merge_handoff_branch_fails() {
+  local dir
+  dir="$(copy_repo main-unparseable-merge-handoff-branch-fails)"
+  create_github_merge_fixture "$dir" "codex/red-merge-source" "codex/red-merge-source" "Merge branch 'codex/red-merge-source'"
+  expect_failure "main unparseable merge handoff branch" "AI_HANDOFF.md branch does not match git branch" "$dir"
+}
+
+case_main_octopus_merge_handoff_branch_fails() {
+  local dir
+  dir="$(copy_repo main-octopus-merge-handoff-branch-fails)"
+  init_fixture_git_history_on_main "$dir"
+  git -C "$dir" checkout -qb codex/red-octopus-a
+  set_handoff_branch "$dir" "codex/red-octopus-a"
+  git -C "$dir" add AI_HANDOFF.md
+  git -C "$dir" commit -qm "Set handoff branch to octopus source"
+  git -C "$dir" checkout -q main
+  git -C "$dir" checkout -qb codex/red-octopus-b
+  printf '\nRed-check octopus side branch.\n' >>"$dir/TEST_RESULTS.md"
+  git -C "$dir" add TEST_RESULTS.md
+  git -C "$dir" commit -qm "Add octopus side branch fixture"
+  git -C "$dir" checkout -q main
+  git -C "$dir" merge --no-ff codex/red-octopus-a codex/red-octopus-b \
+    -m "Merge pull request #999 from red/codex/red-octopus-a" >/dev/null
+  expect_failure "main octopus merge handoff branch" "AI_HANDOFF.md branch does not match git branch" "$dir"
+}
+
+case_main_github_merge_other_handoff_failures_still_fail() {
+  local dir
+  dir="$(copy_repo main-github-merge-other-handoff-failures-still-fail)"
+  create_github_merge_fixture "$dir" "codex/red-merge-source" "codex/red-merge-source"
+  perl -0pi -e 's/^## Tests Run$/## Removed Tests Run/m' "$dir/AI_HANDOFF.md"
+  expect_failure "main GitHub merge other handoff failures still fail" "AI_HANDOFF.md missing section: ## Tests Run" "$dir"
 }
 
 case_command_missing_required_reads() {
@@ -699,6 +804,12 @@ case_approved_spec_missing_source
 case_approved_spec_empty_source
 case_active_backlog_missing_spec
 case_handoff_branch_mismatch
+case_main_non_merge_handoff_branch_mismatch
+case_main_github_merge_source_handoff_branch_passes
+case_main_github_merge_mismatched_handoff_branch_fails
+case_main_unparseable_merge_handoff_branch_fails
+case_main_octopus_merge_handoff_branch_fails
+case_main_github_merge_other_handoff_failures_still_fail
 case_command_missing_required_reads
 case_source_registry_missing_status
 case_source_registry_missing_processing_state

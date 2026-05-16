@@ -21,6 +21,29 @@ check_dir() {
   [[ -d "$path" ]] || fail "missing required directory: $path"
 }
 
+handoff_branch_matches_github_main_merge() {
+  local git_branch="$1"
+  local handoff_branch="$2"
+  local rev_line
+  local subject
+  local source_branch
+  local -a rev_parts
+
+  [[ "$git_branch" == "main" ]] || return 1
+
+  rev_line="$(git rev-list --parents -n 1 HEAD 2>/dev/null || true)"
+  read -r -a rev_parts <<<"$rev_line"
+  [[ "${#rev_parts[@]}" -eq 3 ]] || return 1
+
+  subject="$(git log -1 --format=%s 2>/dev/null || true)"
+  if [[ "$subject" =~ ^Merge\ pull\ request\ \#[0-9]+\ from\ [^[:space:]/]+/(.+)$ ]]; then
+    source_branch="${BASH_REMATCH[1]}"
+    [[ "$source_branch" == "$handoff_branch" ]] && return 0
+  fi
+
+  return 1
+}
+
 required_files=(
   "AI_PROJECT_BOOTSTRAP.md"
   "BOOTSTRAP_USAGE.md"
@@ -267,7 +290,8 @@ if git_branch="$(git branch --show-current 2>/dev/null)" && [[ -n "$git_branch" 
       exit
     }
   ' AI_HANDOFF.md)"
-  if [[ -n "$handoff_branch" && "$handoff_branch" != "$git_branch" ]]; then
+  if [[ -n "$handoff_branch" && "$handoff_branch" != "$git_branch" ]] &&
+    ! handoff_branch_matches_github_main_merge "$git_branch" "$handoff_branch"; then
     fail "AI_HANDOFF.md branch does not match git branch: $handoff_branch != $git_branch"
   fi
 fi

@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-035
 title: BOOT-035 Branch-Aware Handoff Model
 type: backlog-item
 status: active
-version: v1.0
+version: v1.3
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 closeout coherence verification and repeated post-merge CI branch-field failures
+source: Phase 1 closeout coherence verification, repeated post-merge CI branch-field failures, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review evidence, and BOOT-035 review approval
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -45,6 +45,28 @@ Out of scope:
 - Removing current-state or handoff validation entirely.
 - Changing PR review or merge policy beyond the minimum branch-field drift fix.
 - Rewriting historical handoff evidence for cosmetic reasons.
+
+## Chosen Design
+
+BOOT-035 uses a narrow validator-backed merge exception rather than making
+`AI_HANDOFF.md` branch-neutral or introducing per-stream handoff files in this
+slice.
+
+The validator should continue to require exact equality between
+`AI_HANDOFF.md` `## Current Branch` and `git branch --show-current` in normal
+branch contexts. The only allowed mismatch is:
+
+- the current Git branch is `main`;
+- `HEAD` is an actual merge commit;
+- the merge commit subject follows GitHub's `Merge pull request ... from
+  owner/branch-name` shape; and
+- the parsed source `branch-name` exactly matches the branch named in
+  `AI_HANDOFF.md`.
+
+This targets the observed failure mode without making the handoff branch field
+globally branch-neutral. Normal feature-branch drift, stale branch fields on
+ordinary `main` commits, and merge commits whose source branch does not match
+the handoff branch must still fail validation.
 
 ## Links
 
@@ -113,7 +135,7 @@ P0
 
 ## Readiness Status
 
-proposed
+in-review
 
 ## Readiness Evidence
 
@@ -121,8 +143,10 @@ proposed
   `AI_HANDOFF.md` branch field are recorded for PR #5 through PR #10.
 - Spec status: `SPEC-BOOT-003` is approved and governs branch/worktree
   hygiene, durable evidence, and validation behavior.
-- Acceptance criteria: not yet finalized beyond preventing branch-field-only
-  CI failures after merge.
+- Acceptance criteria: GitHub-style merge commits on `main` pass when
+  `AI_HANDOFF.md` names the merged source branch; ordinary branch drift still
+  fails on feature branches, normal `main` commits, and mismatched merge
+  sources.
 - Dependencies: Phase 1 closeout verification.
 - Architecture impact: possible if per-stream handoff files become a durable
   artifact family.
@@ -130,9 +154,12 @@ proposed
   if validator behavior changes, and GitHub Actions confirmation.
 - Branch/worktree plan: separate strict-protected Phase 2 branch from green
   `main`.
-- Required reviewers: fresh-context adversarial review; QA/release focus if
-  validator or CI behavior changes.
-- Blocked until: design path is chosen in a reviewed Phase 2 plan.
+- Required reviewers: fresh-context design review before validator changes and
+  fresh-context adversarial implementation review before merge.
+- Design gate: narrow merge-commit validator exception selected;
+  fresh-context design review completed with no P0 blocker and one resolved
+  P1 wording constraint to parse the GitHub merge subject rather than a
+  nonexistent second-parent branch name.
 
 ## Test Expectations
 
@@ -145,14 +172,14 @@ proposed
 
 ## Definition Of Done
 
-- [ ] Branch-aware handoff design chosen and documented.
-- [ ] Validator behavior updated only if required by the chosen design.
-- [ ] Red-check fixtures prove the merge-drift case and guard against hiding
+- [x] Branch-aware handoff design chosen and documented.
+- [x] Validator behavior updated only if required by the chosen design.
+- [x] Red-check fixtures prove the merge-drift case and guard against hiding
       real handoff branch drift.
-- [ ] Artifact registry updated.
-- [ ] Traceability updated.
-- [ ] Current state and handoff updated.
-- [ ] Fresh-context adversarial review complete.
+- [x] Artifact registry updated.
+- [x] Traceability updated.
+- [x] Current state and handoff updated.
+- [x] Fresh-context adversarial review complete.
 - [ ] GitHub Actions confirms `main` no longer fails on branch-field-only
       merge drift.
 
