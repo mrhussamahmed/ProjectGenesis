@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-034
 title: BOOT-034 Next Safe Action Staleness Guard
 type: backlog-item
 status: active
-version: v1.3
+version: v1.4
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 closeout coherence verification, PR #10 BOOT-033 review-loop lesson, BOOT-034 validator-backed implementation, BOOT-034 PR #13 v1.2 review-fix addressing the fresh-context Codex adversarial review findings, and the v1.3 description alignment in response to Codex's v1.2 re-review blocking P2
+source: Phase 1 closeout coherence verification, PR #10 BOOT-033 review-loop lesson, BOOT-034 validator-backed implementation, BOOT-034 PR #13 v1.2 through v1.6 fresh-context Codex review iterations (v1.5 and v1.6 APPROVED), PR #13 merge to main at 0a8c700, and BOOT-034 post-merge cleanup commit ac8f72d
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -149,7 +149,7 @@ P1
 
 ## Readiness Status
 
-in-review
+done
 
 ## Readiness Evidence
 
@@ -190,7 +190,13 @@ in-review
 - [x] Traceability updated.
 - [x] Artifact registry updated.
 - [x] Handoff updated.
-- [ ] Fresh-context review complete before merge.
+- [x] Fresh-context review complete before merge — Codex APPROVED at
+  v1.5 and v1.6 after a six-iteration review cycle.
+- [x] PR #13 merged to `main` at
+  `0a8c7003009a89417ff4d569bad6bfab27b54df9` on 2026-05-16.
+- [x] Post-merge cleanup commit `ac8f72d` resets singular handoff
+  branch field to `main`; latest `main` GitHub Actions `Bootstrap
+  Validation` run `25965530223` succeeded.
 
 ## Parallelization
 

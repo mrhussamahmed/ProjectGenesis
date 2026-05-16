@@ -2,11 +2,11 @@ artifact_id: ART-PLAN-001
 title: Implementation Plan
 type: implementation-plan
 status: active
-version: v1.5
+version: v1.6
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, Phase 1 execution planning, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #12 BOOT-035 merge, BOOT-035 post-merge cleanup, and BOOT-034 next safe action staleness guard implementation in-review
+source: Initial bootstrap scaffold, Phase 1 execution planning, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #12 BOOT-035 merge, BOOT-035 post-merge cleanup, BOOT-034 implementation through PR #13 v1.6, BOOT-034 PR #13 merge to main at 0a8c700, and BOOT-034 post-merge cleanup ac8f72d
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -80,19 +80,13 @@ metadata or ADR-level design; BOOT-032 recorded a baseline rather than making
 generalized benchmark claims; BOOT-033 stayed within local validator parser
 rules and did not require spec or backlog template changes.
 
-## Phase 2 In-Review Plan
-
-Phase 2 has one in-review item, BOOT-034. Remaining candidate work should be
-planned as separate backlog items and reviewed before implementation.
-
-| In-Review Item | Trigger | Purpose | Branch/PR Shape | Status |
-|----------------|---------|---------|-----------------|--------|
-| BOOT-034 | PR #10 / BOOT-033 review-loop lesson | Add a validator-backed staleness guard so committed `AI_HANDOFF.md` and `CURRENT_STATE.md` evidence cannot preserve more than one unmarked forward-looking `Next safe action:` field. | Strict-protected validator PR with red-check fixtures and bulk marking of existing historical envelopes. | In-review on `claude/boot-034-next-safe-action-staleness-guard`; awaiting fresh-context Codex adversarial review. |
-
 ## Phase 2 Completed Work
+
+Phase 2 has two completed items: BOOT-034 and BOOT-035.
 
 | Backlog Item | Trigger | Purpose | Completion Evidence |
 |--------------|---------|---------|---------------------|
+| BOOT-034 | PR #10 / BOOT-033 review-loop lesson | Add a validator-backed staleness guard so committed `AI_HANDOFF.md` and `CURRENT_STATE.md` evidence cannot preserve more than one unmarked forward-looking `Next safe action:` field. | PR #13 merged to `main` at `0a8c7003009a89417ff4d569bad6bfab27b54df9` on 2026-05-16 after a v1.0 through v1.6 fresh-context Codex adversarial review cycle (v1.5 and v1.6 APPROVED). Post-merge cleanup commit `ac8f72d` reset the singular `AI_HANDOFF.md` branch field; main CI run `25965530223` succeeded. |
 | BOOT-035 | Repeated PR #5 through PR #12 post-merge CI branch-field failures | Make handoff branch-aware so feature-branch merges do not fail `main` CI solely because `AI_HANDOFF.md ## Current Branch` still names the merged branch. | PR #12 merged to `main` at `100fe77f0f1971290407651761a3d92964979d27`; post-merge cleanup adds depth-1 checkout detection via commit-object parent headers and a shallow-checkout red-check fixture. |
 
 ## Rollback Or Recovery
