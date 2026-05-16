@@ -2,7 +2,7 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.62
+version: v3.63
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -46,21 +46,22 @@ authoritative: false
 
 - BOOT-034 next safe action staleness guard is in-review on
   `claude/boot-034-next-safe-action-staleness-guard` from green `main` at
-  `f116f85`. PR #13 has had two review iterations so far. v1.0 at head
-  `9d93250` requested changes for two P1 and three P2 findings; the v1.2
-  review-fix at head `e03e0f5` resolved all six. Fresh-context Codex v1.2
-  re-review at `e03e0f5` confirmed all six prior findings fixed but
-  raised one new blocking P2: the PR review package and several
-  summaries still described pre-v1.2 behavior. The v1.3 description
-  alignment updates the PR review package, REVIEW_INDEX summary,
-  ARTIFACT_REGISTRY validator/red-check/PR-package/backlog summaries,
-  and the BOOT-034 backlog item Implementation Decision section to
-  describe v1.2 behavior (start-of-payload markers, multiline-bullet
-  stitching, fenced-code-block exclusion, empty-payload-is-unmarked,
-  twelve red-check fixtures). No validator-script or red-check-fixture
-  content is modified in v1.3 — it is description-only. Local
-  validation, red checks (49 cases), and `git diff --check` pass.
-  Awaiting fresh-context Codex re-review at the v1.3 head.
+  `f116f85`. PR #13 has had three review iterations so far. v1.0 at
+  head `9d93250` requested changes (2 P1, 3 P2, 1 P3); the v1.2
+  review-fix at head `e03e0f5` resolved all six. v1.2 re-review
+  confirmed all six prior findings fixed but raised one new blocking P2
+  (stale descriptions); the v1.3 description alignment at head
+  `4619ac4` addressed those descriptions. v1.3 re-review confirmed the
+  v1.2 P2 is resolved but raised one new blocking P2 (the
+  `ART-REVIEW-PR-13-...` registry row was not bumped from v1.2 to v1.3
+  in the v1.3 commit) and one P3 (the PR review package linked-backlog
+  line referenced backlog `v1.1` instead of `v1.3`). The v1.4 micro-fix
+  bumps the review-record registry row to v1.3 with the v1.2/v1.3
+  history, fixes the backlog-version reference in the PR review
+  package, and bumps state-file versions. No validator-script or
+  red-check-fixture content modified in v1.3 or v1.4. Local validation,
+  red checks (49 cases), and `git diff --check` pass at the v1.4 head.
+  Awaiting fresh-context Codex re-review at the v1.4 head.
 - BOOT-035 branch-aware handoff model is merged through PR #12 at merge commit
   `100fe77f0f1971290407651761a3d92964979d27` with `main` GitHub Actions
   `Bootstrap Validation` run `25960081829` succeeding at `f116f85` after the
@@ -402,15 +403,25 @@ authoritative: false
 
 ## Next Recommended Action
 
-Request fresh-context Codex re-review of BOOT-034 PR #13 at the v1.3
-description-alignment head, iterate on any remaining findings until Codex
-approves with no P0/P1/blocking P2 findings, admin-merge once GitHub Actions
-on the PR is green, and confirm latest `main` GitHub Actions `Bootstrap
-Validation` is green after merge plus apply post-merge cleanup if the
-singular handoff branch field flags on `main` CI.
+Request fresh-context Codex re-review of BOOT-034 PR #13 at the v1.4
+micro-fix head, iterate on any remaining findings until Codex approves with
+no P0/P1/blocking P2 findings, admin-merge once GitHub Actions on the PR is
+green, and confirm latest `main` GitHub Actions `Bootstrap Validation` is
+green after merge plus apply post-merge cleanup if the singular handoff
+branch field flags on `main` CI.
 
 ## Latest Validation
 
+- BOOT-034 PR #13 v1.4 micro-fix on 2026-05-16: `bash -n
+  SCRIPTS/validate-bootstrap.sh` passes; `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.`;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red
+  checks passed.` with 49 cases (unchanged from v1.2/v1.3); `git diff
+  --check` exits 0. v1.4 fixes the `ART-REVIEW-PR-13-...` registry row
+  bump that was missed in v1.3 and the PR review package
+  linked-backlog `v1.1` reference. No validator-script or
+  red-check-fixture content is modified.
 - BOOT-034 PR #13 v1.3 description alignment on 2026-05-16: `bash -n
   SCRIPTS/validate-bootstrap.sh` passes; `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash

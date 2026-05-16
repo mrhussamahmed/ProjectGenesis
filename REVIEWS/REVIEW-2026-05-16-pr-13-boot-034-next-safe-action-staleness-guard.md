@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-13-BOOT-034-NEXT-SAFE-ACTION-STALENESS-GUARD
 title: PR #13 BOOT-034 Next Safe Action Staleness Guard Review
 type: pr-review
 status: active
-version: v1.3
+version: v1.4
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 (v1.0 request changes), Claude review-fix response at v1.2, fresh-context Codex re-review at v1.2 (one new blocking P2 about stale descriptions), and Claude v1.3 description alignment response
+source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 (v1.0 request changes), Claude review-fix response at v1.2, fresh-context Codex re-review at v1.2 (one new blocking P2 about stale descriptions), Claude v1.3 description alignment response, fresh-context Codex re-review at v1.3 (one new blocking P2 about the review-record registry row plus one P3 about backlog version reference), and Claude v1.4 micro-fix response
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -186,16 +186,52 @@ Implementer applied the following description-only updates at v1.3:
 No validator script or red-check fixture behavior change in v1.3; only
 description-level alignment.
 
-## v1.3 Status
+## v1.3 Re-Review Decision
 
-Awaiting fresh-context Codex re-review at the v1.3 head. Local
+Request changes. v1.2 blocking P2 (stale descriptions) confirmed
+resolved. One new blocking P2 and one P3 found:
+
+- P2 (blocking) — `ARTIFACT_REGISTRY.md:136` registered the review
+  record (this file) as `v1.2` with description "Awaiting fresh-context
+  re-review at v1.2 head," but the review record header had already
+  been bumped to `v1.3` in the v1.3 commit. Registry row was not
+  updated.
+- P3 — `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md:43`
+  still referenced `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`
+  as "in-review at v1.1" while the backlog item metadata is at v1.3.
+
+## v1.4 Micro-Fix Response
+
+Implementer applied two targeted description fixes at v1.4:
+
+- Bumped the `ART-REVIEW-PR-13-BOOT-034-NEXT-SAFE-ACTION-STALENESS-GUARD`
+  registry row from `v1.2` to `v1.3` and updated its description to
+  mention the v1.2 re-review verdict and v1.3 description-alignment
+  response.
+- Updated the PR review package linked-backlog line from "in-review at
+  v1.1" to "in-review at v1.3".
+- Bumped state-file versions: `ARTIFACT_REGISTRY.md` v3.55 → v3.56,
+  `AI_HANDOFF.md` v3.60 → v3.61, `CURRENT_STATE.md` v3.62 → v3.63,
+  `TEST_RESULTS.md` v1.81 → v1.82, `WORKLOG/WORKLOG_INDEX.md` v3.57 →
+  v3.58, `REVIEWS/REVIEW_INDEX.md` v2.49 → v2.50, and this review
+  record v1.3 → v1.4.
+- Updated the BOOT-034 PR #13 v1.3 Description Alignment Evidence
+  Envelope `Next safe action:` to describe the v1.4 micro-fix and
+  request fresh-context Codex re-review at the v1.4 head.
+
+No validator-script, red-check-fixture, design, or scope-of-policy
+changes in v1.4.
+
+## v1.4 Status
+
+Awaiting fresh-context Codex re-review at the v1.4 head. Local
 validation passed:
 
 - `bash -n SCRIPTS/validate-bootstrap.sh` — passes
 - `bash -n SCRIPTS/validate-bootstrap-red-checks.sh` — passes
 - `bash SCRIPTS/validate-bootstrap.sh` — passes
 - `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 49 cases
-  (unchanged from v1.2; v1.3 is description-only)
+  (unchanged from v1.2; v1.3 and v1.4 are description-only)
 - `git diff --check` — clean
 
 ## Out Of Scope

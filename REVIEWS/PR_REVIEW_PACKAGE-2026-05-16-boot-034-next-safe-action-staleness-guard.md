@@ -40,7 +40,7 @@ and fail-closed.
 ## Linked Backlog Items Or Tickets
 
 - `BACKLOG.md` row `BOOT-034` (in-review).
-- `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md` (in-review at v1.1).
+- `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md` (in-review at v1.3).
 
 ## Linked ADRs
 
