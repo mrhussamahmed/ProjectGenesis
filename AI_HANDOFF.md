@@ -2,7 +2,7 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.59
+version: v3.60
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -47,21 +47,19 @@ admin-merged to `main` at merge commit
 
 ## Current In-Progress Task
 
-BOOT-034 next safe action staleness guard PR #13 v1.2 review-fix. The
-fresh-context Codex adversarial review of PR #13 at head `9d93250`
-requested changes for two P1 findings (validator undercount on multiline
-payloads, empty payloads, and mid-payload marker words; and ARTIFACT_REGISTRY
-version drift across six rows) plus three P2 findings (fenced code blocks
-not excluded, marker-pass fixtures using `expect_no_failure_mentioning`
-instead of `expect_success`, and `AI_HANDOFF.md` "proposed to done" wording).
-This review-fix tightens `count_unmarked_next_safe_actions` to stitch
-multiline bullets, skip fenced code blocks, require markers at the start of
-the payload (parenthetical or word), and treat empty payloads as unmarked;
-strengthens the eight pass fixtures to use `expect_success`; adds four new
-fixtures for marker-mid-payload, empty-payload, multiline-marked, and
-fenced-code cases; aligns registry rows with file metadata across six
-artifacts; and corrects the pre-change classification wording from "proposed
-to done" to "proposed to in-review".
+BOOT-034 next safe action staleness guard PR #13 v1.3 description
+alignment. The fresh-context Codex v1.2 re-review at head `e03e0f5`
+confirmed all six prior P1/P2/P3 findings fixed but raised one new
+blocking P2: the PR review package and several summaries still described
+pre-v1.2 behavior, creating a permanent mismatch between the
+authoritative review evidence and the actual v1.2 implementation. v1.3
+applies description-only updates so the PR review package, REVIEW_INDEX
+summary, ARTIFACT_REGISTRY validator/red-check/PR-package/backlog
+summaries, and BOOT-034 backlog item Implementation Decision section all
+describe v1.2 behavior (start-of-payload markers, multiline-bullet
+stitching, fenced-code-block exclusion, empty-payload-is-unmarked,
+twelve fixtures total). No validator-script or red-check-fixture
+behavior changes in v1.3.
 
 ## BOOT-034 Pre-Change Classification
 
@@ -280,8 +278,106 @@ to done" to "proposed to in-review".
 - Validation skipped: stack-specific product tests are not applicable
   because no product runtime exists.
 - Review required: fresh-context Codex re-review at the new head.
+  Completed: v1.2 re-review at head `e03e0f5` confirmed all six prior
+  findings fixed but raised one new blocking P2 about stale descriptions
+  in the PR review package and several summaries. v1.3 description
+  alignment applied; see the v1.3 envelope below.
+- Next safe action: superseded by the BOOT-034 PR #13 v1.3 Description
+  Alignment Evidence Envelope below. The v1.2 head request for Codex
+  re-review was completed at v1.2 with a blocking P2 finding now
+  delegated to the v1.3 envelope for resolution.
+
+## BOOT-034 PR #13 v1.3 Description Alignment Pre-Change Classification
+
+- Operation profile: `strict-protected`
+- Target files: `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md`,
+  `ARTIFACT_REGISTRY.md`, `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `AI_HANDOFF.md`, `CURRENT_STATE.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Protected files touched: yes; this updates registered source-of-truth
+  state, registry, traceability, test, worklog, review, and backlog
+  artifacts. No validator-script or red-check-fixture content is
+  modified in v1.3.
+- Expected risk: medium because the change is description-only; the
+  validator behavior set at v1.2 is unchanged.
+- Branch requirement: continuing on
+  `claude/boot-034-next-safe-action-staleness-guard` at head
+  `e03e0f5`.
+- Required validation: `bash -n SCRIPTS/validate-bootstrap.sh`,
+  `bash -n SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`,
+  and fresh-context Codex re-review.
+- Required review: fresh-context Codex re-review at the v1.3 head.
+- Traceability impact: required because BOOT-034 row gains v1.3
+  description-alignment evidence.
+- Registry impact: required because state-file, review-index,
+  test-results, worklog, traceability, and backlog item rows bump
+  versions; PR review package row bumps from v1.0 to v1.2; backlog item
+  bumps to v1.3.
+- Handoff/state impact: required because current task, validation
+  evidence, and next safe action change.
+- Dirty worktree status: before edits, `git status --short --branch`
+  showed only the staged review-fix changes; no unrelated dirty files.
+- Escalation triggers checked: source-of-truth hierarchy, registry
+  alignment, traceability, review policy, and CI behavior. No
+  validator-script changes, no hooks, CI workflow files, shared rules,
+  role files, command files, context packs, templates, ADRs, governance
+  policy, operation routing policy, branch/worktree policy, PR/merge
+  policy, risk model, architecture, security, release, scaffold
+  extraction script, metric scripts, seeded-defect benchmark, or
+  runtime product files are in scope.
+
+## BOOT-034 PR #13 v1.3 Description Alignment Evidence Envelope
+
+- Operation profile: `strict-protected`
+- Classification confidence: high.
+- Escalation triggers checked: source-of-truth hierarchy, registry
+  alignment, traceability, review policy, and CI behavior. No
+  validator-script content, hooks, CI workflow files, shared rules,
+  role files, command files, context packs, templates, ADRs, governance
+  policy, operation routing policy, branch/worktree policy, PR/merge
+  policy, risk model, architecture, security, release, scaffold
+  extraction script, metric scripts, seeded-defect benchmark, or
+  runtime product files are changed.
+- Files read: Codex v1.2 re-review verdict text;
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`;
+  `REVIEWS/REVIEW_INDEX.md`;
+  `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md`;
+  `ARTIFACT_REGISTRY.md`;
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`; the v1.2
+  validator and red-check scripts for reference.
+- Files changed: `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`,
+  `REVIEWS/REVIEW_INDEX.md`,
+  `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md`,
+  `ARTIFACT_REGISTRY.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `AI_HANDOFF.md`, `CURRENT_STATE.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Files intentionally not read: older unrelated review records and
+  archived artifacts. Untracked `research/` remains intentionally
+  unread; validators prune it.
+- Artifacts not impacted: `SCRIPTS/validate-bootstrap.sh` and
+  `SCRIPTS/validate-bootstrap-red-checks.sh` (no content change in
+  v1.3), hooks, CI workflow files, shared agent rules, role files,
+  command files, context packs, templates, ADRs, governance policy,
+  operation routing policy, branch/worktree policy, PR/merge policy,
+  risk model, architecture, security, release, public README, scaffold
+  extraction scripts, metric scripts, seeded-defect benchmark plan, and
+  runtime product files.
+- Validation run: `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash
+  -n SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.`;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red
+  checks passed.` with 49 cases (unchanged from v1.2); `git diff
+  --check` exits 0. Since v1.3 is description-only, no new awk probes
+  are needed.
+- Validation skipped: stack-specific product tests are not applicable
+  because no product runtime exists.
+- Review required: fresh-context Codex re-review at the v1.3 head.
 - Next safe action: request fresh-context Codex re-review of PR #13 at
-  the v1.2 head, iterate on any new findings until Codex approves with
+  the v1.3 head, iterate on any new findings until Codex approves with
   no P0/P1/blocking P2 findings, then admin-merge PR #13 once GitHub
   Actions on the PR is green and post-merge cleanup if `main` CI flags
   the singular `AI_HANDOFF.md` branch field.

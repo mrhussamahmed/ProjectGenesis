@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-13-BOOT-034-NEXT-SAFE-ACTION-STALENESS-GUARD
 title: PR #13 BOOT-034 Next Safe Action Staleness Guard Review
 type: pr-review
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 and Claude review-fix response at v1.2
+source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 (v1.0 request changes), Claude review-fix response at v1.2, fresh-context Codex re-review at v1.2 (one new blocking P2 about stale descriptions), and Claude v1.3 description alignment response
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -140,18 +140,63 @@ field is now marked `superseded by the BOOT-034 PR #13 v1.2 Review-Fix
 Evidence Envelope below`, and the new v1.2 envelope carries the current
 active unmarked next-action line.
 
-## v1.2 Status
+## v1.2 Re-Review Decision
 
-Awaiting fresh-context Codex re-review at the v1.2 head. Local validation
-passed:
+Request changes. All six prior findings (P1.1, P1.2, P2.1, P2.2, P2.3,
+P3) confirmed fixed. One new blocking P2 finding: the PR review package
+and several summaries still described pre-v1.2 behavior, creating a
+permanent mismatch between the authoritative review evidence and the
+actual implementation. Specific locations:
+
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`
+  lines `:83-85` ("marker words may appear anywhere in the payload",
+  "empty payloads are marked") and `:161-175` (eight-fixture / 45-case
+  description).
+- `REVIEWS/REVIEW_INDEX.md` line `:66` (pre-v1.2 fixture counts).
+- `ARTIFACT_REGISTRY.md` lines `:135,164` (PR-package and red-check
+  summaries with eight-fixture v1.0 description).
+- `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md` lines `:52-66`
+  (old whole-word/eight-fixture implementation decision).
+
+## v1.3 Description Alignment Response
+
+Implementer applied the following description-only updates at v1.3:
+
+- PR review package rewritten to describe v1.2 behavior: start-of-payload
+  marker requirement, multiline-bullet stitching, fenced-code-block
+  exclusion, empty-payload-is-unmarked. Listed all twelve red-check
+  fixtures (eight initial plus four v1.2 review-fix), updated test count
+  to 49, and documented the v1.2 awk edge-case probe. Bumped review
+  package version to v1.2.
+- REVIEW_INDEX summary updated to match v1.2 implementation.
+- ARTIFACT_REGISTRY rows for validator (`ART-SCRIPT-VALIDATE`),
+  red-check (`ART-SCRIPT-VALIDATE-RED`), BOOT-034 backlog item
+  (`ART-BACKLOG-BOOT-034`), and PR review package
+  (`ART-PR-PACKAGE-BOOT-034-NEXT-SAFE-ACTION-STALENESS-GUARD`) updated
+  to describe v1.2 behavior. PR-package row bumped to v1.2, backlog row
+  bumped to v1.3.
+- BACKLOG item v1.3 with the Implementation Decision section rewritten
+  to describe v1.2 behavior and twelve fixtures.
+- This review record updated with the v1.2 re-review verdict and v1.3
+  fix response.
+- Source-of-truth version bumps: ARTIFACT_REGISTRY v3.55, CURRENT_STATE
+  v3.62, AI_HANDOFF v3.60, TEST_RESULTS v1.81, WORKLOG v3.57,
+  REVIEW_INDEX v2.49, TRACEABILITY_MATRIX v2.53.
+
+No validator script or red-check fixture behavior change in v1.3; only
+description-level alignment.
+
+## v1.3 Status
+
+Awaiting fresh-context Codex re-review at the v1.3 head. Local
+validation passed:
 
 - `bash -n SCRIPTS/validate-bootstrap.sh` — passes
 - `bash -n SCRIPTS/validate-bootstrap-red-checks.sh` — passes
 - `bash SCRIPTS/validate-bootstrap.sh` — passes
 - `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 49 cases
+  (unchanged from v1.2; v1.3 is description-only)
 - `git diff --check` — clean
-- awk edge-case probe — confirms all P1.1 cases (mid-payload marker
-  words, empty payload, fenced code) are correctly classified
 
 ## Out Of Scope
 

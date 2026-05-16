@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-034
 title: BOOT-034 Next Safe Action Staleness Guard
 type: backlog-item
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 closeout coherence verification, PR #10 BOOT-033 review-loop lesson, BOOT-034 validator-backed implementation, and BOOT-034 PR #13 v1.2 review-fix addressing the fresh-context Codex adversarial review findings
+source: Phase 1 closeout coherence verification, PR #10 BOOT-033 review-loop lesson, BOOT-034 validator-backed implementation, BOOT-034 PR #13 v1.2 review-fix addressing the fresh-context Codex adversarial review findings, and the v1.3 description alignment in response to Codex's v1.2 re-review blocking P2
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -52,23 +52,40 @@ Out of scope:
 Validator-backed path selected. `SCRIPTS/validate-bootstrap.sh` adds a narrow
 fail-closed check that counts unmarked `Next safe action:` envelope fields in
 `AI_HANDOFF.md` and `CURRENT_STATE.md`. At most one unmarked field per file
-is allowed. Historical envelopes must mark their `Next safe action:` payload
-with `completed`, `superseded`, `historical`, or `delegated` (case
-insensitive, whole-word). `SCRIPTS/validate-bootstrap-red-checks.sh` adds
-eight fixtures covering:
+is allowed. Historical envelopes must place one of `completed`, `superseded`,
+`historical`, or `delegated` at the start of the trimmed payload, either as
+a direct marker word followed by a non-letter or inside a leading
+parenthetical such as `(historical)`. Marker words appearing later in the
+payload (for example "confirm delegated authority" or "ensure work is
+completed before merge") do NOT count as marked, so the rule stays
+fail-closed on legitimately active instructions that happen to mention a
+marker word. The validator stitches multiline bullets so continuation lines
+are appended to the payload, skips Markdown fenced code blocks (``` and
+~~~), and treats empty payloads as unmarked (structurally incomplete
+envelopes are flagged).
+
+`SCRIPTS/validate-bootstrap-red-checks.sh` adds twelve fixtures covering
+both the initial scope and the v1.2 review-fix additions:
 
 - two unmarked entries trip the guard on `AI_HANDOFF.md`,
 - two unmarked entries trip the guard on `CURRENT_STATE.md`,
-- `completed`, `superseded`, `historical`, and `delegated` are accepted as
-  markers (four fixtures),
-- the live `## Next Recommended Action` section heading is not over-matched,
-- and unrelated narrative prose mentioning `Next safe action:` inside
-  backticks is not over-matched.
+- `completed`, `superseded`, `historical`, and `delegated` at the start of
+  the payload pass (four fixtures using `expect_success` after v1.2),
+- the live `## Next Recommended Action` section heading is not
+  over-matched (`expect_success`),
+- narrative prose mentioning `Next safe action:` inside backticks is not
+  over-matched (`expect_success`),
+- marker words mid-payload do NOT count as marked (v1.2),
+- empty payloads count as unmarked (v1.2),
+- multiline marked bullets pass when the marker is on the first line (v1.2),
+- bullets inside Markdown fenced code blocks are ignored (v1.2).
 
 Existing historical envelope fields in `AI_HANDOFF.md` were bulk-marked with
 a `(historical)` prefix to satisfy the new rule on the current state. The
-new BOOT-034 envelope retains a single unmarked `Next safe action:` as the
-active current entry.
+new BOOT-034 PR #13 v1.2 Review-Fix Evidence Envelope retains the single
+unmarked `Next safe action:` as the active current entry; the previous
+BOOT-034 v1.0 Final Evidence Envelope `Next safe action:` is marked as
+`superseded by the BOOT-034 PR #13 v1.2 Review-Fix Evidence Envelope below`.
 
 ## Links
 

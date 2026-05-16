@@ -2,11 +2,11 @@ artifact_id: ART-PR-PACKAGE-BOOT-034-NEXT-SAFE-ACTION-STALENESS-GUARD
 title: BOOT-034 Next Safe Action Staleness Guard Review Package
 type: pr-review-package
 status: active
-version: v1.0
+version: v1.2
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: BOOT-034 implementation of the validator-backed staleness guard for `Next safe action:` envelope fields
+source: BOOT-034 implementation of the validator-backed staleness guard for `Next safe action:` envelope fields and v1.2 review-fix tightening the validator, fixture assertions, fenced-code handling, registry alignment, and PR review package description
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -80,13 +80,29 @@ Validator-backed, narrow, fail-closed:
   leading whitespace). Section headings such as `## Next Recommended
   Action` (any line starting with `#`) and narrative prose mentioning
   `Next safe action:` inside backticks are excluded by the pattern.
-- A `Next safe action:` payload is "marked" (historical) when it contains
-  any of `completed`, `superseded`, `historical`, or `delegated` as a
-  whole word (case insensitive). Empty payloads are treated as marked.
+- Multiline bullets are stitched together: any indented continuation line
+  is appended to the bullet's payload until the next bullet, blank line,
+  Markdown fence, or section heading.
+- Markdown fenced code blocks (` ``` ` and `~~~`) are tracked and their
+  contents are skipped entirely so illustrative `Next safe action:`
+  examples inside code fences do not trip the rule.
+- A `Next safe action:` bullet is "marked" (historical) when its trimmed
+  payload starts with one of the canonical marker words (`completed`,
+  `superseded`, `historical`, `delegated`) or with a leading parenthetical
+  such as `(historical)` containing one of those words. The marker must
+  appear at the start of the payload; marker words appearing later in
+  the payload (for example, "confirm delegated authority" or "ensure
+  work is completed before merge") do NOT count as marked, so the rule
+  stays fail-closed on legitimately active instructions that happen to
+  mention a marker word.
+- Empty payloads (a bullet with `Next safe action:` and no content on
+  the same line or any continuation line) count as unmarked. They
+  indicate a structurally incomplete envelope and should be flagged.
 - The validator fails when more than one unmarked field exists in a single
   file. Zero unmarked fields is allowed (no current action). One unmarked
   field represents the current active envelope.
-- `SCRIPTS/validate-bootstrap-red-checks.sh` gains eight focused fixtures:
+- `SCRIPTS/validate-bootstrap-red-checks.sh` gains twelve focused fixtures
+  (eight initial plus four added in the v1.2 review-fix):
   - `case_stale_next_safe_action_historical_fails`
   - `case_current_state_stale_next_safe_action_fails`
   - `case_next_safe_action_marked_completed_passes`
@@ -95,21 +111,28 @@ Validator-backed, narrow, fail-closed:
   - `case_next_safe_action_marked_delegated_passes`
   - `case_next_recommended_action_heading_passes`
   - `case_next_safe_action_prose_not_overmatched`
+  - `case_marker_word_mid_payload_is_not_marker` (v1.2)
+  - `case_empty_next_safe_action_payload_is_unmarked` (v1.2)
+  - `case_multiline_marked_next_safe_action_passes` (v1.2)
+  - `case_fenced_code_next_safe_action_ignored` (v1.2)
 - Existing 25 unmarked historical envelope fields in `AI_HANDOFF.md` were
   bulk-marked with `(historical)` prefixes via an idempotent perl
   substitution that leaves already-marked lines untouched. The two
   pre-existing markers (`completed; superseded` and `superseded`) were
-  preserved.
-- The new BOOT-034 Final Evidence Envelope is the single active unmarked
-  entry in `AI_HANDOFF.md`.
+  preserved. The v1.2 review-fix additionally marks the v1.0 BOOT-034
+  Final Evidence Envelope `Next safe action:` as `superseded by the
+  BOOT-034 PR #13 v1.2 Review-Fix Evidence Envelope below`.
+- The new BOOT-034 PR #13 v1.2 Review-Fix Evidence Envelope is the single
+  active unmarked entry in `AI_HANDOFF.md` at the v1.2 head.
 
 ## Changed Files
 
 - `SCRIPTS/validate-bootstrap.sh` — adds `count_unmarked_next_safe_actions`
   helper and per-file unmarked-count check for `AI_HANDOFF.md` and
   `CURRENT_STATE.md`.
-- `SCRIPTS/validate-bootstrap-red-checks.sh` — adds eight new BOOT-034
-  fixtures and registers them in the dispatcher list.
+- `SCRIPTS/validate-bootstrap-red-checks.sh` — adds twelve new BOOT-034
+  fixtures (eight initial plus four v1.2 review-fix cases) and registers
+  them in the dispatcher list.
 - `AI_HANDOFF.md` — new BOOT-034 Pre-Change Classification and Final
   Evidence Envelope; 25 historical `- Next safe action:` lines bulk-marked
   with `(historical)`; header sections updated for active agent, role,
@@ -145,23 +168,42 @@ high
 - Stale unmarked historical `Next safe action:` envelope in
   `CURRENT_STATE.md` trips the validator:
   `case_current_state_stale_next_safe_action_fails`.
-- `completed` marker passes: `case_next_safe_action_marked_completed_passes`.
-- `superseded` marker passes:
+- `completed` marker at start of payload passes:
+  `case_next_safe_action_marked_completed_passes`.
+- `superseded` marker at start of payload passes:
   `case_next_safe_action_marked_superseded_passes`.
-- `historical` marker passes:
+- `(historical)` parenthetical at start of payload passes:
   `case_next_safe_action_marked_historical_passes`.
-- `delegated` marker passes:
+- `delegated` marker at start of payload passes:
   `case_next_safe_action_marked_delegated_passes`.
 - The live `## Next Recommended Action` section heading is not over-matched
   and `CURRENT_STATE.md` continues to validate when that section exists:
   `case_next_recommended_action_heading_passes`.
 - Narrative prose mentioning `Next safe action:` inside backticks is not
   over-matched: `case_next_safe_action_prose_not_overmatched`.
+- Marker words appearing mid-payload (e.g., "confirm delegated authority")
+  do NOT count as marked; two such bullets trip the staleness guard:
+  `case_marker_word_mid_payload_is_not_marker` (v1.2).
+- Empty payloads on `- Next safe action:` bullets count as unmarked and
+  trip the staleness guard when more than one such bullet exists:
+  `case_empty_next_safe_action_payload_is_unmarked` (v1.2).
+- Multiline bullets where the marker is on the first line still pass
+  (the validator stitches continuation lines but the marker remains at
+  the start of the payload):
+  `case_multiline_marked_next_safe_action_passes` (v1.2).
+- Bullets inside Markdown fenced code blocks are illustrative examples
+  and must be ignored entirely:
+  `case_fenced_code_next_safe_action_ignored` (v1.2).
 
 ## Tests Added Or Updated
 
-- Eight new BOOT-034 red-check fixtures listed above.
-- No existing fixtures were modified.
+- Twelve BOOT-034 red-check fixtures (eight initial plus four v1.2
+  review-fix fixtures listed above).
+- No existing pre-BOOT-034 fixtures were modified.
+- v1.2 review-fix strengthened the eight initial pass fixtures to use
+  `expect_success` instead of `expect_no_failure_mentioning` so they
+  now assert validator exit 0 overall rather than only the absence of
+  the unmarked-entries failure string.
 
 ## Tests Run
 
@@ -171,9 +213,13 @@ high
   with `AI_HANDOFF.md has 25 unmarked 'Next safe action:' entries`, proving
   the new staleness guard activates on the recorded historical drift.
 - Post-bulk-mark `bash SCRIPTS/validate-bootstrap.sh` — passes.
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 45 cases
-  (37 prior + 8 new BOOT-034 fixtures).
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 49 cases
+  (37 prior + 12 new BOOT-034 fixtures: eight initial + four v1.2
+  review-fix).
 - `git diff --check` — clean.
+- v1.2 awk edge-case probe against Codex's listed false-negative cases
+  (mid-payload marker words, empty payload, fenced code) confirmed the
+  tightened rule correctly counts them as unmarked.
 
 ## Rollout And Rollback
 
@@ -189,11 +235,15 @@ high
 ## Traceability Evidence
 
 - `TRACEABILITY_MATRIX.md` BOOT-034 row maps the staleness-guard
-  requirement to the new validator helper, eight red checks, bulk marking
-  of 25 historical envelopes, and local validation.
+  requirement to the validator helper, twelve red checks (eight initial
+  plus four v1.2 review-fix), bulk marking of 25 historical envelopes,
+  and local validation including the v1.2 awk edge-case probe.
 - `ARTIFACT_REGISTRY.md` bumps validator (`v1.13`) and red-check (`v1.9`)
   rows; updates state-file rows; updates the BOOT-034 backlog item entry;
-  registers this review package.
+  registers this review package and the new
+  `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md`
+  review record (v1.2 documenting v1.0 request-changes findings and v1.2
+  fix response).
 
 ## Assumptions
 
@@ -254,7 +304,13 @@ Please review:
 
 ## Review Status
 
-Awaiting fresh-context Codex adversarial review.
+Fresh-context Codex adversarial review v1.0 at head `9d93250` requested
+changes (2 P1, 3 P2, 1 P3). v1.2 review-fix at head `e03e0f5` addressed
+all six findings; fresh-context Codex re-review at v1.2 confirmed all
+six prior findings fixed and raised one new blocking P2 — the PR review
+package and several summaries still described pre-v1.2 behavior. This
+update aligns those descriptions to the v1.2 implementation. Awaiting
+fresh-context Codex re-review at the description-update head.
 
 ## Out Of Scope For This PR
 

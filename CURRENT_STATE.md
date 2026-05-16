@@ -2,7 +2,7 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.61
+version: v3.62
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -46,27 +46,21 @@ authoritative: false
 
 - BOOT-034 next safe action staleness guard is in-review on
   `claude/boot-034-next-safe-action-staleness-guard` from green `main` at
-  `f116f85`. PR #13 v1.0 fresh-context Codex adversarial review at head
-  `9d93250` requested changes for two P1 findings (validator undercount and
-  `ARTIFACT_REGISTRY.md` version drift) and three P2 findings (fenced code
-  blocks not excluded, marker-pass fixtures using
-  `expect_no_failure_mentioning` instead of `expect_success`, and
-  `AI_HANDOFF.md` "proposed to done" wording). The v1.2 review-fix tightens
-  `count_unmarked_next_safe_actions` to stitch multiline bullets, skip
-  fenced code blocks, require markers at the start of the payload
-  (parenthetical or word), and treat empty payloads as unmarked. The eight
-  pass fixtures now use `expect_success`. Four new fixtures cover
-  marker-mid-payload, empty payload, multiline-marked, and fenced-code
-  cases (49 red-check cases total, up from 45). Registry rows for
-  `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
-  `REVIEWS/REVIEW_INDEX.md`, and `WORKLOG/WORKLOG_INDEX.md` are aligned to
-  file metadata, and the AI_HANDOFF wording is corrected. The 25
-  previously unmarked historical `Next safe action:` envelope fields in
-  `AI_HANDOFF.md` remain bulk-marked with `(historical)` prefixes; the two
-  pre-existing markers and the now-superseded BOOT-034 v1.0 Final Evidence
-  Envelope `Next safe action:` are also marked. Local validation, red
-  checks, and `git diff --check` pass. Awaiting fresh-context Codex
-  re-review at the v1.2 head.
+  `f116f85`. PR #13 has had two review iterations so far. v1.0 at head
+  `9d93250` requested changes for two P1 and three P2 findings; the v1.2
+  review-fix at head `e03e0f5` resolved all six. Fresh-context Codex v1.2
+  re-review at `e03e0f5` confirmed all six prior findings fixed but
+  raised one new blocking P2: the PR review package and several
+  summaries still described pre-v1.2 behavior. The v1.3 description
+  alignment updates the PR review package, REVIEW_INDEX summary,
+  ARTIFACT_REGISTRY validator/red-check/PR-package/backlog summaries,
+  and the BOOT-034 backlog item Implementation Decision section to
+  describe v1.2 behavior (start-of-payload markers, multiline-bullet
+  stitching, fenced-code-block exclusion, empty-payload-is-unmarked,
+  twelve red-check fixtures). No validator-script or red-check-fixture
+  content is modified in v1.3 — it is description-only. Local
+  validation, red checks (49 cases), and `git diff --check` pass.
+  Awaiting fresh-context Codex re-review at the v1.3 head.
 - BOOT-035 branch-aware handoff model is merged through PR #12 at merge commit
   `100fe77f0f1971290407651761a3d92964979d27` with `main` GitHub Actions
   `Bootstrap Validation` run `25960081829` succeeding at `f116f85` after the
@@ -408,15 +402,27 @@ authoritative: false
 
 ## Next Recommended Action
 
-Request fresh-context Codex re-review of BOOT-034 PR #13 at the v1.2
-review-fix head, iterate on any remaining findings until Codex approves with
-no P0/P1/blocking P2 findings, admin-merge once GitHub Actions on the PR is
-green, and confirm latest `main` GitHub Actions `Bootstrap Validation` is
-green after merge plus apply post-merge cleanup if the singular handoff
-branch field flags on `main` CI.
+Request fresh-context Codex re-review of BOOT-034 PR #13 at the v1.3
+description-alignment head, iterate on any remaining findings until Codex
+approves with no P0/P1/blocking P2 findings, admin-merge once GitHub Actions
+on the PR is green, and confirm latest `main` GitHub Actions `Bootstrap
+Validation` is green after merge plus apply post-merge cleanup if the
+singular handoff branch field flags on `main` CI.
 
 ## Latest Validation
 
+- BOOT-034 PR #13 v1.3 description alignment on 2026-05-16: `bash -n
+  SCRIPTS/validate-bootstrap.sh` passes; `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.`;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red
+  checks passed.` with 49 cases (unchanged from v1.2; v1.3 is
+  description-only); `git diff --check` exits 0. v1.3 updates the PR
+  review package, REVIEW_INDEX summary, ARTIFACT_REGISTRY validator/
+  red-check/PR-package/backlog summaries, and BOOT-034 backlog item
+  Implementation Decision section to describe v1.2 behavior, addressing
+  Codex's v1.2 re-review blocking P2 on stale descriptions. No
+  validator-script or red-check-fixture content is modified.
 - BOOT-034 PR #13 v1.2 review-fix on 2026-05-16: `bash -n
   SCRIPTS/validate-bootstrap.sh` passes; `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
