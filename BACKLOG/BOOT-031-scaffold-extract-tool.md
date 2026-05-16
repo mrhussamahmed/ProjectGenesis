@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-031
 title: BOOT-031 Scaffold Extraction Tool
 type: backlog-item
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-15
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and BOOT-031 implementation on branch claude/boot-031-scaffold-extract-tool
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, BOOT-031 implementation on branch claude/boot-031-scaffold-extract-tool, and PR #8 merge to main at 32743172
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -103,7 +103,7 @@ P0
 
 ## Readiness Status
 
-in-review
+done
 
 ## Readiness Evidence
 
@@ -146,8 +146,10 @@ in-review
 - [x] Traceability updated.
 - [x] Artifact registry updated (new `ART-SCAFFOLD-EXTRACT-SCRIPT`).
 - [x] Handoff updated.
-- [ ] Review complete or pending review recorded: fresh-context Codex review
-      will run after the PR is open and GitHub `validate` is green.
+- [x] Review complete: fresh-context Codex adversarial re-review approved
+      PR #8 at head `914e1b2`. PR #8 merged to `main` at
+      `32743172a41db65f89d54a84db8d3f2bbb2e2a3b`; the feature branch
+      `claude/boot-031-scaffold-extract-tool` was deleted at merge.
 
 ## Parallelization
 

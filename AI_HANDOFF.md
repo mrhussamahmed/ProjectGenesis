@@ -22,19 +22,19 @@ authoritative: false
 
 ## Active Agent
 
-Codex
+Claude
 
 ## Current Role
 
-Adversarial PR Reviewer
+DevOps Release Reviewer
 
 ## Current Branch
 
-`claude/boot-031-scaffold-extract-tool`
+`main`
 
 ## Current Worktree
 
-`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/trusting-haslett-23f476`
+`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/festive-ride-eadc67`
 
 ## Last Completed Task
 
