@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-10-BOOT-033-SRC-SPEC-CROSS-VALIDATION
 title: PR 10 BOOT-033 SRC And SPEC Cross-Validation Review
 type: pr-review
 status: active
-version: v1.0
+version: v1.2
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review of ProjectGenesis PR #10 at head 5bbdab4
+source: Fresh-context Codex adversarial review and re-review of ProjectGenesis PR #10 at heads 5bbdab4 and 9402401
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -19,6 +19,102 @@ authoritative: false
 ## Review Decision
 
 request changes
+
+## Re-Review Outcome
+
+Decision: request changes.
+
+Head reviewed: `9402401732e3c33ec444aa235a644060252007df`
+(`9402401`).
+
+Pre-write validation passed locally before this v1.2 re-review state
+update: `bash SCRIPTS/validate-bootstrap.sh` printed `Bootstrap
+validation passed.`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`
+printed `Bootstrap red checks passed.`, and `git diff --check
+origin/main...HEAD` exited 0 with no output. The scripts define failure
+as nonzero exit with `Bootstrap validation failed...` or `Bootstrap red
+checks failed...`, and print the pass lines on success.
+
+Post-write validation passed after one corrected classification error.
+The first post-write `bash SCRIPTS/validate-bootstrap.sh` failed because
+this re-review state update initially classified protected
+review/state-artifact edits as `review-only`; the durable classification
+was corrected to `planning-governance`. The final post-write `bash
+SCRIPTS/validate-bootstrap.sh` printed `Bootstrap validation passed.`,
+`bash SCRIPTS/validate-bootstrap-red-checks.sh` printed `Bootstrap red
+checks passed.`, and `git diff --check origin/main...HEAD` exited 0
+with no output.
+
+P1-a status: resolved. `AI_HANDOFF.md` now contains the exact section
+headers `## BOOT-033 Pre-Change Classification` and `## BOOT-033 Final
+Evidence Envelope`. The pre-change section contains these exact standard
+field names with non-placeholder values: `Operation profile:`,
+`Target files:`, `Protected files touched:`, `Expected risk:`,
+`Branch requirement:`, `Required validation:`, `Required review:`,
+`Traceability impact:`, `Registry impact:`, `Handoff/state impact:`,
+`Dirty worktree status:`, and `Escalation triggers checked:`. The final
+evidence envelope contains these exact standard field names with
+non-placeholder values: `Operation profile:`, `Classification
+confidence:`, `Escalation triggers checked:`, `Files read:`, `Files
+changed:`, `Files intentionally not read:`, `Artifacts not impacted:`,
+`Validation run:`, `Validation skipped:`, `Review required:`, and `Next
+safe action:`. The active handoff fields `## Current Role`, `## Current
+Branch`, and `## Current Worktree` now point to `Adversarial PR
+Reviewer`, `claude/boot-033-src-spec-cross-validation`, and
+`/Users/ahmedabd/Desktop/AI Projects/New Poject
+bootstrap/.claude/worktrees/trusting-haslett-23f476`. `## Last
+Completed Task` and `## Current In-Progress Task` now point to PR #10 /
+BOOT-033 review-fix work instead of stale PR #9 work.
+
+P1-b status: not resolved. `TEST_RESULTS.md` now includes both required
+BOOT-033 rows: `BOOT-033 SRC/SPEC cross-validation local validation`
+and `PR #10 BOOT-033 review-fix validation`. However, `CURRENT_STATE.md`
+still records PR #10 / BOOT-033 as in review at head `5bbdab4`, still
+says the next recommended action is to address the P1 findings by fixing
+the stale/missing evidence, and does not record that the review-fix
+commit `9402401` has been applied. `ARTIFACT_REGISTRY.md` row metadata
+for `ART-REG-001`, `ART-TRACE-001`, `ART-STATE-002`, `ART-STATE-003`,
+`ART-TEST-003`, `ART-REVIEW-INDEX`, the PR #10 review artifact, and
+`ART-WORKLOG-INDEX` still describes the current state as `PR #10
+BOOT-033 adversarial review` / `request-changes` rather than review-fix
+applied pending re-review. That leaves current-state and registry
+evidence incoherent with the head under re-review.
+
+Validator and red-check changes are unchanged from the initial
+implementation commit: `git diff 5bbdab4..HEAD --
+SCRIPTS/validate-bootstrap.sh SCRIPTS/validate-bootstrap-red-checks.sh`
+had no output. The review-fix commit changed only state/review artifacts.
+
+Scope creep: none found in the PR diff. `git diff --name-only
+origin/main...HEAD` contains only the expected BOOT-033 validator,
+red-check, backlog, review, and source-of-truth files. A forbidden-scope
+scan returned no hooks, CI workflows, role files, command files, context
+packs, templates, ADRs, governance, operation routing, branch/worktree
+guide, PR/merge policy, risk model, prior scaffold/metric scripts, or
+runtime mechanics.
+
+BOOT-033 readiness is correctly recorded as `in-review` in `BACKLOG.md`,
+`BACKLOG/BACKLOG_INDEX.md`, and
+`BACKLOG/BOOT-033-src-spec-cross-validation.md`.
+
+GitHub PR metadata and checks could not be independently fetched in this
+environment: both `gh pr view 10 --repo mrhussamahmed/ProjectGenesis
+--json headRefOid,baseRefOid,state,url,statusCheckRollup` and `gh pr
+checks 10 --repo mrhussamahmed/ProjectGenesis` failed with `error
+connecting to api.github.com`.
+
+## Implementer P1-b Resolution Note
+
+The implementer commits a second review-fix immediately after this v1.2
+re-review record to address the residual P1-b finding. That follow-up
+commit aligns `CURRENT_STATE.md`, `ARTIFACT_REGISTRY.md`,
+`TRACEABILITY_MATRIX.md`, `AI_HANDOFF.md`, `TEST_RESULTS.md`,
+`WORKLOG/WORKLOG_INDEX.md`, and `REVIEWS/REVIEW_INDEX.md` to the
+review-fix-applied head and records the v1.2 re-review session and
+outcome (P1-a resolved, P1-b being addressed by this commit). Validator
+and red-check scripts remain byte-identical to `5bbdab4`. A
+fresh-context Codex confirmation re-review at the new head is required
+before merge.
 
 ## Risk Level
 
