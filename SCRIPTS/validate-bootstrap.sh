@@ -122,7 +122,7 @@ required_files=(
   "REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md"
   "REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md"
   "TESTS/MANUAL_TEST_CHECKLIST.md"
-  "MAINTAINER_ARCHIVE/TESTS/ACCEPTANCE_CRITERIA_MAP.md"
+  "TESTS/ACCEPTANCE_CRITERIA_MAP.md"
   "WORKLOG/WORKLOG_INDEX.md"
   "HANDOFFS/HANDOFF_INDEX.md"
   "SCRIPTS/start-claude.sh"
@@ -132,8 +132,8 @@ required_files=(
   "SCRIPTS/metric-evidence-coverage.sh"
   "SCRIPTS/metric-acceptance-coverage.sh"
   "SCRIPTS/metric-traceability-completeness.sh"
-  "MAINTAINER_ARCHIVE/SCRIPTS/run-seeded-defect-bench.sh"
-  "MAINTAINER_ARCHIVE/TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
+  "SCRIPTS/run-seeded-defect-bench.sh"
+  "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
   ".githooks/pre-commit"
   ".githooks/commit-msg"
   ".githooks/pre-push"
@@ -680,7 +680,7 @@ done < <(awk '
     }
     if (target_body ~ /(SCRIPTS\/|\.github\/workflows|\.githooks\/|memory\/ai\/|PR_REVIEW_POLICY\.md|PR_MERGE_POLICY\.md|RISK_MODEL\.md|BRANCH_AND_WORKTREE_GUIDE\.md|GOVERNANCE\.md|OPERATION_ROUTING\.md|CONTEXT_PACKS\/|COMMANDS\/|REVIEWS\/templates\/|SPECS\/templates\/|ADR\/templates\/|BACKLOG\/templates\/)/ && profile != "strict-protected") {
       print "strict|" section
-    } else if (target_body ~ /(SPECS\/|BACKLOG\.md|BACKLOG\/|TRACEABILITY_MATRIX\.md|ARTIFACT_REGISTRY\.md|ADR\/|02_requirements\/|MAINTAINER_ARCHIVE\/TESTS\/ACCEPTANCE_CRITERIA_MAP\.md|TESTS\/ACCEPTANCE_CRITERIA_MAP\.md)/ && profile !~ /^(planning-governance|strict-protected)$/) {
+    } else if (target_body ~ /(SPECS\/|BACKLOG\.md|BACKLOG\/|TRACEABILITY_MATRIX\.md|ARTIFACT_REGISTRY\.md|ADR\/|02_requirements\/|TESTS\/ACCEPTANCE_CRITERIA_MAP\.md)/ && profile !~ /^(planning-governance|strict-protected)$/) {
       print "planning|" section
     }
   }
