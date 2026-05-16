@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-9-BOOT-032-SEEDED-DEFECT-BENCHMARK
 title: PR 9 BOOT-032 Seeded-Defect Benchmark Review
 type: pr-review
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: fresh-context Codex adversarial review of ProjectGenesis PR #9 and implementer review-fix response
+source: fresh-context Codex adversarial review, implementer review-fix response, and Codex re-review approval of ProjectGenesis PR #9
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -16,9 +16,40 @@ authoritative: false
 
 # Adversarial PR Review
 
+## Re-Review Outcome (v1.2)
+
+- Re-review date: 2026-05-16
+- Head reviewed: `54548f0`
+- Decision: approve
+- P2 resolution status: resolved. `SCRIPTS/run-seeded-defect-bench.sh`
+  now uses `set +e; bash "$red_checks" >"$run_log" 2>&1;
+  red_status=$?; set -e`, and the prior inverted `if ! bash ...;
+  then red_status=$?` pattern is absent.
+- Pass-path probe: `bash SCRIPTS/run-seeded-defect-bench.sh` printed
+  `seeded_defect_cases: 25`, `seeded_defect_detected: 25`,
+  `seeded_defect_detection_rate: 100%`, and
+  `red_check_harness_status: 0`.
+- Failure-path probe: copied the worktree to `/tmp/boot032-probe`,
+  replaced `SCRIPTS/validate-bootstrap-red-checks.sh` in that copy with
+  a stub exiting 7, ran `bash SCRIPTS/run-seeded-defect-bench.sh`, and
+  observed `red_check_harness_status: 7`.
+- Scope guard: passed. `git diff --name-status origin/main...HEAD`
+  contains only the expected BOOT-032 implementation, review, and
+  source-of-truth files. A forbidden-scope path scan returned no hooks,
+  CI workflows, role files, command files, context packs, templates,
+  ADRs, governance files, operation routing, branch/worktree guide,
+  PR/merge policy, risk model, runtime mechanics, or BOOT-033 files.
+- Source-of-truth audit: pre-edit audit found stale pre-fix wording in
+  `CURRENT_STATE.md`, `AI_HANDOFF.md`, and `TRACEABILITY_MATRIX.md`;
+  this re-review updates those records to the v1.2 approve outcome.
+- Validation: pre-state-edit `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, and
+  `git diff --check origin/main...HEAD` all passed.
+- New findings: none.
+
 ## Review Decision
 
-request changes
+approve in v1.2 re-review. Initial v1.1 decision was request changes.
 
 ## Risk Level
 
@@ -105,7 +136,9 @@ adversarial deep
 
 ## Final Recommendation
 
-Request changes. The PR scope, registry, traceability, validation, benchmark plan, and extracted scaffold behavior are otherwise in good shape, but the benchmark runner must not emit a false zero harness status on failure.
+Superseded by v1.2 re-review approval. The initial v1.1 recommendation was
+request changes because the benchmark runner emitted a false zero harness
+status on failure; the review-fix now resolves that P2.
 
 ## Re-Review Conditions
 
@@ -139,5 +172,5 @@ Post-fix validation on `claude/boot-032-seeded-defect-benchmark`:
 - `bash SCRIPTS/validate-bootstrap-red-checks.sh` passes (25 cases).
 - `git diff --check origin/main...HEAD` is clean.
 
-Fresh-context Codex re-review pending after the fix commit is pushed
-and GitHub `validate` is green again.
+Fresh-context Codex re-review v1.2 approved the fix at head `54548f0`
+with no new findings.
