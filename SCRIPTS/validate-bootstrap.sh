@@ -366,6 +366,82 @@ if [[ -f "02_requirements/ASSUMPTIONS_REGISTER.md" ]]; then
   ' 02_requirements/ASSUMPTIONS_REGISTER.md)
 fi
 
+# BOOT-033 SRC/SPEC cross-validation.
+#
+# Verify that cited SRC-* and SPEC-* identifiers in `BACKLOG/BOOT-*.md`
+# files exist in their respective registers. Provisional placeholders
+# prefixed with `provisional:` or `pending:` are allowed without
+# registration; "none" or "n/a" values are treated as no-citation and
+# skipped. Bare canonical IDs must be registered:
+#
+# - `SRC-[0-9]+` must appear in `00_intake/SOURCE_REGISTRY.md` as a
+#   table row (`| SRC-NNN |`).
+# - `SPEC-[A-Z][A-Z0-9-]*-[0-9]+` must appear in `SPECS/SPEC_INDEX.md`
+#   as a table row (`| SPEC-XXX-NNN |`) or as an existing spec file in
+#   `SPECS/` named `SPEC-XXX-NNN-*.md`.
+#
+# The validator only inspects citations in `BACKLOG/BOOT-*.md` so
+# downstream product intake and existing planning narratives are not
+# disturbed. Future work can extend the scope to other files when the
+# downstream source/spec catalog grows.
+
+src_registered() {
+  local id="$1"
+  [[ -z "$id" ]] && return 0
+  if [[ -f 00_intake/SOURCE_REGISTRY.md ]]; then
+    grep -qE "^\| $id +\|" 00_intake/SOURCE_REGISTRY.md && return 0
+  fi
+  return 1
+}
+
+spec_registered() {
+  local id="$1"
+  [[ -z "$id" ]] && return 0
+  if [[ -f SPECS/SPEC_INDEX.md ]]; then
+    grep -qE "^\| $id +\|" SPECS/SPEC_INDEX.md && return 0
+  fi
+  if find SPECS -maxdepth 1 -type f -name "${id}-*.md" -print 2>/dev/null | grep -q .; then
+    return 0
+  fi
+  return 1
+}
+
+# Strip provisional/pending prefixes from each token so the canonical
+# `SRC-N` / `SPEC-X-N` ID is the only thing the validator checks.
+extract_ids() {
+  local line="$1"
+  local pattern="$2"
+  printf '%s' "$line" \
+    | grep -oE "(provisional:|pending:)?$pattern" \
+    | grep -vE '^(provisional:|pending:)' \
+    || true
+}
+
+if [[ -d BACKLOG ]]; then
+  while IFS= read -r file; do
+    src_line="$(awk 'tolower($0) ~ /^- source ids:/ { sub(/^[^:]*:[ ]*/, ""); print; exit }' "$file")"
+    if [[ -n "$src_line" ]]; then
+      lower="$(printf '%s' "$src_line" | tr '[:upper:]' '[:lower:]')"
+      if [[ "$lower" != none* ]] && [[ "$lower" != "n/a" ]]; then
+        while IFS= read -r id; do
+          [[ -z "$id" ]] && continue
+          src_registered "$id" || fail "$file cites unregistered source ID: $id"
+        done < <(extract_ids "$src_line" 'SRC-[0-9]+')
+      fi
+    fi
+    spec_line="$(awk 'tolower($0) ~ /^- linked spec:/ { sub(/^[^:]*:[ ]*/, ""); print; exit }' "$file")"
+    if [[ -n "$spec_line" ]]; then
+      lower="$(printf '%s' "$spec_line" | tr '[:upper:]' '[:lower:]')"
+      if [[ "$lower" != none* ]] && [[ "$lower" != "n/a" ]]; then
+        while IFS= read -r id; do
+          [[ -z "$id" ]] && continue
+          spec_registered "$id" || fail "$file cites unregistered spec ID: $id"
+        done < <(extract_ids "$spec_line" 'SPEC-[A-Z][A-Z0-9-]*-[0-9]+')
+      fi
+    fi
+  done < <(find BACKLOG -maxdepth 1 -type f -name 'BOOT-*.md' -print 2>/dev/null)
+fi
+
 grep -Fq "ARTIFACT_REGISTRY.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference ARTIFACT_REGISTRY.md"
 grep -Fq "TRACEABILITY_MATRIX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference TRACEABILITY_MATRIX.md"
 grep -Fq "SPECS/SPEC_INDEX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference SPECS/SPEC_INDEX.md"

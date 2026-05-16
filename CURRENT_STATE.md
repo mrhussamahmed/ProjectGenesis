@@ -248,11 +248,11 @@ authoritative: false
 
 ## Active Branch
 
-- `main`.
+- `claude/boot-033-src-spec-cross-validation` for BOOT-033 work.
 
 ## Active Worktree
 
-- `/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/festive-ride-eadc67`
+- `/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/trusting-haslett-23f476`
 
 ## Active Backlog Focus
 

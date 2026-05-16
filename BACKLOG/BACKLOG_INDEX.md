@@ -26,7 +26,7 @@ Detailed backlog items can be stored in this folder.
 | BOOT-030 | Scaffold Extraction Checklist | `BACKLOG/BOOT-030-scaffold-extract-checklist.md` | done | P0 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
 | BOOT-031 | Scaffold Extraction Tool | `BACKLOG/BOOT-031-scaffold-extract-tool.md` | done | P0 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
 | BOOT-032 | Seeded-Defect Benchmark | `BACKLOG/BOOT-032-seeded-defect-benchmark.md` | done | P0 | medium | high | SPEC-BOOT-003 | sequential |
-| BOOT-033 | SRC And SPEC Cross-Validation | `BACKLOG/BOOT-033-src-spec-cross-validation.md` | queued after BOOT-032 | P1 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
+| BOOT-033 | SRC And SPEC Cross-Validation | `BACKLOG/BOOT-033-src-spec-cross-validation.md` | in-review | P1 | medium | high | SPEC-BOOT-002, SPEC-BOOT-003 | sequential |
 
 ## Rules
 

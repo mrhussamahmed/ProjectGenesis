@@ -463,6 +463,196 @@ case_scaffold_extract_registry_includes_kept_framework_paths() {
   done
 }
 
+case_unregistered_src_id_fails() {
+  # Coverage: a backlog item that cites a canonical SRC-NNN ID must trip the
+  # validator if that ID is not registered in `00_intake/SOURCE_REGISTRY.md`.
+  local dir
+  dir="$(copy_repo unregistered-src-id)"
+  cat >"$dir/BACKLOG/BOOT-RED-100-unregistered-src.md" <<'EOF'
+artifact_id: ART-BACKLOG-BOOT-RED-100
+title: BOOT-RED-100 Unregistered Source Citation
+type: backlog-item
+status: active
+version: v1.0
+created: 2026-05-16
+updated: 2026-05-16
+owner: AI Bootstrap Maintainers
+source: red check
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: true
+
+# BOOT-RED-100: Unregistered Source Citation
+
+## Purpose
+
+Red-check fixture: cite an unregistered `SRC-*` ID and expect the validator
+to fail.
+
+## Links
+
+- Linked spec: none
+- Source IDs: SRC-99901
+EOF
+  expect_failure "unregistered src id fails" "cites unregistered source ID: SRC-99901" "$dir"
+}
+
+case_unregistered_spec_id_fails() {
+  # Coverage: a backlog item that cites a canonical SPEC-* ID must trip the
+  # validator if that ID is not registered in `SPECS/SPEC_INDEX.md` and no
+  # matching `SPECS/SPEC-*-*.md` file exists.
+  local dir
+  dir="$(copy_repo unregistered-spec-id)"
+  cat >"$dir/BACKLOG/BOOT-RED-200-unregistered-spec.md" <<'EOF'
+artifact_id: ART-BACKLOG-BOOT-RED-200
+title: BOOT-RED-200 Unregistered Spec Citation
+type: backlog-item
+status: active
+version: v1.0
+created: 2026-05-16
+updated: 2026-05-16
+owner: AI Bootstrap Maintainers
+source: red check
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: true
+
+# BOOT-RED-200: Unregistered Spec Citation
+
+## Purpose
+
+Red-check fixture: cite an unregistered `SPEC-*` ID and expect the validator
+to fail.
+
+## Links
+
+- Linked spec: SPEC-RED-9999
+- Source IDs: none
+EOF
+  expect_failure "unregistered spec id fails" "cites unregistered spec ID: SPEC-RED-9999" "$dir"
+}
+
+case_registered_src_id_passes() {
+  # Coverage: a backlog item that cites a freshly registered SRC-* ID must
+  # not trip the validator (no FAIL line mentioning the ID).
+  local dir
+  dir="$(copy_repo registered-src-id)"
+  cat >>"$dir/00_intake/SOURCE_REGISTRY.md" <<'EOF'
+| SRC-99902 | `00_intake/raw/red.md` | note | red | 2026-05-16 | active | pending | internal | none |  |
+EOF
+  cat >"$dir/BACKLOG/BOOT-RED-300-registered-src.md" <<'EOF'
+artifact_id: ART-BACKLOG-BOOT-RED-300
+title: BOOT-RED-300 Registered Source Citation
+type: backlog-item
+status: active
+version: v1.0
+created: 2026-05-16
+updated: 2026-05-16
+owner: AI Bootstrap Maintainers
+source: red check
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: true
+
+# BOOT-RED-300: Registered Source Citation
+
+## Purpose
+
+Red-check fixture: cite a registered `SRC-*` ID and expect the validator
+to remain silent about it.
+
+## Links
+
+- Linked spec: none
+- Source IDs: SRC-99902
+EOF
+  expect_no_failure_mentioning "registered src id passes" "$dir" "cites unregistered source ID: SRC-99902"
+}
+
+case_provisional_src_id_passes() {
+  # Coverage: a backlog item that cites a `provisional:SRC-*` placeholder
+  # must not require registration. The validator treats the prefix as an
+  # explicit escape hatch.
+  local dir
+  dir="$(copy_repo provisional-src-id)"
+  cat >"$dir/BACKLOG/BOOT-RED-400-provisional-src.md" <<'EOF'
+artifact_id: ART-BACKLOG-BOOT-RED-400
+title: BOOT-RED-400 Provisional Source Citation
+type: backlog-item
+status: active
+version: v1.0
+created: 2026-05-16
+updated: 2026-05-16
+owner: AI Bootstrap Maintainers
+source: red check
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: true
+
+# BOOT-RED-400: Provisional Source Citation
+
+## Purpose
+
+Red-check fixture: cite a `provisional:SRC-*` placeholder and expect the
+validator to skip registration enforcement.
+
+## Links
+
+- Linked spec: none
+- Source IDs: provisional:SRC-99903
+EOF
+  expect_no_failure_mentioning "provisional src id passes" "$dir" "cites unregistered source ID: SRC-99903"
+}
+
+case_provisional_spec_id_passes() {
+  # Coverage: a backlog item that cites a `pending:SPEC-*` placeholder must
+  # not require registration either.
+  local dir
+  dir="$(copy_repo provisional-spec-id)"
+  cat >"$dir/BACKLOG/BOOT-RED-500-provisional-spec.md" <<'EOF'
+artifact_id: ART-BACKLOG-BOOT-RED-500
+title: BOOT-RED-500 Provisional Spec Citation
+type: backlog-item
+status: active
+version: v1.0
+created: 2026-05-16
+updated: 2026-05-16
+owner: AI Bootstrap Maintainers
+source: red check
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: true
+
+# BOOT-RED-500: Provisional Spec Citation
+
+## Purpose
+
+Red-check fixture: cite a `pending:SPEC-*` placeholder and expect the
+validator to skip registration enforcement.
+
+## Links
+
+- Linked spec: pending:SPEC-RED-1234
+- Source IDs: none
+EOF
+  expect_no_failure_mentioning "provisional spec id passes" "$dir" "cites unregistered spec ID: SPEC-RED-1234"
+}
+
 case_scaffold_extract_reset_files_use_header_only_tables() {
   # Coverage: the extracted shared-state reset files must match the
   # SCAFFOLD_FORK_CHECKLIST.md header-only table contract for STALE_ITEMS.md,
@@ -530,6 +720,11 @@ case_scaffold_extract_refuses_source_as_target
 case_scaffold_extract_refuses_nonempty_without_force
 case_scaffold_extract_registry_includes_kept_framework_paths
 case_scaffold_extract_reset_files_use_header_only_tables
+case_unregistered_src_id_fails
+case_unregistered_spec_id_fails
+case_registered_src_id_passes
+case_provisional_src_id_passes
+case_provisional_spec_id_passes
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2

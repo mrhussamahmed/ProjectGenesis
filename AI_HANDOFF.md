@@ -30,7 +30,7 @@ DevOps Release Reviewer
 
 ## Current Branch
 
-`main`
+`claude/boot-033-src-spec-cross-validation`
 
 ## Current Worktree
 
