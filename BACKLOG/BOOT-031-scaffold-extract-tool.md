@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-031
 title: BOOT-031 Scaffold Extraction Tool
 type: backlog-item
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-15
-updated: 2026-05-15
+updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog and PR #6 review fix
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and BOOT-031 implementation on branch claude/boot-031-scaffold-extract-tool
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -103,22 +103,26 @@ P0
 
 ## Readiness Status
 
-blocked
+in-review
 
 ## Readiness Evidence
 
-- Source evidence: BOOT-030 checklist after merge.
+- Source evidence: BOOT-030 checklist merged through PR #7 at
+  `9066894`/`9e21ce9`.
 - Spec status: `SPEC-BOOT-002` active; `SPEC-BOOT-003` approved.
-- Acceptance criteria: target extraction passes validator and clean-state
-  checks.
-- Dependencies: BOOT-030.
-- Architecture impact: possible script/metadata impact, to be confirmed in
-  BOOT-031 classification.
-- Test expectations: red-check fixtures, bootstrap validation on extracted
-  target, shell syntax checks.
-- Branch/worktree plan: separate branch from `main`.
-- Required reviewers: fresh-context adversarial review.
-- Blocked until: BOOT-030 merged.
+- Acceptance criteria: extracted target passes `bash SCRIPTS/validate-bootstrap.sh`
+  via the new golden red-check fixture; dry-run default writes nothing; safety
+  refusals are covered by red checks.
+- Dependencies: BOOT-030 merged.
+- Architecture impact: adds the new `SCRIPTS/scaffold-extract.sh` script and
+  four red-check fixtures; the validator itself is unchanged.
+- Test expectations: shell syntax checks, bootstrap validation,
+  bootstrap red checks (including four new BOOT-031 fixtures), and an in-target
+  validation invoked by the script's Phase 4.
+- Branch/worktree plan: `claude/boot-031-scaffold-extract-tool` from latest
+  green `main`.
+- Required reviewers: fresh-context adversarial Codex review through the
+  installed plugin once GitHub `validate` is green.
 
 ## Test Expectations
 
@@ -131,13 +135,19 @@ blocked
 
 ## Definition Of Done
 
-- [ ] Spec linked.
-- [ ] Acceptance criteria satisfied.
-- [ ] Tests added or updated, or justified.
-- [ ] Traceability updated.
-- [ ] Artifact registry updated.
-- [ ] Handoff updated.
-- [ ] Review complete or pending review recorded.
+- [x] Spec linked.
+- [x] Acceptance criteria satisfied: extracted scaffold validates locally and
+      red-check golden fixture passes.
+- [x] Tests added: four new red-check fixtures
+      (`case_scaffold_extract_golden_validates`,
+      `case_scaffold_extract_dry_run_writes_nothing`,
+      `case_scaffold_extract_refuses_source_as_target`,
+      `case_scaffold_extract_refuses_nonempty_without_force`).
+- [x] Traceability updated.
+- [x] Artifact registry updated (new `ART-SCAFFOLD-EXTRACT-SCRIPT`).
+- [x] Handoff updated.
+- [ ] Review complete or pending review recorded: fresh-context Codex review
+      will run after the PR is open and GitHub `validate` is green.
 
 ## Parallelization
 
