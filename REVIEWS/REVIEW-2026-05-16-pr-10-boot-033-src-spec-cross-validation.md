@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-10-BOOT-033-SRC-SPEC-CROSS-VALIDATION
 title: PR 10 BOOT-033 SRC And SPEC Cross-Validation Review
 type: pr-review
 status: active
-version: v1.3
+version: v1.4
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review and re-review of ProjectGenesis PR #10 at heads 5bbdab4, 9402401, and e0d63b7
+source: Fresh-context Codex adversarial review and re-review of ProjectGenesis PR #10 at heads 5bbdab4, 9402401, e0d63b7, and 8cfdae9
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -19,6 +19,95 @@ authoritative: false
 ## Review Decision
 
 request changes
+
+## Second Confirmation Re-Review Outcome
+
+Decision: request changes.
+
+Head reviewed: `8cfdae919f551c1411825269af07e4310005c210`
+(`8cfdae9`).
+
+Pre-write validation commands and outputs:
+
+- `bash SCRIPTS/validate-bootstrap.sh` exited 0 and printed
+  `Bootstrap validation passed.`
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` exited 0 and printed
+  `Bootstrap red checks passed.`
+- `git diff --check origin/main...HEAD` exited 0 with no output.
+- `gh pr view 10 --repo mrhussamahmed/ProjectGenesis --json
+  headRefOid,baseRefOid,state,url,statusCheckRollup` exited 1 with
+  `error connecting to api.github.com` and the GitHub status/connectivity
+  hint.
+- `gh pr checks 10 --repo mrhussamahmed/ProjectGenesis` exited 1 with
+  `error connecting to api.github.com` and the GitHub status/connectivity
+  hint.
+- `git diff e0d63b7..HEAD -- SCRIPTS/validate-bootstrap.sh
+  SCRIPTS/validate-bootstrap-red-checks.sh` exited 0 with no output.
+
+Post-write validation commands and outputs:
+
+- `bash SCRIPTS/validate-bootstrap.sh` exited 0 and printed
+  `Bootstrap validation passed.`
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` exited 0 and printed
+  `Bootstrap red checks passed.`
+- `git diff --check origin/main...HEAD` exited 0 with no output.
+
+Residual finding resolution evidence:
+
+- Resolved in active handoff summary: `AI_HANDOFF.md:47-63` says the PR has
+  absorbed both the v1.2 P1-b state-coherence fix and the v1.3 residual
+  handoff fix, describes the stale circular instruction as already rewritten,
+  and sets the next safe action to another confirmation re-review before
+  merge.
+- Resolved in the v1.3 envelope: `AI_HANDOFF.md:262-270` says the v1.3
+  confirmation re-review requested changes, says the residual handoff stale
+  instructions have been rewritten in this commit, and sets the next safe
+  action to another fresh-context confirmation re-review.
+- Resolved in current state: `CURRENT_STATE.md:47-65` and
+  `CURRENT_STATE.md:338-350` describe the residual handoff fix as applied and
+  ask for this confirmation re-review before admin merge.
+- Not fully resolved in the older v1.2 envelope: `AI_HANDOFF.md:161-165` still
+  says the v1.2 next safe action is superseded by v1.3, then instructs:
+  `Fix the residual handoff issue before another confirmation re-review.`
+  At head `8cfdae9`, that sentence is stale because the active state claims the
+  residual handoff fix has already been applied. The user explicitly required
+  this v1.2 envelope next-safe-action to be non-circular at the new head.
+
+Scope-creep evaluation:
+
+- `git diff --name-only origin/main...HEAD` contains the expected BOOT-033
+  validator/red-check additions and source-of-truth/review artifacts:
+  `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-033-src-spec-cross-validation.md`, `CURRENT_STATE.md`,
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-033-src-spec-cross-validation.md`,
+  `REVIEWS/REVIEW-2026-05-16-pr-10-boot-033-src-spec-cross-validation.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `SCRIPTS/validate-bootstrap.sh`, `TEST_RESULTS.md`,
+  `TRACEABILITY_MATRIX.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Forbidden-scope scan returned no `.githooks/*`, `.github/workflows/*`,
+  `memory/ai/*`, `COMMANDS/*`, `CONTEXT_PACKS/*`, `SPECS/*`, `ADR/*`,
+  governance/policy files, prior scaffold/metric scripts, or runtime
+  mechanics.
+- Validator-script drift since v1.3: none. `git diff e0d63b7..HEAD --`
+  for both validator scripts had no output.
+
+GitHub PR metadata and check rollup:
+
+- Not independently fetched in this environment. Both required GitHub CLI
+  commands failed with `error connecting to api.github.com`.
+- Local head is `8cfdae919f551c1411825269af07e4310005c210`; local base
+  `origin/main` is `08260d4496e13acc3c7553091ccebb7a19a1cd87`.
+
+New findings:
+
+| Severity | File | Evidence | Finding | Required Change |
+|----------|------|----------|---------|-----------------|
+| P1 | `AI_HANDOFF.md` | `AI_HANDOFF.md:161-165` still says, in the v1.2 Re-Review Final Evidence Envelope next-safe-action, `Fix the residual handoff issue before another confirmation re-review.` | The v1.3 residual handoff fix is incomplete at `8cfdae9` because one of the exact sections the confirmation prompt required to be non-circular still contains a stale fix instruction. Active state now says the residual handoff issue is already applied, so the older v1.2 envelope contradicts the new current truth. | Rewrite the v1.2 Re-Review Final Evidence Envelope next-safe-action so it records the residual handoff issue as already fixed by the v1.3 residual handoff fix and points to the next confirmation re-review/admin-merge path rather than instructing another fix. |
+
+Final recommendation: requires more changes. Do not merge PR #10 until the
+remaining stale v1.2 handoff-envelope next-safe-action is corrected and a
+fresh confirmation re-review approves.
 
 ## Confirmation Re-Review Outcome
 
