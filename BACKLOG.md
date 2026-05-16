@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.26
+version: v1.27
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-026 / BOOT-027 / BOOT-028 added for PR #5 Phase 0, BOOT-029 through BOOT-033 added for Phase 1 execution planning, PR #6 assumption-claim review fix, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 in-review on its own branch, PR #7 BOOT-030 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, and PR #9 BOOT-032 merge/post-merge source-of-truth cleanup
+source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-026 / BOOT-027 / BOOT-028 added for PR #5 Phase 0, BOOT-029 through BOOT-033 added for Phase 1 execution planning, PR #6 assumption-claim review fix, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 in-review on its own branch, PR #7 BOOT-030 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 merge/post-merge source-of-truth cleanup, and PR #10 BOOT-033 merge/post-merge source-of-truth cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -55,7 +55,7 @@ under `BACKLOG/`.
 | BOOT-030 | Scaffold extraction checklist | Create a human-readable extraction checklist and reset policy for downstream scaffold reuse before implementing a script. Defines which artifacts are framework, instance history, example, or reset-template material. | P0 | medium | high | BOOT-029; SPEC-BOOT-002, SPEC-BOOT-003 | done | sequential | Documentation Curator |
 | BOOT-031 | Scaffold extraction tool | Implement a dry-run-first `SCRIPTS/scaffold-extract.sh` or equivalent after BOOT-030 defines the policy. Validate the extracted target with bootstrap validation and golden/fixture checks. | P0 | medium | high | BOOT-030; SPEC-BOOT-002, SPEC-BOOT-003 | done | sequential | Implementation Agent, QA Reviewer |
 | BOOT-032 | Seeded-defect benchmark and coverage metrics | Add first empirical evidence for review and anti-hallucination claims: evidence/acceptance/traceability metric scripts, a seeded-defect benchmark plan, and baseline reporting. | P0 | medium | high | BOOT-031 merged; SPEC-BOOT-003 | done | sequential | QA Reviewer, Documentation Curator |
-| BOOT-033 | SRC/SPEC ID cross-validation | Extend the validator and red checks so cited `SRC-*` and `SPEC-*` identifiers must exist in repository source-of-truth registers or spec files, with explicit provisional syntax if needed. | P1 | medium | high | BOOT-029, BOOT-032; SPEC-BOOT-002, SPEC-BOOT-003 | in-review | sequential | Implementation Agent, QA Reviewer |
+| BOOT-033 | SRC/SPEC ID cross-validation | Extend the validator and red checks so cited `SRC-*` and `SPEC-*` identifiers must exist in repository source-of-truth registers or spec files, with explicit provisional syntax if needed. | P1 | medium | high | BOOT-029, BOOT-032; SPEC-BOOT-002, SPEC-BOOT-003 | done | sequential | Implementation Agent, QA Reviewer |
 
 ## External Ticket Workflow
 
