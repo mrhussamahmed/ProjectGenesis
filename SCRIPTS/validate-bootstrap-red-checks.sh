@@ -15,7 +15,29 @@ copy_repo() {
   local name="$1"
   local dest="$tmp_root/$name"
   local current_branch
-  current_branch="$(git -C "$repo_root" branch --show-current 2>/dev/null || printf '%s' main)"
+  # On GitHub Actions `pull_request` events the checkout is a detached
+  # HEAD so `git branch --show-current` succeeds but returns an empty
+  # string; that empty value would make `symbolic-ref HEAD refs/heads/`
+  # fail and leave the temp repo on the implicit `master` default,
+  # which then trips the validator's `AI_HANDOFF.md` branch-mismatch
+  # check inside every red-check fixture. Fall back to reading the
+  # branch name out of `AI_HANDOFF.md` itself (the validator's source
+  # of truth for the current branch) so the temp repo's HEAD always
+  # matches what the fixture's `AI_HANDOFF.md` declares.
+  current_branch="$(git -C "$repo_root" branch --show-current 2>/dev/null || true)"
+  if [[ -z "$current_branch" ]]; then
+    current_branch="$(awk '
+      /^## Current Branch$/ {
+        getline
+        getline
+        gsub(/`/, "")
+        gsub(/^[ \t]+|[ \t]+$/, "")
+        print
+        exit
+      }
+    ' "$repo_root/AI_HANDOFF.md" 2>/dev/null)"
+  fi
+  [[ -z "$current_branch" ]] && current_branch="main"
   mkdir -p "$dest"
   rsync -a --exclude '.git' "$repo_root/" "$dest/"
   git -C "$dest" init -q
@@ -1006,6 +1028,46 @@ EOF
   expect_success "multiline marked next safe action passes" "$dir"
 }
 
+case_copy_repo_recovers_handoff_branch_when_source_is_detached() {
+  # BOOT-034 v1.6: in GitHub Actions `pull_request` events the
+  # source repo is checked out in detached HEAD, so
+  # `git branch --show-current` returns empty. The previous
+  # `copy_repo` then ran `symbolic-ref HEAD refs/heads/` with an
+  # empty branch, which left the temp repo on the implicit `master`
+  # default and tripped the validator's branch-mismatch check inside
+  # every BOOT-034 pass fixture. The fix falls back to reading the
+  # branch from `AI_HANDOFF.md` itself. This fixture exercises the
+  # detached HEAD recovery directly.
+  local detached_src="$tmp_root/detached-head-source"
+  rm -rf "$detached_src"
+  git clone --no-local "$repo_root" "$detached_src" >/dev/null 2>&1
+  git -C "$detached_src" checkout --detach >/dev/null 2>&1
+  local handoff_branch
+  handoff_branch="$(awk '
+    /^## Current Branch$/ {
+      getline
+      getline
+      gsub(/`/, "")
+      gsub(/^[ \t]+|[ \t]+$/, "")
+      print
+      exit
+    }
+  ' "$detached_src/AI_HANDOFF.md")"
+  local saved_root="$repo_root"
+  repo_root="$detached_src"
+  local copy_dir
+  copy_dir="$(copy_repo detached-head-copy)"
+  repo_root="$saved_root"
+  local got
+  got="$(git -C "$copy_dir" symbolic-ref --short HEAD 2>/dev/null || true)"
+  if [[ "$got" != "$handoff_branch" ]]; then
+    echo "FAIL: copy_repo did not recover handoff branch under detached HEAD" >&2
+    echo "  expected: $handoff_branch" >&2
+    echo "  got:      $got" >&2
+    failures=$((failures + 1))
+  fi
+}
+
 case_fenced_code_next_safe_action_ignored() {
   # BOOT-034: bullets inside fenced Markdown code blocks (``` or ~~~)
   # are illustrative examples, not real envelope fields. They must
@@ -1080,6 +1142,7 @@ case_marker_word_mid_payload_is_not_marker
 case_empty_next_safe_action_payload_is_unmarked
 case_multiline_marked_next_safe_action_passes
 case_fenced_code_next_safe_action_ignored
+case_copy_repo_recovers_handoff_branch_when_source_is_detached
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2

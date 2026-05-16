@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-PR-13-BOOT-034-NEXT-SAFE-ACTION-STALENESS-GUARD
 title: PR #13 BOOT-034 Next Safe Action Staleness Guard Review
 type: pr-review
 status: active
-version: v1.5
+version: v1.6
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 (v1.0 request changes), Claude v1.2 review-fix, fresh-context Codex v1.2 re-review (new blocking P2 on stale descriptions), Claude v1.3 description-alignment, fresh-context Codex v1.3 re-review (new blocking P2 on review-record registry row plus P3 on backlog version), Claude v1.4 micro-fix, fresh-context Codex v1.4 re-review (three new blocking P2 on review-record description, state-file registry row versions, and BOOT-034 traceability row), and Claude v1.5 registry/traceability alignment response
+source: Fresh-context Codex adversarial review of BOOT-034 PR #13 at head 9d93250 (v1.0 request changes), Claude v1.2 review-fix, fresh-context Codex v1.2 re-review (new blocking P2 on stale descriptions), Claude v1.3 description-alignment, fresh-context Codex v1.3 re-review (new blocking P2 on review-record registry row plus P3 on backlog version), Claude v1.4 micro-fix, fresh-context Codex v1.4 re-review (three new blocking P2), Claude v1.5 registry/traceability alignment response, fresh-context Codex v1.5 re-review (APPROVED), and Claude v1.6 copy_repo detached-HEAD CI fix
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -269,16 +269,61 @@ Implementer applied the following description-only updates at v1.5:
 
 No validator-script, red-check-fixture, or design changes in v1.5.
 
-## v1.5 Status
+## v1.5 Re-Review Decision
 
-Awaiting fresh-context Codex re-review at the v1.5 head. Local
-validation passed:
+**APPROVE.** All v1.4 blocking P2 findings confirmed resolved. No
+P0/P1/blocking P2 issues remain. One non-blocking P3 about a stale
+historical sentence at `CURRENT_STATE.md:210` ("No PR is currently in
+an active implementation phase. PR #5..." — historical wording inside
+the broad Active Implementation Phase section). Codex explicitly
+stated the PR is "Safe to admin-merge."
+
+## v1.6 Post-Approval CI Fix
+
+After Codex's v1.5 approval, the GitHub Actions PR check failed on the
+`pull_request` event (run `25963680867`) even though the `push` event
+run (`25963679909`) succeeded. The pull_request event checks out the
+repo in detached HEAD, so `copy_repo` in
+`SCRIPTS/validate-bootstrap-red-checks.sh` produced empty
+`current_branch` and then failed
+`git symbolic-ref HEAD refs/heads/`. Every BOOT-034 pass fixture that
+uses `copy_repo` + `expect_success` then tripped on
+`AI_HANDOFF.md branch does not match git branch:
+claude/boot-034-next-safe-action-staleness-guard != master`.
+
+v1.6 fix:
+
+- `SCRIPTS/validate-bootstrap-red-checks.sh` `copy_repo` falls back
+  to reading the current branch from `AI_HANDOFF.md` when
+  `git branch --show-current` returns empty, then defaults to `main`
+  if that also fails. The temp repo's HEAD now matches what the
+  fixture's `AI_HANDOFF.md` declares.
+- Added regression fixture
+  `case_copy_repo_recovers_handoff_branch_when_source_is_detached`
+  that creates a fresh detached clone of the repo, calls `copy_repo`
+  on it with `repo_root` swapped, and asserts the temp repo's HEAD
+  matches the AI_HANDOFF branch.
+- Verified locally by replicating the CI environment in `/tmp` with
+  `git checkout --detach` and rerunning `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` — it now passes.
+
+No validator-script content changed in v1.6; only the red-check
+infrastructure helper and a regression fixture.
+
+## v1.6 Status
+
+Awaiting fresh-context Codex re-review at the v1.6 head plus
+confirmation that both PR `validate` CI runs (push and pull_request)
+pass. Local validation passed:
 
 - `bash -n SCRIPTS/validate-bootstrap.sh` — passes
 - `bash -n SCRIPTS/validate-bootstrap-red-checks.sh` — passes
 - `bash SCRIPTS/validate-bootstrap.sh` — passes
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 49
-  cases (unchanged from v1.2; v1.3 through v1.5 are description-only)
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` — passes with 50
+  cases (49 prior + 1 new BOOT-034 v1.6 detached-HEAD recovery
+  fixture)
+- Detached-HEAD simulation in `/tmp/boot034-detached-probe` (created
+  via `git checkout --detach`) — red checks pass
 - `git diff --check` — clean
 
 ## Out Of Scope

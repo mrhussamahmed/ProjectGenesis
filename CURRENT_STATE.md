@@ -2,7 +2,7 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.64
+version: v3.65
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -46,27 +46,24 @@ authoritative: false
 
 - BOOT-034 next safe action staleness guard is in-review on
   `claude/boot-034-next-safe-action-staleness-guard` from green `main` at
-  `f116f85`. PR #13 has had four review iterations so far. v1.0 at
-  head `9d93250` requested changes (2 P1, 3 P2, 1 P3); v1.2 review-fix
-  at head `e03e0f5` resolved all six. v1.2 re-review found one new
-  blocking P2 (stale descriptions); v1.3 description alignment at head
-  `4619ac4` addressed those descriptions. v1.3 re-review found one new
-  blocking P2 (review-record registry row not bumped) and one P3
-  (PR review package backlog version reference); v1.4 micro-fix at head
-  `4025d56` addressed both. v1.4 re-review confirmed v1.3 findings
-  resolved but raised three new blocking P2 (review-record row
-  description, state-file registry row versions, BOOT-034 traceability
-  row); v1.5 registry/traceability alignment in this commit bumps the
-  state-file registry rows to match actual file metadata
-  (`ART-REG-001` v3.57, `ART-STATE-002` v3.64, `ART-STATE-003` v3.62,
-  `ART-TEST-003` v1.83, `ART-REVIEW-INDEX` v2.51, `ART-WORKLOG-INDEX`
-  v3.59), updates the `ART-REVIEW-PR-13-...` row to v1.5 with the full
-  v1.0–v1.5 review history, and updates the `TRACEABILITY_MATRIX.md`
-  BOOT-034 row with v1.4 and v1.5 history. No validator-script or
-  red-check-fixture content modified in v1.3, v1.4, or v1.5. Local
-  validation, red checks (49 cases unchanged), and `git diff --check`
-  pass at the v1.5 head. Awaiting fresh-context Codex re-review at the
-  v1.5 head.
+  `f116f85`. PR #13 has gone through five review iterations and one
+  CI-driven follow-up so far. v1.0 (request changes 2 P1, 3 P2, 1 P3)
+  → v1.2 review-fix (all six resolved) → v1.2 re-review (new blocking
+  P2 on descriptions) → v1.3 description alignment → v1.3 re-review
+  (new blocking P2 + P3 on registry row + backlog version) → v1.4
+  micro-fix → v1.4 re-review (three new blocking P2 on review-record
+  description, state-file registry rows, BOOT-034 traceability row) →
+  v1.5 alignment → **v1.5 re-review APPROVED at head `244d6d7`** with
+  only one non-blocking P3 about a stale historical sentence at
+  `CURRENT_STATE.md:210`. After approval, the GitHub Actions PR check
+  failed on the `pull_request` event (detached HEAD) because
+  `copy_repo` did not handle empty `git branch --show-current` output.
+  v1.6 fixes `copy_repo` to fall back to `AI_HANDOFF.md`'s branch and
+  adds regression fixture
+  `case_copy_repo_recovers_handoff_branch_when_source_is_detached`.
+  Local validation, red checks (50 cases), and `git diff --check` pass.
+  Awaiting both PR `validate` CI runs to be green on the v1.6 head and
+  a brief fresh-context Codex re-review of the v1.6 fix.
 - BOOT-035 branch-aware handoff model is merged through PR #12 at merge commit
   `100fe77f0f1971290407651761a3d92964979d27` with `main` GitHub Actions
   `Bootstrap Validation` run `25960081829` succeeding at `f116f85` after the
@@ -408,15 +405,27 @@ authoritative: false
 
 ## Next Recommended Action
 
-Request fresh-context Codex re-review of BOOT-034 PR #13 at the v1.5
-registry/traceability alignment head, iterate on any remaining findings
-until Codex approves with no P0/P1/blocking P2 findings, admin-merge once
-GitHub Actions on the PR is green, and confirm latest `main` GitHub Actions
-`Bootstrap Validation` is green after merge plus apply post-merge cleanup
-if the singular handoff branch field flags on `main` CI.
+Confirm both PR #13 `validate` CI runs (push and pull_request) are green
+on the v1.6 head, request a brief fresh-context Codex re-review of the
+v1.6 copy_repo fix, admin-merge PR #13 once approved, and confirm latest
+`main` GitHub Actions `Bootstrap Validation` is green after merge plus
+apply post-merge cleanup if the singular handoff branch field flags on
+`main` CI.
 
 ## Latest Validation
 
+- BOOT-034 PR #13 v1.6 copy_repo detached-HEAD CI fix on 2026-05-16:
+  `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.`;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red
+  checks passed.` with 50 cases (49 prior + 1 new BOOT-034 v1.6
+  detached-HEAD recovery fixture); manual detached-HEAD simulation in
+  `/tmp/boot034-detached-probe` via `git checkout --detach` passed.
+  `git diff --check` exits 0. v1.6 fixes `copy_repo` to fall back to
+  `AI_HANDOFF.md` branch when `git branch --show-current` returns
+  empty (GitHub Actions `pull_request` event) and adds a regression
+  fixture. No validator-script content modified in v1.6.
 - BOOT-034 PR #13 v1.5 registry/traceability alignment on 2026-05-16:
   `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash

@@ -2,7 +2,7 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.62
+version: v3.63
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
@@ -47,24 +47,26 @@ admin-merged to `main` at merge commit
 
 ## Current In-Progress Task
 
-BOOT-034 next safe action staleness guard PR #13 v1.5 registry/
-traceability version alignment. The fresh-context Codex v1.4 re-review
-at head `4025d56` confirmed the v1.3 P2 (review-record registry row not
-bumped) and P3 (PR review package backlog version) are resolved by the
-v1.4 micro-fix, but raised three new blocking P2 findings:
-
-- the `ART-REVIEW-PR-13-...` registry row description was bumped to
-  v1.3 but did not mention the v1.4 micro-fix,
-- the state-file registry rows (`ART-REG-001`, `ART-STATE-002`,
-  `ART-STATE-003`, `ART-TEST-003`, `ART-REVIEW-INDEX`,
-  `ART-WORKLOG-INDEX`) were not bumped to match the actual file
-  metadata versions after v1.4, and
-- the `TRACEABILITY_MATRIX.md` BOOT-034 row still said "Awaiting
-  fresh-context re-review at the v1.3 head" without v1.4 history.
-
-v1.5 aligns all those rows with the actual current file metadata and
-includes the v1.4/v1.5 history. No validator-script, red-check-fixture,
-or design changes in v1.5.
+BOOT-034 next safe action staleness guard PR #13 v1.6 copy_repo
+detached-HEAD CI fix. The fresh-context Codex v1.5 re-review at head
+`244d6d7` **APPROVED** the PR with no remaining P0/P1/blocking P2
+findings (only one non-blocking P3 about a stale historical sentence
+in `CURRENT_STATE.md:210`). However, the GitHub Actions PR check
+failed on the `pull_request` event (run `25963680867`) even though
+the `push` event run (`25963679909`) succeeded. The pull_request
+checkout is in detached HEAD, so `copy_repo` in
+`SCRIPTS/validate-bootstrap-red-checks.sh` produced empty
+`current_branch`, then `git symbolic-ref HEAD refs/heads/` failed and
+the temp repo defaulted to `master`. Every BOOT-034 pass fixture that
+uses `copy_repo` + `expect_success` then tripped on
+`AI_HANDOFF.md branch does not match git branch: <branch> != master`.
+v1.6 fixes `copy_repo` to fall back to reading the current branch
+from `AI_HANDOFF.md` (the validator's source-of-truth for branch),
+then defaults to `main`, and adds regression fixture
+`case_copy_repo_recovers_handoff_branch_when_source_is_detached` that
+creates a fresh detached clone and asserts `copy_repo` recovers the
+handoff branch. No validator-script changes; only the red-check
+infrastructure helper and a regression fixture in v1.6.
 
 ## BOOT-034 Pre-Change Classification
 
@@ -399,11 +401,11 @@ or design changes in v1.5.
   file metadata, review-record row updated to v1.5 with cumulative
   review history, and the BOOT-034 traceability row updated with v1.4
   and v1.5 history.
-- Next safe action: request fresh-context Codex re-review of PR #13 at
-  the v1.5 head, iterate on any new findings until Codex approves with
-  no P0/P1/blocking P2 findings, then admin-merge PR #13 once GitHub
-  Actions on the PR is green and apply post-merge cleanup if `main` CI
-  flags the singular `AI_HANDOFF.md` branch field.
+- Next safe action: confirm both PR #13 `validate` CI runs (push and
+  pull_request) are green on the v1.6 head, request a brief
+  fresh-context Codex re-review of the v1.6 copy_repo fix, then
+  admin-merge PR #13 and apply post-merge cleanup if `main` CI flags
+  the singular `AI_HANDOFF.md` branch field.
 
 ## BOOT-035 Post-Merge Cleanup Pre-Change Classification
 
