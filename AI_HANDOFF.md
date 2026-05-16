@@ -30,7 +30,7 @@ Adversarial PR Reviewer
 
 ## Current Branch
 
-`claude/boot-033-src-spec-cross-validation`
+`main`
 
 ## Current Worktree
 
