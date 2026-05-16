@@ -47,11 +47,11 @@ required_files=(
   "BOOTSTRAP_USAGE.md"
   "GETTING_STARTED.md"
   "NEW_PROJECT_INITIALIZATION.md"
-  "BOOTSTRAP_AUDIT.md"
+  "MAINTAINER_ARCHIVE/BOOTSTRAP_AUDIT.md"
   "CLAUDE.md"
   "AGENTS.md"
   "GOVERNANCE.md"
-  "GOVERNANCE_PERFORMANCE.md"
+  "MAINTAINER_ARCHIVE/GOVERNANCE_PERFORMANCE.md"
   "OPERATION_ROUTING.md"
   "PROJECT_MEMORY.md"
   "CURRENT_STATE.md"
@@ -62,11 +62,11 @@ required_files=(
   "OPEN_QUESTIONS.md"
   "BACKLOG.md"
   "IMPLEMENTATION_PLAN.md"
-  "PARALLEL_EXECUTION_PLAN.md"
+  "MAINTAINER_ARCHIVE/PARALLEL_EXECUTION_PLAN.md"
   "BRANCH_AND_WORKTREE_GUIDE.md"
   "ARTIFACT_REGISTRY.md"
   "TRACEABILITY_MATRIX.md"
-  "STALE_ITEMS.md"
+  "MAINTAINER_ARCHIVE/STALE_ITEMS.md"
   "TEST_STRATEGY.md"
   "TEST_PLAN.md"
   "TEST_RESULTS.md"
@@ -122,18 +122,18 @@ required_files=(
   "REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md"
   "REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md"
   "TESTS/MANUAL_TEST_CHECKLIST.md"
-  "TESTS/ACCEPTANCE_CRITERIA_MAP.md"
+  "MAINTAINER_ARCHIVE/TESTS/ACCEPTANCE_CRITERIA_MAP.md"
   "WORKLOG/WORKLOG_INDEX.md"
   "HANDOFFS/HANDOFF_INDEX.md"
   "SCRIPTS/start-claude.sh"
   "SCRIPTS/validate-bootstrap.sh"
   "SCRIPTS/validate-bootstrap-red-checks.sh"
-  "SCRIPTS/scaffold-extract.sh"
+  "MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh"
   "SCRIPTS/metric-evidence-coverage.sh"
   "SCRIPTS/metric-acceptance-coverage.sh"
   "SCRIPTS/metric-traceability-completeness.sh"
-  "SCRIPTS/run-seeded-defect-bench.sh"
-  "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
+  "MAINTAINER_ARCHIVE/SCRIPTS/run-seeded-defect-bench.sh"
+  "MAINTAINER_ARCHIVE/TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
   ".githooks/pre-commit"
   ".githooks/commit-msg"
   ".githooks/pre-push"
@@ -150,8 +150,9 @@ required_dirs=(
   "REVIEWS"
   "REVIEWS/templates"
   "TESTS"
-  "ARTIFACTS"
-  "ARTIFACTS/ARCHIVE"
+  "MAINTAINER_ARCHIVE"
+  "MAINTAINER_ARCHIVE/ARTIFACTS"
+  "MAINTAINER_ARCHIVE/ARTIFACTS/ARCHIVE"
   "WORKLOG"
   "HANDOFFS"
   "INPUT"
@@ -461,7 +462,7 @@ if [[ -d BACKLOG ]]; then
         done < <(extract_ids "$spec_line" 'SPEC-[A-Z][A-Z0-9-]*-[0-9]+')
       fi
     fi
-  done < <(find BACKLOG -maxdepth 1 -type f -name 'BOOT-*.md' -print 2>/dev/null)
+  done < <(find MAINTAINER_ARCHIVE/BACKLOG -maxdepth 1 -type f -name 'BOOT-*.md' -print 2>/dev/null)
 fi
 
 # BOOT-034 Next Safe Action Staleness Guard.
@@ -679,7 +680,7 @@ done < <(awk '
     }
     if (target_body ~ /(SCRIPTS\/|\.github\/workflows|\.githooks\/|memory\/ai\/|PR_REVIEW_POLICY\.md|PR_MERGE_POLICY\.md|RISK_MODEL\.md|BRANCH_AND_WORKTREE_GUIDE\.md|GOVERNANCE\.md|OPERATION_ROUTING\.md|CONTEXT_PACKS\/|COMMANDS\/|REVIEWS\/templates\/|SPECS\/templates\/|ADR\/templates\/|BACKLOG\/templates\/)/ && profile != "strict-protected") {
       print "strict|" section
-    } else if (target_body ~ /(SPECS\/|BACKLOG\.md|BACKLOG\/|TRACEABILITY_MATRIX\.md|ARTIFACT_REGISTRY\.md|ADR\/|02_requirements\/|TESTS\/ACCEPTANCE_CRITERIA_MAP\.md)/ && profile !~ /^(planning-governance|strict-protected)$/) {
+    } else if (target_body ~ /(SPECS\/|BACKLOG\.md|BACKLOG\/|TRACEABILITY_MATRIX\.md|ARTIFACT_REGISTRY\.md|ADR\/|02_requirements\/|MAINTAINER_ARCHIVE\/TESTS\/ACCEPTANCE_CRITERIA_MAP\.md|TESTS\/ACCEPTANCE_CRITERIA_MAP\.md)/ && profile !~ /^(planning-governance|strict-protected)$/) {
       print "planning|" section
     }
   }

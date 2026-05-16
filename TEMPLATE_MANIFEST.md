@@ -34,13 +34,45 @@ a maintainer can run by hand.
 
 ## Copy Semantics Decision
 
-For this slice, ProjectGenesis uses manifest-mediated scaffold copy. A clean
-new project scaffold is produced by applying `TEMPLATE_MANIFEST.md` and
-`TEMPLATE_STARTERS/`. Raw root copy is not claimed as clean until maintainer
-history is removed or relocated from copied paths.
+ProjectGenesis supports two copy modes. Both are clean for the file paths
+classified as `maintainer-archive`; one mode additionally resets the
+`starter-reset` files.
 
-Do not assume `cp -R` of the ProjectGenesis root produces a clean new-project
-scaffold. Use the scaffold procedure below.
+1. **Raw-root direct copy (slice 2 and later).** All ProjectGenesis
+   maintainer-archive paths (REVIEWS records, BACKLOG/BOOT-* tickets,
+   BOOTSTRAP_AUDIT.md, GOVERNANCE_PERFORMANCE.md, PARALLEL_EXECUTION_PLAN.md,
+   SCAFFOLD_FORK_CHECKLIST.md, STALE_ITEMS.md, GITHUB_REPOSITORY_SETUP.md,
+   SPECS/SPEC-BOOT-*, the PG-specific TESTS and SCRIPTS, docs/, ARTIFACTS/,
+   and .github/ISSUE_TEMPLATE/) have been relocated into a single top-level
+   `MAINTAINER_ARCHIVE/` directory. A maintainer may therefore run
+   `cp -R projectgenesis newproj` and get a scaffold whose **active paths
+   that were previously maintainer-archive** are now clean. The consumer's
+   recommended cleanup step is `rm -rf newproj/MAINTAINER_ARCHIVE/`.
+
+   Caveat (slice 3 territory): the `starter-reset` files at the active
+   scaffold root (`AI_HANDOFF.md`, `CURRENT_STATE.md`, `BACKLOG.md`,
+   `BACKLOG/BACKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`,
+   `WORKLOG/WORKLOG_INDEX.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+   `ARTIFACT_REGISTRY.md`, `IMPLEMENTATION_PLAN.md`, `SPECS/SPEC_INDEX.md`,
+   `README.md`) still carry their ProjectGenesis instance content under
+   `cp -R`. Slice 3 trims these to clean active state with the accumulated
+   history written to `MAINTAINER_ARCHIVE/snapshots/`. Until slice 3,
+   consumers using raw `cp -R` should additionally apply the
+   `TEMPLATE_STARTERS/` mapping below (or wait for slice 3 to land).
+
+2. **Manifest-mediated scaffold copy (slice 1, still supported).** Follow
+   the classification table, nested overrides, starter-reset mappings, and
+   scaffold procedure below. This produces a scaffold that excludes
+   `MAINTAINER_ARCHIVE/` and replaces `starter-reset` targets with files
+   from `TEMPLATE_STARTERS/`, giving a fully clean scaffold without a
+   post-copy cleanup step.
+
+History note: prior versions of this manifest stated raw root copy was not
+clean at all. Slice 2 relocated ProjectGenesis maintainer history into
+`MAINTAINER_ARCHIVE/` and updated `SCRIPTS/validate-bootstrap.sh` and
+`ARTIFACT_REGISTRY.md` to point at the new paths, which makes raw root copy
+clean of maintainer-archive content for the first time. Active state
+required-reading files are still slice-3 work.
 
 ## Classification Legend
 
@@ -65,14 +97,31 @@ new project. If a maintainer-history path is kept for audit reasons inside the
 ProjectGenesis repository, it must remain outside required-reading paths and
 must not be classified as `copy` or `copy-clean`.
 
-In this slice, `BACKLOG/`, `REVIEWS/`, `WORKLOG/`, `ARTIFACTS/`, `docs/`,
-`BOOTSTRAP_AUDIT.md`, `GITHUB_REPOSITORY_SETUP.md`, `GOVERNANCE_PERFORMANCE.md`,
-`PARALLEL_EXECUTION_PLAN.md`, `SCAFFOLD_FORK_CHECKLIST.md`, `STALE_ITEMS.md`,
-and the `SPECS/SPEC-BOOT-*` files are classified as `maintainer-archive` at
-the path or folder level. Nested overrides classify `TESTS/ACCEPTANCE_CRITERIA_MAP.md`,
-`TESTS/ADVERSARIAL_SEED_BENCHMARK.md`, `SCRIPTS/run-seeded-defect-bench.sh`,
-`SCRIPTS/scaffold-extract.sh`, and `.github/ISSUE_TEMPLATE/` as
-`maintainer-archive` while keeping the parent folder copyable.
+After slice 2, all ProjectGenesis maintainer-archive files live under the
+top-level `MAINTAINER_ARCHIVE/` directory. Concretely:
+
+- `MAINTAINER_ARCHIVE/BACKLOG/BOOT-*.md` (PG BOOT ticket files)
+- `MAINTAINER_ARCHIVE/REVIEWS/PR_REVIEW_PACKAGE-*.md` and
+  `MAINTAINER_ARCHIVE/REVIEWS/REVIEW-*.md` (PG review records)
+- `MAINTAINER_ARCHIVE/SPECS/SPEC-BOOT-*.md` (PG specs)
+- `MAINTAINER_ARCHIVE/BOOTSTRAP_AUDIT.md`,
+  `MAINTAINER_ARCHIVE/GITHUB_REPOSITORY_SETUP.md`,
+  `MAINTAINER_ARCHIVE/GOVERNANCE_PERFORMANCE.md`,
+  `MAINTAINER_ARCHIVE/PARALLEL_EXECUTION_PLAN.md`,
+  `MAINTAINER_ARCHIVE/SCAFFOLD_FORK_CHECKLIST.md`,
+  `MAINTAINER_ARCHIVE/STALE_ITEMS.md` (PG-specific top-level files)
+- `MAINTAINER_ARCHIVE/TESTS/ACCEPTANCE_CRITERIA_MAP.md` and
+  `MAINTAINER_ARCHIVE/TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
+- `MAINTAINER_ARCHIVE/SCRIPTS/run-seeded-defect-bench.sh` and
+  `MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh`
+- `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` (PG-branded issue templates)
+- `MAINTAINER_ARCHIVE/docs/` (PG-launch/demo/release content)
+- `MAINTAINER_ARCHIVE/ARTIFACTS/` (formerly top-level ARTIFACTS/)
+
+The original top-level paths (`BACKLOG/`, `REVIEWS/`, `SPECS/`, `TESTS/`,
+`SCRIPTS/`, `.github/`) remain in the repository root and now contain only
+reusable scaffold material (indexes, templates, project-neutral scripts and
+checks).
 
 ## Documented Allowlist
 
@@ -190,7 +239,7 @@ Hits outside this allowlist are real leaks and must be reclassified.
 |------|-------|-------|
 | `.git` | `exclude` | Git internal state. Never copied; new project initializes its own. |
 | `.githooks/` | `copy` | Reusable commit-msg and pre-commit hooks. Project-neutral. |
-| `.github/` | `copy` | Issue templates, workflows, CODEOWNERS scaffolding. Project-neutral. |
+| `.github/` | `copy` | After slice 2 contains `workflows/` and `CODEOWNERS`. PG-branded `ISSUE_TEMPLATE/` moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/`. See nested overrides. |
 | `.gitignore` | `copy` | Reusable ignore rules. |
 | `00_intake/` | `copy` | Intake scaffolding; instance files are empty templates. See nested overrides. |
 | `01_context/` | `copy` | Product context scaffolding; instance files are empty templates. See nested overrides. |
@@ -201,11 +250,11 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `AI_PROJECT_BOOTSTRAP.md` | `copy-clean` | Reusable bootstrap operating-model description. Metadata references PG specs only. |
 | `AI_REVIEW_PROMPTS.md` | `copy-clean` | Reusable review-prompt library. |
 | `ARCHITECTURE.md` | `copy-clean` | Project-neutral architecture stub. Consumer is expected to overwrite for their product. |
-| `ARTIFACTS/` | `maintainer-archive` | ProjectGenesis artifact archive folder (currently empty `ARCHIVE/`). Not required-reading for new project. |
+| `MAINTAINER_ARCHIVE/` | `maintainer-archive` | Consolidated ProjectGenesis maintainer history folder (added in slice 2). Contains BACKLOG/BOOT-*, REVIEWS/PR_REVIEW_PACKAGE-*, REVIEWS/REVIEW-*, SPECS/SPEC-BOOT-*, BOOTSTRAP_AUDIT.md, GITHUB_REPOSITORY_SETUP.md, GOVERNANCE_PERFORMANCE.md, PARALLEL_EXECUTION_PLAN.md, SCAFFOLD_FORK_CHECKLIST.md, STALE_ITEMS.md, TESTS/ACCEPTANCE_CRITERIA_MAP.md, TESTS/ADVERSARIAL_SEED_BENCHMARK.md, SCRIPTS/run-seeded-defect-bench.sh, SCRIPTS/scaffold-extract.sh, .github/ISSUE_TEMPLATE/, docs/, and ARTIFACTS/. Required-reading is unaffected. A consumer may `rm -rf MAINTAINER_ARCHIVE/` after `cp -R` if they do not want to keep the upstream audit copy. |
 | `ARTIFACT_REGISTRY.md` | `starter-reset` | Heavy ProjectGenesis registry history. Treat as starter-reset; see Mapping table. |
 | `BACKLOG.md` | `starter-reset` | Top-level backlog summary contains ProjectGenesis BOOT history. Replace from `TEMPLATE_STARTERS/BACKLOG.md`. |
-| `BACKLOG/` | `maintainer-archive` | Folder contains ProjectGenesis BOOT-029..BOOT-035 item files. See nested overrides for `BACKLOG_INDEX.md` and `templates/`. |
-| `BOOTSTRAP_AUDIT.md` | `maintainer-archive` | ProjectGenesis-specific bootstrap audit record. Not part of clean scaffold. |
+| `BACKLOG/` | `copy` | After slice 2 contains only `BACKLOG_INDEX.md` and `templates/`. All `BOOT-*.md` ticket files moved to `MAINTAINER_ARCHIVE/BACKLOG/`. See nested overrides for the starter-reset `BACKLOG_INDEX.md`. |
+| `BOOTSTRAP_AUDIT.md` | (relocated) | Moved to `MAINTAINER_ARCHIVE/BOOTSTRAP_AUDIT.md` in slice 2. Top-level `BOOTSTRAP_AUDIT.md` no longer exists. |
 | `BOOTSTRAP_USAGE.md` | `copy-clean` | Reusable usage guide. Metadata references PG specs only. |
 | `BRANCH_AND_WORKTREE_GUIDE.md` | `copy-clean` | Reusable branch/worktree guidance. Metadata references PG specs only. |
 | `CI_CD_GUIDE.md` | `copy-clean` | Reusable CI/CD guidance. |
@@ -217,9 +266,9 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `CURRENT_STATE.md` | `starter-reset` | Heavy ProjectGenesis state history. Replace from `TEMPLATE_STARTERS/CURRENT_STATE.md`. |
 | `DECISIONS.md` | `copy-clean` | Reusable decision-governance guidance. |
 | `GETTING_STARTED.md` | `copy-clean` | Reusable getting-started guide. |
-| `GITHUB_REPOSITORY_SETUP.md` | `maintainer-archive` | ProjectGenesis-branded with explicit `mrhussamahmed/ProjectGenesis` repository name and remote URL. Not part of clean scaffold. |
+| `GITHUB_REPOSITORY_SETUP.md` | (relocated) | Moved to `MAINTAINER_ARCHIVE/GITHUB_REPOSITORY_SETUP.md` in slice 2. |
 | `GOVERNANCE.md` | `copy-clean` | Reusable governance doc. Metadata references PG specs only. |
-| `GOVERNANCE_PERFORMANCE.md` | `maintainer-archive` | ProjectGenesis-specific governance performance measurements tied to BOOT-024. |
+| `GOVERNANCE_PERFORMANCE.md` | (relocated) | Moved to `MAINTAINER_ARCHIVE/GOVERNANCE_PERFORMANCE.md` in slice 2. |
 | `HANDOFFS/` | `copy` | Handoff folder with neutral index. See nested overrides. |
 | `HOOKS_AND_GUARDRAILS.md` | `copy-clean` | Reusable hooks/guardrails guidance. |
 | `IMPLEMENTATION_PLAN.md` | `starter-reset` | Heavy ProjectGenesis phase-1 history. See Mapping table. |
@@ -229,19 +278,19 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `OBSERVABILITY.md` | `copy-clean` | Reusable observability guidance. |
 | `OPEN_QUESTIONS.md` | `copy-clean` | Reusable open-questions register with seeded generic OQ rows. Consumer may overwrite. |
 | `OPERATION_ROUTING.md` | `copy-clean` | Reusable adaptive-governance routing. Body says it is the routing control plane for "ProjectGenesis"; the word here refers to the operating model itself (the scaffold product). Consumer may keep or rename to their project. |
-| `PARALLEL_EXECUTION_PLAN.md` | `maintainer-archive` | ProjectGenesis-specific BOOT-030/031 parallel-execution plan. |
+| `PARALLEL_EXECUTION_PLAN.md` | (relocated) | Moved to `MAINTAINER_ARCHIVE/PARALLEL_EXECUTION_PLAN.md` in slice 2. |
 | `PR_MERGE_POLICY.md` | `copy-clean` | Reusable merge policy. Metadata references PG specs only. |
 | `PR_REVIEW_POLICY.md` | `copy-clean` | Reusable review policy. Metadata references PG specs only. |
 | `PROJECT_MEMORY.md` | `copy-clean` | Reusable project-memory description. Consumer may overwrite. |
 | `README.md` | `starter-reset` | ProjectGenesis-branded README. New projects should not inherit ProjectGenesis branding. Consumer-owned starter behavior is out of scope for this slice's required mapping; provide a minimal starter or treat as documented exclusion. See Notes. |
 | `RELEASE_READINESS.md` | `copy-clean` | Reusable release readiness checklist. |
-| `REVIEWS/` | `maintainer-archive` | Folder contains ProjectGenesis PR review packages and reviews. See nested overrides for `REVIEW_INDEX.md` and `templates/`. |
+| `REVIEWS/` | `copy` | After slice 2 contains only `REVIEW_INDEX.md` and `templates/`. All `PR_REVIEW_PACKAGE-*.md` and `REVIEW-*.md` files moved to `MAINTAINER_ARCHIVE/REVIEWS/`. See nested overrides for the starter-reset `REVIEW_INDEX.md`. |
 | `RISK_MODEL.md` | `copy-clean` | Reusable risk model guidance. |
-| `SCAFFOLD_FORK_CHECKLIST.md` | `maintainer-archive` | ProjectGenesis-specific fork checklist tied to BOOT-029/030/031. Not part of consumer first-run scaffold. |
+| `SCAFFOLD_FORK_CHECKLIST.md` | (relocated) | Moved to `MAINTAINER_ARCHIVE/SCAFFOLD_FORK_CHECKLIST.md` in slice 2. |
 | `SCRIPTS/` | `copy` | Reusable scripts. |
 | `SECURITY_AND_PRIVACY.md` | `copy-clean` | Reusable security/privacy guidance. |
-| `SPECS/` | `maintainer-archive` | Folder contains ProjectGenesis `SPEC-BOOT-*` files. See nested overrides for `SPEC_INDEX.md` and `templates/`. |
-| `STALE_ITEMS.md` | `maintainer-archive` | ProjectGenesis-specific staleness log tied to BOOT-033/034 and PR #10. Not part of clean scaffold. |
+| `SPECS/` | `copy` | After slice 2 contains only `SPEC_INDEX.md` and `templates/`. All `SPEC-BOOT-*.md` files moved to `MAINTAINER_ARCHIVE/SPECS/`. See nested overrides for the starter-reset `SPEC_INDEX.md`. |
+| `STALE_ITEMS.md` | (relocated) | Moved to `MAINTAINER_ARCHIVE/STALE_ITEMS.md` in slice 2. Reusable docs that mention `STALE_ITEMS.md` describe it as an optional pattern; a new project can create its own instance if needed. |
 | `start here/` | `copy` | Helper RTF files for starting a new project. Project-neutral. |
 | `TEMP/` | `exclude` | Temporary working space. Not copied. |
 | `TEMPLATE_MANIFEST.md` | `copy-clean` | This manifest. Copied unchanged. |
@@ -251,8 +300,8 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `TEST_RESULTS.md` | `starter-reset` | Heavy ProjectGenesis test history. Replace from `TEMPLATE_STARTERS/TEST_RESULTS.md`. |
 | `TEST_STRATEGY.md` | `copy-clean` | Reusable test strategy. |
 | `TRACEABILITY_MATRIX.md` | `starter-reset` | Heavy ProjectGenesis traceability history. Replace from `TEMPLATE_STARTERS/TRACEABILITY_MATRIX.md`. |
-| `WORKLOG/` | `maintainer-archive` | Folder reserved for ProjectGenesis worklog records. See nested overrides for `WORKLOG_INDEX.md`. |
-| `docs/` | `maintainer-archive` | ProjectGenesis-specific launch, demo, release notes, and roadmap drafts authored by ProjectGenesis Maintainers. Not part of consumer first-run scaffold. |
+| `WORKLOG/` | `copy` | After slice 2 contains only `WORKLOG_INDEX.md` (starter-reset). No worklog history files exist at root. |
+| `docs/` | (relocated) | Moved to `MAINTAINER_ARCHIVE/docs/` in slice 2. PG-specific launch/demo/release notes are now archive material. |
 | `examples/` | `example` | Clearly marked example projects under `examples/simple-saas-demo/`. Copy only as example reference, not as active state. |
 | `memory/` | `copy` | Memory folder. See nested overrides. |
 
@@ -365,7 +414,7 @@ introduced them; consumers may relabel.
 |-------------|-------|-------|
 | `.github/workflows/` | `copy` | Reusable CI workflows. |
 | `.github/CODEOWNERS` | `copy` | Reusable CODEOWNERS scaffold. |
-| `.github/ISSUE_TEMPLATE/` | `maintainer-archive` | Templates explicitly reference "ProjectGenesis" in `about:` lines, `owner` metadata, and the `mrhussamahmed/ProjectGenesis` repository URL. Not part of clean scaffold. New projects should provide their own issue templates. |
+| `.github/ISSUE_TEMPLATE/` | (relocated) | Moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` in slice 2. Templates referenced "ProjectGenesis" in `about:` lines, `owner` metadata, and the `mrhussamahmed/ProjectGenesis` repository URL. New projects should provide their own issue templates. |
 
 ## Required-Reading Inventory
 
