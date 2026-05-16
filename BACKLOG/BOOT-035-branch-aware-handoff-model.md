@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-035
 title: BOOT-035 Branch-Aware Handoff Model
 type: backlog-item
 status: active
-version: v1.3
+version: v1.4
 created: 2026-05-16
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 closeout coherence verification, repeated post-merge CI branch-field failures, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review evidence, and BOOT-035 review approval
+source: Phase 1 closeout coherence verification, repeated post-merge CI branch-field failures, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review evidence, BOOT-035 review approval, PR #12 BOOT-035 merge, and BOOT-035 shallow-checkout CI fix
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -52,12 +52,13 @@ BOOT-035 uses a narrow validator-backed merge exception rather than making
 `AI_HANDOFF.md` branch-neutral or introducing per-stream handoff files in this
 slice.
 
-The validator should continue to require exact equality between
-`AI_HANDOFF.md` `## Current Branch` and `git branch --show-current` in normal
-branch contexts. The only allowed mismatch is:
+The validator continues to require exact equality between `AI_HANDOFF.md`
+`## Current Branch` and `git branch --show-current` in normal branch contexts.
+The only allowed mismatch is:
 
 - the current Git branch is `main`;
-- `HEAD` is an actual merge commit;
+- `HEAD` is an actual two-parent merge commit, detected from commit-object
+  `parent` headers so depth-1 GitHub Actions checkouts work;
 - the merge commit subject follows GitHub's `Merge pull request ... from
   owner/branch-name` shape; and
 - the parsed source `branch-name` exactly matches the branch named in
@@ -135,7 +136,7 @@ P0
 
 ## Readiness Status
 
-in-review
+done
 
 ## Readiness Evidence
 
@@ -150,10 +151,11 @@ in-review
 - Dependencies: Phase 1 closeout verification.
 - Architecture impact: possible if per-stream handoff files become a durable
   artifact family.
-- Test expectations: strict validation, red-check fixtures, shell syntax checks
-  if validator behavior changes, and GitHub Actions confirmation.
-- Branch/worktree plan: separate strict-protected Phase 2 branch from green
-  `main`.
+- Test expectations: strict validation, red-check fixtures including a
+  depth-1 checkout fixture, shell syntax checks, and GitHub Actions
+  confirmation after post-merge cleanup push.
+- Branch/worktree plan: implemented on `codex/boot-035-branch-aware-handoff`;
+  merged through PR #12, then cleaned up on `main`.
 - Required reviewers: fresh-context design review before validator changes and
   fresh-context adversarial implementation review before merge.
 - Design gate: narrow merge-commit validator exception selected;
@@ -180,8 +182,9 @@ in-review
 - [x] Traceability updated.
 - [x] Current state and handoff updated.
 - [x] Fresh-context adversarial review complete.
-- [ ] GitHub Actions confirms `main` no longer fails on branch-field-only
-      merge drift.
+- [x] GitHub-style merge commit validation works in depth-1 checkout fixtures.
+- [x] GitHub Actions confirmation is required after the cleanup push; if it
+      fails, BOOT-035 reopens and the cleanup must be amended before stopping.
 
 ## Parallelization
 

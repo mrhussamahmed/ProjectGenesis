@@ -24,16 +24,14 @@ check_dir() {
 handoff_branch_matches_github_main_merge() {
   local git_branch="$1"
   local handoff_branch="$2"
-  local rev_line
+  local parent_count
   local subject
   local source_branch
-  local -a rev_parts
 
   [[ "$git_branch" == "main" ]] || return 1
 
-  rev_line="$(git rev-list --parents -n 1 HEAD 2>/dev/null || true)"
-  read -r -a rev_parts <<<"$rev_line"
-  [[ "${#rev_parts[@]}" -eq 3 ]] || return 1
+  parent_count="$(git cat-file -p HEAD 2>/dev/null | awk '$1 == "parent" { count++ } END { print count + 0 }')"
+  [[ "$parent_count" -eq 2 ]] || return 1
 
   subject="$(git log -1 --format=%s 2>/dev/null || true)"
   if [[ "$subject" =~ ^Merge\ pull\ request\ \#[0-9]+\ from\ [^[:space:]/]+/(.+)$ ]]; then

@@ -2,11 +2,11 @@ artifact_id: ART-PLAN-001
 title: Implementation Plan
 type: implementation-plan
 status: active
-version: v1.3
+version: v1.4
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, Phase 1 execution planning, Phase 1 closeout coherence verification, and BOOT-035 branch-aware handoff planning
+source: Initial bootstrap scaffold, Phase 1 execution planning, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #12 BOOT-035 merge, and BOOT-035 post-merge cleanup
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -82,13 +82,18 @@ rules and did not require spec or backlog template changes.
 
 ## Phase 2 Candidate Plan
 
-Phase 2 is not active. Candidate work should be planned as separate backlog
-items and reviewed before implementation.
+Phase 2 has one completed item, BOOT-035. Remaining candidate work should be
+planned as separate backlog items and reviewed before implementation.
 
 | Candidate | Trigger | Purpose | First Required Action |
 |-----------|---------|---------|-----------------------|
 | BOOT-034 | PR #10 / BOOT-033 review-loop lesson | Prevent stale forward-looking `Next safe action:` instructions from surviving after the referenced action is complete. | Choose documentation-only, template, or validator enforcement path in a reviewed Phase 2 plan. |
-| BOOT-035 | Repeated PR #5 through PR #10 post-merge CI branch-field failures | Make handoff branch-aware or branch-neutral so feature-branch merges do not fail `main` CI solely because `AI_HANDOFF.md ## Current Branch` still names the merged branch. | Choose per-stream handoff, branch-neutral main handoff, or validator design in a reviewed strict-protected Phase 2 plan. |
+
+## Phase 2 Completed Work
+
+| Backlog Item | Trigger | Purpose | Completion Evidence |
+|--------------|---------|---------|---------------------|
+| BOOT-035 | Repeated PR #5 through PR #12 post-merge CI branch-field failures | Make handoff branch-aware so feature-branch merges do not fail `main` CI solely because `AI_HANDOFF.md ## Current Branch` still names the merged branch. | PR #12 merged to `main` at `100fe77f0f1971290407651761a3d92964979d27`; post-merge cleanup adds depth-1 checkout detection via commit-object parent headers and a shallow-checkout red-check fixture. |
 
 ## Rollback Or Recovery
 

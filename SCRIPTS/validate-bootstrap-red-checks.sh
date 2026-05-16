@@ -221,6 +221,15 @@ case_main_github_merge_source_handoff_branch_passes() {
   expect_success "main GitHub merge source handoff branch passes" "$dir"
 }
 
+case_main_github_merge_shallow_checkout_passes() {
+  local dir
+  local shallow_dir="$tmp_root/main-github-merge-shallow-checkout-passes"
+  dir="$(copy_repo main-github-merge-shallow-source)"
+  create_github_merge_fixture "$dir" "codex/red-merge-shallow-source" "codex/red-merge-shallow-source"
+  git clone --depth=1 --branch main "file://$dir" "$shallow_dir" >/dev/null 2>&1
+  expect_success "main GitHub merge shallow checkout passes" "$shallow_dir"
+}
+
 case_main_github_merge_mismatched_handoff_branch_fails() {
   local dir
   dir="$(copy_repo main-github-merge-mismatched-handoff-branch-fails)"
@@ -806,6 +815,7 @@ case_active_backlog_missing_spec
 case_handoff_branch_mismatch
 case_main_non_merge_handoff_branch_mismatch
 case_main_github_merge_source_handoff_branch_passes
+case_main_github_merge_shallow_checkout_passes
 case_main_github_merge_mismatched_handoff_branch_fails
 case_main_unparseable_merge_handoff_branch_fails
 case_main_octopus_merge_handoff_branch_fails

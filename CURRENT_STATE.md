@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.58
+version: v3.59
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #9 merge/post-merge source-of-truth cleanup, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, PR #11 merge/post-merge source-of-truth cleanup, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review validation, and BOOT-035 review approval
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #9 merge/post-merge source-of-truth cleanup, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, PR #11 merge/post-merge source-of-truth cleanup, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review validation, BOOT-035 review approval, PR #12 BOOT-035 merge, and BOOT-035 shallow-checkout CI fix
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -44,29 +44,29 @@ authoritative: false
 
 ## Active Implementation Phase
 
-- BOOT-035 branch-aware handoff model is in-review on
-  `codex/boot-035-branch-aware-handoff` from green `main` commit
-  `36738a870cc210eb033d9456fd1b6b3bffec8e62`. The selected design path is a
-  narrow validator exception for GitHub-style merge commits on `main` where
-  `AI_HANDOFF.md` `## Current Branch` still names the merged source branch.
-  The exception is backed by six red-check fixtures and preserves ordinary
-  branch-mismatch failures on feature branches, normal `main` commits,
-  mismatched GitHub merge sources, unparseable merge subjects, and octopus
-  merges. Fresh-context design review completed with no P0 blocker and one
-  resolved P1 wording constraint: branch names must be parsed from the GitHub
-  merge subject, not from the second parent commit. Fresh-context
-  implementation review initially requested one P2 state-coherence fix; the
-  fix was applied and narrow re-review approved with no P0/P1/P2 findings.
+- BOOT-035 branch-aware handoff model is merged through PR #12 at merge commit
+  `100fe77f0f1971290407651761a3d92964979d27`. The remote branch
+  `codex/boot-035-branch-aware-handoff` was deleted. The selected design path
+  is a narrow validator exception for GitHub-style merge commits on `main`
+  where `AI_HANDOFF.md` `## Current Branch` still names the merged source
+  branch. Initial PR checks passed and local validation on the merge commit
+  passed, but GitHub Actions run `25959334165` failed because the depth-1
+  Actions checkout made `git rev-list --parents` unsuitable for detecting the
+  merge commit's two parents. This cleanup changes the helper to count
+  `parent` headers from the commit object with `git cat-file -p HEAD`, adds a
+  shallow-checkout red-check fixture, and sets the singular handoff branch
+  field back to `main` for the post-merge cleanup commit. BOOT-035 is done
+  after this cleanup is pushed and latest `main` CI is green; BOOT-034 remains
+  proposed only.
 - Phase 1 closeout coherence / PR #11 is merged to `main` at merge commit
   `a55aa2070c07255a4704d3ca7b11e27c535b3b3e`. The remote branch
   `codex/phase-1-closeout-coherence` was deleted. The merge records Phase 1
   complete, updates `IMPLEMENTATION_PLAN.md`, and adds proposed Phase 2
-  backlog candidates BOOT-034 and BOOT-035. BOOT-035 is now active
-  in-review on the current branch; BOOT-034 remains proposed only. GitHub
-  Actions on the merge commit failed with the known singular
-  `AI_HANDOFF.md` branch-mismatch issue; this
-  post-merge cleanup corrects the branch field to `main` and records merge
-  evidence.
+  backlog candidates BOOT-034 and BOOT-035. BOOT-035 was implemented and
+  merged through PR #12; BOOT-034 remains proposed only. GitHub Actions on the
+  PR #11 merge commit failed with the known singular `AI_HANDOFF.md`
+  branch-mismatch issue; follow-up commit `36738a870cc210eb033d9456fd1b6b3bffec8e62`
+  corrected the branch field to `main` and passed CI.
 - Phase 1D / BOOT-033 SRC/SPEC cross-validation is merged to `main`
   through PR #10
   (`https://github.com/mrhussamahmed/ProjectGenesis/pull/10`) at merge
@@ -301,8 +301,7 @@ authoritative: false
 
 ## Active Branch
 
-- `codex/boot-035-branch-aware-handoff` from `main` commit
-  `36738a870cc210eb033d9456fd1b6b3bffec8e62`.
+- `main` at PR #12 post-merge cleanup.
 
 ## Active Worktree
 
@@ -315,8 +314,8 @@ authoritative: false
 - BOOT-034 is a proposed Phase 2 candidate to prevent stale
   forward-looking `Next safe action:` instructions in committed handoff/state
   evidence.
-- BOOT-035 is the active Phase 2 branch-aware handoff task and is in-review
-  after local strict validation passed.
+- BOOT-035 branch-aware handoff is merged through PR #12; this cleanup fixes
+  the depth-1 GitHub Actions checkout detector and records final state.
 - Public launch readiness and adoption packaging for ProjectGenesis discovery
   and reuse.
 - Bootstrap package completeness and downstream project intake readiness after
@@ -334,8 +333,8 @@ authoritative: false
   succeeded.
 - BOOT-034 is proposed only; it must be planned and reviewed before any
   template, validator, or policy implementation.
-- BOOT-035 merge is blocked on push, PR creation, and GitHub Actions after
-  push.
+- BOOT-035 is not blocked locally; the remaining confirmation is the latest
+  `main` GitHub Actions run after this cleanup push.
 - No product-specific input has been provided for a downstream software
   project.
 - No active bootstrap publication blockers.
@@ -386,11 +385,24 @@ authoritative: false
 
 ## Next Recommended Action
 
-Push `codex/boot-035-branch-aware-handoff`, open the PR, and confirm GitHub
-Actions `Bootstrap Validation` is green before merge.
+Confirm latest `main` GitHub Actions `Bootstrap Validation` is green, then
+choose the next Phase 2 item. BOOT-034 remains the proposed follow-up for
+stale forward-looking `Next safe action:` evidence.
 
 ## Latest Validation
 
+- BOOT-035 PR #12 merge and shallow-checkout fix on 2026-05-16: PR #12 merged
+  to `main` at `100fe77f0f1971290407651761a3d92964979d27`; PR branch checks
+  were green. Local validation on the merge commit passed, but GitHub Actions
+  run `25959334165` failed because the depth-1 checkout did not satisfy the
+  `git rev-list --parents` merge detector. The cleanup fix counts commit
+  object `parent` headers with `git cat-file -p HEAD`; a temporary depth-1
+  fixture reproduced the CI failure before the fix and passed after it. `bash
+  SCRIPTS/validate-bootstrap.sh` passed, `bash -n
+  SCRIPTS/validate-bootstrap.sh` passed, `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passed, and `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` passed with 37 cases including
+  the new shallow-checkout fixture.
 - BOOT-035 branch-aware handoff local validation on 2026-05-16:
   `bash -n SCRIPTS/validate-bootstrap.sh` passed; `bash -n
   SCRIPTS/validate-bootstrap-red-checks.sh` passed; `bash
