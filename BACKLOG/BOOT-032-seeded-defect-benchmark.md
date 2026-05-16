@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-032
 title: BOOT-032 Seeded-Defect Benchmark
 type: backlog-item
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-15
-updated: 2026-05-15
+updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and PR #6 merge/post-merge source-of-truth cleanup
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, PR #6 merge/post-merge source-of-truth cleanup, and BOOT-032 implementation on branch claude/boot-032-seeded-defect-benchmark
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -106,7 +106,7 @@ P0
 
 ## Readiness Status
 
-queued after BOOT-031; research-only prep allowed if isolated
+in-review
 
 ## Readiness Evidence
 
@@ -135,13 +135,23 @@ queued after BOOT-031; research-only prep allowed if isolated
 
 ## Definition Of Done
 
-- [ ] Spec linked.
-- [ ] Acceptance criteria satisfied.
-- [ ] Tests added or updated, or justified.
-- [ ] Traceability updated.
-- [ ] Artifact registry updated.
-- [ ] Handoff updated.
-- [ ] Review complete or pending review recorded.
+- [x] Spec linked.
+- [x] Acceptance criteria satisfied: coverage metric scripts return
+      parseable lines; the seeded-defect benchmark records a baseline
+      detection rate.
+- [x] Tests added or updated, or justified: `bash -n` passes for all
+      new scripts; `bash SCRIPTS/validate-bootstrap.sh` passes after
+      adding the new required files and registry rows; the seeded-defect
+      runner records baseline detection rate 25/25 (100%).
+- [x] Traceability updated.
+- [x] Artifact registry updated (`ART-METRIC-EVIDENCE-COVERAGE`,
+      `ART-METRIC-ACCEPTANCE-COVERAGE`,
+      `ART-METRIC-TRACEABILITY-COMPLETENESS`,
+      `ART-SEEDED-DEFECT-BENCH-RUNNER`, and `ART-SEED-BENCH-PLAN`).
+- [x] Handoff updated.
+- [ ] Review complete or pending review recorded: fresh-context Codex
+      review will run after the PR is open and GitHub `validate` is
+      green.
 
 ## Parallelization
 
