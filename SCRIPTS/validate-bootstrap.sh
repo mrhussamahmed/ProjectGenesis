@@ -464,6 +464,127 @@ if [[ -d BACKLOG ]]; then
   done < <(find BACKLOG -maxdepth 1 -type f -name 'BOOT-*.md' -print 2>/dev/null)
 fi
 
+# BOOT-034 Next Safe Action Staleness Guard.
+#
+# Committed handoff and state evidence in `AI_HANDOFF.md` and
+# `CURRENT_STATE.md` may carry one or more `Next safe action:` envelope
+# fields. After an envelope's action is complete, the line goes stale and
+# must not keep instructing the next agent to redo work that already
+# happened. The PR #10 / BOOT-033 v1.0 through v1.5 review loop is the
+# canonical incident: successive fresh-context reviews each surfaced an
+# older, unmarked `Next safe action:` line that was misread as still
+# active.
+#
+# The check is narrow and fail-closed:
+#
+# - It scans only `AI_HANDOFF.md` and `CURRENT_STATE.md`.
+# - It only matches Markdown list-item bullets that start (after optional
+#   leading whitespace) with `-` or `*`, then `Next safe action:` (case
+#   insensitive). Section headings such as `## Next Recommended Action`
+#   start with `#` and are skipped. Narrative prose mentioning
+#   `Next safe action:` inside backticks is skipped because it does not
+#   begin with a list bullet.
+# - Multiline bullets are stitched together: any indented continuation
+#   line is appended to the bullet's payload until the next bullet,
+#   blank line, or section heading.
+# - Lines inside fenced code blocks (` ``` ` or `~~~`) are ignored so
+#   illustrative `Next safe action:` examples in code fences do not trip
+#   the rule.
+# - A bullet is "marked" (historical) when its trimmed payload starts
+#   with one of the canonical marker words (`completed`, `superseded`,
+#   `historical`, `delegated`) or with a leading parenthetical such as
+#   `(historical)` containing one of those words. The marker must be at
+#   the start of the payload; marker words appearing later in the
+#   payload (for example, "confirm delegated authority" or "ensure work
+#   is completed before merge") do NOT count as marked, so the rule
+#   stays fail-closed on legitimately active instructions that happen to
+#   mention a marker word.
+# - Empty payloads (a bullet with `Next safe action:` and no content on
+#   the same line or any continuation line) count as unmarked. They
+#   indicate a structurally incomplete envelope and should be flagged.
+# - At most one unmarked `Next safe action:` field is allowed per file.
+#   That single line represents the current/active envelope. All other
+#   envelopes are historical and must carry one of the explicit markers
+#   at the start of the payload.
+#
+# The marker set is intentionally small: `completed`, `superseded`,
+# `historical`, `delegated`. If a maintainer wants to describe a
+# different historical state (for example a merged PR), the canonical
+# pattern is `Next safe action: completed by PR #N merge; ...` which
+# already matches the `completed` marker.
+#
+# The rule deliberately does not police general prose; it only inspects
+# the structured `Next safe action:` envelope field used by
+# `OPERATION_ROUTING.md`.
+
+count_unmarked_next_safe_actions() {
+  local target="$1"
+  [[ -f "$target" ]] || { echo 0; return; }
+  awk '
+    function has_start_marker(payload,    lower) {
+      lower = tolower(payload)
+      sub(/^[ \t]+/, "", lower)
+      if (lower == "") return 0
+      # Parenthetical marker at the very start, optionally with extra
+      # text inside the parens: e.g. "(historical)", "(completed; see X)".
+      if (lower ~ /^\([^)]*(completed|superseded|historical|delegated)[^)]*\)/) return 1
+      # Direct marker word at the very start of the payload, terminated
+      # by a non-letter (whitespace, punctuation, end of line).
+      if (lower ~ /^(completed|superseded|historical|delegated)([^a-z]|$)/) return 1
+      return 0
+    }
+    function finalize(    payload) {
+      if (!in_bullet) return
+      payload = bullet_payload
+      gsub(/^[ \t]+|[ \t]+$/, "", payload)
+      # Empty payloads are structurally incomplete -- count as unmarked
+      # so the staleness guard flags them.
+      if (!has_start_marker(payload)) count += 1
+      in_bullet = 0
+      bullet_payload = ""
+    }
+    BEGIN {
+      in_fence = 0
+      in_bullet = 0
+      bullet_payload = ""
+    }
+    # Toggle Markdown fence state on lines starting with ``` or ~~~.
+    /^[ \t]*(```|~~~)/ {
+      finalize()
+      in_fence = !in_fence
+      next
+    }
+    in_fence { next }
+    # Section headings end any open bullet.
+    /^#/ { finalize(); next }
+    # Blank lines end any open bullet.
+    /^[ \t]*$/ { finalize(); next }
+    # New list bullet (either a new `Next safe action:` field or a
+    # different bullet). Finalize the previous bullet first.
+    /^[ \t]*[-*][ \t]/ {
+      finalize()
+      if (tolower($0) ~ /^[ \t]*[-*][ \t]+next safe action:/) {
+        idx = index(tolower($0), "next safe action:")
+        bullet_payload = substr($0, idx + length("next safe action:"))
+        in_bullet = 1
+      }
+      next
+    }
+    # Continuation line for the open bullet.
+    in_bullet { bullet_payload = bullet_payload " " $0 }
+    END { finalize(); print count + 0 }
+  ' "$target"
+}
+
+for stale_target in AI_HANDOFF.md CURRENT_STATE.md; do
+  if [[ -f "$stale_target" ]]; then
+    unmarked_count="$(count_unmarked_next_safe_actions "$stale_target")"
+    if [[ "$unmarked_count" -gt 1 ]]; then
+      fail "$stale_target has $unmarked_count unmarked 'Next safe action:' entries; only the current envelope may be unmarked. Mark historical entries with one of: completed, superseded, historical, delegated."
+    fi
+  fi
+done
+
 grep -Fq "ARTIFACT_REGISTRY.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference ARTIFACT_REGISTRY.md"
 grep -Fq "TRACEABILITY_MATRIX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference TRACEABILITY_MATRIX.md"
 grep -Fq "SPECS/SPEC_INDEX.md" CONTEXT_INDEX.md || fail "CONTEXT_INDEX.md does not reference SPECS/SPEC_INDEX.md"

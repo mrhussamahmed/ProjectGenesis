@@ -2,11 +2,11 @@ artifact_id: ART-PLAN-001
 title: Implementation Plan
 type: implementation-plan
 status: active
-version: v1.4
+version: v1.5
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, Phase 1 execution planning, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #12 BOOT-035 merge, and BOOT-035 post-merge cleanup
+source: Initial bootstrap scaffold, Phase 1 execution planning, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #12 BOOT-035 merge, BOOT-035 post-merge cleanup, and BOOT-034 next safe action staleness guard implementation in-review
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -80,14 +80,14 @@ metadata or ADR-level design; BOOT-032 recorded a baseline rather than making
 generalized benchmark claims; BOOT-033 stayed within local validator parser
 rules and did not require spec or backlog template changes.
 
-## Phase 2 Candidate Plan
+## Phase 2 In-Review Plan
 
-Phase 2 has one completed item, BOOT-035. Remaining candidate work should be
+Phase 2 has one in-review item, BOOT-034. Remaining candidate work should be
 planned as separate backlog items and reviewed before implementation.
 
-| Candidate | Trigger | Purpose | First Required Action |
-|-----------|---------|---------|-----------------------|
-| BOOT-034 | PR #10 / BOOT-033 review-loop lesson | Prevent stale forward-looking `Next safe action:` instructions from surviving after the referenced action is complete. | Choose documentation-only, template, or validator enforcement path in a reviewed Phase 2 plan. |
+| In-Review Item | Trigger | Purpose | Branch/PR Shape | Status |
+|----------------|---------|---------|-----------------|--------|
+| BOOT-034 | PR #10 / BOOT-033 review-loop lesson | Add a validator-backed staleness guard so committed `AI_HANDOFF.md` and `CURRENT_STATE.md` evidence cannot preserve more than one unmarked forward-looking `Next safe action:` field. | Strict-protected validator PR with red-check fixtures and bulk marking of existing historical envelopes. | In-review on `claude/boot-034-next-safe-action-staleness-guard`; awaiting fresh-context Codex adversarial review. |
 
 ## Phase 2 Completed Work
 

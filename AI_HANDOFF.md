@@ -2,11 +2,11 @@ artifact_id: ART-STATE-003
 title: AI Handoff
 type: shared-state
 status: active
-version: v3.58
+version: v3.63
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, PR #11 merge/post-merge source-of-truth cleanup, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review validation, BOOT-035 review approval, PR #12 BOOT-035 merge, and BOOT-035 shallow-checkout CI fix
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, checkout action maintenance, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-019 through BOOT-024 startup, BOOT-019 through BOOT-024 merge, BOOT-019 through BOOT-024 post-merge state cleanup, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist startup, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 review fixes, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, PR #11 review package/fix response, PR #11 re-review approval, PR #11 merge/post-merge source-of-truth cleanup, BOOT-035 branch-aware handoff implementation startup, BOOT-035 in-review validation, BOOT-035 review approval, PR #12 BOOT-035 merge, BOOT-035 shallow-checkout CI fix, BOOT-034 next safe action staleness guard implementation, and BOOT-034 PR #13 v1.2 review-fix for validator robustness, fixture assertions, fenced code block exclusion, and registry version alignment
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -22,7 +22,7 @@ authoritative: false
 
 ## Active Agent
 
-Codex
+Claude
 
 ## Current Role
 
@@ -30,28 +30,382 @@ Implementation Agent
 
 ## Current Branch
 
-`main`
+`claude/boot-034-next-safe-action-staleness-guard`
 
 ## Current Worktree
 
-`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/festive-ride-eadc67`
+`/Users/ahmedabd/Desktop/AI Projects/New Poject bootstrap/.claude/worktrees/magical-pascal-69c5ea`
 
 ## Last Completed Task
 
-PR #12 / BOOT-035 branch-aware handoff admin-merged to `main` at merge commit
-`100fe77f0f1971290407651761a3d92964979d27` on 2026-05-16. The PR branch
-checks passed before merge, and the remote branch
+BOOT-035 post-merge cleanup commit `f116f85` was pushed to `main` and GitHub
+Actions `Bootstrap Validation` run `25960081829` succeeded on 2026-05-16,
+restoring `main` CI to green. PR #12 / BOOT-035 branch-aware handoff
+admin-merged to `main` at merge commit
+`100fe77f0f1971290407651761a3d92964979d27` on 2026-05-16. The remote branch
 `codex/boot-035-branch-aware-handoff` was deleted.
 
 ## Current In-Progress Task
 
-BOOT-035 post-merge cleanup is active on `main`. Local validation on merge
-commit `100fe77f0f1971290407651761a3d92964979d27` passed, but GitHub Actions
-run `25959334165` failed because the depth-1 Actions checkout did not satisfy
-the initial `git rev-list --parents` merge detector. This cleanup switches the
-detector to commit-object parent headers via `git cat-file -p HEAD`, adds a
-shallow-checkout red-check fixture, updates source-of-truth state, and sets
-`AI_HANDOFF.md` `## Current Branch` to `main` for the follow-up commit.
+BOOT-034 next safe action staleness guard PR #13 v1.6 copy_repo
+detached-HEAD CI fix. The fresh-context Codex v1.5 re-review at head
+`244d6d7` **APPROVED** the PR with no remaining P0/P1/blocking P2
+findings (only one non-blocking P3 about a stale historical sentence
+in `CURRENT_STATE.md:210`). However, the GitHub Actions PR check
+failed on the `pull_request` event (run `25963680867`) even though
+the `push` event run (`25963679909`) succeeded. The pull_request
+checkout is in detached HEAD, so `copy_repo` in
+`SCRIPTS/validate-bootstrap-red-checks.sh` produced empty
+`current_branch`, then `git symbolic-ref HEAD refs/heads/` failed and
+the temp repo defaulted to `master`. Every BOOT-034 pass fixture that
+uses `copy_repo` + `expect_success` then tripped on
+`AI_HANDOFF.md branch does not match git branch: <branch> != master`.
+v1.6 fixes `copy_repo` to fall back to reading the current branch
+from `AI_HANDOFF.md` (the validator's source-of-truth for branch),
+then defaults to `main`, and adds regression fixture
+`case_copy_repo_recovers_handoff_branch_when_source_is_detached` that
+creates a fresh detached clone and asserts `copy_repo` recovers the
+handoff branch. No validator-script changes; only the red-check
+infrastructure helper and a regression fixture in v1.6.
+
+## BOOT-034 Pre-Change Classification
+
+- Operation profile: `strict-protected`
+- Target files: `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `IMPLEMENTATION_PLAN.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`,
+  and a new PR review package under `REVIEWS/`.
+- Protected files touched: yes; this changes validator mechanics, red-check
+  mechanics, and several registered source-of-truth state/backlog/plan
+  artifacts.
+- Expected risk: high because the validator gains a new structural rule over
+  committed handoff/state evidence. The rule is fail-closed and narrow: it
+  counts unmarked `Next safe action:` envelope fields in `AI_HANDOFF.md` and
+  `CURRENT_STATE.md`, treating `completed`, `superseded`, `historical`, and
+  `delegated` as explicit historical markers, and ignoring `## Next
+  Recommended Action` section headings and unrelated prose.
+- Branch requirement: branch required; using
+  `claude/boot-034-next-safe-action-staleness-guard` from green `main` at
+  `f116f85`.
+- Required validation: `bash -n SCRIPTS/validate-bootstrap.sh`, `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh`, `bash
+  SCRIPTS/validate-bootstrap.sh`, `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and GitHub
+  Actions `Bootstrap Validation` on the PR.
+- Required review: fresh-context Codex adversarial review because validator
+  mechanics change. Re-review loop until Codex approves with no
+  P0/P1/blocking P2 findings.
+- Traceability impact: required because BOOT-034 status changes from
+  proposed to in-review and a new validator rule plus red-check fixtures
+  map to acceptance evidence for `SPEC-BOOT-003` durable-evidence
+  governance.
+- Registry impact: required because `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `IMPLEMENTATION_PLAN.md`, `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`,
+  `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`, and the new PR
+  review package change.
+- Handoff/state impact: required because active branch, worktree, active
+  task, validation evidence, and next safe action change.
+- Dirty worktree status: before edits, `git status --short --branch` showed
+  `## claude/boot-034-next-safe-action-staleness-guard...origin/main` and
+  no untracked files; the worktree was clean at the new branch's checkout
+  of `main` at `f116f85`.
+- Escalation triggers checked: validator mechanics, red-check mechanics,
+  source-of-truth hierarchy for `AI_HANDOFF.md` and `CURRENT_STATE.md`,
+  protected planning artifacts (`BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `IMPLEMENTATION_PLAN.md`, `TRACEABILITY_MATRIX.md`, `ARTIFACT_REGISTRY.md`),
+  review policy, CI behavior, and dirty worktree handling. No hooks, CI
+  workflow files, shared rules, role files, command files, context packs,
+  templates, ADRs, governance policy, operation routing policy,
+  branch/worktree policy, PR/merge policy, risk model, architecture,
+  security, release, scaffold extraction script, metric scripts,
+  seeded-defect benchmark, or runtime product files are in scope.
+
+## BOOT-034 Final Evidence Envelope
+
+- Operation profile: `strict-protected`
+- Classification confidence: high.
+- Escalation triggers checked: validator mechanics, red-check mechanics,
+  source-of-truth hierarchy for `AI_HANDOFF.md` and `CURRENT_STATE.md`,
+  protected planning artifacts (`BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `IMPLEMENTATION_PLAN.md`, `TRACEABILITY_MATRIX.md`, `ARTIFACT_REGISTRY.md`),
+  review policy, CI behavior, dirty worktree handling, and shell-syntax
+  obligations for validator/red-check changes. No hooks, CI workflow files,
+  shared rules, role files, command files, context packs, templates, ADRs,
+  governance policy, operation routing policy, branch/worktree policy,
+  PR/merge policy, risk model, architecture, security, release, scaffold
+  extraction script, metric scripts, seeded-defect benchmark, or runtime
+  product files are changed.
+- Files read: `AGENTS.md`, `CLAUDE.md`, `memory/ai/SHARED_AGENT_RULES.md`,
+  `memory/ai/ROLE_IMPLEMENTATION_AGENT.md`, `AI_PROJECT_BOOTSTRAP.md`,
+  `CONTEXT_INDEX.md`, `CURRENT_STATE.md`, `AI_HANDOFF.md`,
+  `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`,
+  `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md`,
+  `TRACEABILITY_MATRIX.md`, `GOVERNANCE.md`, `OPERATION_ROUTING.md`,
+  `BRANCH_AND_WORKTREE_GUIDE.md`, `BACKLOG.md`,
+  `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `IMPLEMENTATION_PLAN.md`, `SCRIPTS/validate-bootstrap.sh`, and
+  `SCRIPTS/validate-bootstrap-red-checks.sh`.
+- Files changed: `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `IMPLEMENTATION_PLAN.md`, `ARTIFACT_REGISTRY.md`,
+  `TRACEABILITY_MATRIX.md`, `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`.
+- Files intentionally not read: older unrelated review records and archived
+  artifacts; BOOT-034 evidence is available from current source-of-truth
+  files, validator scripts, the active backlog item, the BOOT-033
+  review-loop history summarized in `CURRENT_STATE.md`, and Codex review
+  expectations. The untracked `research/` directory remains intentionally
+  unread; validators prune it.
+- Artifacts not impacted: hooks, CI workflow files, shared agent rules, role
+  files, command files, context packs, templates, ADRs, governance policy,
+  operation routing policy, branch/worktree policy, PR/merge policy, risk
+  model, architecture, security, release, public README, scaffold extraction
+  scripts, metric scripts, seeded-defect benchmark plan, and runtime product
+  files.
+- Validation run: `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.` on
+  this branch after bulk marking 25 historical `Next safe action:` envelope
+  fields with `(historical)` prefixes; `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red checks
+  passed.` with 45 cases (37 prior + 8 new BOOT-034 fixtures); and `git diff
+  --check` exits 0. Before bulk marking, the new validator rule reported
+  `AI_HANDOFF.md has 25 unmarked 'Next safe action:' entries`, confirming
+  the staleness guard activates on the recorded historical drift.
+- Validation skipped: stack-specific product tests are not applicable because
+  this changes bootstrap validation and source-of-truth records only.
+- Review required: fresh-context Codex adversarial review because validator
+  mechanics change. Completed: PR #13 v1.0 fresh-context Codex adversarial
+  review at head `9d93250` requested changes; v1.2 review-fix applied; see
+  the v1.2 Review-Fix Evidence Envelope below for current state.
+- Next safe action: superseded by the BOOT-034 PR #13 v1.2 Review-Fix
+  Evidence Envelope below. The original three sub-actions of this envelope
+  (push branch, open PR, request Codex review) all completed at v1.0; the
+  remaining sub-actions (iterate to Codex approval, admin-merge) are
+  delegated to the v1.2 envelope.
+
+## BOOT-034 PR #13 v1.2 Review-Fix Pre-Change Classification
+
+- Operation profile: `strict-protected`
+- Target files: `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`, `REVIEWS/REVIEW_INDEX.md`,
+  and `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`.
+- Protected files touched: yes; validator mechanics, red-check mechanics,
+  and registered source-of-truth state/registry/traceability/test-result
+  /worklog/review-index artifacts change.
+- Expected risk: high because validator mechanics are tightened. The
+  changes are narrow: stricter awk that handles multiline bullets, skips
+  fenced code blocks, and requires markers at the start of the payload;
+  fixture pass/fail assertion correction; registry version alignment.
+- Branch requirement: continuing on
+  `claude/boot-034-next-safe-action-staleness-guard` at head `9d93250`.
+- Required validation: `bash -n SCRIPTS/validate-bootstrap.sh`, `bash -n
+  SCRIPTS/validate-bootstrap-red-checks.sh`, `bash
+  SCRIPTS/validate-bootstrap.sh`, `bash
+  SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`, and
+  fresh-context Codex re-review.
+- Required review: fresh-context Codex re-review.
+- Traceability impact: required because BOOT-034 row gains v1.2
+  review-fix evidence.
+- Registry impact: required because six registry rows are aligned to
+  actual file versions plus version bumps for review-fix changes.
+- Handoff/state impact: required because current task, validation
+  evidence, and next safe action change.
+- Dirty worktree status: before edits, `git status --short --branch`
+  showed `## claude/boot-034-next-safe-action-staleness-guard` with no
+  untracked or modified tracked files.
+- Escalation triggers checked: validator mechanics, red-check mechanics,
+  source-of-truth hierarchy, registry alignment, traceability, review
+  policy, CI behavior, and dirty worktree handling. No hooks, CI workflow
+  files, shared rules, role files, command files, context packs, templates,
+  ADRs, governance policy, operation routing policy, branch/worktree
+  policy, PR/merge policy, risk model, architecture, security, release,
+  scaffold extraction script, metric scripts, seeded-defect benchmark, or
+  runtime product files are in scope.
+
+## BOOT-034 PR #13 v1.2 Review-Fix Evidence Envelope
+
+- Operation profile: `strict-protected`
+- Classification confidence: high.
+- Escalation triggers checked: validator mechanics, red-check mechanics,
+  source-of-truth hierarchy, registry alignment, traceability, review
+  policy, and CI behavior. No hooks, CI workflow files, shared rules,
+  role files, command files, context packs, templates, ADRs, governance
+  policy, operation routing policy, branch/worktree policy, PR/merge
+  policy, risk model, architecture, security, release, scaffold
+  extraction script, metric scripts, seeded-defect benchmark, or runtime
+  product files are changed.
+- Files read: PR #13 diff `origin/main...HEAD`, Codex v1.0 adversarial
+  review verdict text, `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`.
+- Files changed: `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, `WORKLOG/WORKLOG_INDEX.md`,
+  `REVIEWS/REVIEW_INDEX.md`, and
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`.
+- Files intentionally not read: older unrelated review records and
+  archived artifacts. Untracked `research/` remains intentionally
+  unread; validators prune it.
+- Artifacts not impacted: hooks, CI workflow files, shared agent rules,
+  role files, command files, context packs, templates, ADRs, governance
+  policy, operation routing policy, branch/worktree policy, PR/merge
+  policy, risk model, architecture, security, release, public README,
+  scaffold extraction scripts, metric scripts, seeded-defect benchmark
+  plan, and runtime product files.
+- Validation run: `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash
+  -n SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.`;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red
+  checks passed.` with 49 cases (45 prior + 4 new BOOT-034 review-fix
+  fixtures for marker-mid-payload-is-not-marker, empty-payload-is-
+  unmarked, multiline-marked-passes, and fenced-code-ignored); `git
+  diff --check` exits 0. An awk probe against Codex's edge cases
+  confirmed mid-payload marker words, empty payloads, and fenced code
+  examples are correctly treated as unmarked or ignored, and that
+  same-line `completed`/`(historical)` markers continue to pass.
+- Validation skipped: stack-specific product tests are not applicable
+  because no product runtime exists.
+- Review required: fresh-context Codex re-review at the new head.
+  Completed: v1.2 re-review at head `e03e0f5` confirmed all six prior
+  findings fixed but raised one new blocking P2 about stale descriptions
+  in the PR review package and several summaries. v1.3 description
+  alignment applied; see the v1.3 envelope below.
+- Next safe action: superseded by the BOOT-034 PR #13 v1.3 Description
+  Alignment Evidence Envelope below. The v1.2 head request for Codex
+  re-review was completed at v1.2 with a blocking P2 finding now
+  delegated to the v1.3 envelope for resolution.
+
+## BOOT-034 PR #13 v1.3 Description Alignment Pre-Change Classification
+
+- Operation profile: `strict-protected`
+- Target files: `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`,
+  `REVIEWS/REVIEW_INDEX.md`, `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md`,
+  `ARTIFACT_REGISTRY.md`, `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `AI_HANDOFF.md`, `CURRENT_STATE.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Protected files touched: yes; this updates registered source-of-truth
+  state, registry, traceability, test, worklog, review, and backlog
+  artifacts. No validator-script or red-check-fixture content is
+  modified in v1.3.
+- Expected risk: medium because the change is description-only; the
+  validator behavior set at v1.2 is unchanged.
+- Branch requirement: continuing on
+  `claude/boot-034-next-safe-action-staleness-guard` at head
+  `e03e0f5`.
+- Required validation: `bash -n SCRIPTS/validate-bootstrap.sh`,
+  `bash -n SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `bash SCRIPTS/validate-bootstrap.sh`,
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh`, `git diff --check`,
+  and fresh-context Codex re-review.
+- Required review: fresh-context Codex re-review at the v1.3 head.
+- Traceability impact: required because BOOT-034 row gains v1.3
+  description-alignment evidence.
+- Registry impact: required because state-file, review-index,
+  test-results, worklog, traceability, and backlog item rows bump
+  versions; PR review package row bumps from v1.0 to v1.2; backlog item
+  bumps to v1.3.
+- Handoff/state impact: required because current task, validation
+  evidence, and next safe action change.
+- Dirty worktree status: before edits, `git status --short --branch`
+  showed only the staged review-fix changes; no unrelated dirty files.
+- Escalation triggers checked: source-of-truth hierarchy, registry
+  alignment, traceability, review policy, and CI behavior. No
+  validator-script changes, no hooks, CI workflow files, shared rules,
+  role files, command files, context packs, templates, ADRs, governance
+  policy, operation routing policy, branch/worktree policy, PR/merge
+  policy, risk model, architecture, security, release, scaffold
+  extraction script, metric scripts, seeded-defect benchmark, or
+  runtime product files are in scope.
+
+## BOOT-034 PR #13 v1.3 Description Alignment Evidence Envelope
+
+- Operation profile: `strict-protected`
+- Classification confidence: high.
+- Escalation triggers checked: source-of-truth hierarchy, registry
+  alignment, traceability, review policy, and CI behavior. No
+  validator-script content, hooks, CI workflow files, shared rules,
+  role files, command files, context packs, templates, ADRs, governance
+  policy, operation routing policy, branch/worktree policy, PR/merge
+  policy, risk model, architecture, security, release, scaffold
+  extraction script, metric scripts, seeded-defect benchmark, or
+  runtime product files are changed.
+- Files read: Codex v1.2 re-review verdict text;
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`;
+  `REVIEWS/REVIEW_INDEX.md`;
+  `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md`;
+  `ARTIFACT_REGISTRY.md`;
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`; the v1.2
+  validator and red-check scripts for reference.
+- Files changed: `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-034-next-safe-action-staleness-guard.md`,
+  `REVIEWS/REVIEW_INDEX.md`,
+  `REVIEWS/REVIEW-2026-05-16-pr-13-boot-034-next-safe-action-staleness-guard.md`,
+  `ARTIFACT_REGISTRY.md`,
+  `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`,
+  `AI_HANDOFF.md`, `CURRENT_STATE.md`, `TRACEABILITY_MATRIX.md`,
+  `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md`.
+- Files intentionally not read: older unrelated review records and
+  archived artifacts. Untracked `research/` remains intentionally
+  unread; validators prune it.
+- Artifacts not impacted: `SCRIPTS/validate-bootstrap.sh` and
+  `SCRIPTS/validate-bootstrap-red-checks.sh` (no content change in
+  v1.3), hooks, CI workflow files, shared agent rules, role files,
+  command files, context packs, templates, ADRs, governance policy,
+  operation routing policy, branch/worktree policy, PR/merge policy,
+  risk model, architecture, security, release, public README, scaffold
+  extraction scripts, metric scripts, seeded-defect benchmark plan, and
+  runtime product files.
+- Validation run: `bash -n SCRIPTS/validate-bootstrap.sh` passes; `bash
+  -n SCRIPTS/validate-bootstrap-red-checks.sh` passes; `bash
+  SCRIPTS/validate-bootstrap.sh` prints `Bootstrap validation passed.`;
+  `bash SCRIPTS/validate-bootstrap-red-checks.sh` prints `Bootstrap red
+  checks passed.` with 49 cases (unchanged from v1.2); `git diff
+  --check` exits 0. Since v1.3 is description-only, no new awk probes
+  are needed.
+- Validation skipped: stack-specific product tests are not applicable
+  because no product runtime exists.
+- Review required: fresh-context Codex re-review at the v1.3 head.
+  Completed: v1.3 re-review at head `4619ac4` confirmed the v1.2
+  blocking P2 (stale descriptions) is resolved by the v1.3 fix but
+  raised one new blocking P2 (the `ART-REVIEW-PR-13-...` registry row
+  was not bumped to v1.3 in the v1.3 commit) plus one P3 (the PR
+  review package linked-backlog line still referenced backlog `v1.1`).
+  v1.4 micro-fix applied: registry row bumped to v1.3 and PR review
+  package linked-backlog line bumped to v1.3; state-file versions
+  bumped. v1.4 re-review at head `4025d56` confirmed the v1.3 findings
+  resolved but raised three new blocking P2 findings (review-record row
+  description still said "Awaiting v1.3 re-review" without v1.4
+  mention; state-file registry rows for `ART-REG-001`/`ART-STATE-002`/
+  `ART-STATE-003`/`ART-TEST-003`/`ART-REVIEW-INDEX`/`ART-WORKLOG-INDEX`
+  not bumped to match the v1.4 file metadata; `TRACEABILITY_MATRIX.md`
+  BOOT-034 row not updated for v1.4). v1.5 registry/traceability
+  alignment in this commit: state-file registry rows now match actual
+  file metadata, review-record row updated to v1.5 with cumulative
+  review history, and the BOOT-034 traceability row updated with v1.4
+  and v1.5 history.
+- Next safe action: confirm both PR #13 `validate` CI runs (push and
+  pull_request) are green on the v1.6 head, request a brief
+  fresh-context Codex re-review of the v1.6 copy_repo fix, then
+  admin-merge PR #13 and apply post-merge cleanup if `main` CI flags
+  the singular `AI_HANDOFF.md` branch field.
 
 ## BOOT-035 Post-Merge Cleanup Pre-Change Classification
 
@@ -116,7 +470,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   SCRIPTS/validate-bootstrap-red-checks.sh` passed with 37 cases.
 - Validation skipped: stack-specific product tests are not applicable because
   this changes bootstrap validation and source-of-truth records only.
-- Next safe action: confirm the latest `main` GitHub Actions `Bootstrap
+- Next safe action: (historical) confirm the latest `main` GitHub Actions `Bootstrap
   Validation` run is green before starting any next Phase 2 item.
 
 ## BOOT-035 Pre-Change Classification
@@ -335,7 +689,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Review required: fresh-context review before merge because backlog,
   registry, traceability, current state, and handoff source-of-truth files
   changed; completed by PR #11 re-review approval at `dd3fcbb`.
-- Next safe action: verify latest `main` CI after this cleanup commit is
+- Next safe action: (historical) verify latest `main` CI after this cleanup commit is
   pushed. After `main` is green, plan BOOT-035 before another multi-PR phase;
   BOOT-034 and BOOT-035 are proposed, not active implementation.
 
@@ -430,7 +784,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Review required: v1.5 third confirmation re-review complete; decision
   approve. No BOOT-033 stale circular next-safe-action remains at head
   `5a06127`.
-- Next safe action: admin-merge PR #10 then run post-merge cleanup.
+- Next safe action: (historical) admin-merge PR #10 then run post-merge cleanup.
 
 ## PR 10 BOOT-033 Second Confirmation Re-Review Pre-Change Classification
 
@@ -535,7 +889,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   next-safe-action has been rewritten in this commit so it records
   the residual handoff issue as already resolved by the v1.3 fix and
   defers to this v1.4 envelope.
-- Next safe action: request another fresh-context Codex confirmation
+- Next safe action: (historical) request another fresh-context Codex confirmation
   re-review at the new head; on approval, admin-merge PR #10 and run
   post-merge cleanup. Do not merge PR #10 until that confirmation
   re-review approves.
@@ -746,7 +1100,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   handoff stale instructions have been rewritten in this commit so
   `AI_HANDOFF.md` no longer instructs the next agent to apply a fix
   that has already been applied.
-- Next safe action: request another fresh-context Codex confirmation
+- Next safe action: (historical) request another fresh-context Codex confirmation
   re-review at the new head; on approval, admin-merge PR #10 and run
   post-merge cleanup. Do not merge PR #10 until that confirmation
   re-review approves.
@@ -847,7 +1201,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Review required: fresh-context Codex adversarial review (already
   performed initial review; review-fix re-review pending after
   push).
-- Next safe action: commit the review-fix edits, push, wait for
+- Next safe action: (historical) commit the review-fix edits, push, wait for
   GitHub `validate` to be green, request fresh-context Codex
   re-review through the installed plugin, iterate if findings
   remain, merge after approval.
@@ -1033,7 +1387,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product
   runtime code exists.
 - Review required: fresh-context Codex re-review after push.
-- Next safe action: commit the fix, push, wait for GitHub `validate`
+- Next safe action: (historical) commit the fix, push, wait for GitHub `validate`
   to be green, request fresh-context Codex re-review, iterate if
   findings remain, merge after approval.
 
@@ -1179,7 +1533,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product
   runtime code exists.
 - Review required: fresh-context Codex adversarial review after push.
-- Next safe action: commit the BOOT-031 changes, push, wait for GitHub
+- Next safe action: (historical) commit the BOOT-031 changes, push, wait for GitHub
   `validate` to be green, request fresh-context Codex review, iterate
   if findings remain, merge after approval, then post-merge
   state-sync cleanup mirroring PR #5/PR #6/PR #7.
@@ -1251,7 +1605,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   runtime code exists.
 - Review required: none for this state-sync cleanup; PR #7 review is
   already approved.
-- Next safe action: push the cleanup commit, verify latest `main`
+- Next safe action: (historical) push the cleanup commit, verify latest `main`
   GitHub Actions status, then begin BOOT-031 scaffold extraction tool
   planning when the user authorizes it. Do not start BOOT-031 work
   before that.
@@ -1324,7 +1678,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product runtime
   code changed.
 - Review required: complete for this re-review; decision is approve.
-- Next safe action: merge PR #7 after normal repository gates remain
+- Next safe action: (historical) merge PR #7 after normal repository gates remain
   satisfied; do not start BOOT-031 until BOOT-030 is merged.
 
 ## PR 7 BOOT-030 Review-Fix Pre-Change Classification
@@ -1397,7 +1751,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product
   runtime code changed.
 - Review required: fresh-context Codex re-review after push.
-- Next safe action: commit the fix edits, push, wait for GitHub `validate`
+- Next safe action: (historical) commit the fix edits, push, wait for GitHub `validate`
   to be green, request fresh-context Codex re-review via the installed
   plugin, iterate if findings remain, then merge after approval.
 
@@ -1458,7 +1812,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: GitHub PR diff/check verification via `gh` could not be
   completed because the local environment could not connect to `api.github.com`.
 - Review required: complete for this pass; decision is request changes.
-- Next safe action: fix the P1 checklist contradiction and P2 dirty-worktree
+- Next safe action: (historical) fix the P1 checklist contradiction and P2 dirty-worktree
   evidence inconsistency, rerun validation/diff checks, then request fresh
   re-review. Do not start BOOT-031 until BOOT-030 is corrected, re-reviewed,
   and merged.
@@ -1558,7 +1912,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Review required: fresh-context Codex adversarial review through the
   installed plugin after the PR is open and GitHub `validate` checks are
   green.
-- Next safe action: commit, push, open PR against `main`, wait for GitHub
+- Next safe action: (historical) commit, push, open PR against `main`, wait for GitHub
   `validate` to be green, then request the formal Codex adversarial review.
 
 ## PR 6 Post-Merge Cleanup Classification
@@ -1627,7 +1981,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   code exists and no product behavior changed.
 - Review decision: PR #6 is already approved with minor comments in the
   durable review record; no blocking P0, P1, P2, or P3 findings remain.
-- Next safe action: after any post-merge cleanup commit is pushed, verify
+- Next safe action: (historical) after any post-merge cleanup commit is pushed, verify
   latest `main` CI status, then start BOOT-030 on a new branch from green
   `main`.
 
@@ -1705,7 +2059,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   code changed.
 - Review decision: approve with minor comments; no P0, P1, P2, or blocking P3
   findings remain.
-- Next safe action: merge PR #6 after normal repository merge requirements are
+- Next safe action: (historical) merge PR #6 after normal repository merge requirements are
   satisfied; start BOOT-030 only after PR #6 is merged to `main`.
 
 ## PR 6 Review Fix Classification
@@ -1788,7 +2142,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product runtime
   code changed.
 - Review required: fresh-context re-review before PR #6 merge.
-- Next safe action: request fresh-context re-review for PR #6; do not start
+- Next safe action: (historical) request fresh-context re-review for PR #6; do not start
   BOOT-030 until PR #6 is approved and merged.
 
 ## PR 6 Review Classification
@@ -1857,7 +2211,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product runtime
   code changed.
 - Review required: PR #6 requires fixes and fresh re-review before merge.
-- Next safe action: fix the P1 and P2 findings in
+- Next safe action: (historical) fix the P1 and P2 findings in
   `REVIEWS/REVIEW-2026-05-15-pr-6-phase-1-execution-plan.md`, rerun
   validation, and request re-review.
 
@@ -1928,7 +2282,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   passed locally on `codex/phase-1-execution-plan`.
 - Validation skipped: stack-specific product tests, because this branch changes
   bootstrap planning/source-of-truth records only.
-- Next safe action: address PR #6 review findings, rerun validation, and
+- Next safe action: (historical) address PR #6 review findings, rerun validation, and
   request re-review before merge.
 
 ## PR 5 Post-Merge Source-Of-Truth Cleanup Classification
@@ -1988,7 +2342,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Review required: no new PR review required for this administrative
   post-merge cleanup; future Phase 1 work must use a new branch and normal
   review path.
-- Next safe action: start the next Phase 1 item on a new branch after
+- Next safe action: (historical) start the next Phase 1 item on a new branch after
   confirming the latest `main` validation remains green.
 
 ## PR 5 Review Pre-Change Classification
@@ -2063,7 +2417,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   code changed.
 - Review required: PR #5 requires implementer fixes and fresh re-review before
   merge.
-- Next safe action: address the findings in
+- Next safe action: (historical) address the findings in
   `REVIEWS/REVIEW-2026-05-15-pr-5-phase-0-validator-scope.md`, then request
   re-review.
 
@@ -2172,7 +2526,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Review status: Codex completed the initial fresh-context adversarial review
   on 2026-05-15 and recorded two P1 and one P2 findings. The PR then received
   five follow-up review passes; pass 6 approved before merge.
-- Next safe action: Phase 0 is complete on `main`. Start the next Phase 1
+- Next safe action: (historical) Phase 0 is complete on `main`. Start the next Phase 1
   item from a new branch only after confirming latest `main` validation is
   green.
 
@@ -2245,7 +2599,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product
   runtime code changed.
 - Review status: complete; PR #5 pass 6 approved before merge.
-- Next safe action: Phase 0 is complete on `main`. Start the next Phase 1
+- Next safe action: (historical) Phase 0 is complete on `main`. Start the next Phase 1
   item from a new branch after confirming latest `main` validation is green.
 
 ## Public Launch Assets Operation Classification
@@ -2319,7 +2673,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
 - Validation skipped: stack-specific product tests because no product runtime
   code changed.
 - Review required: fresh-context review before merge.
-- Next safe action: request review, address findings, then open a PR for
+- Next safe action: (historical) request review, address findings, then open a PR for
   `codex/public-launch-assets`.
 
 ## BOOT-019-024 Post-Merge State-Sync Classification
@@ -2430,7 +2784,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   changed.
 - Review required: fresh-context adversarial review is requested and must be
   approved, with all P0/P1/blocking P2 findings fixed, before merge.
-- Next safe action: wait for the fresh reviewer result, fix findings if any,
+- Next safe action: (historical) wait for the fresh reviewer result, fix findings if any,
   rerun strict validation, then commit, push, open a PR, verify CI, merge, and
   sync `main`.
 
@@ -2555,7 +2909,7 @@ shallow-checkout red-check fixture, updates source-of-truth state, and sets
   Markdown governance spec proposal, not product implementation
 - Review required: complete for BOOT-018; fresh review remains required for
   future mechanics slices
-- Next safe action: start BOOT-019 only with separate work authorization, or
+- Next safe action: (historical) start BOOT-019 only with separate work authorization, or
   provide downstream product input for a new project
 
 ## Files Changed
