@@ -2,11 +2,11 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v3.52
+version: v3.53
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #9 merge/post-merge source-of-truth cleanup, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.4 narrow handoff fix, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, and BOOT-035 branch-aware handoff planning
+source: Initial bootstrap scaffold, SPEC-BOOT-002 merge, final adversarial review, stale status fix, narrow re-review, command shortcut setup, public repository publication request, GitHub branch protection setup, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 review, BOOT-017 validation, BOOT-017 PR creation, BOOT-017 merge, BOOT-017 post-merge state cleanup, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 final review approval, BOOT-018 merge, BOOT-018 state sync, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-025 push validation, PR #5 Phase 0 validator-scope review, PR #5 Phase 0 evidence-package implementation, PR #5 Phase 0 post-push state-sync (BOOT-028), BOOT-028 supplement adding classification, envelope, and registry version bumps, BOOT-028 supplement-2 fixing registry-vs-file version drift on five files plus current-head and CI-attribution corrections, BOOT-028 supplement-3 addressing pass 5 P2 findings, PR #5 merge, PR #5 post-merge source-of-truth cleanup, Phase 1 execution planning validation, PR #6 review, PR #6 review fixes, PR #6 re-review approval, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 scaffold extraction checklist implementation, PR #7 BOOT-030 adversarial review, PR #7 BOOT-030 re-review approval, PR #7 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 adversarial review, PR #8 BOOT-031 review-fix response, PR #8 BOOT-031 Codex re-review approval, PR #8 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 adversarial review, PR #9 BOOT-032 Codex re-review approval, PR #9 merge/post-merge source-of-truth cleanup, PR #10 BOOT-033 adversarial review, PR #10 BOOT-033 v1.2 re-review, PR #10 BOOT-033 v1.2 P1-b state-coherence fix, PR #10 BOOT-033 v1.3 confirmation re-review, PR #10 BOOT-033 v1.3 residual handoff fix, PR #10 BOOT-033 v1.4 second confirmation re-review, PR #10 BOOT-033 v1.4 narrow handoff fix, PR #10 BOOT-033 v1.5 third confirmation re-review approval, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, and PR #11 review package/fix response
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
 linked_tickets: []
 linked_adrs: []
@@ -279,7 +279,7 @@ authoritative: false
 ## Active Branch
 
 - `codex/phase-1-closeout-coherence` for Phase 1 closeout coherence
-  verification and proposed BOOT-034 planning record.
+  verification plus proposed BOOT-034 and BOOT-035 planning records.
 
 ## Active Worktree
 
@@ -351,6 +351,8 @@ authoritative: false
 - `REVIEWS/REVIEW-2026-05-16-pr-9-boot-032-seeded-defect-benchmark.md`
 - `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-boot-033-src-spec-cross-validation.md`
 - `REVIEWS/REVIEW-2026-05-16-pr-10-boot-033-src-spec-cross-validation.md`
+- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-phase-1-closeout-coherence.md`
+- `REVIEWS/REVIEW-2026-05-16-pr-11-phase-1-closeout-coherence.md`
 - `IMPLEMENTATION_PLAN.md`
 - `BACKLOG/BACKLOG_INDEX.md`
 - `BACKLOG/BOOT-034-next-safe-action-staleness-guard.md`
@@ -362,15 +364,25 @@ authoritative: false
 
 ## Next Recommended Action
 
-Complete the Phase 1 closeout coherence branch review and merge path. Phase 1
-is complete on `main`, GitHub Actions passed at
-`bdc8b19e94564a4a50db8a06f5b06d75e67e2c7c`, and BOOT-034 is only a proposed
-Phase 2 candidate until separately planned and reviewed. BOOT-035 should be
-planned before another multi-PR phase because it addresses repeated branch-field
-merge-drift CI failures.
+Complete PR #11 re-review and merge path. Phase 1 is complete on `main`,
+GitHub Actions passed at `bdc8b19e94564a4a50db8a06f5b06d75e67e2c7c`, and
+BOOT-034 plus BOOT-035 are proposed Phase 2 candidates only until separately
+planned and reviewed. The initial fresh-context PR #11 review requested
+changes for review-package and state-coherence gaps; this branch now records
+the fix response and should be re-reviewed at the latest pushed head before
+merge.
 
 ## Latest Validation
 
+- PR #11 Phase 1 closeout coherence review-fix on 2026-05-16:
+  fresh-context review of PR #11 at head `705f895` requested changes for a
+  missing PR review package, stale `AI_HANDOFF.md` next safe action, and active
+  branch wording that omitted BOOT-035. The fix adds
+  `REVIEWS/PR_REVIEW_PACKAGE-2026-05-16-phase-1-closeout-coherence.md`,
+  `REVIEWS/REVIEW-2026-05-16-pr-11-phase-1-closeout-coherence.md`, review
+  index and registry entries, handoff/current-state corrections, and
+  traceability/test/worklog updates. Local validation for the fix is recorded
+  in `TEST_RESULTS.md`; fresh-context re-review is required before merge.
 - Phase 1 closeout coherence verification on 2026-05-16:
   `git pull --ff-only origin main` reported `Already up to date.` at
   `bdc8b19e94564a4a50db8a06f5b06d75e67e2c7c`; `gh run list --repo
