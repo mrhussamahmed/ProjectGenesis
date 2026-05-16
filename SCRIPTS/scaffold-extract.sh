@@ -1266,6 +1266,11 @@ Common fields for all entries below unless stated otherwise:
 | ART-PREPUSH-HOOK | guide | Pre-Push Hook | \`.githooks/pre-push\` | authoritative | v1.0 | extracted scaffold | none | none | true | Pre-push local hook. |
 | ART-CI-WORKFLOW | guide | CI Bootstrap Validation Workflow | \`.github/workflows/bootstrap-validation.yml\` | authoritative | v1.0 | extracted scaffold | none | none | true | CI workflow running the bootstrap validator. |
 | ART-SCAFFOLD-EXTRACT-SCRIPT | guide | Scaffold Extraction Script | \`SCRIPTS/scaffold-extract.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Dry-run-first scaffold extraction tool implementing \`SCAFFOLD_FORK_CHECKLIST.md\`. |
+| ART-METRIC-EVIDENCE-COVERAGE | guide | Evidence Coverage Metric Script | \`SCRIPTS/metric-evidence-coverage.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reports spec-FR and backlog source-coverage metrics; first empirical evidence measurement for downstream scaffolds. |
+| ART-METRIC-ACCEPTANCE-COVERAGE | guide | Acceptance Coverage Metric Script | \`SCRIPTS/metric-acceptance-coverage.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reports acceptance-criteria coverage metrics from \`TESTS/ACCEPTANCE_CRITERIA_MAP.md\`. |
+| ART-METRIC-TRACEABILITY-COMPLETENESS | guide | Traceability Completeness Metric Script | \`SCRIPTS/metric-traceability-completeness.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reports bootstrap-requirement traceability completeness metrics from \`TRACEABILITY_MATRIX.md\`. |
+| ART-SEEDED-DEFECT-BENCH-RUNNER | guide | Seeded-Defect Benchmark Runner | \`SCRIPTS/run-seeded-defect-bench.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Wraps the red-check harness as a seeded-defect benchmark; reports detection rate without gating CI. |
+| ART-SEED-BENCH-PLAN | benchmark-plan | Adversarial Seed Benchmark Plan | \`TESTS/ADVERSARIAL_SEED_BENCHMARK.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Benchmark plan, defect catalog, and baseline recording procedure for the seeded-defect benchmark. |
 
 ## Lifecycle Rules
 
