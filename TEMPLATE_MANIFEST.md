@@ -38,27 +38,47 @@ ProjectGenesis supports two copy modes. Both are clean for the file paths
 classified as `maintainer-archive`; one mode additionally resets the
 `starter-reset` files.
 
-1. **Raw-root direct copy (slice 2 and later).** Most ProjectGenesis
-   maintainer-archive paths (REVIEWS records, BACKLOG/BOOT-* tickets,
-   SPECS/SPEC-BOOT-* specs, the PG-specific TESTS/ files, the
-   PG-specific `SCRIPTS/run-seeded-defect-bench.sh`, `docs/`,
-   `ARTIFACTS/`, and `.github/ISSUE_TEMPLATE/`) have been relocated into
-   a single top-level `MAINTAINER_ARCHIVE/` directory.
+1. **Raw-root direct copy (slice 2 and later).** A subset of ProjectGenesis
+   maintainer-archive paths have been relocated into a single top-level
+   `MAINTAINER_ARCHIVE/` directory in slice 2:
 
-   A small set of PG-specific top-level files (`BOOTSTRAP_AUDIT.md`,
-   `GITHUB_REPOSITORY_SETUP.md`, `GOVERNANCE_PERFORMANCE.md`,
-   `PARALLEL_EXECUTION_PLAN.md`, `SCAFFOLD_FORK_CHECKLIST.md`,
-   `STALE_ITEMS.md`) plus `SCRIPTS/scaffold-extract.sh` were deliberately
-   NOT relocated in slice 2 because the strict red-check harness
-   (`SCRIPTS/validate-bootstrap-red-checks.sh`) and the scaffold-extract
-   tool itself depend on those files being at their active root paths.
-   A future slice can move them once the red-check harness is updated to
-   match the new layout.
+   - `MAINTAINER_ARCHIVE/BACKLOG/BOOT-029..035.md` (PG BOOT ticket files)
+   - `MAINTAINER_ARCHIVE/REVIEWS/PR_REVIEW_PACKAGE-*.md` and
+     `MAINTAINER_ARCHIVE/REVIEWS/REVIEW-*.md` (PG PR review records)
+   - `MAINTAINER_ARCHIVE/SPECS/SPEC-BOOT-002/003/004.md` (PG specs)
+   - `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` (PG-branded issue templates)
+   - `MAINTAINER_ARCHIVE/docs/` (PG launch/demo/release notes)
+   - `MAINTAINER_ARCHIVE/ARTIFACTS/` (formerly top-level ARTIFACTS/)
+
+   The following PG-specific files were **deliberately NOT relocated in
+   slice 2** because the strict red-check harness
+   (`SCRIPTS/validate-bootstrap-red-checks.sh`) and the
+   `SCRIPTS/scaffold-extract.sh` tool depend on these files being at
+   their active root paths (the tool's clean-reset templates and rsync
+   mirror produce a scaffold with them at root):
+
+   - `BOOTSTRAP_AUDIT.md`
+   - `GITHUB_REPOSITORY_SETUP.md`
+   - `GOVERNANCE_PERFORMANCE.md`
+   - `PARALLEL_EXECUTION_PLAN.md`
+   - `SCAFFOLD_FORK_CHECKLIST.md`
+   - `STALE_ITEMS.md`
+   - `SCRIPTS/scaffold-extract.sh`
+   - `SCRIPTS/run-seeded-defect-bench.sh`
+   - `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
+   - `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
+
+   A future slice can move these ten files once the red-check harness
+   and scaffold-extract reset templates are updated to match the new
+   layout.
 
    A maintainer may therefore run `cp -R projectgenesis newproj` and get
-   a scaffold whose **most maintainer-archive paths** are now clean.
-   The consumer's recommended cleanup step is
-   `rm -rf newproj/MAINTAINER_ARCHIVE/`.
+   a scaffold whose **relocated maintainer-archive paths** are now under
+   `MAINTAINER_ARCHIVE/` and ignorable. The consumer's recommended
+   cleanup step is `rm -rf newproj/MAINTAINER_ARCHIVE/`. The ten
+   not-yet-relocated PG-specific files remain at active root and a
+   consumer who wants a fully clean scaffold should additionally delete
+   them by hand (or use the manifest-mediated copy mode below).
 
    Caveat (slice 3 territory): the `starter-reset` files at the active
    scaffold root (`AI_HANDOFF.md`, `CURRENT_STATE.md`, `BACKLOG.md`,
@@ -111,25 +131,21 @@ must not be classified as `copy` or `copy-clean`.
 After slice 2, the following ProjectGenesis maintainer-archive files
 live under the top-level `MAINTAINER_ARCHIVE/` directory:
 
-- `MAINTAINER_ARCHIVE/BACKLOG/BOOT-*.md` (PG BOOT ticket files)
+- `MAINTAINER_ARCHIVE/BACKLOG/BOOT-029..035.md` (PG BOOT ticket files)
 - `MAINTAINER_ARCHIVE/REVIEWS/PR_REVIEW_PACKAGE-*.md` and
-  `MAINTAINER_ARCHIVE/REVIEWS/REVIEW-*.md` (PG review records)
-- `MAINTAINER_ARCHIVE/SPECS/SPEC-BOOT-*.md` (PG specs)
-- `MAINTAINER_ARCHIVE/TESTS/ACCEPTANCE_CRITERIA_MAP.md` and
-  `MAINTAINER_ARCHIVE/TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
-- `MAINTAINER_ARCHIVE/SCRIPTS/run-seeded-defect-bench.sh`
+  `MAINTAINER_ARCHIVE/REVIEWS/REVIEW-*.md` (PG PR review records)
+- `MAINTAINER_ARCHIVE/SPECS/SPEC-BOOT-002/003/004.md` (PG specs)
 - `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` (PG-branded issue templates)
 - `MAINTAINER_ARCHIVE/docs/` (PG-launch/demo/release content)
 - `MAINTAINER_ARCHIVE/ARTIFACTS/` (formerly top-level ARTIFACTS/)
 
-The original top-level paths (`BACKLOG/`, `REVIEWS/`, `SPECS/`, `TESTS/`,
-`SCRIPTS/`, `.github/`) remain in the repository root and now contain only
-reusable scaffold material (indexes, templates, project-neutral scripts
-and checks) PLUS `SCRIPTS/scaffold-extract.sh`.
+The original top-level paths (`BACKLOG/`, `REVIEWS/`, `SPECS/`, `.github/`)
+remain in the repository root and now contain only reusable scaffold
+material (indexes, templates).
 
-NOT relocated in slice 2 (kept at active root because the strict
-red-check harness or scaffold-extract tool depend on them at their
-active paths):
+**NOT relocated in slice 2** (kept at active root because the strict
+red-check harness or `SCRIPTS/scaffold-extract.sh` reset templates and
+rsync mirror depend on them at their active paths):
 
 - `BOOTSTRAP_AUDIT.md`
 - `GITHUB_REPOSITORY_SETUP.md`
@@ -138,10 +154,14 @@ active paths):
 - `SCAFFOLD_FORK_CHECKLIST.md`
 - `STALE_ITEMS.md`
 - `SCRIPTS/scaffold-extract.sh`
+- `SCRIPTS/run-seeded-defect-bench.sh`
+- `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
+- `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
 
-These remain classified as `maintainer-archive` semantically; their
-relocation is deferred to a future slice that also updates the
-red-check harness and scaffold-extract tool to match the new layout.
+These ten files remain classified as `maintainer-archive` semantically;
+their relocation is deferred to a future slice that also updates the
+red-check harness, the `scaffold-extract.sh` reset templates, and the
+rsync exclude list to match the new layout.
 
 ## Documented Allowlist
 
