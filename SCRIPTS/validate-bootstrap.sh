@@ -462,7 +462,7 @@ if [[ -d BACKLOG ]]; then
         done < <(extract_ids "$spec_line" 'SPEC-[A-Z][A-Z0-9-]*-[0-9]+')
       fi
     fi
-  done < <(find MAINTAINER_ARCHIVE/BACKLOG -maxdepth 1 -type f -name 'BOOT-*.md' -print 2>/dev/null)
+  done < <(find BACKLOG -maxdepth 1 -type f -name 'BOOT-*.md' -print 2>/dev/null)
 fi
 
 # BOOT-034 Next Safe Action Staleness Guard.
