@@ -106,7 +106,7 @@ P0
 
 ## Readiness Status
 
-in-review
+done
 
 ## Readiness Evidence
 
@@ -149,9 +149,14 @@ in-review
       `ART-METRIC-TRACEABILITY-COMPLETENESS`,
       `ART-SEEDED-DEFECT-BENCH-RUNNER`, and `ART-SEED-BENCH-PLAN`).
 - [x] Handoff updated.
-- [ ] Review complete or pending review recorded: fresh-context Codex
-      review will run after the PR is open and GitHub `validate` is
-      green.
+- [x] Review complete: fresh-context Codex adversarial review (v1.0)
+      requested changes for one P2 runner failure-path status-reporting
+      bug; review-fix replaced the inverted `if !` exit-status capture
+      with `set +e; bash ...; red_status=$?; set -e` and a failure-path
+      probe confirmed propagation; fresh-context Codex re-review v1.2
+      approved at head `54548f0`. PR #9 merged to `main` at
+      `cf3db56fc3651141a1ecf59adedac28ead3589ae`; the feature branch
+      `claude/boot-032-seeded-defect-benchmark` was deleted at merge.
 
 ## Parallelization
 
