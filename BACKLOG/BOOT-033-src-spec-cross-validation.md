@@ -2,11 +2,11 @@ artifact_id: ART-BACKLOG-BOOT-033
 title: BOOT-033 SRC And SPEC Cross-Validation
 type: backlog-item
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-15
-updated: 2026-05-15
+updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, and PR #6 merge/post-merge source-of-truth cleanup
+source: Phase 1 execution planning input promoted into tracked backlog, PR #6 review fix, PR #6 merge/post-merge source-of-truth cleanup, and BOOT-033 implementation on branch claude/boot-033-src-spec-cross-validation
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -107,7 +107,7 @@ P1
 
 ## Readiness Status
 
-queued after BOOT-032
+in-review
 
 ## Readiness Evidence
 
@@ -134,13 +134,23 @@ queued after BOOT-032
 
 ## Definition Of Done
 
-- [ ] Spec linked.
-- [ ] Acceptance criteria satisfied.
-- [ ] Tests added or updated, or justified.
-- [ ] Traceability updated.
-- [ ] Artifact registry updated.
-- [ ] Handoff updated.
-- [ ] Review complete or pending review recorded.
+- [x] Spec linked.
+- [x] Acceptance criteria satisfied: `BACKLOG/BOOT-*.md` items that
+      cite canonical `SRC-NNN` or `SPEC-XXX-NNN` IDs must register them
+      in `00_intake/SOURCE_REGISTRY.md` or `SPECS/SPEC_INDEX.md`; the
+      `provisional:` / `pending:` prefix is an explicit escape hatch.
+- [x] Tests added: five new red-check fixtures
+      (`case_unregistered_src_id_fails`,
+      `case_unregistered_spec_id_fails`,
+      `case_registered_src_id_passes`,
+      `case_provisional_src_id_passes`,
+      `case_provisional_spec_id_passes`).
+- [x] Traceability updated.
+- [x] Artifact registry updated.
+- [x] Handoff updated.
+- [ ] Review complete or pending review recorded: fresh-context Codex
+      adversarial review will run after the PR is open and GitHub
+      `validate` is green.
 
 ## Parallelization
 
