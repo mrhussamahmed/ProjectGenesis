@@ -38,16 +38,27 @@ ProjectGenesis supports two copy modes. Both are clean for the file paths
 classified as `maintainer-archive`; one mode additionally resets the
 `starter-reset` files.
 
-1. **Raw-root direct copy (slice 2 and later).** All ProjectGenesis
+1. **Raw-root direct copy (slice 2 and later).** Most ProjectGenesis
    maintainer-archive paths (REVIEWS records, BACKLOG/BOOT-* tickets,
-   BOOTSTRAP_AUDIT.md, GOVERNANCE_PERFORMANCE.md, PARALLEL_EXECUTION_PLAN.md,
-   SCAFFOLD_FORK_CHECKLIST.md, STALE_ITEMS.md, GITHUB_REPOSITORY_SETUP.md,
-   SPECS/SPEC-BOOT-*, the PG-specific TESTS and SCRIPTS, docs/, ARTIFACTS/,
-   and .github/ISSUE_TEMPLATE/) have been relocated into a single top-level
-   `MAINTAINER_ARCHIVE/` directory. A maintainer may therefore run
-   `cp -R projectgenesis newproj` and get a scaffold whose **active paths
-   that were previously maintainer-archive** are now clean. The consumer's
-   recommended cleanup step is `rm -rf newproj/MAINTAINER_ARCHIVE/`.
+   SPECS/SPEC-BOOT-* specs, the PG-specific TESTS/ files, the
+   PG-specific `SCRIPTS/run-seeded-defect-bench.sh`, `docs/`,
+   `ARTIFACTS/`, and `.github/ISSUE_TEMPLATE/`) have been relocated into
+   a single top-level `MAINTAINER_ARCHIVE/` directory.
+
+   A small set of PG-specific top-level files (`BOOTSTRAP_AUDIT.md`,
+   `GITHUB_REPOSITORY_SETUP.md`, `GOVERNANCE_PERFORMANCE.md`,
+   `PARALLEL_EXECUTION_PLAN.md`, `SCAFFOLD_FORK_CHECKLIST.md`,
+   `STALE_ITEMS.md`) plus `SCRIPTS/scaffold-extract.sh` were deliberately
+   NOT relocated in slice 2 because the strict red-check harness
+   (`SCRIPTS/validate-bootstrap-red-checks.sh`) and the scaffold-extract
+   tool itself depend on those files being at their active root paths.
+   A future slice can move them once the red-check harness is updated to
+   match the new layout.
+
+   A maintainer may therefore run `cp -R projectgenesis newproj` and get
+   a scaffold whose **most maintainer-archive paths** are now clean.
+   The consumer's recommended cleanup step is
+   `rm -rf newproj/MAINTAINER_ARCHIVE/`.
 
    Caveat (slice 3 territory): the `starter-reset` files at the active
    scaffold root (`AI_HANDOFF.md`, `CURRENT_STATE.md`, `BACKLOG.md`,
@@ -97,31 +108,40 @@ new project. If a maintainer-history path is kept for audit reasons inside the
 ProjectGenesis repository, it must remain outside required-reading paths and
 must not be classified as `copy` or `copy-clean`.
 
-After slice 2, all ProjectGenesis maintainer-archive files live under the
-top-level `MAINTAINER_ARCHIVE/` directory. Concretely:
+After slice 2, the following ProjectGenesis maintainer-archive files
+live under the top-level `MAINTAINER_ARCHIVE/` directory:
 
 - `MAINTAINER_ARCHIVE/BACKLOG/BOOT-*.md` (PG BOOT ticket files)
 - `MAINTAINER_ARCHIVE/REVIEWS/PR_REVIEW_PACKAGE-*.md` and
   `MAINTAINER_ARCHIVE/REVIEWS/REVIEW-*.md` (PG review records)
 - `MAINTAINER_ARCHIVE/SPECS/SPEC-BOOT-*.md` (PG specs)
-- `MAINTAINER_ARCHIVE/BOOTSTRAP_AUDIT.md`,
-  `MAINTAINER_ARCHIVE/GITHUB_REPOSITORY_SETUP.md`,
-  `MAINTAINER_ARCHIVE/GOVERNANCE_PERFORMANCE.md`,
-  `MAINTAINER_ARCHIVE/PARALLEL_EXECUTION_PLAN.md`,
-  `MAINTAINER_ARCHIVE/SCAFFOLD_FORK_CHECKLIST.md`,
-  `MAINTAINER_ARCHIVE/STALE_ITEMS.md` (PG-specific top-level files)
 - `MAINTAINER_ARCHIVE/TESTS/ACCEPTANCE_CRITERIA_MAP.md` and
   `MAINTAINER_ARCHIVE/TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
-- `MAINTAINER_ARCHIVE/SCRIPTS/run-seeded-defect-bench.sh` and
-  `MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh`
+- `MAINTAINER_ARCHIVE/SCRIPTS/run-seeded-defect-bench.sh`
 - `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` (PG-branded issue templates)
 - `MAINTAINER_ARCHIVE/docs/` (PG-launch/demo/release content)
 - `MAINTAINER_ARCHIVE/ARTIFACTS/` (formerly top-level ARTIFACTS/)
 
 The original top-level paths (`BACKLOG/`, `REVIEWS/`, `SPECS/`, `TESTS/`,
 `SCRIPTS/`, `.github/`) remain in the repository root and now contain only
-reusable scaffold material (indexes, templates, project-neutral scripts and
-checks).
+reusable scaffold material (indexes, templates, project-neutral scripts
+and checks) PLUS `SCRIPTS/scaffold-extract.sh`.
+
+NOT relocated in slice 2 (kept at active root because the strict
+red-check harness or scaffold-extract tool depend on them at their
+active paths):
+
+- `BOOTSTRAP_AUDIT.md`
+- `GITHUB_REPOSITORY_SETUP.md`
+- `GOVERNANCE_PERFORMANCE.md`
+- `PARALLEL_EXECUTION_PLAN.md`
+- `SCAFFOLD_FORK_CHECKLIST.md`
+- `STALE_ITEMS.md`
+- `SCRIPTS/scaffold-extract.sh`
+
+These remain classified as `maintainer-archive` semantically; their
+relocation is deferred to a future slice that also updates the
+red-check harness and scaffold-extract tool to match the new layout.
 
 ## Documented Allowlist
 

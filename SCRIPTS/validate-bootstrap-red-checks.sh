@@ -475,7 +475,7 @@ case_scaffold_extract_golden_validates() {
   rm -rf "$target"
   local output
   set +e
-  output="$(cd "$repo_root" && bash MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh --apply "$target" 2>&1)"
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply "$target" 2>&1)"
   local status=$?
   set -e
   if [[ "$status" -ne 0 ]]; then
@@ -501,7 +501,7 @@ case_scaffold_extract_dry_run_writes_nothing() {
   local target="$tmp_root/scaffold-extract-dry-run"
   rm -rf "$target"
   set +e
-  ( cd "$repo_root" && bash MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh "$target" >/dev/null 2>&1 )
+  ( cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh "$target" >/dev/null 2>&1 )
   local status=$?
   set -e
   if [[ "$status" -ne 0 ]]; then
@@ -519,7 +519,7 @@ case_scaffold_extract_refuses_source_as_target() {
   # Safety: the script must refuse when the target equals the source root.
   local output
   set +e
-  output="$(cd "$repo_root" && bash MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh --apply "$repo_root" 2>&1)"
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply "$repo_root" 2>&1)"
   local status=$?
   set -e
   if [[ "$status" -eq 0 ]]; then
@@ -543,7 +543,7 @@ case_scaffold_extract_refuses_nonempty_without_force() {
   printf 'existing\n' >"$target/keepme.txt"
   local output
   set +e
-  output="$(cd "$repo_root" && bash MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh --apply "$target" 2>&1)"
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply "$target" 2>&1)"
   local status=$?
   set -e
   if [[ "$status" -eq 0 ]]; then
@@ -571,7 +571,7 @@ case_scaffold_extract_registry_includes_kept_framework_paths() {
   rm -rf "$target"
   local output
   set +e
-  output="$(cd "$repo_root" && bash MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh --apply --no-validate "$target" 2>&1)"
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply --no-validate "$target" 2>&1)"
   local status=$?
   set -e
   if [[ "$status" -ne 0 ]]; then
@@ -797,7 +797,7 @@ case_scaffold_extract_reset_files_use_header_only_tables() {
   rm -rf "$target"
   local output
   set +e
-  output="$(cd "$repo_root" && bash MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh --apply --no-validate "$target" 2>&1)"
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply --no-validate "$target" 2>&1)"
   local status=$?
   set -e
   if [[ "$status" -ne 0 ]]; then
