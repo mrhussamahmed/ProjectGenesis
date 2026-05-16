@@ -4,7 +4,7 @@ type: shared-state
 status: active
 version: v4.0
 created: 2026-05-09
-updated: 2026-05-16
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/CURRENT_STATE.md-2026-05-16-pre-slice-3.md)
 linked_specs: []
@@ -37,8 +37,8 @@ decision.
 
 ## Active Implementation Phase
 
-Clean scaffold boundary follow-on slices 1-3 are merged. Slice 4 remains
-pending and must be rebased onto current `main`.
+Clean scaffold boundary follow-on slices 1-4 are merged. Slice 4 added
+adaptive fast-path validation while keeping strict gates for protected paths.
 
 ## Active Branch
 
@@ -50,7 +50,7 @@ repository root
 
 ## Active Backlog Focus
 
-Clean scaffold boundary cleanup slices. See `BACKLOG.md`.
+Clean scaffold boundary cleanup slices are complete. See `BACKLOG.md`.
 
 ## Current Blockers
 
@@ -74,11 +74,14 @@ None. Prior staleness tracking lives in `MAINTAINER_ARCHIVE/STALE_ITEMS.md`.
 
 ## Next Recommended Action
 
-Verify post-merge `main` CI after this branch-field cleanup, then rebase slice
-4 (fast-path validation discipline) onto current `main`.
+Verify post-cleanup `main` CI is green after this state reset, then resume
+normal development from the clean scaffold boundary and adaptive validation
+baseline.
 
 ## Latest Validation
 
-PR #18 pull_request and push `Bootstrap Validation` CI passed before merge.
+PR #19 pull_request and push `Bootstrap Validation` CI passed before merge.
 Post-merge `main` CI initially failed only because `AI_HANDOFF.md` still named
-the slice 3 branch; this cleanup resets active state to `main`.
+the slice 4 branch; this cleanup resets active state to `main`. Local
+`bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`,
+and `git diff --check` passed after the reset.

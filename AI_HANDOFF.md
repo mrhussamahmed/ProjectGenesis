@@ -4,7 +4,7 @@ type: shared-state
 status: active
 version: v4.0
 created: 2026-05-09
-updated: 2026-05-16
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/AI_HANDOFF.md-2026-05-16-pre-slice-3.md)
 linked_specs: []
@@ -18,7 +18,7 @@ authoritative: false
 
 ## Current Date
 
-2026-05-16
+2026-05-17
 
 ## Active Agent
 
@@ -30,7 +30,7 @@ Reviewer / Merge Steward
 
 ## Current Branch
 
-`claude/slice-4-fast-path-validation`
+`main`
 
 ## Current Worktree
 
@@ -38,61 +38,47 @@ repository root
 
 ## Last Completed Task
 
-Slice 3 - shrink required-reading files - merged to `main` through PR #18 at
-merge commit `c2e223e57cfbf20a9bd08efdfcaf7b8bda302a8b`.
+Slice 4 - fast-path validation discipline - merged to `main` through PR #19 at
+merge commit `3926cf07ce9115bfc7128b1f6964a39677743ca7`.
 
 ## Current In-Progress Task
 
-No active implementation task on `main`. Slice 4 - fast-path validation
-discipline - is the next stacked follow-on slice and must be rebased onto
-current `main` before merge review.
+Post-merge cleanup on `main`: reset active state after PR #19 so the
+validator and red-check fixtures see the real `main` branch.
 
 ## Files Changed
 
-- `AI_HANDOFF.md` (this file, trimmed from 186KB to current state only)
-- `CURRENT_STATE.md` (trimmed)
-- `ARTIFACT_REGISTRY.md` (source columns simplified, current entries only)
-- `TRACEABILITY_MATRIX.md` (trimmed)
-- `TEST_RESULTS.md` (trimmed)
-- `IMPLEMENTATION_PLAN.md` (trimmed)
-- `BACKLOG.md` (trimmed)
-- `BACKLOG/BACKLOG_INDEX.md` (trimmed; BOOT-* entries archived in slice 2)
-- `REVIEWS/REVIEW_INDEX.md` (trimmed; review records archived in slice 2)
-- `WORKLOG/WORKLOG_INDEX.md` (trimmed; worklog entries archived)
-- `SPECS/SPEC_INDEX.md` (trimmed; SPEC-BOOT-* archived in slice 2)
-- `MAINTAINER_ARCHIVE/snapshots/*-2026-05-16-pre-slice-3.md` (preserves full pre-trim versions)
+- `AI_HANDOFF.md` (this file, post-merge active-branch reset)
+- `CURRENT_STATE.md` (post-merge active-state reset)
 
 ## Tests Run
 
-- PR #18 pull_request and push `Bootstrap Validation` CI passed before merge.
-- Post-merge `main` CI initially failed only because this active handoff still
-  named the slice 3 branch; this cleanup resets the active branch field to
-  `main`.
+- PR #19 pull_request and push `Bootstrap Validation` CI passed before merge.
+- Post-merge `main` CI initially failed only in red checks because this active
+  handoff still named the slice 4 branch; this cleanup resets the active
+  branch field to `main`.
+- `bash SCRIPTS/validate-bootstrap.sh` passed after this cleanup.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` passed after this cleanup.
+- `git diff --check` passed after this cleanup.
 
 ## Tests Not Run
 
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` (out of scope for slice 3
-  per process-light bootstrap exception).
-- Full ProjectGenesis regression suite (out of scope; slice 3 is required-
-  reading shrink only, no validator/CI/security/merge mechanics changes).
+- Full ProjectGenesis regression suite beyond bootstrap validation and
+  red-check harness.
 
 ## Known Risks
 
-- Trimming required-reading files writes ProjectGenesis state. The
-  process-light exception explicitly authorizes this for slice 3.
-- Snapshots are preserved in `MAINTAINER_ARCHIVE/snapshots/`; no audit
-  history is lost.
+- This cleanup writes active ProjectGenesis state after merge. It does not
+  change validator, hook, scaffold, or policy implementation files.
 
 ## Dirty Worktree Status
 
-In progress on `claude/slice-4-fast-path-validation`. Slices 2 and 3 are
-already merged to `main` (at `b2c8649` after the BOOT-036 post-merge
-cleanup).
+Post-merge cleanup on `main`.
 
 ## Next Recommended Action
 
-Verify post-merge `main` CI is green, then rebase slice 4 onto current
-`main`.
+Push this cleanup to `main`, then verify the post-cleanup `main` CI run is
+green.
 
 ## What The Next AI Must Read First
 
@@ -108,7 +94,7 @@ Verify post-merge `main` CI is green, then rebase slice 4 onto current
 Slice 1: TEMPLATE_MANIFEST.md and TEMPLATE_STARTERS/ - done (merged to main).
 Slice 2: MAINTAINER_ARCHIVE/ relocation - done (merged to main).
 Slice 3: required-reading shrink - done (merged to main through PR #18).
-Slice 4: fast-path validation discipline - pending.
+Slice 4: fast-path validation discipline - done (merged to main through PR #19).
 
 ## Slice 3 Pre-Change Classification
 
@@ -135,3 +121,15 @@ Slice 4: fast-path validation discipline - pending.
   merge.
 - Next safe action: completed by slice 3 trim; the prior envelope above
   records the current state.
+
+## Slice 4 Final Evidence Envelope
+
+- Slice 4 fast-path validation discipline merged through PR #19 at merge
+  commit `3926cf07ce9115bfc7128b1f6964a39677743ca7`.
+- Operation profile: `process-light-exception`
+- Validation skipped: none for this cleanup; bootstrap validation, red checks,
+  and diff whitespace checks passed locally before push.
+- Review required: PR #19 received clean Codex review before admin merge.
+- Next safe action: push this cleanup, verify post-cleanup `main` CI is green,
+  then resume normal work from the clean scaffold boundary and adaptive
+  validation baseline.
