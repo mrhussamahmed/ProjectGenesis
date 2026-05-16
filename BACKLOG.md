@@ -2,12 +2,12 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v1.33
+version: v4.0
 created: 2026-05-09
 updated: 2026-05-16
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold, public repository publication request, ProjectGenesis PR merge, README positioning/tooling prerequisite update, BOOT-017 merge, SPEC-BOOT-003 proposal, SPEC-BOOT-003 review fixes, SPEC-BOOT-003 approval, BOOT-018 merge, BOOT-019 through BOOT-024 implementation, BOOT-019 through BOOT-024 merge, public launch readiness packaging, BOOT-026 / BOOT-027 / BOOT-028 added for PR #5 Phase 0, BOOT-029 through BOOT-033 added for Phase 1 execution planning, PR #6 assumption-claim review fix, PR #6 merge/post-merge source-of-truth cleanup, BOOT-030 in-review on its own branch, PR #7 BOOT-030 merge/post-merge source-of-truth cleanup, BOOT-031 scaffold extraction tool implementation, PR #8 BOOT-031 merge/post-merge source-of-truth cleanup, BOOT-032 seeded-defect benchmark and coverage metrics implementation, PR #9 BOOT-032 merge/post-merge source-of-truth cleanup, PR #10 BOOT-033 merge/post-merge source-of-truth cleanup, Phase 1 closeout coherence verification, BOOT-035 branch-aware handoff planning, BOOT-035 branch-aware handoff implementation startup, BOOT-035 branch-aware handoff in-review state, PR #12 BOOT-035 merge, BOOT-035 post-merge cleanup, and BOOT-034 next safe action staleness guard implementation in-review
-linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003, SPEC-BOOT-004]
+source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/BACKLOG.md-2026-05-16-pre-slice-3.md)
+linked_specs: []
 linked_tickets: []
 linked_adrs: []
 replaces:
@@ -17,87 +17,24 @@ authoritative: true
 # Backlog
 
 This file mirrors the current highest-level backlog. Detailed items can live
-under `BACKLOG/`.
+under `BACKLOG/`. ProjectGenesis legacy `BOOT-*` items are archived under
+`MAINTAINER_ARCHIVE/BACKLOG/`.
 
 ## Current Backlog
 
-| ID | Title | Purpose | Priority | Complexity | Risk | Dependencies | Readiness | Parallelization | Suggested Role |
-|----|-------|---------|----------|------------|------|--------------|-----------|-----------------|----------------|
-| BOOT-001 | Validate bootstrap scaffold | Confirm required files, folders, metadata, and handoff exist. | P0 | low | low | none | ready | sequential | QA Agent |
-| BOOT-002 | Initialize Git and commit baseline | Create a clean version-control baseline if desired. | P1 | low | low | BOOT-001 | ready after validation | sequential | DevOps Reviewer |
-| BOOT-003 | Ingest first product input | Read idea, PRD, Excel file, or feature list and extract requirements. | P1 | medium | medium | product input | blocked | can parallelize with architecture research after intake | Product Analyst |
-| BOOT-004 | Create first product spec | Convert requirements into `SPECS/SPEC-001-*.md` with acceptance criteria. | P1 | medium | medium | BOOT-003 | blocked | sequential before implementation | Spec Author |
-| BOOT-005 | Create first architecture pass | Define project architecture, boundaries, security, observability, and ADR needs. | P1 | medium | high | BOOT-003 | blocked | may run beside backlog planning after intake | Architect |
-| BOOT-006 | Create implementation-ready backlog | Convert specs and architecture into sequenced tasks and Linear-ready items. | P1 | medium | medium | BOOT-004, BOOT-005 | blocked | may parallelize item authoring after boundaries are stable | Backlog Planner |
-| BOOT-007 | Define test strategy for first slice | Map acceptance criteria to automated and manual tests. | P1 | medium | medium | BOOT-004 | blocked | can run beside backlog planning | Test and QA Agent |
-| BOOT-008 | Prepare first implementation branch | Create branch/worktree only after the first task meets Definition of Ready. | P2 | low | low | BOOT-004, BOOT-006, BOOT-007 | blocked | sequential | Implementation Agent |
-| BOOT-009 | Review scaffold intake and governance spec | Review and approve or request changes on `SPEC-BOOT-002` before implementation. | P0 | medium | high | SPEC-BOOT-002 | done | sequential | Adversarial PR Reviewer |
-| BOOT-010 | Implement intake migration and source registry | Add canonical intake folders and migrate `INPUT/` to a legacy alias. | P1 | medium | medium | BOOT-009 | done | sequential | Documentation Curator |
-| BOOT-011 | Implement product context and requirements control | Add product context files plus requirement, assumption, and risk registers. | P1 | medium | high | BOOT-010 | done | sequential | Product Analyst, Spec Author |
-| BOOT-012 | Update workflow policy, templates, and traceability | Add the narrow direct-`main` documentation exception plus evidence, assumption, readiness, and test mapping fields. | P1 | medium | high | BOOT-011 | done | sequential | Spec Author, Architect |
-| BOOT-013 | Improve validator with red-check examples | Define and implement validator checks for evidence, assumptions, commands, sources, and handoff consistency. | P1 | medium | high | BOOT-012 | done | sequential | QA Reviewer |
-| BOOT-014 | Add context packs and command prompt framework | Add subordinate context packs and safe command prompt scaffolding after validator rules can check authority limits. | P2 | medium | medium | BOOT-013 | done | can parallelize after validator boundaries are stable | Documentation Curator |
-| BOOT-015 | Migrate onboarding RTF files | Convert useful RTF content to Markdown and register legacy lifecycle status. | P2 | medium | medium | BOOT-009 | done | can parallelize after spec approval | Documentation Curator |
-| BOOT-016 | Publish ProjectGenesis public repository | Add public README, AGPLv3 license, Code Owners, GitHub branch protection guidance, and a reviewable publication PR. | P1 | low | medium | origin repository access | done | sequential | Documentation Curator, DevOps Release Reviewer |
-| BOOT-017 | Improve README positioning and tooling prerequisites | Clarify ProjectGenesis capabilities, audience fit, Linear backlog storage, Linear setup, optional Spec Kit use, and other supported tooling before downstream project work starts. | P2 | low | low | BOOT-016 | done | sequential | Documentation Curator, DevOps Release Reviewer |
-| BOOT-018 | Create adaptive governance routing spec | Create approved `SPEC-BOOT-003` as the governing policy-only spec for operation profiles, escalation, durable evidence, and protected-artifact routing. | P0 | medium | high | user-approved plan | done | sequential | Spec Author |
-| BOOT-019 | Define operation profile policy | After `SPEC-BOOT-003` is approved or activated, update governance-facing docs with approved operation profiles, risk mapping, branch rules, validation, and review requirements. | P1 | medium | high | BOOT-018 | done | sequential | Documentation Curator |
-| BOOT-020 | Define artifact impact map | After `SPEC-BOOT-003` is approved or activated and BOOT-019 is complete, add reviewed impact mapping so changed files determine required reads, writes, validation, review, and not-impacted artifacts. | P1 | medium | high | BOOT-019; SPEC-BOOT-003 approved or active | done | sequential | Documentation Curator, QA Reviewer |
-| BOOT-021 | Define validation modes and evidence envelope | After `SPEC-BOOT-003` is approved or activated and BOOT-020 is complete, add approved guidance for fast, standard, and strict validation modes plus durable operation evidence records. | P1 | medium | high | BOOT-020; SPEC-BOOT-003 approved or active | done | sequential | QA Reviewer, Documentation Curator |
-| BOOT-022 | Update current-state and handoff policy | After `SPEC-BOOT-003` is approved or activated and BOOT-021 is complete, add reviewed policy for compact current truth, durable evidence references, and handoff compression without losing active operational facts. | P1 | medium | high | BOOT-021; SPEC-BOOT-003 approved or active | done | sequential | Documentation Curator |
-| BOOT-023 | Add structural validator support | Add path/profile structural validator checks and red-check fixtures only after `SPEC-BOOT-003` is approved or activated and impact/evidence rules are stable. | P1 | medium | high | BOOT-021, BOOT-022; SPEC-BOOT-003 approved or active | done | sequential | QA Reviewer |
-| BOOT-024 | Measure governance routing performance | After `SPEC-BOOT-003` is approved or activated and BOOT-019 through BOOT-023 are complete, benchmark representative small and medium operations to confirm time and token savings without new review, traceability, or handoff regressions. | P2 | medium | medium | BOOT-019 through BOOT-023; SPEC-BOOT-003 approved or active | done | sequential | QA Reviewer, Documentation Curator |
-| BOOT-025 | Package public launch readiness assets | Add additive launch checklist, release-note draft, example/demo assets, social drafts, issue templates, seed issue drafts, token-efficiency guidance, minimal CLI proposal, and required review/state records without changing product behavior or governance mechanics. | P1 | medium | medium | SPEC-BOOT-004 | done | sequential | Documentation Curator, Adversarial PR Reviewer |
-| BOOT-026 | Restore validator-passing state on the PR #5 branch | Re-add the 15-line metadata block on `README.md` that was removed in `9de53e0` and update `AI_HANDOFF.md` `## Current Branch` to match the actual worktree branch so the bootstrap validator exits 0 and the Phase 0 mechanic commit can land. | P1 | low | low | SPEC-BOOT-002 | done | sequential | Implementation Agent |
-| BOOT-027 | Phase 0 validator scope and AWK first-block fix | Update `SCRIPTS/validate-bootstrap.sh` find commands to `-prune` `.claude/` and `research/` so generated agent state and disposable research output are not scanned. Remove the `checked_first = 1; exit` pair in the AWK so every `## Pre-Change Classification` block in `AI_HANDOFF.md` is inspected. Add three red-check fixtures (`case_research_dir_does_not_trip_validator`, `case_claude_worktree_does_not_trip_validator`, `case_protected_planning_misclassified_in_second_block`) plus a new `expect_no_failure_mentioning` helper. | P0 | low | medium | SPEC-BOOT-003 | done | sequential | Implementation Agent, Adversarial PR Reviewer |
-| BOOT-028 | Source-of-truth state-sync after PR #5 evidence-package push | Correct pre-push wording in `CURRENT_STATE.md`, `AI_HANDOFF.md`, `TRACEABILITY_MATRIX.md`, `REVIEWS/REVIEW_INDEX.md`, `TEST_RESULTS.md`, and `WORKLOG/WORKLOG_INDEX.md` after evidence-package merge commit `068783d` was pushed to `origin/claude/festive-ride-eadc67` and GitHub Actions `validate` ran green on the merge head. Records were authored inside commit `068783d` and went stale once the push completed; this state-sync brings them current. | P2 | low | low | SPEC-BOOT-003 | done | sequential | Implementation Agent |
-| BOOT-029 | Phase 1 execution plan | Convert the selected Phase 1 candidates into tracked backlog items and a sequenced implementation plan before starting any new scaffold mechanics. This is planning-only and must not implement scaffold extraction, benchmark scripts, or validator checks. | P0 | medium | medium | SPEC-BOOT-002, SPEC-BOOT-003 | done | sequential | Backlog Planner |
-| BOOT-030 | Scaffold extraction checklist | Create a human-readable extraction checklist and reset policy for downstream scaffold reuse before implementing a script. Defines which artifacts are framework, instance history, example, or reset-template material. | P0 | medium | high | BOOT-029; SPEC-BOOT-002, SPEC-BOOT-003 | done | sequential | Documentation Curator |
-| BOOT-031 | Scaffold extraction tool | Implement a dry-run-first `SCRIPTS/scaffold-extract.sh` or equivalent after BOOT-030 defines the policy. Validate the extracted target with bootstrap validation and golden/fixture checks. | P0 | medium | high | BOOT-030; SPEC-BOOT-002, SPEC-BOOT-003 | done | sequential | Implementation Agent, QA Reviewer |
-| BOOT-032 | Seeded-defect benchmark and coverage metrics | Add first empirical evidence for review and anti-hallucination claims: evidence/acceptance/traceability metric scripts, a seeded-defect benchmark plan, and baseline reporting. | P0 | medium | high | BOOT-031 merged; SPEC-BOOT-003 | done | sequential | QA Reviewer, Documentation Curator |
-| BOOT-033 | SRC/SPEC ID cross-validation | Extend the validator and red checks so cited `SRC-*` and `SPEC-*` identifiers must exist in repository source-of-truth registers or spec files, with explicit provisional syntax if needed. | P1 | medium | high | BOOT-029, BOOT-032; SPEC-BOOT-002, SPEC-BOOT-003 | done | sequential | Implementation Agent, QA Reviewer |
-| BOOT-034 | Next safe action staleness guard | Add a Phase 2 convention, template update, or validator-backed check so committed handoff/state evidence does not preserve stale forward-looking `Next safe action:` instructions after the action is complete. | P1 | medium | medium | Phase 1 complete; SPEC-BOOT-003 | done | sequential | Documentation Curator, QA Reviewer |
-| BOOT-035 | Branch-aware handoff model | Fix the structural merge-drift caused by the singular `AI_HANDOFF.md` `## Current Branch` field so feature-branch merges do not fail `main` CI solely because handoff still names the merged branch. | P0 | medium | high | Phase 1 complete; SPEC-BOOT-003 | done | sequential | Documentation Curator, QA Reviewer, Implementation Agent |
+No active or proposed backlog items in the bootstrap scaffold itself. Clean-
+scaffold-boundary slices are tracked in `IMPLEMENTATION_PLAN.md` and the
+slice branches (`claude/slice-2-clean-raw-root`,
+`claude/slice-3-shrink-required-reading`, `claude/slice-4-*`).
+
+## Conventions
+
+- Use a short, stable ticket prefix chosen by the product owner.
+- Register every backlog item in `BACKLOG/BACKLOG_INDEX.md`.
+- Use `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md` to draft new items.
+- Link backlog items to specs, ADRs, traceability rows, tests, and reviews.
 
 ## External Ticket Workflow
 
-If Linear, GitHub Issues, or another external tracker is available, use local
-backlog items as drafts until tickets are actually created. Markdown remains
-authoritative until ticket existence is confirmed.
-
-Tracker availability requires all of:
-
-- the user authorizes tracker use
-- an integration, CLI, or API is installed and usable
-- the agent can read or create tickets with command or tool evidence
-
-Ticket confirmation requires one of:
-
-- a real ticket ID or URL returned by the integration
-- successful CLI or API output
-- an authoritative repository artifact recording confirmed ticket evidence
-
-Do not claim external tickets exist from draft titles, planned descriptions, or
-chat claims alone.
-
-Each Linear-ready backlog item should include:
-
-- title
-- purpose
-- user or system value
-- scope
-- linked spec
-- linked acceptance criteria
-- related ADR
-- dependencies
-- risks
-- suggested owner role
-- estimated complexity
-- implementation phase
-- related files or modules if known
-- priority
-- readiness status
-- test expectations
-- definition of done
-- parallelization status
-- file ownership boundaries
+Linear or another tracker may be added later. Until then, the Markdown
+backlog under `BACKLOG/` is authoritative.
