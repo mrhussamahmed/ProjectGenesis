@@ -131,6 +131,7 @@ ProjectGenesis bootstrap scaffold.
 | Artifact ID | Type | Title | File | Status | Version | Authoritative | Notes |
 |---|---|---|---|---|---|---|---|
 | ART-SCRIPT-START-CLAUDE | script | Claude Role Launcher | `SCRIPTS/start-claude.sh` | active | v4.0 | false | Role launcher. |
+| ART-SCRIPT-OP-PROFILE | script | Operation Profile Extractor | `SCRIPTS/operation-profile.sh` | active | v4.0 | false | Slice 4 fast-path adapter: reads AI_HANDOFF.md Operation profile and maps to validator level. |
 | ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | active | v4.0 | false | Shape and structure validator. |
 | ART-SCRIPT-RED-CHECKS | script | Red-Check Harness | `SCRIPTS/validate-bootstrap-red-checks.sh` | active | v4.0 | false | Red-check harness. |
 | ART-METRIC-EVIDENCE | script | Evidence Coverage Metric | `SCRIPTS/metric-evidence-coverage.sh` | active | v4.0 | false | Metric script. |

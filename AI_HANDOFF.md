@@ -30,7 +30,7 @@ Implementation
 
 ## Current Branch
 
-`claude/slice-3-shrink-required-reading`
+`claude/slice-4-fast-path-validation`
 
 ## Current Worktree
 
@@ -86,7 +86,7 @@ versions are small, current, and project-neutral.
 
 ## Dirty Worktree Status
 
-In progress on `claude/slice-3-shrink-required-reading`. Slice 2 already
+In progress on `claude/slice-4-fast-path-validation`. Slice 2 already
 committed and pushed on `claude/slice-2-clean-raw-root` (the slice 2 PR).
 
 ## Next Recommended Action

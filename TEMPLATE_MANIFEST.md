@@ -400,6 +400,7 @@ introduced them; consumers may relabel.
 | Nested Path | Class | Notes |
 |-------------|-------|-------|
 | `SCRIPTS/start-claude.sh` | `copy` | Reusable role launcher. |
+| `SCRIPTS/operation-profile.sh` | `copy` | Reusable slice-4 operation-profile extractor for adaptive fast-path validation. |
 | `SCRIPTS/metric-acceptance-coverage.sh` | `copy` | Reusable metric script. |
 | `SCRIPTS/metric-evidence-coverage.sh` | `copy` | Reusable metric script. |
 | `SCRIPTS/metric-traceability-completeness.sh` | `copy` | Reusable metric script. |

@@ -4,6 +4,21 @@ set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$repo_root"
 
+# Validator profile (slice 4 adaptive routing).
+#
+#   strict (default)     — run all checks.
+#   state-sync           — run shape + AI_HANDOFF sections + registry path
+#                          registration checks; skip cross-validation and
+#                          deep awk-based content checks.
+#   shape-only           — run only required-files / required-dirs and
+#                          YAML metadata checks. Used for docs-trivial
+#                          and process-light-exception operations.
+#
+# The default remains strict; non-strict levels are only used when the
+# hook layer explicitly opts in via BOOTSTRAP_VALIDATE_PROFILE, AND the
+# hook has confirmed that no strict-gate path is in the staged file set.
+BOOTSTRAP_VALIDATE_PROFILE="${BOOTSTRAP_VALIDATE_PROFILE:-strict}"
+
 failures=0
 
 fail() {
@@ -126,6 +141,7 @@ required_files=(
   "WORKLOG/WORKLOG_INDEX.md"
   "HANDOFFS/HANDOFF_INDEX.md"
   "SCRIPTS/start-claude.sh"
+  "SCRIPTS/operation-profile.sh"
   "SCRIPTS/validate-bootstrap.sh"
   "SCRIPTS/validate-bootstrap-red-checks.sh"
   "MAINTAINER_ARCHIVE/SCRIPTS/scaffold-extract.sh"
@@ -190,6 +206,16 @@ while IFS= read -r file; do
 done < <(find . \
   \( -path './.git' -o -path './.claude' -o -path './research' \) -prune \
   -o -type f -name '*.md' -print)
+
+# Fast-path early-exit for shape-only profile (slice 4).
+if [[ "$BOOTSTRAP_VALIDATE_PROFILE" == "shape-only" ]]; then
+  if (( failures > 0 )); then
+    echo "Bootstrap validation failed with $failures issue(s) (shape-only profile)." >&2
+    exit 1
+  fi
+  echo "Bootstrap validation passed (shape-only profile; deep checks skipped per BOOTSTRAP_VALIDATE_PROFILE=shape-only)."
+  exit 0
+fi
 
 for section in \
   "## Current Date" \
