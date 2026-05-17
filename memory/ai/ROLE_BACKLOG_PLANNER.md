@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-BACKLOG-PLANNER
 title: Role - Backlog Planner
 type: agent-role
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -41,6 +41,8 @@ Convert specs and architecture into implementation-ready backlog.
 - Identify blockers.
 - Prepare Linear-ticket-ready items if Linear is available.
 - Avoid fake ticket claims.
+- Use PRs or issues to coordinate parallel branches. Do not use
+  `CURRENT_STATE.md` as a live board of every active branch.
 
 ## Allowed Actions
 
@@ -69,8 +71,9 @@ Convert specs and architecture into implementation-ready backlog.
 
 ## Required Updates Before Stopping
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `BACKLOG.md`
 - `BACKLOG/BACKLOG_INDEX.md`
 - detailed backlog item files when created
@@ -81,6 +84,10 @@ Convert specs and architecture into implementation-ready backlog.
 - `WORKLOG/WORKLOG_INDEX.md`
 
 ## Handoff Requirements
+
+For unmerged branch work, record tactical resume details in `.ai/SESSION.md`
+and shared branch status in the PR body or review package. Update committed
+state only for durable changes that should remain true on `main`.
 
 Record next ready task, blockers, dependencies, file ownership, risks,
 reviewers, test expectations, and whether Linear has been updated or only

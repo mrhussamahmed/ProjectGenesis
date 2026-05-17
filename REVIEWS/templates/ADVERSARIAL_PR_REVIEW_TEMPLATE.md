@@ -62,6 +62,13 @@ light | standard | deep | adversarial deep | multi-role review
 - Skipped validation rationale:
 - Handoff and evidence durability:
 
+## Split-State Review
+
+- Canonical state remains merge-safe:
+- Branch-specific status is in PR evidence:
+- Local session facts are not committed:
+- Review evidence durability is appropriate for risk:
+
 ## Required Changes
 
 - 

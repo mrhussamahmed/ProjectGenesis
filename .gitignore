@@ -15,5 +15,5 @@ __pycache__/
 coverage/
 tmp/
 *.log
+.ai/
 .bootstrap-scaffold-mode
-

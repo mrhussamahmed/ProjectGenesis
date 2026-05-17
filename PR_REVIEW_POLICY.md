@@ -2,13 +2,13 @@ artifact_id: ART-REVIEW-001
 title: PR Review Policy
 type: review-policy
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, and SPEC-BOOT-003
+source: User request, reference repository audit, SPEC-BOOT-003, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-003]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -32,6 +32,17 @@ The reviewer must not rely on implementer chat history. The reviewer reads:
 - traceability matrix
 - artifact registry
 - current state and handoff
+
+## Branch-Specific State
+
+Branch-specific current status, active worktree, next branch action, and
+temporary validation state belong in the PR body, PR comments, or review
+package. They must not be active facts in committed canonical state files.
+
+Normal low-risk PR review evidence may live in GitHub PR reviews or PR
+comments. High-risk, governance, validator, hook, CI, role, or
+source-of-truth changes need a durable review object: either a GitHub review
+object or a committed review record under `REVIEWS/`.
 
 ## Severity Levels
 
@@ -61,7 +72,7 @@ The reviewer must check:
 - Is there architecture drift or product scope drift?
 - Was stale documentation or stale code used as current truth?
 - Are artifacts and traceability updated?
-- Is handoff updated?
+- Is handoff or PR evidence updated in the correct split-state location?
 - Are errors and failure modes handled?
 - Is observability adequate?
 - Is the change too broad or unrelated?
@@ -74,6 +85,8 @@ The reviewer must check:
   evidence?
 - Are skipped reads, skipped validation, and not-impacted artifacts justified by
   the operation profile and impact map?
+- Do committed canonical state files avoid active branch/session facts that
+  would become false after merge?
 
 ## Blocking Issues
 
@@ -87,7 +100,8 @@ Block or request changes for:
 - stale artifact used as current truth
 - missing traceability for important requirement
 - unexplained dirty worktree or unrelated changes
-- missing AI handoff after significant work
+- missing required PR evidence or durable handoff/state update in the correct
+  split-state location after significant work
 - high uncertainty without spike or open question
 
 ## Reviewer Output

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# operation-profile.sh: read AI_HANDOFF.md's most recent "Pre-Change
-# Classification" section and emit the Operation profile value to stdout.
+# operation-profile.sh: read a local `.ai/SESSION.md` operation profile hint,
+# falling back to AI_HANDOFF.md's legacy "Pre-Change Classification" section,
+# and emit the Operation profile value to stdout.
 #
 # Output is one of:
 #   - docs-trivial
@@ -10,7 +11,7 @@
 #   - docs-public-claim
 #   - strict-protected
 #   - process-light-exception
-#   - unknown (if no profile or AI_HANDOFF.md missing)
+#   - unknown (if no valid local or legacy profile is present)
 #
 # Side-channel: maps profiles to validator levels via stdout when the
 # caller passes the `--validator-level` flag instead of the raw profile.
@@ -19,10 +20,10 @@
 #   - state-sync: shape-only + AI_HANDOFF sections + registry registration
 #   - strict: everything (default)
 #
-# Strict gates remain strict: this script reports profile-as-recorded.
-# The decision to actually use a non-strict validator level is made by the
-# hook layer, which also checks that the staged file set does not include
-# any strict-gate path.
+# Strict gates remain strict: this script reports a profile hint only. The
+# decision to actually use a non-strict validator level is made by the hook
+# layer, which also checks that the staged file set does not include any
+# strict-gate path.
 
 set -euo pipefail
 
@@ -34,7 +35,83 @@ if [[ "${1:-}" == "--validator-level" ]]; then
   mode="validator-level"
 fi
 
-extract_profile() {
+is_known_profile() {
+  case "$1" in
+    docs-trivial|docs-non-authoritative|state-sync|planning-governance|docs-public-claim|strict-protected|process-light-exception)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+extract_local_session_value() {
+  local key="$1"
+  local file=".ai/SESSION.md"
+  awk -F: -v wanted="$key" '
+    $1 ~ "^[[:space:]]*" wanted "[[:space:]]*$" {
+      value = $2
+      gsub(/`/, "", value)
+      gsub(/^[ \t]+|[ \t]+$/, "", value)
+      sub(/[[:space:]].*$/, "", value)
+      print value
+      found = 1
+      exit
+    }
+    END { if (!found) print "" }
+  ' "$file"
+}
+
+extract_profile_from_local_session() {
+  local file=".ai/SESSION.md"
+  if [[ ! -f "$file" ]]; then
+    echo "unknown"
+    return
+  fi
+
+  local profile branch updated_at_epoch current_branch now_epoch session_ttl_seconds
+  profile="$(extract_local_session_value "operation_profile")"
+  branch="$(extract_local_session_value "branch")"
+  updated_at_epoch="$(extract_local_session_value "updated_at_epoch")"
+
+  if [[ -z "$profile" || -z "$branch" || -z "$updated_at_epoch" ]]; then
+    echo "unknown"
+    return
+  fi
+
+  if ! is_known_profile "$profile"; then
+    echo "unknown"
+    return
+  fi
+
+  current_branch="$(git branch --show-current 2>/dev/null || true)"
+  if [[ -z "$current_branch" || "$branch" != "$current_branch" ]]; then
+    echo "unknown"
+    return
+  fi
+
+  if [[ ! "$updated_at_epoch" =~ ^[0-9]+$ ]]; then
+    echo "unknown"
+    return
+  fi
+
+  now_epoch="$(date +%s)"
+  session_ttl_seconds="${BOOTSTRAP_SESSION_TTL_SECONDS:-43200}"
+  if [[ ! "$session_ttl_seconds" =~ ^[0-9]+$ ]]; then
+    echo "unknown"
+    return
+  fi
+
+  if (( now_epoch - updated_at_epoch > session_ttl_seconds )); then
+    echo "unknown"
+    return
+  fi
+
+  echo "$profile"
+}
+
+extract_profile_from_legacy_handoff() {
   local file="AI_HANDOFF.md"
   if [[ ! -f "$file" ]]; then
     echo "unknown"
@@ -66,6 +143,22 @@ extract_profile() {
     }
     END { print profile }
   ' "$file"
+}
+
+extract_profile() {
+  local profile
+  profile="$(extract_profile_from_local_session)"
+  if [[ "$profile" != "unknown" ]]; then
+    echo "$profile"
+    return
+  fi
+
+  profile="$(extract_profile_from_legacy_handoff)"
+  if is_known_profile "$profile"; then
+    echo "$profile"
+  else
+    echo "unknown"
+  fi
 }
 
 profile_to_validator_level() {

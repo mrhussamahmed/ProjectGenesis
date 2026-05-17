@@ -2,13 +2,13 @@ artifact_id: ART-WORKLOG-INDEX
 title: Worklog Index
 type: worklog
 status: active
-version: v4.0
+version: v4.2
 created: 2026-05-09
-updated: 2026-05-16
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/WORKLOG_INDEX-2026-05-16-pre-slice-3.md)
 linked_specs: []
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -27,7 +27,9 @@ ProjectGenesis legacy worklog sessions are archived under
 
 | Worklog ID | Date | Subject | File | Notes |
 |------------|------|---------|------|-------|
-| none | none | none | none | No worklog entries in the active scaffold yet. |
+| WORKLOG-BOOT-STATE-001-IMPLEMENTATION-2026-05-17 | 2026-05-17 | Split-state handoff implementation | `REVIEWS/PR_REVIEW_PACKAGE-split-state-handoff.md` | Implemented split canonical/PR/local session state, local operation-profile hints, validator guards, red-check fixtures, and merge-safe canonical snapshots. Latest local strict validation, red checks, shell syntax, check-ignore, and diff check passed after maintainer-approval boundary correction; CI, fresh review, and explicit Path B maintainer approval or Path A remain pending. |
+| WORKLOG-BOOT-STATE-001-TASK-0-2026-05-17 | 2026-05-17 | Establish split-state implementation authority | `BACKLOG/BOOT-STATE-001-split-state-handoff.md` | Task 0 added the recurring bootstrap-governance exception to `PR_MERGE_POLICY.md` and registered `BOOT-STATE-001`; Path B still requires explicit maintainer approval for this PR before merge, otherwise Path A is required. |
+| WORKLOG-SPLIT-STATE-HANDOFF-PLAN-REVIEW-2026-05-17 | 2026-05-17 | Codex adversarial review of split-state handoff plan | `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md` | Latest re-review approved the plan with minor comments; implementation must begin with Task 0. |
 
 ## Conventions
 

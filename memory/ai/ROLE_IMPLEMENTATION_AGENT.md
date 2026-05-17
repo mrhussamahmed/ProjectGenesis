@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-IMPLEMENTATION-AGENT
 title: Role - Implementation Agent
 type: agent-role
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -23,8 +23,9 @@ Implement ready tasks.
 ## Required Context Files To Read
 
 - `memory/ai/SHARED_AGENT_RULES.md`
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `BRANCH_AND_WORKTREE_GUIDE.md`
 - `IMPLEMENTATION_PLAN.md`
 - relevant spec
@@ -46,8 +47,8 @@ Implement ready tasks.
 - Update `TEST_RESULTS.md`.
 - Update `TRACEABILITY_MATRIX.md`.
 - Update `ARTIFACT_REGISTRY.md`.
-- Update `CURRENT_STATE.md`.
-- Update `AI_HANDOFF.md`.
+- Update committed state only when durable project truth changed and should
+  remain true on `main` after merge.
 - Prepare PR review package if PR-ready.
 
 ## Allowed Actions
@@ -71,13 +72,14 @@ Implement ready tasks.
 - Scoped code and test changes.
 - Updated test results.
 - Updated traceability and artifact registry entries.
-- Updated current state and handoff.
+- Updated state and handoff evidence when durable project truth changed.
 - PR review package when the work is PR-ready.
 
 ## Required Updates Before Stopping
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `TEST_RESULTS.md`
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
@@ -86,14 +88,18 @@ Implement ready tasks.
 
 ## Handoff Requirements
 
+For unmerged branch work, record tactical resume details in `.ai/SESSION.md`
+and shared branch status in the PR body or review package. Update committed
+state only for durable changes that should remain true on `main`.
+
 Record branch, worktree, changed files, tests run, failures, skipped checks,
 risks, assumptions, dirty worktree status, and next safe action.
 
 ## Evidence Requirements
 
 Implementation completion requires changed files, passing or documented failing
-checks, mapped acceptance criteria, and updated handoff. Claims must cite this
-evidence.
+checks, mapped acceptance criteria, and updated durable handoff or PR evidence.
+Claims must cite this evidence.
 
 ## Escalation And Stop Conditions
 

@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-ADVERSARIAL-PR-REVIEWER
 title: Role - Adversarial PR Reviewer
 type: agent-role
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: User request and SPEC-BOOT-003
 linked_specs: [SPEC-BOOT-003]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -27,8 +27,9 @@ Perform fresh-context adversarial PR review.
 - `PR_MERGE_POLICY.md`
 - `RISK_MODEL.md`
 - `OPERATION_ROUTING.md`
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 - relevant specs
@@ -53,6 +54,9 @@ Perform fresh-context adversarial PR review.
 - Check missing handoff.
 - Check pre-change classification, profile escalation, impact-map coverage,
   skipped validation rationale, and final evidence envelope.
+- Verify committed state files do not contain active branch/session facts that
+  will become false after merge. Branch-specific status must be in PR
+  evidence, not canonical state.
 - Classify findings as P0, P1, P2, or P3.
 - Return approve, approve with minor comments, request changes, or block.
 
@@ -83,8 +87,9 @@ Perform fresh-context adversarial PR review.
 
 ## Required Updates Before Stopping
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - review record under `REVIEWS/` when a review is performed
 - `ARTIFACT_REGISTRY.md` for new review artifacts
 - `TRACEABILITY_MATRIX.md`
@@ -92,6 +97,10 @@ Perform fresh-context adversarial PR review.
 - `WORKLOG/WORKLOG_INDEX.md`
 
 ## Handoff Requirements
+
+For unmerged branch work, record tactical resume details in `.ai/SESSION.md`
+and shared branch status in the PR body or review package. Update committed
+state only for durable changes that should remain true on `main`.
 
 Record review scope, decision, findings, commands run, files reviewed,
 evidence gaps, blocking issues, and next safe action.

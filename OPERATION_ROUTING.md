@@ -2,13 +2,13 @@ artifact_id: ART-OPS-ROUTING-001
 title: Operation Routing And Impact Map
 type: governance
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-14
-updated: 2026-05-14
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-003 and user authorization for BOOT-019 through BOOT-024
+source: SPEC-BOOT-003, user authorization for BOOT-019 through BOOT-024, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-003]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -28,12 +28,16 @@ and record the conflict.
 
 ## Fast-Path Validator Discipline (Slice 4)
 
-Slice 4 wires the operation profile recorded in `AI_HANDOFF.md`'s most
-recent `Pre-Change Classification` section into the validator and the
-git hooks so small changes get a proportionally small validator pass:
+Operation profile may be recorded in gitignored `.ai/SESSION.md` for local
+hook hints, with legacy `AI_HANDOFF.md` profile extraction as a compatibility
+fallback. Small changes still get a proportionally small validator pass only
+when strict gates are not touched:
 
-1. `SCRIPTS/operation-profile.sh` extracts the recorded `Operation profile:`
-   value and maps it to a validator level:
+1. `SCRIPTS/operation-profile.sh` extracts a valid local
+   `operation_profile:` value from `.ai/SESSION.md` when the session branch
+   matches the current branch and `updated_at_epoch:` is fresh. It falls back
+   to legacy `AI_HANDOFF.md` extraction only when no valid local session hint
+   exists. It then maps the profile to a validator level:
    - `docs-trivial` and `process-light-exception` → `shape-only`
    - any other profile (including missing or unrecognized) → `strict`
 2. `.githooks/pre-commit` and `.githooks/pre-push` read this mapping and
@@ -53,11 +57,11 @@ git hooks so small changes get a proportionally small validator pass:
    required-dirs, and YAML metadata checks, then exits early with a
    passing message. In `strict` mode (default) it runs every check.
 
-The default everywhere remains strict, so a missing or unset profile
-never weakens validation. The fast path is opt-in via an explicit
-docs-trivial or process-light-exception Operation profile in
-`AI_HANDOFF.md`, AND the hook layer must agree (no strict-gate paths
-touched) before the lighter check actually runs.
+The default everywhere remains strict, so a missing, stale, branch-mismatched,
+or unrecognized profile never weakens validation. The fast path is opt-in via
+an explicit docs-trivial or process-light-exception local session profile, AND
+the hook layer must agree (no strict-gate paths touched) before the lighter
+check actually runs.
 
 This implements the "small changes avoid heavyweight validation and
 review ceremony" goal of the approved Clean Scaffold Boundary And
@@ -77,10 +81,15 @@ Adaptive routing is allowed only when the operation record proves:
 - required reads are scoped by impact
 - writes are limited to impacted artifacts
 - skipped validation has a rule-based reason
-- durable evidence exists in repository files
+- durable evidence exists in PR/review evidence or repository files
 
 Chat-only classification, chat-only review, and chat-only completion evidence
 are invalid for meaningful work.
+
+`.ai/SESSION.md` is not durable operation evidence. Durable operation evidence
+for shared or protected work must live in one of: PR body, PR comment,
+committed PR review package, committed review record, or an explicitly
+approved bootstrap-governance exception.
 
 ## Operation Profiles
 
@@ -273,6 +282,24 @@ summaries. It must preserve active risks, blockers, validation failures, dirty
 state, next action, unresolved assumptions, and review status.
 
 ## Handoff And Current State
+
+Committed current-state files are replace-in-place snapshots. They should not
+accumulate session diaries. Historical proof should live in Git commits,
+GitHub PRs, CI run links, review records when risk requires them, and rare
+milestone archives.
+
+Committed state changes only when one of these changes:
+
+- durable project baseline
+- active blocker
+- accepted spec, backlog, or ADR status
+- release or validation baseline
+- known risk affecting future work
+
+Normal branch progress does not change canonical state. Operation
+classification may be recorded in `.ai/SESSION.md` for local work and in PR
+evidence for shared review. Only durable policy or project-state changes need
+committed state updates.
 
 `CURRENT_STATE.md` should contain current operational truth only:
 

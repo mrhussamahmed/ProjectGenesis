@@ -2,13 +2,13 @@ artifact_id: ART-GOV-001
 title: Governance
 type: governance
 status: authoritative
-version: v1.3
+version: v1.4
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, SPEC-BOOT-002, and SPEC-BOOT-003
+source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -153,10 +153,12 @@ large documentation changes. When in doubt, use a branch.
 
 ## Required End-Of-Session Updates
 
-Every major work session ends with updates to:
+Every major work session ends with local or durable updates appropriate to the
+state boundary:
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 - `SPECS/SPEC_INDEX.md`, when specs changed

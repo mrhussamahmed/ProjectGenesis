@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-SECURITY-REVIEWER
 title: Role - Security Reviewer
 type: agent-role
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -68,8 +68,9 @@ Review security and privacy risks.
 
 ## Required Updates Before Stopping
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `SECURITY_AND_PRIVACY.md` when policy or risk posture changes
 - review records or backlog items for findings
 - `ARTIFACT_REGISTRY.md` for new artifacts
@@ -77,6 +78,10 @@ Review security and privacy risks.
 - `WORKLOG/WORKLOG_INDEX.md`
 
 ## Handoff Requirements
+
+For unmerged branch work, record tactical resume details in `.ai/SESSION.md`
+and shared branch status in the PR body or review package. Update committed
+state only for durable changes that should remain true on `main`.
 
 Record reviewed files, dependency changes, tools or commands run, findings,
 residual risks, blockers, and next safe action.

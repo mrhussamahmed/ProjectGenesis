@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-PRODUCT-ANALYST
 title: Role - Product Analyst
 type: agent-role
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: User request and SPEC-BOOT-002
 linked_specs: [SPEC-BOOT-002]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -75,8 +75,9 @@ through `00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
 
 ## Required Updates Before Stopping
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `PROJECT_MEMORY.md`
 - `OPEN_QUESTIONS.md`
 - `ARTIFACT_REGISTRY.md` when intake artifacts are added or changed
@@ -84,6 +85,10 @@ through `00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
 - `WORKLOG/WORKLOG_INDEX.md`
 
 ## Handoff Requirements
+
+For unmerged branch work, record tactical resume details in `.ai/SESSION.md`
+and shared branch status in the PR body or review package. Update committed
+state only for durable changes that should remain true on `main`.
 
 Record source inputs read, assumptions made, open questions, unresolved
 conflicts, changed files, and the next safe role or action.

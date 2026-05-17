@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-DEVOPS-RELEASE-REVIEWER
 title: Role - DevOps Release Reviewer
 type: agent-role
 status: authoritative
-version: v1.0
+version: v1.1
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -61,12 +61,13 @@ Review CI/CD, deployment, rollback, observability, and release readiness.
 - Release readiness assessment.
 - Build, test, smoke, rollback, observability, and environment findings.
 - Blockers, residual risks, and required follow-up.
-- Updated traceability and handoff.
+- Updated traceability and durable handoff or PR evidence.
 
 ## Required Updates Before Stopping
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `RELEASE_READINESS.md` when readiness changes
 - `CI_CD_GUIDE.md` or `OBSERVABILITY.md` when guidance changes
 - `TEST_RESULTS.md` when checks run
@@ -74,6 +75,10 @@ Review CI/CD, deployment, rollback, observability, and release readiness.
 - `WORKLOG/WORKLOG_INDEX.md`
 
 ## Handoff Requirements
+
+For unmerged branch work, record tactical resume details in `.ai/SESSION.md`
+and shared branch status in the PR body or review package. Update committed
+state only for durable changes that should remain true on `main`.
 
 Record checks reviewed, commands run, release blockers, rollback status,
 observability gaps, environment assumptions, and next safe action.

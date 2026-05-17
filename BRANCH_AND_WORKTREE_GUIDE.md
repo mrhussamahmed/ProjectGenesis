@@ -2,13 +2,13 @@ artifact_id: ART-GIT-001
 title: Branch And Worktree Guide
 type: guide
 status: authoritative
-version: v1.2
+version: v1.3
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, SPEC-BOOT-002, and SPEC-BOOT-003
+source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -86,10 +86,28 @@ Recommended branch names:
 
 - Use separate worktrees for concurrent AI agents.
 - Avoid overlapping file ownership between agents.
-- Declare branch purpose, worktree path, task, and owner in `AI_HANDOFF.md`.
+- Declare branch purpose, worktree path, task, and owner in PR evidence for
+  shared work. Use `.ai/SESSION.md` for local tactical resume notes.
 - Stop and report unexpected changes from another agent.
 - Do not overwrite another agent's work without analysis.
 - Clean up merged branches and stale worktrees.
+
+## Local Session Handoff
+
+Agents may use `.ai/SESSION.md` as a gitignored local resume aid for one
+worktree. It is not source of truth and must not contain decisions, accepted
+risks, review findings, spec changes, or merge evidence.
+
+Allowed local-session content:
+
+- current branch and worktree path
+- operation profile for local hooks
+- next local command
+- dirty files observed in this worktree
+- short tactical notes needed to resume the same worktree
+
+Shared branch state belongs in the PR body, PR comments, issue, or review
+package. Durable project truth belongs in committed repository files.
 
 ## Start Checklist
 
@@ -98,18 +116,21 @@ Recommended branch names:
 3. Confirm task readiness.
 4. Confirm branch/worktree plan.
 5. Confirm file ownership and parallel risk.
-6. Record the active branch and worktree in `CURRENT_STATE.md` and
-   `AI_HANDOFF.md`.
+6. Record local tactical state in `.ai/SESSION.md` when useful. Record shared
+   branch state in PR evidence. Update committed state only when durable
+   project truth changed and should remain true on `main` after merge.
 
 ## Stop Checklist
 
 1. Run relevant tests and validation.
 2. Run `git status --short --branch`.
-3. Record changed files, tests, failures, assumptions, and next action in
-   `AI_HANDOFF.md`.
-4. Update `CURRENT_STATE.md`, `ARTIFACT_REGISTRY.md`, and
-   `TRACEABILITY_MATRIX.md`.
-5. Explain any dirty or untracked files.
+3. Record local resume details in `.ai/SESSION.md` when unmerged local work
+   remains.
+4. Record shared branch status, changed files, tests, failures, assumptions,
+   and next action in PR evidence or a review package.
+5. Update `CURRENT_STATE.md`, `AI_HANDOFF.md`, `ARTIFACT_REGISTRY.md`, and
+   `TRACEABILITY_MATRIX.md` only for durable project-truth changes.
+6. Explain any dirty or untracked files.
 
 ## Dirty Worktree Handling
 
