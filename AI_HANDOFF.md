@@ -26,88 +26,68 @@ Claude
 
 ## Current Role
 
-Implementation Agent
+Documentation Curator
 
 ## Current Branch
 
-`claude/sharp-shockley-6bd7a3`
+`main`
 
 ## Current Worktree
 
-`.claude/worktrees/sharp-shockley-6bd7a3`
+repository root
 
 ## Last Completed Task
 
-Slice 5 reuse-boundary clean extraction (PR #20). The extractor,
-downstream-aware validator, contract check, advisory coherence reporting,
-manifest update, and red-check fixture landed at commit `5e3b9a3`. Three
-Codex review-fix commits followed: `fb0e57c` (manifest README starter +
-state hygiene), `f188c83` (allowlist brand-prose and untracked plan-path
-reference), and `c20dc4b` (manifest Step 6 allowlist scope, emitted
-TRACEABILITY_MATRIX and AI_HANDOFF excluded-path leakage, script
-docstring rewrite).
+Slice 5 reuse-boundary clean extraction merged to `main` through PR #20
+at squash merge commit
+`97b6e9a3188de41e12b70fc5080e26c8ab07f271`.
 
 ## Current In-Progress Task
 
-Awaiting final fresh-context Codex re-review of PR #20 at HEAD `c20dc4b`
-plus this handoff-staleness fix; merge once review has no blocking
-findings and CI passes.
+Post-merge cleanup on `main`: reset active state after PR #20 so the
+validator sees the real `main` branch. The pre-merge AI_HANDOFF.md still
+named `claude/sharp-shockley-6bd7a3` as the current branch, which caused
+the post-merge `main` `Bootstrap Validation` CI run to fail at
+`AI_HANDOFF.md branch does not match git branch:
+claude/sharp-shockley-6bd7a3 != main`. This cleanup resets the active
+branch field to `main` and refreshes the evidence envelope accordingly.
 
 ## Files Changed
 
-- `.gitignore`
-- `SCRIPTS/scaffold-extract.sh`
-- `SCRIPTS/validate-bootstrap.sh`
-- `SCRIPTS/validate-bootstrap-red-checks.sh`
-- `TEMPLATE_MANIFEST.md`
-- `AI_HANDOFF.md` (this file)
-- `CURRENT_STATE.md`
+- `AI_HANDOFF.md` (this file, post-merge active-branch reset)
+- `CURRENT_STATE.md` (post-merge active-state reset)
+- `TEST_RESULTS.md` (post-merge cleanup row recording the failed `main`
+  CI run and this cleanup pass)
 
 ## Tests Run
 
-- `bash SCRIPTS/validate-bootstrap.sh` passed (source/maintainer mode).
-- `bash -n SCRIPTS/scaffold-extract.sh SCRIPTS/validate-bootstrap.sh SCRIPTS/validate-bootstrap-red-checks.sh` passed.
-- `git diff --check` passed.
-- `grep -q '^\.bootstrap-scaffold-mode$' .gitignore` passed.
-- `bash SCRIPTS/scaffold-extract.sh --apply <tmp>` passed; contract check
-  passed, advisory coherence ran non-blocking, downstream validator passed
-  inside the extracted target.
-- Forbidden upstream string scan against extracted output: no matches.
-- Bare `ProjectGenesis` scan against the 13 project-owned generated files:
-  no matches.
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` passed, including the new
-  `case_scaffold_extract_contract_detects_forbidden_string_contamination`
-  fixture.
+- PR #20 pull_request and push `Bootstrap Validation` CI passed before
+  the squash merge to `main` (runs 25988769737 and 25988770445).
+- Post-merge `main` CI initially failed (run 25989064447): the merged
+  AI_HANDOFF.md still named the slice 5 branch
+  `claude/sharp-shockley-6bd7a3`; this cleanup resets the active branch
+  field to `main`.
+- `bash SCRIPTS/validate-bootstrap.sh` passed after this cleanup.
 
 ## Tests Not Run
 
-- Live execution of the mixed-mode guard during the Codex sandboxed review
-  (the sandbox blocked `.bootstrap-scaffold-mode` writes); static inspection
-  confirmed the guard logic at `SCRIPTS/validate-bootstrap.sh` line 70.
+- Full regression suite beyond bootstrap validation; the reuse-boundary
+  red-check fixtures already ran on the slice 5 branch before merge.
 
 ## Known Risks
 
-- Pre-existing P2 in the validator's placeholder-pattern check: it writes
-  to `/tmp/bootstrap-placeholder-hit.$$` and silently no-ops in read-only
-  temp environments. This is environmental and predates this slice; out
-  of scope for the reuse-boundary work.
-- Bare `ProjectGenesis` remains intentionally in copied framework docs
-  (`CI_CD_GUIDE.md`, `OPERATION_ROUTING.md`, `TEMPLATE_MANIFEST.md`) and
-  in `SCRIPTS/validate-bootstrap.sh` motivating-context comments. All
-  match `TEMPLATE_MANIFEST.md` allowlist items 1, 5, and 6.
+- This cleanup writes active state after merge. It does not change
+  validator, hook, scaffold, or policy implementation files.
 
 ## Dirty Worktree Status
 
-Clean. Slice 5 implementation (`5e3b9a3`) and three Codex review-fix
-commits (`fb0e57c`, `f188c83`, `c20dc4b`) have landed on
-`claude/sharp-shockley-6bd7a3` and are pushed to origin. The only
-untracked path is `.claude/`, which is worktree-local Claude Code session
-metadata and is never committed.
+Post-merge cleanup on `main`.
 
 ## Next Recommended Action
 
-Confirm fresh-context Codex review of PR #20 is clean and CI is green,
-then merge.
+Push this cleanup to `main`, then verify the post-cleanup `main` CI run
+is green. Once that succeeds, resume normal development from the clean
+scaffold boundary baseline.
 
 ## What The Next AI Must Read First
 
@@ -124,6 +104,7 @@ Slice 1: TEMPLATE_MANIFEST.md and TEMPLATE_STARTERS/ - done (merged to main).
 Slice 2: MAINTAINER_ARCHIVE/ relocation - done (merged to main).
 Slice 3: required-reading shrink - done (merged to main through PR #18).
 Slice 4: fast-path validation discipline - done (merged to main through PR #19).
+Slice 5: reuse-boundary clean extraction - done (merged to main through PR #20 at `97b6e9a`).
 
 ## Slice 3 Pre-Change Classification
 
@@ -209,5 +190,27 @@ Slice 4: fast-path validation discipline - done (merged to main through PR #19).
   Codex sandbox (sandboxed write restriction), static check confirmed
   guard logic at `SCRIPTS/validate-bootstrap.sh` line 70.
 - Review required: fresh-context Codex re-review after P1 fixes.
-- Next safe action: confirm Codex re-review is clean and CI is green, then
-  merge PR #20.
+- Next safe action: (historical) completed by PR #20 squash merge at
+  `97b6e9a`; this post-merge cleanup envelope above records the current
+  state.
+
+## Slice 5 Post-Merge Cleanup Envelope
+
+- Operation profile: `process-light-exception`
+- Classification confidence: high
+- Files read: post-merge `main` CI run 25989064447, `AI_HANDOFF.md`,
+  `CURRENT_STATE.md`, `TEST_RESULTS.md`, and `SCRIPTS/validate-bootstrap.sh`.
+- Files changed: `AI_HANDOFF.md` (this file), `CURRENT_STATE.md`,
+  `TEST_RESULTS.md`.
+- Files intentionally not read: implementation files (no behavior change
+  in this cleanup).
+- Artifacts not impacted: validator, extractor, hooks, CI workflow,
+  manifest, red-check harness.
+- Validation run: `bash SCRIPTS/validate-bootstrap.sh` passed locally on
+  `main` after this cleanup.
+- Validation skipped: none for this cleanup; the slice 5 implementation
+  evidence is recorded in the envelope above.
+- Review required: none for this post-merge state reset; the underlying
+  slice 5 implementation received a clean Codex review before merge.
+- Next safe action: push this cleanup to `main`, then verify the
+  post-cleanup `main` CI run is green.

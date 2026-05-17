@@ -37,17 +37,17 @@ decision.
 
 ## Active Implementation Phase
 
-Clean scaffold boundary follow-on slices 1-4 are merged. Slice 5
-(reuse-boundary clean extraction) is in review on branch
-`claude/sharp-shockley-6bd7a3` (PR #20).
+Clean scaffold boundary follow-on slices 1-5 are merged. Slice 5
+(reuse-boundary clean extraction) landed on `main` through PR #20 at
+squash merge commit `97b6e9a3188de41e12b70fc5080e26c8ab07f271`.
 
 ## Active Branch
 
-`claude/sharp-shockley-6bd7a3`
+`main`
 
 ## Active Worktree
 
-`.claude/worktrees/sharp-shockley-6bd7a3`
+repository root
 
 ## Active Backlog Focus
 
@@ -75,18 +75,23 @@ None. Prior staleness tracking lives in `MAINTAINER_ARCHIVE/STALE_ITEMS.md`.
 
 ## Next Recommended Action
 
-Complete Codex adversarial review of PR #20 (reuse-boundary slice 5),
-address any blocking findings, verify CI is green, then merge.
+Push this post-merge cleanup to `main`, then verify the post-cleanup
+`main` CI run is green. After that, resume normal development from the
+clean scaffold boundary baseline.
 
 ## Latest Validation
 
-Slice 5 (reuse-boundary clean extraction, PR #20) local checks:
-`bash SCRIPTS/validate-bootstrap.sh`,
-`bash -n SCRIPTS/scaffold-extract.sh SCRIPTS/validate-bootstrap.sh SCRIPTS/validate-bootstrap-red-checks.sh`,
-`git diff --check`, `grep -q '^\.bootstrap-scaffold-mode$' .gitignore`,
-`bash SCRIPTS/scaffold-extract.sh --apply <tmp>` (extracted contract check
-and downstream validator), forbidden upstream string scan against the
-extracted target, project-owned-file bare `ProjectGenesis` scan, and
-`bash SCRIPTS/validate-bootstrap-red-checks.sh` (including the new
+Pre-merge: PR #20 pull_request and push `Bootstrap Validation` CI passed
+(runs 25988769737 and 25988770445). All local slice 5 checks
+(`bash SCRIPTS/validate-bootstrap.sh`,
+`bash SCRIPTS/scaffold-extract.sh --apply <tmp>`,
+forbidden-path/string scans, and
+`bash SCRIPTS/validate-bootstrap-red-checks.sh` with the new
 `case_scaffold_extract_contract_detects_forbidden_string_contamination`
-fixture) all passed locally on 2026-05-17.
+fixture) passed locally on 2026-05-17.
+
+Post-merge: the first `main` `Bootstrap Validation` CI run after the
+squash merge (run 25989064447) failed because `AI_HANDOFF.md` still
+named the slice 5 branch. This cleanup resets active state to `main`;
+`bash SCRIPTS/validate-bootstrap.sh` passes locally on `main` after the
+reset.
