@@ -75,9 +75,10 @@ None. Prior staleness tracking lives in `MAINTAINER_ARCHIVE/STALE_ITEMS.md`.
 
 ## Next Recommended Action
 
-Push this post-merge cleanup to `main`, then verify the post-cleanup
-`main` CI run is green. After that, resume normal development from the
-clean scaffold boundary baseline.
+Resume normal development from the clean scaffold boundary baseline.
+Slice 5 (reuse-boundary clean extraction) is merged, the post-merge
+state reset has been pushed (`05f01f2`), and the post-cleanup `main` CI
+run 25990299701 is green; no further slice 5 follow-up work is pending.
 
 ## Latest Validation
 
@@ -92,6 +93,7 @@ fixture) passed locally on 2026-05-17.
 
 Post-merge: the first `main` `Bootstrap Validation` CI run after the
 squash merge (run 25989064447) failed because `AI_HANDOFF.md` still
-named the slice 5 branch. This cleanup resets active state to `main`;
-`bash SCRIPTS/validate-bootstrap.sh` passes locally on `main` after the
-reset.
+named the slice 5 branch. The cleanup commit `05f01f2` reset active
+state to `main`; `bash SCRIPTS/validate-bootstrap.sh` passed locally on
+`main` after the reset, and the post-cleanup `Bootstrap Validation` CI
+run 25990299701 finished green (1m19s).

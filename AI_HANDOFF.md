@@ -44,13 +44,10 @@ at squash merge commit
 
 ## Current In-Progress Task
 
-Post-merge cleanup on `main`: reset active state after PR #20 so the
-validator sees the real `main` branch. The pre-merge AI_HANDOFF.md still
-named `claude/sharp-shockley-6bd7a3` as the current branch, which caused
-the post-merge `main` `Bootstrap Validation` CI run to fail at
-`AI_HANDOFF.md branch does not match git branch:
-claude/sharp-shockley-6bd7a3 != main`. This cleanup resets the active
-branch field to `main` and refreshes the evidence envelope accordingly.
+None. Slice 5 is fully merged and the post-merge state has been
+reconciled with `main` (cleanup commit `05f01f2`, post-cleanup CI run
+25990299701 green). This handoff snapshot is the post-cleanup
+finalization.
 
 ## Files Changed
 
@@ -81,13 +78,17 @@ branch field to `main` and refreshes the evidence envelope accordingly.
 
 ## Dirty Worktree Status
 
-Post-merge cleanup on `main`.
+Clean. The post-merge cleanup commit `05f01f2` is on `main` and the
+post-cleanup `main` `Bootstrap Validation` CI run 25990299701 finished
+green. Only untracked paths in the working tree are `.claude/` (Claude
+Code worktree-local session metadata) and `research/` (untracked
+maintainer-local research scratch).
 
 ## Next Recommended Action
 
-Push this cleanup to `main`, then verify the post-cleanup `main` CI run
-is green. Once that succeeds, resume normal development from the clean
-scaffold boundary baseline.
+Resume normal development from the clean scaffold boundary baseline.
+The post-cleanup `main` CI is green; no further slice 5 follow-up work
+is required.
 
 ## What The Next AI Must Read First
 
@@ -207,10 +208,21 @@ Slice 5: reuse-boundary clean extraction - done (merged to main through PR #20 a
 - Artifacts not impacted: validator, extractor, hooks, CI workflow,
   manifest, red-check harness.
 - Validation run: `bash SCRIPTS/validate-bootstrap.sh` passed locally on
-  `main` after this cleanup.
+  `main` after this cleanup. Post-cleanup `Bootstrap Validation` CI run
+  25990299701 finished green (1m19s).
 - Validation skipped: none for this cleanup; the slice 5 implementation
   evidence is recorded in the envelope above.
 - Review required: none for this post-merge state reset; the underlying
   slice 5 implementation received a clean Codex review before merge.
-- Next safe action: push this cleanup to `main`, then verify the
-  post-cleanup `main` CI run is green.
+- Next safe action: completed by post-cleanup CI run 25990299701; no
+  further slice 5 follow-up work is pending.
+
+## Residual Record-Keeping Gap
+
+The Codex adversarial review cycles for slice 5 are recorded only in
+the PR #20 discussion (comment 4470354255 captures the writable-env
+verification evidence) and in the implementer's chat transcript. They
+were not written to `REVIEWS/REVIEW_INDEX.md` or recorded as a GitHub
+PR review object. This is a durable record-keeping gap. It does not
+block merge or CI but is acknowledged here so a future review of slice
+5 can locate the evidence without depending on chat history.
