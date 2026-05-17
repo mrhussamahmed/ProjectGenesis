@@ -26,7 +26,7 @@ upstream's legacy backlog items are archived under
 | Item ID | Title | File | Status | Priority | Complexity | Risk | Linked Spec | Parallelization |
 |---------|-------|------|--------|----------|------------|------|-------------|-----------------|
 | BOOT-STATE-001 | Split-State Handoff Boundary | `BACKLOG/BOOT-STATE-001-split-state-handoff.md` | done | P1 | high | high | none; recurring bootstrap-governance exception in `PR_MERGE_POLICY.md` | not-allowed |
-| BOOT-GREEN-MERGE-001 | AI Green-Merge For Bootstrap Scaffold Usability | `BACKLOG/BOOT-GREEN-MERGE-001-ai-green-merge-scaffold-usability.md` | ready | P1 | medium | medium | none; recurring bootstrap-governance exception in `PR_MERGE_POLICY.md` | not-allowed |
+| BOOT-GREEN-MERGE-001 | AI Green-Merge For Bootstrap Scaffold Usability | `BACKLOG/BOOT-GREEN-MERGE-001-ai-green-merge-scaffold-usability.md` | done | P1 | medium | medium | none; recurring bootstrap-governance exception in `PR_MERGE_POLICY.md` | not-allowed |
 
 ## Rules
 
