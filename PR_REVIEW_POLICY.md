@@ -2,13 +2,13 @@ artifact_id: ART-REVIEW-001
 title: PR Review Policy
 type: review-policy
 status: authoritative
-version: v1.2
+version: v1.4
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-05-18
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, SPEC-BOOT-003, and BOOT-STATE-001
+source: User request, reference repository audit, SPEC-BOOT-003, BOOT-STATE-001, and BOOT-GREEN-MERGE-001
 linked_specs: [SPEC-BOOT-003]
-linked_tickets: [BOOT-STATE-001]
+linked_tickets: [BOOT-STATE-001, BOOT-GREEN-MERGE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -17,6 +17,17 @@ authoritative: true
 # PR Review Policy
 
 Every PR requires a fresh-context adversarial review.
+
+Adversarial review is defect detection, not authorization. A clean review does
+not unlock a merge by granting a human-style approval; instead, an unresolved
+P0, P1, or blocking P2 finding from the review blocks the merge until it is
+fixed. P0/P1/blocking P2 findings must not be "accepted with rationale" — they
+must be resolved. Non-blocking P2 may be deferred only when the reviewer
+explicitly classifies it as non-blocking and the deferral is tracked. Once
+required CI/status checks pass, required local validation passes, scope is
+clean, and no P0/P1/blocking P2 findings remain, AI may merge per
+`PR_MERGE_POLICY.md` without waiting for any human, maintainer, or Code Owner
+approval.
 
 ## Fresh Context
 
@@ -46,25 +57,27 @@ object or a committed review record under `REVIEWS/`.
 
 ## Severity Levels
 
-- P0: blocker, must be fixed before merge.
-- P1: high severity, must be fixed before merge unless explicitly accepted with
-  documented rationale.
-- P2: medium severity, should be fixed before merge unless clearly
-  non-blocking and tracked.
+- P0: blocker, must be fixed before merge. Must not be accepted with rationale.
+- P1: high severity, must be fixed before merge. Must not be accepted with rationale.
+- P2: medium severity. Blocking P2 must be fixed before merge and must not be accepted with rationale. Non-blocking P2 may be deferred only when the reviewer explicitly classifies it as non-blocking and the deferral is tracked.
 - P3: minor issue or improvement, may be fixed if cheap or tracked as follow-up.
 
 ## Review Decisions
 
-- approve
-- approve with minor comments
-- request changes
-- block
+The reviewer reports findings and a defect-detection decision:
+
+- no blocking findings
+- minor comments only
+- blocking findings present (changes required)
+
+These decisions describe whether defects remain to be fixed before merge. They
+are not human-style merge authorizations.
 
 ## Mandatory Checks
 
 The reviewer must check:
 
-- Does the change match the approved or active spec?
+- Does the change match the approved or active spec, or a named exception?
 - Are acceptance criteria satisfied?
 - Are tests adequate and mapped?
 - Are edge cases handled?
@@ -87,10 +100,12 @@ The reviewer must check:
   the operation profile and impact map?
 - Do committed canonical state files avoid active branch/session facts that
   would become false after merge?
+- Does the PR avoid reintroducing required human, maintainer, or Code Owner
+  approval as a merge gate in active authoritative policy?
 
 ## Blocking Issues
 
-Block or request changes for:
+The reviewer must record a blocking finding for:
 
 - implementation does not match approved spec
 - missing or inadequate tests for meaningful behavior
@@ -103,12 +118,20 @@ Block or request changes for:
 - missing required PR evidence or durable handoff/state update in the correct
   split-state location after significant work
 - high uncertainty without spike or open question
+- reintroduction of required human/maintainer/Code Owner approval as a merge
+  gate in active authoritative policy
+
+A blocking finding (P0, P1, or blocking P2) holds the merge until it is
+resolved per `PR_MERGE_POLICY.md`. Acceptance-with-rationale is not permitted
+for P0, P1, or blocking P2. Non-blocking P2 may be tracked and deferred when
+the reviewer explicitly classifies it as non-blocking.
 
 ## Reviewer Output
 
 The reviewer must include:
 
-- review decision
+- defect-detection decision (no blocking findings, minor comments only, or
+  blocking findings present)
 - risk level
 - model or effort level used or recommended
 - files reviewed
@@ -118,7 +141,9 @@ The reviewer must include:
 - required changes
 - optional improvements
 - evidence for each major finding
-- final recommendation
+- final recommendation (which is a defect-detection statement, not a human
+  authorization to merge)
 
 High-risk or complex PRs may require two rounds of adversarial review plus
-focused security, architecture, QA, and release reviews.
+focused security, architecture, QA, and release reviews. The reviewer's role
+remains defect detection in all cases.

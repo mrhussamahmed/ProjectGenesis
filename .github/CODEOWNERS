@@ -1,3 +1,17 @@
-# Require maintainer review for every path when GitHub branch protection
-# enables "Require review from Code Owners".
+# Informational ownership only. Do NOT use this file as a required-review
+# merge gate.
+#
+# Per `PR_MERGE_POLICY.md` and `PR_REVIEW_POLICY.md`, AI may merge after
+# required CI/status checks pass, required local validation passes, scope is
+# clean, and no P0/P1/blocking P2 findings remain. Human, maintainer, and
+# Code Owner approval are not required as merge gates. GitHub branch
+# protection on `main` must keep required status checks but must NOT enable
+# "Require review from Code Owners" or "Require a pull request before
+# merging" with required approving reviews. The validator
+# (`SCRIPTS/validate-bootstrap.sh`) prevents active authoritative policy from
+# reintroducing required human/maintainer/Code Owner approval as a merge
+# gate.
+#
+# Listing an owner below only indicates who knows the area; it does not
+# block merge.
 * @mrhussamahmed

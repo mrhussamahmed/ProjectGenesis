@@ -441,11 +441,193 @@ case_policy_unconditional_committed_state_rule_fails() {
   expect_failure "policy unconditional committed-state rule fails" "PR policy contains unconditional committed-state handoff requirement" "$dir"
 }
 
-case_policy_missing_maintainer_authority_boundary_fails() {
+case_policy_reintroduces_required_human_approval_fails() {
+  # BOOT-GREEN-MERGE-001: active authoritative policy must NOT reintroduce
+  # required human, maintainer, or Code Owner approval as a merge gate.
+  # This fixture appends a positive requirement clause to PR_MERGE_POLICY.md
+  # and expects the validator regression guard to flag it.
   local dir
-  dir="$(copy_repo policy-missing-maintainer-authority-boundary-fails)"
-  perl -0pi -e 's/- adversarial review approval is not maintainer approval unless the reviewer is\n  explicitly acting as a maintainer and approves using this exception for this\n  PR\n//' "$dir/PR_MERGE_POLICY.md"
-  expect_failure "policy missing maintainer authority boundary fails" "PR_MERGE_POLICY.md missing maintainer-approval authority boundary" "$dir"
+  dir="$(copy_repo policy-reintroduces-required-human-approval-fails)"
+  cat >>"$dir/PR_MERGE_POLICY.md" <<'EOF'
+
+## Reintroduced Approval Gate (Red Check Fixture)
+
+- A PR requires at least one approving review from a Code Owner before merge.
+EOF
+  expect_failure "policy reintroduces required human approval fails" "reintroduces required human/maintainer/Code Owner approval as a merge gate" "$dir"
+}
+
+case_role_reintroduces_required_human_approval_fails() {
+  # BOOT-GREEN-MERGE-001: the regression guard also covers active role
+  # files. A role file that says merge requires maintainer approval must
+  # trip the validator.
+  local dir
+  dir="$(copy_repo role-reintroduces-required-human-approval-fails)"
+  cat >>"$dir/memory/ai/ROLE_IMPLEMENTATION_AGENT.md" <<'EOF'
+
+## Reintroduced Approval Gate (Red Check Fixture)
+
+- Maintainer approval is required before merge.
+EOF
+  expect_failure "role reintroduces required human approval fails" "reintroduces required human/maintainer/Code Owner approval as a merge gate" "$dir"
+}
+
+case_policy_negation_phrasing_passes() {
+  # BOOT-GREEN-MERGE-001: lines that explicitly say a gate is NOT required
+  # or is informational only must not be flagged. The validator must remain
+  # silent on the as-shipped policy phrasings. We append a redundant negation
+  # clause to confirm the guard treats negation correctly.
+  local dir
+  dir="$(copy_repo policy-negation-phrasing-passes)"
+  cat >>"$dir/PR_MERGE_POLICY.md" <<'EOF'
+
+## Negation Phrasing Fixture (Red Check Fixture)
+
+- A maintainer approval is not required to merge a PR; Code Owner review is
+  informational only.
+EOF
+  expect_no_failure_mentioning "policy negation phrasing passes" "$dir" "reintroduces required human/maintainer/Code Owner approval as a merge gate"
+}
+
+case_setup_guide_reintroduces_required_approving_review_count_fails() {
+  # BOOT-GREEN-MERGE-001 / Codex blocking P2: the regression guard must
+  # also catch GitHub enforcement keys in `GITHUB_REPOSITORY_SETUP.md`.
+  # A `required_approving_review_count` of 1+ reintroduces a required
+  # approving review gate at the GitHub enforcement layer.
+  local dir
+  dir="$(copy_repo setup-guide-reintroduces-required-approving-review-count-fails)"
+  cat >>"$dir/GITHUB_REPOSITORY_SETUP.md" <<'EOF'
+
+## Reintroduced GitHub Key Fixture (Red Check Fixture)
+
+```json
+{
+  "required_approving_review_count": 1
+}
+```
+EOF
+  expect_failure "setup guide reintroduces required approving review count fails" "GitHub branch-protection key" "$dir"
+}
+
+case_setup_guide_reintroduces_require_code_owner_reviews_fails() {
+  # BOOT-GREEN-MERGE-001 / Codex blocking P2: `require_code_owner_reviews:
+  # true` reintroduces a required Code Owner review gate.
+  local dir
+  dir="$(copy_repo setup-guide-reintroduces-require-code-owner-reviews-fails)"
+  cat >>"$dir/GITHUB_REPOSITORY_SETUP.md" <<'EOF'
+
+## Reintroduced GitHub Key Fixture (Red Check Fixture)
+
+```json
+{
+  "require_code_owner_reviews": true
+}
+```
+EOF
+  expect_failure "setup guide reintroduces require code owner reviews fails" "GitHub branch-protection key" "$dir"
+}
+
+case_setup_guide_reintroduces_require_last_push_approval_fails() {
+  # BOOT-GREEN-MERGE-001 / Codex blocking P2: `require_last_push_approval:
+  # true` reintroduces a required human re-approval after the last push.
+  local dir
+  dir="$(copy_repo setup-guide-reintroduces-require-last-push-approval-fails)"
+  cat >>"$dir/GITHUB_REPOSITORY_SETUP.md" <<'EOF'
+
+## Reintroduced GitHub Key Fixture (Red Check Fixture)
+
+```json
+{
+  "require_last_push_approval": true
+}
+```
+EOF
+  expect_failure "setup guide reintroduces require last push approval fails" "GitHub branch-protection key" "$dir"
+}
+
+case_setup_guide_disabled_github_keys_pass() {
+  # BOOT-GREEN-MERGE-001: disabled forms of the GitHub enforcement keys
+  # (count = 0, false, null) must NOT be flagged. The validator must remain
+  # silent on the as-shipped setup guidance, which uses null for
+  # `required_pull_request_reviews` and references the disabled forms.
+  local dir
+  dir="$(copy_repo setup-guide-disabled-github-keys-pass)"
+  cat >>"$dir/GITHUB_REPOSITORY_SETUP.md" <<'EOF'
+
+## Disabled GitHub Key Fixture (Red Check Fixture)
+
+```json
+{
+  "required_approving_review_count": 0,
+  "require_code_owner_reviews": false,
+  "require_last_push_approval": false
+}
+```
+EOF
+  expect_no_failure_mentioning "setup guide disabled github keys pass" "$dir" "GitHub branch-protection key"
+}
+
+case_policy_reintroduces_required_human_approval_wrapped_fails() {
+  # BOOT-GREEN-MERGE-001 / second Codex re-review blocking P2: a wrapped
+  # Markdown bullet must not bypass the regression guard. The text
+  # "- A PR requires" on one line and "  maintainer approval before merge."
+  # on the next line is a single logical bullet in rendered Markdown, and
+  # the validator must treat it that way for pattern matching.
+  local dir
+  dir="$(copy_repo policy-reintroduces-required-human-approval-wrapped-fails)"
+  cat >>"$dir/PR_MERGE_POLICY.md" <<'EOF'
+
+## Reintroduced Approval Gate (Wrapped Red Check Fixture)
+
+- A PR requires
+  maintainer approval before merge.
+EOF
+  expect_failure "policy reintroduces required human approval wrapped fails" "reintroduces required human/maintainer/Code Owner approval as a merge gate" "$dir"
+}
+
+case_setup_guide_reintroduces_non_null_required_pull_request_reviews_fails() {
+  # BOOT-GREEN-MERGE-001 / fifth Codex re-review blocking P2: GitHub's
+  # branch-protection API enables PR review protection whenever
+  # `required_pull_request_reviews` is a non-null object, even when no
+  # inner field is set. A red-check fixture must catch this regression
+  # path because checking only the inner keys leaves the parent object
+  # as an open path back to required reviews.
+  local dir
+  dir="$(copy_repo setup-guide-reintroduces-non-null-required-pull-request-reviews-fails)"
+  cat >>"$dir/GITHUB_REPOSITORY_SETUP.md" <<'EOF'
+
+## Reintroduced GitHub Parent-Object Fixture (Red Check Fixture)
+
+```json
+{
+  "required_pull_request_reviews": {
+    "dismiss_stale_reviews": true
+  }
+}
+```
+EOF
+  expect_failure "setup guide reintroduces non-null required pull request reviews fails" "GitHub branch-protection key" "$dir"
+}
+
+case_setup_guide_null_required_pull_request_reviews_passes() {
+  # BOOT-GREEN-MERGE-001: the disabled form
+  # `"required_pull_request_reviews": null` is the green-merge-aligned
+  # value and must NOT trip the parent-object guard. The validator must
+  # stay silent on the as-shipped setup guidance, which uses this form
+  # in both PUT examples.
+  local dir
+  dir="$(copy_repo setup-guide-null-required-pull-request-reviews-passes)"
+  cat >>"$dir/GITHUB_REPOSITORY_SETUP.md" <<'EOF'
+
+## Disabled GitHub Parent-Object Fixture (Red Check Fixture)
+
+```json
+{
+  "required_pull_request_reviews": null
+}
+```
+EOF
+  expect_no_failure_mentioning "setup guide null required pull request reviews passes" "$dir" "GitHub branch-protection key"
 }
 
 case_scaffold_extract_golden_validates() {
@@ -1125,7 +1307,16 @@ case_canonical_allowed_split_state_wording_passes
 case_handoff_without_classification_passes
 case_role_unconditional_committed_state_rule_fails
 case_policy_unconditional_committed_state_rule_fails
-case_policy_missing_maintainer_authority_boundary_fails
+case_policy_reintroduces_required_human_approval_fails
+case_role_reintroduces_required_human_approval_fails
+case_policy_negation_phrasing_passes
+case_setup_guide_reintroduces_required_approving_review_count_fails
+case_setup_guide_reintroduces_require_code_owner_reviews_fails
+case_setup_guide_reintroduces_require_last_push_approval_fails
+case_setup_guide_disabled_github_keys_pass
+case_policy_reintroduces_required_human_approval_wrapped_fails
+case_setup_guide_reintroduces_non_null_required_pull_request_reviews_fails
+case_setup_guide_null_required_pull_request_reviews_passes
 case_scaffold_extract_golden_validates
 case_scaffold_extract_dry_run_writes_nothing
 case_scaffold_extract_refuses_source_as_target

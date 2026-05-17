@@ -2,13 +2,13 @@ artifact_id: ART-README
 title: ProjectGenesis README
 type: public-readme
 status: active
-version: v1.5
+version: v1.6
 created: 2026-05-13
-updated: 2026-05-17
+updated: 2026-05-18
 owner: ProjectGenesis Maintainers
-source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, Phase 0 validator-scope restoration, and v0.2.0 public alpha release notes
+source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, Phase 0 validator-scope restoration, v0.2.0 public alpha release notes, and BOOT-GREEN-MERGE-001 AI green-merge
 linked_specs: [SPEC-BOOT-002]
-linked_tickets: []
+linked_tickets: [BOOT-GREEN-MERGE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -246,21 +246,21 @@ bash SCRIPTS/validate-bootstrap-red-checks.sh
 
 ## GitHub Repository Controls
 
-This public repository is intended to be governed through pull requests.
-Maintainers should protect the `main` branch so changes cannot be merged without
-review.
+This public repository is governed through pull requests. The `main` branch is
+protected by objective status-check enforcement, not by human/maintainer/Code
+Owner approval gates. AI may merge after required CI/status checks pass,
+required local validation passes, scope is clean, and no P0/P1/blocking P2
+findings remain. See `PR_MERGE_POLICY.md` for the green-merge contract.
 
 Recommended GitHub settings:
 
-- require pull requests before merging into `main`
-- require at least one approval
-- require review from Code Owners
-- dismiss stale approvals after new commits
-- require conversation resolution
-- require the `validate` GitHub Actions job to pass after the workflow exists
-  on `main`
+- require the `validate` GitHub Actions status check to pass once the workflow exists on `main`
+- leave `required_pull_request_reviews` disabled — do not require approving reviews on `main`
+- leave `require_code_owner_reviews` disabled — do not require Code Owner review on `main`
+- leave `required_approving_review_count` at 0 — no approving review is required
+- conversation resolution before merge is optional but recommended
 - disallow force pushes and branch deletion
-- keep `.github/CODEOWNERS` assigning ownership of all files to the maintainer
+- keep `.github/CODEOWNERS` as informational ownership only; do not wire it up as a required-review gate
 
 See `GITHUB_REPOSITORY_SETUP.md` for setup commands and verification steps.
 
