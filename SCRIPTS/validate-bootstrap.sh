@@ -306,13 +306,15 @@ while IFS= read -r file; do
   case "$file" in
     SPECS/templates/*|ADR/templates/*|BACKLOG/templates/*|REVIEWS/templates/*) continue ;;
   esac
-  if grep -En "$placeholder_pattern" "$file" >/tmp/bootstrap-placeholder-hit.$$ 2>/dev/null; then
+  # Capture grep output in a shell variable instead of writing through /tmp;
+  # earlier behavior wrote to /tmp/bootstrap-placeholder-hit.$$ and silently
+  # degraded in restricted environments where /tmp was not writable.
+  placeholder_hits="$(grep -En "$placeholder_pattern" "$file" 2>/dev/null || true)"
+  if [[ -n "$placeholder_hits" ]]; then
     echo "Potential unresolved placeholder in $file:" >&2
-    cat /tmp/bootstrap-placeholder-hit.$$ >&2
-    rm -f /tmp/bootstrap-placeholder-hit.$$
+    printf '%s\n' "$placeholder_hits" >&2
     fail "$file contains unresolved placeholder-like text"
   fi
-  rm -f /tmp/bootstrap-placeholder-hit.$$
 done < <(find . \
   \( -path './.git' -o -path './.claude' -o -path './research' \) -prune \
   -o -type f -name '*.md' -print | sed 's#^\./##')
