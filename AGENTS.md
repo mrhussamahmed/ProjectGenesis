@@ -13,7 +13,10 @@ selected `ROLE_*.md` file as its operating role for the session and follow the
 same source-of-truth hierarchy, handoff rules, traceability rules, diagram
 rules, and review rules as Claude.
 
-Codex must update `CURRENT_STATE.md` and `AI_HANDOFF.md` before stopping.
+Before stopping, Codex should update `.ai/SESSION.md` for local resume context
+when there is unmerged local work. Update committed `CURRENT_STATE.md` and
+`AI_HANDOFF.md` only when durable project truth changed and the update should
+remain true on `main` after merge.
 Codex must not rely on chat history as source of truth.
 
 ## Codex Role Selection

@@ -40,6 +40,16 @@ authoritative: false
 - Impact map summary:
 - Skipped reads or validations:
 
+## Branch-Specific State
+
+- Branch:
+- Worktree:
+- Owner agent:
+- Current branch status:
+- Next branch action:
+- Shared/protected files touched:
+- Coordination notes for parallel agents:
+
 ## Linked ADRs
 
 - 

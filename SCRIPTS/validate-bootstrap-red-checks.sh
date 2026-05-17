@@ -15,31 +15,18 @@ copy_repo() {
   local name="$1"
   local dest="$tmp_root/$name"
   local current_branch
-  # On GitHub Actions `pull_request` events the checkout is a detached
-  # HEAD so `git branch --show-current` succeeds but returns an empty
-  # string; that empty value would make `symbolic-ref HEAD refs/heads/`
-  # fail and leave the temp repo on the implicit `master` default,
-  # which then trips the validator's `AI_HANDOFF.md` branch-mismatch
-  # check inside every red-check fixture. Fall back to reading the
-  # branch name out of `AI_HANDOFF.md` itself (the validator's source
-  # of truth for the current branch) so the temp repo's HEAD always
-  # matches what the fixture's `AI_HANDOFF.md` declares.
+  # On GitHub Actions `pull_request` events the checkout is often detached.
+  # Use the current branch when available and otherwise initialize fixtures
+  # on `main`; canonical state no longer needs to match the fixture branch.
   current_branch="$(git -C "$repo_root" branch --show-current 2>/dev/null || true)"
-  if [[ -z "$current_branch" ]]; then
-    current_branch="$(awk '
-      /^## Current Branch$/ {
-        getline
-        getline
-        gsub(/`/, "")
-        gsub(/^[ \t]+|[ \t]+$/, "")
-        print
-        exit
-      }
-    ' "$repo_root/AI_HANDOFF.md" 2>/dev/null)"
-  fi
   [[ -z "$current_branch" ]] && current_branch="main"
   mkdir -p "$dest"
-  rsync -a --exclude '.git' "$repo_root/" "$dest/"
+  rsync -a \
+    --exclude '.git' \
+    --exclude '.claude' \
+    --exclude '.ai' \
+    --exclude 'research' \
+    "$repo_root/" "$dest/"
   git -C "$dest" init -q
   git -C "$dest" symbolic-ref HEAD "refs/heads/$current_branch"
   printf '%s\n' "$dest"
@@ -81,6 +68,32 @@ expect_success() {
 
   if [[ "$status" -ne 0 ]]; then
     echo "FAIL: $name unexpectedly failed:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+expect_command_output() {
+  local name="$1"
+  local dir="$2"
+  local expected="$3"
+  shift 3
+  local output
+
+  set +e
+  output="$(cd "$dir" && "$@" 2>&1)"
+  local status=$?
+  set -e
+
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: $name command failed:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+    return
+  fi
+
+  if [[ "$output" != "$expected" ]]; then
+    echo "FAIL: $name expected '$expected' but got:" >&2
     echo "$output" >&2
     failures=$((failures + 1))
   fi
@@ -187,110 +200,6 @@ case_active_backlog_missing_spec() {
 | RED-001 | Invalid active backlog item | Missing linked spec evidence. | P1 | medium | medium | none | ready | sequential | Implementation Agent |
 EOF
   expect_failure "active backlog missing linked spec" "active backlog item missing linked spec" "$dir"
-}
-
-init_fixture_git_history_on_main() {
-  local dir="$1"
-
-  git -C "$dir" config user.email "bootstrap-red-check@example.invalid"
-  git -C "$dir" config user.name "Bootstrap Red Check"
-  git -C "$dir" symbolic-ref HEAD refs/heads/main
-  git -C "$dir" add -A
-  git -C "$dir" commit -qm "Initial red-check fixture"
-}
-
-set_handoff_branch() {
-  local dir="$1"
-  local handoff_branch="$2"
-
-  HANDOFF_BRANCH="$handoff_branch" perl -0pi -e 's/(## Current Branch\n\n)`[^`]+`/$1 . chr(96) . $ENV{HANDOFF_BRANCH} . chr(96)/e' "$dir/AI_HANDOFF.md"
-}
-
-case_handoff_branch_mismatch() {
-  local dir
-  dir="$(copy_repo handoff-branch-mismatch)"
-  set_handoff_branch "$dir" "red-mismatch-branch"
-  expect_failure "handoff branch mismatch" "AI_HANDOFF.md branch does not match git branch" "$dir"
-}
-
-create_github_merge_fixture() {
-  local dir="$1"
-  local handoff_branch="$2"
-  local merge_source_branch="$3"
-  local merge_subject="${4:-Merge pull request #999 from red/$merge_source_branch}"
-
-  init_fixture_git_history_on_main "$dir"
-  git -C "$dir" checkout -qb "$handoff_branch"
-  set_handoff_branch "$dir" "$handoff_branch"
-  git -C "$dir" add AI_HANDOFF.md
-  git -C "$dir" commit -qm "Set handoff branch to $handoff_branch"
-  git -C "$dir" checkout -q main
-  git -C "$dir" merge --no-ff "$handoff_branch" -m "$merge_subject" >/dev/null
-}
-
-case_main_non_merge_handoff_branch_mismatch() {
-  local dir
-  dir="$(copy_repo main-non-merge-handoff-branch-mismatch)"
-  init_fixture_git_history_on_main "$dir"
-  set_handoff_branch "$dir" "codex/red-main-stale-branch"
-  expect_failure "main non-merge handoff branch mismatch" "AI_HANDOFF.md branch does not match git branch" "$dir"
-}
-
-case_main_github_merge_source_handoff_branch_passes() {
-  local dir
-  dir="$(copy_repo main-github-merge-source-handoff-branch-passes)"
-  create_github_merge_fixture "$dir" "codex/red-merge-source" "codex/red-merge-source"
-  expect_success "main GitHub merge source handoff branch passes" "$dir"
-}
-
-case_main_github_merge_shallow_checkout_passes() {
-  local dir
-  local shallow_dir="$tmp_root/main-github-merge-shallow-checkout-passes"
-  dir="$(copy_repo main-github-merge-shallow-source)"
-  create_github_merge_fixture "$dir" "codex/red-merge-shallow-source" "codex/red-merge-shallow-source"
-  git clone --depth=1 --branch main "file://$dir" "$shallow_dir" >/dev/null 2>&1
-  expect_success "main GitHub merge shallow checkout passes" "$shallow_dir"
-}
-
-case_main_github_merge_mismatched_handoff_branch_fails() {
-  local dir
-  dir="$(copy_repo main-github-merge-mismatched-handoff-branch-fails)"
-  create_github_merge_fixture "$dir" "codex/red-merge-handoff" "codex/red-merge-source"
-  expect_failure "main GitHub merge mismatched handoff branch" "AI_HANDOFF.md branch does not match git branch" "$dir"
-}
-
-case_main_unparseable_merge_handoff_branch_fails() {
-  local dir
-  dir="$(copy_repo main-unparseable-merge-handoff-branch-fails)"
-  create_github_merge_fixture "$dir" "codex/red-merge-source" "codex/red-merge-source" "Merge branch 'codex/red-merge-source'"
-  expect_failure "main unparseable merge handoff branch" "AI_HANDOFF.md branch does not match git branch" "$dir"
-}
-
-case_main_octopus_merge_handoff_branch_fails() {
-  local dir
-  dir="$(copy_repo main-octopus-merge-handoff-branch-fails)"
-  init_fixture_git_history_on_main "$dir"
-  git -C "$dir" checkout -qb codex/red-octopus-a
-  set_handoff_branch "$dir" "codex/red-octopus-a"
-  git -C "$dir" add AI_HANDOFF.md
-  git -C "$dir" commit -qm "Set handoff branch to octopus source"
-  git -C "$dir" checkout -q main
-  git -C "$dir" checkout -qb codex/red-octopus-b
-  printf '\nRed-check octopus side branch.\n' >>"$dir/TEST_RESULTS.md"
-  git -C "$dir" add TEST_RESULTS.md
-  git -C "$dir" commit -qm "Add octopus side branch fixture"
-  git -C "$dir" checkout -q main
-  git -C "$dir" merge --no-ff codex/red-octopus-a codex/red-octopus-b \
-    -m "Merge pull request #999 from red/codex/red-octopus-a" >/dev/null
-  expect_failure "main octopus merge handoff branch" "AI_HANDOFF.md branch does not match git branch" "$dir"
-}
-
-case_main_github_merge_other_handoff_failures_still_fail() {
-  local dir
-  dir="$(copy_repo main-github-merge-other-handoff-failures-still-fail)"
-  create_github_merge_fixture "$dir" "codex/red-merge-source" "codex/red-merge-source"
-  perl -0pi -e 's/^## Tests Run$/## Removed Tests Run/m' "$dir/AI_HANDOFF.md"
-  expect_failure "main GitHub merge other handoff failures still fail" "AI_HANDOFF.md missing section: ## Tests Run" "$dir"
 }
 
 case_command_missing_required_reads() {
@@ -404,51 +313,6 @@ case_operation_routing_missing_context_reference() {
   expect_failure "operation routing missing context reference" "CONTEXT_INDEX.md does not reference OPERATION_ROUTING.md" "$dir"
 }
 
-case_protected_mechanics_misclassified() {
-  # Slice 3 trimmed AI_HANDOFF.md to active state only, so the old in-place
-  # perl substitution had no source to mutate. Append a self-contained
-  # fixture classification block that mimics the misclassification we want
-  # the validator to flag.
-  local dir
-  dir="$(copy_repo protected-mechanics-misclassified)"
-  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
-
-## Pre-Change Classification (red-check fixture mechanics misclassified)
-
-- Target files: `SCRIPTS/validate-bootstrap.sh`, `.githooks/pre-commit`,
-  `memory/ai/SHARED_AGENT_RULES.md`, `GOVERNANCE.md`,
-  `OPERATION_ROUTING.md`
-- Operation profile: `planning-governance`
-- Protected files touched: true
-- Reason: Red-check fixture mechanics misclassified; touching validator,
-  hooks, role files, governance, and routing should escalate to
-  strict-protected.
-EOF
-  expect_failure "protected mechanics misclassified" "protected mechanics classification must be strict-protected" "$dir"
-}
-
-case_protected_planning_misclassified() {
-  # Slice 3 trimmed AI_HANDOFF.md's old BOOT-019-024 classification block
-  # away. Append a self-contained fixture block that mimics the
-  # misclassification we want the validator to flag (planning artifacts
-  # touched, but profile lower than planning-governance).
-  local dir
-  dir="$(copy_repo protected-planning-misclassified)"
-  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
-
-## Pre-Change Classification (red-check fixture planning misclassified)
-
-- Target files: `SPECS/SPEC_INDEX.md`, `BACKLOG.md`,
-  `TRACEABILITY_MATRIX.md`, `ARTIFACT_REGISTRY.md`
-- Operation profile: `docs-trivial`
-- Protected files touched: false
-- Reason: Red-check fixture planning misclassified; touching specs,
-  backlog, traceability, and registry should escalate to
-  planning-governance.
-EOF
-  expect_failure "protected planning misclassified" "protected planning classification must be planning-governance or strict-protected" "$dir"
-}
-
 case_research_dir_does_not_trip_validator() {
   local dir
   dir="$(copy_repo research-dir-ignored)"
@@ -477,21 +341,111 @@ EOF
   expect_no_failure_mentioning ".claude worktree does not trip validator" "$dir" ".claude/worktrees/phase-0-fixture/note.md"
 }
 
-case_protected_planning_misclassified_in_second_block() {
+case_canonical_active_state_rejects_volatile_session_text() {
   local dir
-  dir="$(copy_repo protected-planning-misclassified-second-block)"
-  cat >>"$dir/AI_HANDOFF.md" <<'EOF'
+  dir="$(copy_repo canonical-active-state-rejects-volatile-session-text)"
+  perl -0pi -e 's/(## Current Worktree\n\n)[^\n]+/$1.claude\/worktrees\/example/' "$dir/AI_HANDOFF.md"
+  expect_failure "canonical active state rejects volatile session text" "canonical state contains active volatile session text" "$dir"
+}
 
-## Pre-Change Classification (red-check fixture second block)
+case_local_session_ignored_by_validator() {
+  local dir
+  dir="$(copy_repo local-session-ignored-by-validator)"
+  mkdir -p "$dir/.ai"
+  cat >"$dir/.ai/SESSION.md" <<'EOF'
+# Local Session
 
-- Operation profile: `docs-trivial`
-- Target files: `SPECS/`, `BACKLOG.md`, `TRACEABILITY_MATRIX.md`,
-  `ARTIFACT_REGISTRY.md`
-- Protected files touched: false
-- Reason: Red-check fixture second block; this profile should escalate
-  to planning-governance because target_files include planning artifacts.
+operation_profile: docs-trivial
+branch: local-only
+updated_at_epoch: 1
+note: TODO this ignored local scratch lacks artifact metadata by design.
 EOF
-  expect_failure "protected planning misclassified in second block" "protected planning classification must be planning-governance or strict-protected" "$dir"
+  expect_success "local session ignored by validator" "$dir"
+}
+
+case_local_session_profile_routes_shape_only() {
+  local dir fixture_branch now_epoch
+  dir="$(copy_repo local-session-profile-routes-shape-only)"
+  fixture_branch="$(git -C "$dir" branch --show-current)"
+  now_epoch="$(date +%s)"
+  mkdir -p "$dir/.ai"
+  cat >"$dir/.ai/SESSION.md" <<EOF
+operation_profile: docs-trivial
+branch: $fixture_branch
+updated_at_epoch: $now_epoch
+worktree: local scratch
+EOF
+  expect_command_output "local session profile routes shape-only" "$dir" "shape-only" bash SCRIPTS/operation-profile.sh --validator-level
+}
+
+case_no_local_session_profile_routes_strict() {
+  local dir
+  dir="$(copy_repo no-local-session-profile-routes-strict)"
+  rm -rf "$dir/.ai"
+  expect_command_output "no local session profile routes strict" "$dir" "strict" bash SCRIPTS/operation-profile.sh --validator-level
+}
+
+case_stale_local_session_profile_routes_strict() {
+  local dir fixture_branch
+  dir="$(copy_repo stale-local-session-profile-routes-strict)"
+  fixture_branch="$(git -C "$dir" branch --show-current)"
+  mkdir -p "$dir/.ai"
+  cat >"$dir/.ai/SESSION.md" <<EOF
+operation_profile: docs-trivial
+branch: $fixture_branch
+updated_at_epoch: 1
+EOF
+  expect_command_output "stale local session profile routes strict" "$dir" "strict" env BOOTSTRAP_SESSION_TTL_SECONDS=60 bash SCRIPTS/operation-profile.sh --validator-level
+}
+
+case_branch_mismatch_local_session_profile_routes_strict() {
+  local dir now_epoch
+  dir="$(copy_repo branch-mismatch-local-session-profile-routes-strict)"
+  now_epoch="$(date +%s)"
+  mkdir -p "$dir/.ai"
+  cat >"$dir/.ai/SESSION.md" <<EOF
+operation_profile: docs-trivial
+branch: different-branch
+updated_at_epoch: $now_epoch
+EOF
+  expect_command_output "branch mismatch local session profile routes strict" "$dir" "strict" bash SCRIPTS/operation-profile.sh --validator-level
+}
+
+case_canonical_allowed_split_state_wording_passes() {
+  local dir
+  dir="$(copy_repo canonical-allowed-split-state-wording-passes)"
+  perl -0pi -e 's/(## Current In-Progress Task\n\n).*?(\n\n## Files Changed)/$1Branch-specific session state belongs outside this committed file per the\nsplit-state rules.$2/s' "$dir/AI_HANDOFF.md"
+  expect_success "canonical allowed split-state wording passes" "$dir"
+}
+
+case_handoff_without_classification_passes() {
+  local dir
+  dir="$(copy_repo handoff-without-classification-passes)"
+  perl -0pi -e 's/\n## .*Pre-Change Classification.*?(?=\n## |\z)//sg' "$dir/AI_HANDOFF.md"
+  perl -0pi -e 's/^.*Operation profile:.*\n//mg' "$dir/AI_HANDOFF.md"
+  expect_success "handoff without classification passes" "$dir"
+}
+
+case_role_unconditional_committed_state_rule_fails() {
+  local dir
+  dir="$(copy_repo role-unconditional-committed-state-rule-fails)"
+  perl -0pi -e 's/(## Required Updates Before Stopping\n\n).*?(- `TEST_RESULTS\.md`)/$1- `CURRENT_STATE.md`\n- `AI_HANDOFF.md`\n$2/s' "$dir/memory/ai/ROLE_IMPLEMENTATION_AGENT.md"
+  expect_failure "role unconditional committed-state rule fails" "contains unconditional committed-state stopping rule" "$dir"
+}
+
+case_policy_unconditional_committed_state_rule_fails() {
+  local dir
+  dir="$(copy_repo policy-unconditional-committed-state-rule-fails)"
+  perl -0pi -e 's/- canonical `AI_HANDOFF\.md` and `CURRENT_STATE\.md` are updated only when\n  durable project truth changed and the update should remain true on `main`\n  after merge/- `AI_HANDOFF.md` is updated\n- `CURRENT_STATE.md` is updated/' "$dir/PR_MERGE_POLICY.md"
+  perl -0pi -e 's/missing required PR evidence or durable handoff\/state update in the correct\n  split-state location after significant work/missing AI handoff after significant work/' "$dir/PR_REVIEW_POLICY.md"
+  expect_failure "policy unconditional committed-state rule fails" "PR policy contains unconditional committed-state handoff requirement" "$dir"
+}
+
+case_policy_missing_maintainer_authority_boundary_fails() {
+  local dir
+  dir="$(copy_repo policy-missing-maintainer-authority-boundary-fails)"
+  perl -0pi -e 's/- adversarial review approval is not maintainer approval unless the reviewer is\n  explicitly acting as a maintainer and approves using this exception for this\n  PR\n//' "$dir/PR_MERGE_POLICY.md"
+  expect_failure "policy missing maintainer authority boundary fails" "PR_MERGE_POLICY.md missing maintainer-approval authority boundary" "$dir"
 }
 
 case_scaffold_extract_golden_validates() {
@@ -1121,46 +1075,6 @@ EOF
   expect_success "multiline marked next safe action passes" "$dir"
 }
 
-case_copy_repo_recovers_handoff_branch_when_source_is_detached() {
-  # BOOT-034 v1.6: in GitHub Actions `pull_request` events the
-  # source repo is checked out in detached HEAD, so
-  # `git branch --show-current` returns empty. The previous
-  # `copy_repo` then ran `symbolic-ref HEAD refs/heads/` with an
-  # empty branch, which left the temp repo on the implicit `master`
-  # default and tripped the validator's branch-mismatch check inside
-  # every BOOT-034 pass fixture. The fix falls back to reading the
-  # branch from `AI_HANDOFF.md` itself. This fixture exercises the
-  # detached HEAD recovery directly.
-  local detached_src="$tmp_root/detached-head-source"
-  rm -rf "$detached_src"
-  git clone --no-local "$repo_root" "$detached_src" >/dev/null 2>&1
-  git -C "$detached_src" checkout --detach >/dev/null 2>&1
-  local handoff_branch
-  handoff_branch="$(awk '
-    /^## Current Branch$/ {
-      getline
-      getline
-      gsub(/`/, "")
-      gsub(/^[ \t]+|[ \t]+$/, "")
-      print
-      exit
-    }
-  ' "$detached_src/AI_HANDOFF.md")"
-  local saved_root="$repo_root"
-  repo_root="$detached_src"
-  local copy_dir
-  copy_dir="$(copy_repo detached-head-copy)"
-  repo_root="$saved_root"
-  local got
-  got="$(git -C "$copy_dir" symbolic-ref --short HEAD 2>/dev/null || true)"
-  if [[ "$got" != "$handoff_branch" ]]; then
-    echo "FAIL: copy_repo did not recover handoff branch under detached HEAD" >&2
-    echo "  expected: $handoff_branch" >&2
-    echo "  got:      $got" >&2
-    failures=$((failures + 1))
-  fi
-}
-
 case_fenced_code_next_safe_action_ignored() {
   # BOOT-034: bullets inside fenced Markdown code blocks (``` or ~~~)
   # are illustrative examples, not real envelope fields. They must
@@ -1189,14 +1103,6 @@ EOF
 case_approved_spec_missing_source
 case_approved_spec_empty_source
 case_active_backlog_missing_spec
-case_handoff_branch_mismatch
-case_main_non_merge_handoff_branch_mismatch
-case_main_github_merge_source_handoff_branch_passes
-case_main_github_merge_shallow_checkout_passes
-case_main_github_merge_mismatched_handoff_branch_fails
-case_main_unparseable_merge_handoff_branch_fails
-case_main_octopus_merge_handoff_branch_fails
-case_main_github_merge_other_handoff_failures_still_fail
 case_command_missing_required_reads
 case_source_registry_missing_status
 case_source_registry_missing_processing_state
@@ -1207,11 +1113,19 @@ case_approved_assumption_unsupported_evidence
 case_operation_routing_missing_profile
 case_operation_routing_missing_validation_mode
 case_operation_routing_missing_context_reference
-case_protected_mechanics_misclassified
-case_protected_planning_misclassified
 case_research_dir_does_not_trip_validator
 case_claude_worktree_does_not_trip_validator
-case_protected_planning_misclassified_in_second_block
+case_canonical_active_state_rejects_volatile_session_text
+case_local_session_ignored_by_validator
+case_local_session_profile_routes_shape_only
+case_no_local_session_profile_routes_strict
+case_stale_local_session_profile_routes_strict
+case_branch_mismatch_local_session_profile_routes_strict
+case_canonical_allowed_split_state_wording_passes
+case_handoff_without_classification_passes
+case_role_unconditional_committed_state_rule_fails
+case_policy_unconditional_committed_state_rule_fails
+case_policy_missing_maintainer_authority_boundary_fails
 case_scaffold_extract_golden_validates
 case_scaffold_extract_dry_run_writes_nothing
 case_scaffold_extract_refuses_source_as_target
@@ -1236,7 +1150,6 @@ case_marker_word_mid_payload_is_not_marker
 case_empty_next_safe_action_payload_is_unmarked
 case_multiline_marked_next_safe_action_passes
 case_fenced_code_next_safe_action_ignored
-case_copy_repo_recovers_handoff_branch_when_source_is_detached
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2

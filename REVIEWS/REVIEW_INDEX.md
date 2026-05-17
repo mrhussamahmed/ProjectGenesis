@@ -2,9 +2,9 @@ artifact_id: ART-REVIEW-INDEX
 title: Review Index
 type: review-index
 status: active
-version: v4.0
+version: v4.2
 created: 2026-05-09
-updated: 2026-05-16
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/REVIEW_INDEX-2026-05-16-pre-slice-3.md)
 linked_specs: []
@@ -27,7 +27,8 @@ archived under `MAINTAINER_ARCHIVE/REVIEWS/`.
 
 | Review ID | Date | Subject | File | Outcome | Reviewer | Notes |
 |-----------|------|---------|------|---------|----------|-------|
-| none | none | none | none | none | none | No reviews recorded in the active scaffold yet. |
+| REVIEW-SPLIT-STATE-HANDOFF-PLAN-2026-05-17 | 2026-05-17 | Split-state handoff boundary plan | `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md` | approve with minor comments | Codex | Latest re-review approves the plan; implementation must begin with Task 0 and Path B is unavailable until `PR_MERGE_POLICY.md` permits it. |
+| REVIEW-SPLIT-STATE-HANDOFF-IMPLEMENTATION-2026-05-17 | 2026-05-17 | Split-state handoff boundary implementation | `REVIEWS/REVIEW-2026-05-17-split-state-handoff-implementation.md` | approve with minor comments | Codex | Implementation review approved; merge still requires explicit Path B maintainer approval or Path A, plus PR CI. |
 
 ## Conventions
 

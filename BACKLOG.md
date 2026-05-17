@@ -2,13 +2,13 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v4.0
+version: v4.1
 created: 2026-05-09
-updated: 2026-05-16
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/BACKLOG.md-2026-05-16-pre-slice-3.md)
 linked_specs: []
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -22,10 +22,9 @@ under `BACKLOG/`. ProjectGenesis legacy `BOOT-*` items are archived under
 
 ## Current Backlog
 
-No active or proposed backlog items in the bootstrap scaffold itself. Clean-
-scaffold-boundary slices are tracked in `IMPLEMENTATION_PLAN.md` and the
-slice branches (`claude/slice-2-clean-raw-root`,
-`claude/slice-3-shrink-required-reading`, `claude/slice-4-*`).
+| Item | Status | Priority | Notes |
+|------|--------|----------|-------|
+| `BOOT-STATE-001` | in-review | P1 | Split canonical, PR, and local session state so branch/session-specific AI handoff data does not drift into committed project truth. Local implementation checks pass; CI and fresh adversarial review are pending. |
 
 ## Conventions
 

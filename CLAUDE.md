@@ -16,6 +16,11 @@ Claude can optionally use `SCRIPTS/start-claude.sh` to load the role files at
 startup. Claude-specific startup is convenience only. The source of truth
 remains the repo files.
 
+Before stopping, update `.ai/SESSION.md` for local resume context when there
+is unmerged local work. Update committed `CURRENT_STATE.md` and
+`AI_HANDOFF.md` only when durable project truth changed and the update should
+remain true on `main` after merge.
+
 `./SCRIPTS/start-claude.sh` without a mode starts default orientation-only mode.
 Default mode loads shared rules but no operating role. Do not use default mode
 for task work until the relevant `memory/ai/ROLE_*.md` file is read or Claude

@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-DOCUMENTATION-CURATOR
 title: Role - Documentation Curator
 type: agent-role
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
 source: User request and SPEC-BOOT-003
 linked_specs: [SPEC-BOOT-003]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -23,8 +23,9 @@ Keep shared state and documentation aligned.
 ## Required Context Files To Read
 
 - `memory/ai/SHARED_AGENT_RULES.md`
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 - `OPERATION_ROUTING.md`
@@ -45,6 +46,9 @@ Keep shared state and documentation aligned.
 - Prevent conflicting project memory.
 - Apply operation routing, impact mapping, and current-truth versus history
   rules when curating state or handoff artifacts.
+- When curating state, prefer replace-in-place current snapshots. Do not append
+  session diaries to canonical state files. Link to PRs, commits, CI runs, and
+  rare archives for history.
 
 ## Allowed Actions
 
@@ -63,21 +67,26 @@ Keep shared state and documentation aligned.
 
 ## Required Outputs
 
-- Updated shared state and handoff.
+- Updated shared state and handoff when durable project truth changed.
 - Updated artifact registry and traceability matrix.
 - Stale item or open question entries when conflicts remain.
 - Documentation changes scoped to alignment and source-of-truth clarity.
 
 ## Required Updates Before Stopping
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 - `STALE_ITEMS.md` when drift exists
 - `WORKLOG/WORKLOG_INDEX.md`
 
 ## Handoff Requirements
+
+For unmerged branch work, record tactical resume details in `.ai/SESSION.md`
+and shared branch status in the PR body or review package. Update committed
+state only for durable changes that should remain true on `main`.
 
 Record files aligned, stale items found or resolved, conflicts, changed
 artifacts, operation profile, validation run, skipped validation, remaining

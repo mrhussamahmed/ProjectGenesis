@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Slice 4 adaptive routing: pre-push reads the same profile signal as
-# pre-commit. Push validation defaults to strict; a docs-trivial or
-# process-light-exception profile only relaxes pre-push checks when the
-# pushed branch contains no strict-gate path changes vs origin/main.
+# Adaptive routing: pre-push reads the same local `.ai/SESSION.md` profile
+# hint as pre-commit, falling back to legacy AI_HANDOFF.md profile extraction.
+# Push validation defaults to strict; a docs-trivial or process-light-exception
+# profile only relaxes pre-push checks when the pushed branch contains no
+# strict-gate path changes vs origin/main.
 
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$repo_root"

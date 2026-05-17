@@ -72,27 +72,6 @@ if [[ "$scaffold_context" == "downstream" ]] && \
   fail "Invalid scaffold mode: downstream marker present with maintainer-only source files (SCRIPTS/scaffold-extract.sh)"
 fi
 
-handoff_branch_matches_github_main_merge() {
-  local git_branch="$1"
-  local handoff_branch="$2"
-  local parent_count
-  local subject
-  local source_branch
-
-  [[ "$git_branch" == "main" ]] || return 1
-
-  parent_count="$(git cat-file -p HEAD 2>/dev/null | awk '$1 == "parent" { count++ } END { print count + 0 }')"
-  [[ "$parent_count" -eq 2 ]] || return 1
-
-  subject="$(git log -1 --format=%s 2>/dev/null || true)"
-  if [[ "$subject" =~ ^Merge\ pull\ request\ \#[0-9]+\ from\ [^[:space:]/]+/(.+)$ ]]; then
-    source_branch="${BASH_REMATCH[1]}"
-    [[ "$source_branch" == "$handoff_branch" ]] && return 0
-  fi
-
-  return 1
-}
-
 # Required files for every scaffold (maintainer + downstream).
 common_required_files=(
   "AI_PROJECT_BOOTSTRAP.md"
@@ -269,7 +248,7 @@ while IFS= read -r file; do
   grep -Eq '^version: .+' "$file" || fail "$file missing version metadata"
   grep -Eq '^authoritative: (true|false)$' "$file" || fail "$file missing authoritative metadata"
 done < <(find . \
-  \( -path './.git' -o -path './.claude' -o -path './research' \) -prune \
+  \( -path './.git' -o -path './.claude' -o -path './.ai' -o -path './research' \) -prune \
   -o -type f -name '*.md' -print)
 
 # Fast-path early-exit for shape-only profile (slice 4).
@@ -301,6 +280,52 @@ for section in \
   grep -Fq "$section" AI_HANDOFF.md || fail "AI_HANDOFF.md missing section: $section"
 done
 
+check_canonical_active_state_sections() {
+  local target="$1"
+  [[ -f "$target" ]] || return 0
+  awk '
+    function active_section(name) {
+      return name == "## Current Branch" ||
+        name == "## Current Worktree" ||
+        name == "## Current In-Progress Task" ||
+        name == "## Dirty Worktree Status" ||
+        name == "## Next Recommended Action"
+    }
+    function emit(reason) {
+      print FILENAME ":" NR ": " reason ": " $0
+    }
+    /^## / {
+      section = $0
+      in_active = active_section(section)
+      next
+    }
+    in_active {
+      lower = tolower($0)
+      if ($0 ~ /\.claude\/worktrees\//) {
+        emit("canonical state contains active volatile session text")
+      }
+      if ($0 ~ /`?(claude|codex)\/[A-Za-z0-9._-]+`?/) {
+        emit("canonical state contains active volatile session text")
+      }
+      if (lower ~ /awaiting .*merge/ || lower ~ /push .*cleanup/ || lower ~ /verify .*ci/) {
+        emit("canonical state contains active volatile session text")
+      }
+      if ((lower ~ /\.ai\/session\.md/ && lower ~ /(canonical source of truth|durable evidence|shared review evidence)/) ||
+          (lower ~ /(canonical source of truth|durable evidence|shared review evidence)/ && lower ~ /\.ai\/session\.md/)) {
+        emit("canonical state incorrectly treats local session as durable evidence")
+      }
+    }
+  ' "$target"
+}
+
+for canonical_state_file in AI_HANDOFF.md CURRENT_STATE.md; do
+  canonical_state_hits="$(check_canonical_active_state_sections "$canonical_state_file")"
+  if [[ -n "$canonical_state_hits" ]]; then
+    printf '%s\n' "$canonical_state_hits" >&2
+    fail "$canonical_state_file canonical state contains active volatile session text"
+  fi
+done
+
 placeholder_pattern='TODO|TBD|FIXME|REPLACE_ME|YOUR_|NEEDS CLARIFICATION'
 while IFS= read -r file; do
   case "$file" in
@@ -316,7 +341,7 @@ while IFS= read -r file; do
     fail "$file contains unresolved placeholder-like text"
   fi
 done < <(find . \
-  \( -path './.git' -o -path './.claude' -o -path './research' \) -prune \
+  \( -path './.git' -o -path './.claude' -o -path './.ai' -o -path './research' \) -prune \
   -o -type f -name '*.md' -print | sed 's#^\./##')
 
 while IFS= read -r file; do
@@ -371,22 +396,6 @@ done < <(awk -F'|' '
     }
   }
 ' BACKLOG.md)
-
-if git_branch="$(git branch --show-current 2>/dev/null)" && [[ -n "$git_branch" ]]; then
-  handoff_branch="$(awk '
-    /^## Current Branch$/ {
-      getline
-      getline
-      gsub(/`/, "")
-      print
-      exit
-    }
-  ' AI_HANDOFF.md)"
-  if [[ -n "$handoff_branch" && "$handoff_branch" != "$git_branch" ]] &&
-    ! handoff_branch_matches_github_main_merge "$git_branch" "$handoff_branch"; then
-    fail "AI_HANDOFF.md branch does not match git branch: $handoff_branch != $git_branch"
-  fi
-fi
 
 if [[ -d COMMANDS ]]; then
   while IFS= read -r file; do
@@ -751,67 +760,34 @@ for field in \
   grep -Fq "$field" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing evidence envelope field: $field"
 done
 
-grep -Fq "Pre-Change Classification" AI_HANDOFF.md || fail "AI_HANDOFF.md missing pre-change classification record"
-grep -Fq "Operation profile:" AI_HANDOFF.md || fail "AI_HANDOFF.md missing operation profile evidence"
 grep -Fq "OPERATION_ROUTING.md" REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md || fail "PR review package template missing operation routing section"
 grep -Fq "Operation Routing Review" REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md || fail "adversarial review template missing operation routing review"
+grep -Fq "## Branch-Specific State" REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md || fail "PR review package template missing branch-specific state fields"
+grep -Fq "## Split-State Review" REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md || fail "adversarial review template missing split-state review checks"
+grep -Fq ".ai/SESSION.md" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing local session routing language"
+grep -Fq "not durable operation evidence" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md must state local session is not durable evidence"
+grep -Fq "PR body, PR comment" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing PR durable evidence locations"
+grep -Fq "committed PR review package" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing committed review package evidence location"
+grep -Fq "committed review record" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing committed review record evidence location"
+grep -Fq "adversarial review approval is not maintainer approval" PR_MERGE_POLICY.md || fail "PR_MERGE_POLICY.md missing maintainer-approval authority boundary"
+if grep -Fxq -- "- \`AI_HANDOFF.md\` is updated" PR_MERGE_POLICY.md ||
+   grep -Fxq -- "- \`CURRENT_STATE.md\` is updated" PR_MERGE_POLICY.md ||
+   grep -Fq "missing AI handoff after significant work" PR_REVIEW_POLICY.md; then
+  fail "PR policy contains unconditional committed-state handoff requirement"
+fi
 
-while IFS='|' read -r kind section; do
-  [[ -z "$kind" ]] && continue
-  case "$kind" in
-    strict) fail "AI_HANDOFF.md protected mechanics classification must be strict-protected: $section" ;;
-    planning) fail "AI_HANDOFF.md protected planning classification must be planning-governance or strict-protected: $section" ;;
-  esac
-done < <(awk '
-  function trim(value) {
-    gsub(/^[ \t]+|[ \t]+$/, "", value)
-    return value
-  }
-  function evaluate() {
-    if (!in_classification) {
-      return
+while IFS= read -r role_file; do
+  if awk '
+    /^## Required Updates Before Stopping/ { in_section = 1; next }
+    /^## / { in_section = 0 }
+    in_section && ($0 == "- `CURRENT_STATE.md`" || $0 == "- `AI_HANDOFF.md`") {
+      bad = 1
     }
-    if (target_body ~ /(SCRIPTS\/|\.github\/workflows|\.githooks\/|memory\/ai\/|PR_REVIEW_POLICY\.md|PR_MERGE_POLICY\.md|RISK_MODEL\.md|BRANCH_AND_WORKTREE_GUIDE\.md|GOVERNANCE\.md|OPERATION_ROUTING\.md|CONTEXT_PACKS\/|COMMANDS\/|REVIEWS\/templates\/|SPECS\/templates\/|ADR\/templates\/|BACKLOG\/templates\/)/ && profile != "strict-protected") {
-      print "strict|" section
-    } else if (target_body ~ /(SPECS\/|BACKLOG\.md|BACKLOG\/|TRACEABILITY_MATRIX\.md|ARTIFACT_REGISTRY\.md|ADR\/|02_requirements\/|TESTS\/ACCEPTANCE_CRITERIA_MAP\.md)/ && profile !~ /^(planning-governance|strict-protected)$/) {
-      print "planning|" section
-    }
-  }
-  /^## / {
-    evaluate()
-    section = trim(substr($0, 4))
-    in_classification = ($0 ~ /Pre-Change Classification/)
-    profile = ""
-    body = ""
-    target_body = ""
-    in_target = 0
-    next
-  }
-  in_classification {
-    body = body "\n" $0
-    if ($0 ~ /Target files:/) {
-      in_target = 1
-    }
-    if ($0 ~ /Protected files touched:/) {
-      in_target = 0
-    }
-    if (in_target) {
-      target_body = target_body "\n" $0
-    }
-    if ($0 ~ /Operation profile:/) {
-      if (match($0, /`[^`]+`/)) {
-        profile = substr($0, RSTART + 1, RLENGTH - 2)
-      } else {
-        split($0, profile_parts, "Operation profile:")
-        profile = trim(profile_parts[2])
-        sub(/[[:space:]].*$/, "", profile)
-      }
-    }
-  }
-  END {
-    evaluate()
-  }
-' AI_HANDOFF.md)
+    END { exit bad ? 0 : 1 }
+  ' "$role_file"; then
+    fail "$role_file contains unconditional committed-state stopping rule"
+  fi
+done < <(find memory/ai -maxdepth 1 -type f -name 'ROLE_*.md' -print)
 
 for path in "${required_files[@]}"; do
   grep -Fq "\`$path\`" ARTIFACT_REGISTRY.md || fail "ARTIFACT_REGISTRY.md does not register $path"

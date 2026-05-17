@@ -2,13 +2,13 @@ artifact_id: ART-AI-SHARED-RULES
 title: Shared Agent Rules
 type: agent-rules
 status: authoritative
-version: v1.2
+version: v1.3
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User request, review fix, and SPEC-BOOT-003
+source: User request, review fix, SPEC-BOOT-003, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-003]
-linked_tickets: []
+linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -41,6 +41,18 @@ Follow the source-of-truth hierarchy in `AI_PROJECT_BOOTSTRAP.md` and
 - Do not invent APIs, requirements, tickets, domain rules, files, commands,
   completion status, or external integration state.
 
+## State Boundary
+
+Committed state files describe durable project truth that should remain true
+on `main` after merge. They are not per-agent scratchpads.
+
+Branch-specific shared state belongs in a PR, issue, or review package. Local
+resume state belongs in gitignored `.ai/SESSION.md`.
+
+Agents must not record temporary worktree paths, feature-branch "current"
+state, or "awaiting merge" instructions as active facts in committed
+`CURRENT_STATE.md` or `AI_HANDOFF.md`.
+
 ## Role Selection
 
 Each task uses the same role definitions regardless of whether the agent is
@@ -50,8 +62,10 @@ Claude, Codex, or another coding agent.
 - Then read exactly the relevant `memory/ai/ROLE_*.md` file for the task.
 - If a task crosses roles, read the primary role first and any additional role
   files needed for the requested work.
-- Record the active role in `AI_HANDOFF.md` and `WORKLOG/WORKLOG_INDEX.md`
-  before stopping.
+- For unmerged branch work, record tactical resume details in
+  `.ai/SESSION.md` and shared branch status in the PR body or review package.
+  Update committed state only for durable changes that should remain true on
+  `main`.
 - Claude `default` startup mode is orientation-only. It loads these shared
   rules but no operating role. Do not perform meaningful task work from default
   mode until the relevant `memory/ai/ROLE_*.md` file has been read or Claude is
@@ -106,8 +120,9 @@ analysis, spike work, backlog preparation, and documentation only.
 
 Before stopping after meaningful work, update:
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
+- `.ai/SESSION.md` for local resume context when unmerged local work remains
+- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
+  changed and should remain true on `main` after merge
 - `ARTIFACT_REGISTRY.md` when artifacts were created, changed, superseded, or
   retired
 - `TRACEABILITY_MATRIX.md` when specs, backlog, implementation, tests, reviews,
@@ -138,6 +153,8 @@ Mermaid diagrams are governed by the same source-of-truth hierarchy.
   `PR_REVIEW_POLICY.md`.
 - Reviewers must not rely on implementer chat history.
 - The implementation agent must not be the only reviewer of its own work.
-- Before stopping or switching agents, update `AI_HANDOFF.md` with branch,
-  worktree, changed files, tests run, failures, risks, assumptions, and the
-  next safe action.
+- Before stopping or switching agents with unmerged local work, update
+  `.ai/SESSION.md` with branch, worktree, changed files, tests run, failures,
+  risks, assumptions, and the next local action. Put shared branch status in
+  PR evidence. Update `AI_HANDOFF.md` only for durable handoff facts that
+  should remain true on `main`.

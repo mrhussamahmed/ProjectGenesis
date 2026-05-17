@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Slice 4 adaptive routing: read the Operation profile from AI_HANDOFF.md's
-# most recent Pre-Change Classification section. If the profile indicates a
-# docs-trivial or process-light-exception change AND the staged file set
-# does not touch any strict-gate path (validators, CI, security, hooks,
-# governance, role instructions, reusable templates), the validator runs
-# in shape-only mode. Otherwise the validator runs in strict mode (full
-# checks). Default is strict, so a missing profile never weakens validation.
+# Adaptive routing: read the local `.ai/SESSION.md` operation profile hint,
+# falling back to legacy AI_HANDOFF.md profile extraction. If the profile
+# indicates a docs-trivial or process-light-exception change AND the staged
+# file set does not touch any strict-gate path (validators, CI, security,
+# hooks, governance, role instructions, reusable templates), the validator
+# runs in shape-only mode. Otherwise the validator runs in strict mode.
+# Default is strict, so a missing or stale local session never weakens
+# validation.
 
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$repo_root"
