@@ -160,6 +160,72 @@ log "target directory:  $target_abs"
 log "extraction date:   $extract_date"
 
 # ---------------------------------------------------------------------------
+# Shared reuse-boundary contract lists.
+#
+# FORBIDDEN_PATHS is the single source of truth for paths that must not appear
+# in an extracted downstream scaffold. It is reused for:
+#   - rsync exclusions in Phase 1 (so the path is never mirrored)
+#   - the post-extraction contract check (so an accidental inclusion fails)
+#   - advisory coherence reporting against TEMPLATE_MANIFEST.md
+#
+# FORBIDDEN_STRINGS is the upstream owner/repository attribution that must not
+# leak into any active extracted file.
+#
+# PROJECT_OWNED_GENERATED_FILES is the set of files the extractor emits as
+# clean starters or starter-resets. Bare `ProjectGenesis` is forbidden in
+# these files. Bare `ProjectGenesis` in copied framework documentation is
+# allowed as scaffold attribution (see implementation summary).
+# ---------------------------------------------------------------------------
+
+FORBIDDEN_PATHS=(
+  "MAINTAINER_ARCHIVE"
+  "BOOTSTRAP_AUDIT.md"
+  "GITHUB_REPOSITORY_SETUP.md"
+  "GOVERNANCE_PERFORMANCE.md"
+  "PARALLEL_EXECUTION_PLAN.md"
+  "SCAFFOLD_FORK_CHECKLIST.md"
+  "STALE_ITEMS.md"
+  "TESTS/ACCEPTANCE_CRITERIA_MAP.md"
+  "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
+  "SCRIPTS/run-seeded-defect-bench.sh"
+  "SCRIPTS/scaffold-extract.sh"
+  ".github/CODEOWNERS"
+)
+
+# RELEASE_NOTES.md carries upstream release URLs (FORBIDDEN_STRINGS matches)
+# and is maintainer-only history. It is excluded by path so that the contract
+# string check does not need to scan and fail on a file that should not be
+# shipped to downstream consumers in the first place. It is not listed in
+# FORBIDDEN_PATHS because the plan's explicit absence list does not require
+# it; instead, the contract string check would naturally fail on it if it
+# slipped through.
+EXTRA_EXCLUDED_PATHS=(
+  "RELEASE_NOTES.md"
+)
+
+FORBIDDEN_STRINGS=(
+  "mrhussamahmed/ProjectGenesis"
+  "github.com/mrhussamahmed/ProjectGenesis"
+  "@mrhussamahmed"
+)
+
+PROJECT_OWNED_GENERATED_FILES=(
+  "README.md"
+  "CURRENT_STATE.md"
+  "AI_HANDOFF.md"
+  "ARTIFACT_REGISTRY.md"
+  "TEST_RESULTS.md"
+  "PROJECT_MEMORY.md"
+  "IMPLEMENTATION_PLAN.md"
+  "BACKLOG.md"
+  "TRACEABILITY_MATRIX.md"
+  "SPECS/SPEC_INDEX.md"
+  "BACKLOG/BACKLOG_INDEX.md"
+  "REVIEWS/REVIEW_INDEX.md"
+  "WORKLOG/WORKLOG_INDEX.md"
+)
+
+# ---------------------------------------------------------------------------
 # Phase 1: Mirror framework files from source to target using rsync.
 # ---------------------------------------------------------------------------
 
@@ -183,6 +249,7 @@ rsync_excludes=(
   --exclude='.env.*'
   --exclude='*.log'
   --exclude='bootstrap-placeholder-hit.*'
+  --exclude='.bootstrap-scaffold-mode'
   --exclude='SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md'
   --exclude='SPECS/SPEC-BOOT-003-adaptive-governance-routing.md'
   --exclude='SPECS/SPEC-BOOT-004-public-launch-readiness.md'
@@ -208,6 +275,12 @@ rsync_excludes=(
   --exclude='BACKLOG/BOOT-08*'
   --exclude='BACKLOG/BOOT-09*'
 )
+
+# Reuse the shared contract lists so excluded paths cannot drift between
+# rsync, the contract check, and advisory reporting.
+for path in "${FORBIDDEN_PATHS[@]}" "${EXTRA_EXCLUDED_PATHS[@]}"; do
+  rsync_excludes+=(--exclude="$path")
+done
 
 log "Phase 1: mirror framework files (rsync)"
 if [[ "$apply" -eq 1 ]]; then
@@ -268,7 +341,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -331,7 +404,6 @@ None.
 - \`PR_REVIEW_POLICY.md\`
 - \`RISK_MODEL.md\`
 - \`OPERATION_ROUTING.md\`
-- \`SCAFFOLD_FORK_CHECKLIST.md\`
 
 ## Known Stale Or Superseded Files
 
@@ -357,7 +429,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -389,7 +461,7 @@ none yet
 
 ## Last Completed Task
 
-Scaffold extracted from ProjectGenesis using \`SCAFFOLD_FORK_CHECKLIST.md\`.
+Initial bootstrap scaffold extraction.
 
 ## Current In-Progress Task
 
@@ -485,7 +557,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -515,7 +587,7 @@ instead of a product spec. Product implementation must not use this exception.
 | Product Requirement | Spec ID | Backlog Item | Linear Ticket | ADR | Architecture Doc | Implementation Branch | Changed Files | Tests | Review Record | Release Status | Current Status |
 |---------------------|---------|--------------|---------------|-----|------------------|-----------------------|---------------|-------|---------------|----------------|----------------|
 | REQ-BOOT-001: Spec-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_PROJECT_BOOTSTRAP.md\`, \`GOVERNANCE.md\`, \`SPECS/templates/SPEC_TEMPLATE.md\` | \`SCRIPTS/validate-bootstrap.sh\` existence checks | pending | not released | initialized |
-| REQ-BOOT-002: Test-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`TEST_STRATEGY.md\`, \`TEST_PLAN.md\`, \`TESTS/ACCEPTANCE_CRITERIA_MAP.md\` | validator plus future stack tests | pending | not released | initialized |
+| REQ-BOOT-002: Test-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`TEST_STRATEGY.md\`, \`TEST_PLAN.md\` | validator plus future stack tests | pending | not released | initialized |
 | REQ-BOOT-003: Artifact lifecycle control | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`ARTIFACT_REGISTRY.md\`, \`GOVERNANCE.md\` | metadata checks with documented \`AGENTS.md\` and \`CLAUDE.md\` exception | pending | not released | initialized |
 | REQ-BOOT-004: Branch and worktree hygiene | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`BRANCH_AND_WORKTREE_GUIDE.md\`, \`.githooks/\` | hook templates and validator | pending | not released | initialized |
 | REQ-BOOT-005: Anti-hallucination and source-of-truth rules | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_PROJECT_BOOTSTRAP.md\`, \`GOVERNANCE.md\`, \`CONTEXT_INDEX.md\` | validator required files | pending | not released | initialized |
@@ -561,7 +633,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -640,7 +712,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -674,7 +746,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -710,7 +782,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -750,7 +822,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -777,7 +849,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -789,7 +861,7 @@ authoritative: false
 
 | Date | Scope | Command | Result | Notes |
 |------|-------|---------|--------|-------|
-| $extract_date | scaffold extraction | \`bash SCRIPTS/validate-bootstrap.sh\` | passed | Initial validation after scaffold extraction from ProjectGenesis using \`SCAFFOLD_FORK_CHECKLIST.md\`. |
+| $extract_date | scaffold extraction | \`bash SCRIPTS/validate-bootstrap.sh\` | passed | Initial validation after scaffold extraction. |
 EOF
 
 emit "OPEN_QUESTIONS.md" <<EOF
@@ -801,7 +873,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -827,41 +899,6 @@ implementation.
   backlog, traceability, current state, and handoff.
 EOF
 
-emit "STALE_ITEMS.md" <<EOF
-artifact_id: ART-STATE-005
-title: Stale Items
-type: shared-state
-status: active
-version: v1.0
-created: $extract_date
-updated: $extract_date
-owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
-linked_specs: []
-linked_tickets: []
-linked_adrs: []
-replaces:
-replaced_by:
-authoritative: false
-
-# Stale Items
-
-This file tracks stale documents, stale code areas, obsolete generated
-artifacts, abandoned branches, outdated specs, outdated diagrams, outdated
-backlog items, and files that need review before reuse.
-
-## Current Stale Items
-
-| Item | Type | Detected | Status | Resolution |
-|------|------|----------|--------|------------|
-
-## Rules
-
-- Add an entry whenever a stale document, diagram, code area, or branch is
-  detected.
-- Resolve entries by archiving or updating the stale artifact.
-EOF
-
 emit "PROJECT_MEMORY.md" <<EOF
 artifact_id: ART-STATE-001
 title: Project Memory
@@ -871,7 +908,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -888,7 +925,7 @@ the higher-priority source and update this summary later.
 
 ## Project Purpose
 
-- Downstream project intake using the reusable ProjectGenesis scaffold.
+- Downstream project intake using the reusable bootstrap scaffold.
   Replace this section with the downstream project purpose once product
   intake begins.
 
@@ -906,8 +943,7 @@ the higher-priority source and update this summary later.
 
 ## Recent Decisions
 
-- Scaffold extracted from ProjectGenesis using \`SCAFFOLD_FORK_CHECKLIST.md\`
-  on $extract_date.
+- Initial bootstrap scaffold extraction on $extract_date.
 EOF
 
 emit "ADR/ADR_INDEX.md" <<EOF
@@ -919,7 +955,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -946,7 +982,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -972,7 +1008,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -1027,89 +1063,22 @@ revert the change set or restore superseded artifacts from \`ARTIFACTS/ARCHIVE/\
 when appropriate.
 EOF
 
-emit "PARALLEL_EXECUTION_PLAN.md" <<EOF
-artifact_id: ART-PAR-001
-title: Parallel Execution Plan
-type: execution-plan
-status: authoritative
-version: v1.0
-created: $extract_date
-updated: $extract_date
-owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
-linked_specs: []
-linked_tickets: []
-linked_adrs: []
-replaces:
-replaced_by:
-authoritative: true
+# ---------------------------------------------------------------------------
+# README.md clean-state. The extractor must not ship the upstream README to
+# downstream consumers. The starter is intentionally minimal and project-
+# neutral; consumers replace it with their own README before publishing.
+# ---------------------------------------------------------------------------
 
-# Parallel Execution Plan
+emit "README.md" <<'EOF'
+# Project Name
 
-Parallel implementation is not allowed by default. It becomes allowed only when
-this file explicitly marks streams as safe.
+This repository was initialized from an AI project bootstrap scaffold.
 
-## Current Parallel Streams
+## Next Steps
 
-No product implementation streams are currently approved for parallel work.
-
-| Stream | Backlog Items | Branch | Worktree | Owner Agent | File Ownership | Status | Merge Order |
-|--------|---------------|--------|----------|-------------|----------------|--------|-------------|
-| none | none | none | none | none | none | not approved | none |
-
-## Parallel Work Is Allowed Only When
-
-- tasks have separate specs or clearly separate acceptance criteria
-- file ownership is mostly separate
-- shared interfaces are already stable or explicitly versioned
-- no agent needs to change global architecture independently
-- no agent needs to change shared data models without coordination
-- no agent needs to change shared CI/CD, dependency configuration,
-  authentication, authorization, or deployment files independently
-- merge order is documented
-- integration test expectations are documented
-
-## Parallel Work Must Stop If
-
-- two agents need to edit the same core files
-- a shared contract changes
-- architecture assumptions diverge
-- one task invalidates another task's spec
-- unexpected changes appear in another worktree
-- conflict risk becomes high
-
-## Shared Files That Require Coordination
-
-- \`AI_PROJECT_BOOTSTRAP.md\`
-- \`GOVERNANCE.md\`
-- \`ARCHITECTURE.md\`
-- \`DECISIONS.md\`
-- \`ARTIFACT_REGISTRY.md\`
-- \`TRACEABILITY_MATRIX.md\`
-- \`CURRENT_STATE.md\`
-- \`AI_HANDOFF.md\`
-- \`SPECS/SPEC_INDEX.md\`
-- \`ADR/ADR_INDEX.md\`
-- \`BACKLOG.md\`
-- dependency manifests
-- CI/CD files
-- authentication, authorization, schema, API contract, migration, and global
-  configuration files
-
-## Required Stream Record
-
-When approving parallel work, add a row with:
-
-- backlog items
-- specs and acceptance criteria
-- branch and worktree names
-- owner agent or role
-- owned files or modules
-- shared files requiring coordination
-- expected integration order
-- merge conflict risk
-- integration test strategy
-- stop conditions
+1. Add product source material to `00_intake/raw/`.
+2. Ask an AI agent that follows `AGENTS.md` to run `Start requirement breakdown`.
+3. Replace this README with the project's own description before publishing.
 EOF
 
 # ---------------------------------------------------------------------------
@@ -1127,7 +1096,7 @@ version: v1.0
 created: $extract_date
 updated: $extract_date
 owner: AI Bootstrap Maintainers
-source: Scaffold extracted from ProjectGenesis using SCAFFOLD_FORK_CHECKLIST.md
+source: Initial bootstrap scaffold
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -1158,9 +1127,7 @@ Common fields for all entries below unless stated otherwise:
 | ART-AGENT-CLAUDE | agent-instructions | Claude Instructions | \`CLAUDE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Short Claude entrypoint. |
 | ART-AGENT-GENERIC | agent-instructions | Codex And Generic Agent Instructions | \`AGENTS.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Short generic agent entrypoint. |
 | ART-LICENSE | license | License | \`LICENSE\` | authoritative | v1.0 | extracted scaffold | none | none | true | Project license. Downstream forkers must keep or replace per their own license requirements. |
-| ART-README | public-readme | README | \`README.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Project README inherited from ProjectGenesis. Downstream forkers should rewrite project-specific text (name, claims, owner, links) before publishing. |
-| ART-GITHUB-REPOSITORY-SETUP | repository-setup | GitHub Repository Setup | \`GITHUB_REPOSITORY_SETUP.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Repository publication, branch protection, and maintainer-review setup guide inherited from ProjectGenesis. Downstream forkers should rewrite project-specific text before publishing. |
-| ART-GITHUB-CODEOWNERS | github-config | Code Owners | \`.github/CODEOWNERS\` | active | v1.0 | extracted scaffold | none | none | false | Code Owners file inherited from ProjectGenesis. Downstream forkers should replace the owner handle before publishing. |
+| ART-README | public-readme | README | \`README.md\` | active | v1.0 | extracted scaffold | none | none | false | Project-neutral README starter. Downstream consumers should replace it with their own project description before publishing. |
 | ART-GITIGNORE | config | Git Ignore | \`.gitignore\` | active | v1.0 | extracted scaffold | none | none | false | Generic generated-file and secret-adjacent ignores. |
 | ART-AI-SHARED-RULES | agent-rules | Shared Agent Rules | \`memory/ai/SHARED_AGENT_RULES.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Shared behavior rules for all coding agents. |
 | ART-AI-ROLE-PRODUCT-ANALYST | agent-role | Product Analyst Role | \`memory/ai/ROLE_PRODUCT_ANALYST.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Product discovery role definition. |
@@ -1178,16 +1145,12 @@ Common fields for all entries below unless stated otherwise:
 | ART-BOOT-002 | guide | Bootstrap Usage Guide | \`BOOTSTRAP_USAGE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | How to use the package. |
 | ART-GETTING-STARTED | guide | Getting Started | \`GETTING_STARTED.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Primary getting-started guide. |
 | ART-NEW-PROJECT-INIT | guide | New Project Initialization | \`NEW_PROJECT_INITIALIZATION.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | New downstream project initialization prompt. |
-| ART-BOOT-003 | audit | Bootstrap Repository Audit | \`BOOTSTRAP_AUDIT.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Audit record. |
 | ART-GOV-001 | governance | Governance | \`GOVERNANCE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Core governance rules. |
-| ART-GOV-PERF-001 | measurement | Governance Performance Measurement | \`GOVERNANCE_PERFORMANCE.md\` | active | v1.0 | extracted scaffold | none | none | false | Governance routing performance measurement record carried over from the framework. |
 | ART-OPS-ROUTING-001 | governance | Operation Routing And Impact Map | \`OPERATION_ROUTING.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Adaptive governance control plane. |
 | ART-CTX-001 | guide | Context Index | \`CONTEXT_INDEX.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Required reading map. |
 | ART-ARCH-001 | architecture | Bootstrap Architecture | \`ARCHITECTURE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Process architecture. |
 | ART-ADR-001 | adr-guide | Decision Governance | \`DECISIONS.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | ADR rules. |
 | ART-GIT-001 | guide | Branch And Worktree Guide | \`BRANCH_AND_WORKTREE_GUIDE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Git and worktree rules. |
-| ART-SCAFFOLD-FORK-CHECKLIST | guide | Scaffold Fork Checklist | \`SCAFFOLD_FORK_CHECKLIST.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Human-readable reset/exclusion policy for downstream scaffold reuse. |
-| ART-PAR-001 | execution-plan | Parallel Execution Plan | \`PARALLEL_EXECUTION_PLAN.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Parallel work gate. |
 | ART-REG-001 | registry | Artifact Registry | \`ARTIFACT_REGISTRY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Artifact inventory. |
 | ART-TRACE-001 | traceability | Traceability Matrix | \`TRACEABILITY_MATRIX.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Requirement-to-evidence map. |
 | ART-TEST-001 | test-strategy | Test Strategy | \`TEST_STRATEGY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Testing principles. |
@@ -1211,7 +1174,6 @@ Common fields for all entries below unless stated otherwise:
 | ART-STATE-002 | shared-state | Current State | \`CURRENT_STATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Current operational view. |
 | ART-STATE-003 | shared-state | AI Handoff | \`AI_HANDOFF.md\` | active | v1.0 | extracted scaffold | none | none | false | Agent transition state. |
 | ART-STATE-004 | shared-state | Open Questions | \`OPEN_QUESTIONS.md\` | active | v1.0 | extracted scaffold | none | none | false | Unresolved blockers. |
-| ART-STATE-005 | shared-state | Stale Items | \`STALE_ITEMS.md\` | active | v1.0 | extracted scaffold | none | none | false | Drift and stale items. |
 | ART-BACKLOG-001 | backlog | Backlog | \`BACKLOG.md\` | active | v1.0 | extracted scaffold | none | none | true | Current backlog mirror. |
 | ART-PLAN-001 | implementation-plan | Implementation Plan | \`IMPLEMENTATION_PLAN.md\` | active | v1.0 | extracted scaffold | none | none | true | Bootstrap implementation plan. |
 | ART-TEST-003 | test-results | Test Results | \`TEST_RESULTS.md\` | active | v1.0 | extracted scaffold | none | none | false | Validation history. |
@@ -1230,7 +1192,6 @@ Common fields for all entries below unless stated otherwise:
 | ART-REVIEW-PR-TEMPLATE | template | PR Review Package Template | \`REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | PR review package template. |
 | ART-REVIEW-ADVERSARIAL-TEMPLATE | template | Adversarial PR Review Template | \`REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Adversarial PR review template. |
 | ART-TEST-MANUAL-CHECKLIST | manual-test-checklist | Manual Test Checklist | \`TESTS/MANUAL_TEST_CHECKLIST.md\` | active | v1.0 | extracted scaffold | none | none | false | Manual test checklist. |
-| ART-TEST-AC-MAP | traceability | Acceptance Criteria Map | \`TESTS/ACCEPTANCE_CRITERIA_MAP.md\` | active | v1.0 | extracted scaffold | none | none | true | Acceptance criteria mapping. |
 | ART-WORKLOG-INDEX | worklog | Worklog Index | \`WORKLOG/WORKLOG_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | false | Session worklog. |
 | ART-HANDOFF-INDEX | handoff-index | Handoff Index | \`HANDOFFS/HANDOFF_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | false | Handoff index. |
 | ART-INTAKE-INDEX | intake-index | Intake Index | \`00_intake/INTAKE_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | true | Canonical intake folder index. |
@@ -1266,12 +1227,9 @@ Common fields for all entries below unless stated otherwise:
 | ART-COMMITMSG-HOOK | guide | Commit Message Hook | \`.githooks/commit-msg\` | authoritative | v1.0 | extracted scaffold | none | none | true | Commit message local hook. |
 | ART-PREPUSH-HOOK | guide | Pre-Push Hook | \`.githooks/pre-push\` | authoritative | v1.0 | extracted scaffold | none | none | true | Pre-push local hook. |
 | ART-CI-WORKFLOW | guide | CI Bootstrap Validation Workflow | \`.github/workflows/bootstrap-validation.yml\` | authoritative | v1.0 | extracted scaffold | none | none | true | CI workflow running the bootstrap validator. |
-| ART-SCAFFOLD-EXTRACT-SCRIPT | guide | Scaffold Extraction Script | \`SCRIPTS/scaffold-extract.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Dry-run-first scaffold extraction tool implementing \`SCAFFOLD_FORK_CHECKLIST.md\`. |
 | ART-METRIC-EVIDENCE-COVERAGE | guide | Evidence Coverage Metric Script | \`SCRIPTS/metric-evidence-coverage.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reports spec-FR and backlog source-coverage metrics; first empirical evidence measurement for downstream scaffolds. |
-| ART-METRIC-ACCEPTANCE-COVERAGE | guide | Acceptance Coverage Metric Script | \`SCRIPTS/metric-acceptance-coverage.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reports acceptance-criteria coverage metrics from \`TESTS/ACCEPTANCE_CRITERIA_MAP.md\`. |
+| ART-METRIC-ACCEPTANCE-COVERAGE | guide | Acceptance Coverage Metric Script | \`SCRIPTS/metric-acceptance-coverage.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reports acceptance-criteria coverage metrics. |
 | ART-METRIC-TRACEABILITY-COMPLETENESS | guide | Traceability Completeness Metric Script | \`SCRIPTS/metric-traceability-completeness.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reports bootstrap-requirement traceability completeness metrics from \`TRACEABILITY_MATRIX.md\`. |
-| ART-SEEDED-DEFECT-BENCH-RUNNER | guide | Seeded-Defect Benchmark Runner | \`SCRIPTS/run-seeded-defect-bench.sh\` | authoritative | v1.0 | extracted scaffold | none | none | true | Wraps the red-check harness as a seeded-defect benchmark; reports detection rate without gating CI. |
-| ART-SEED-BENCH-PLAN | benchmark-plan | Adversarial Seed Benchmark Plan | \`TESTS/ADVERSARIAL_SEED_BENCHMARK.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Benchmark plan, defect catalog, and baseline recording procedure for the seeded-defect benchmark. |
 
 ## Lifecycle Rules
 
@@ -1284,19 +1242,157 @@ Common fields for all entries below unless stated otherwise:
 EOF
 
 # ---------------------------------------------------------------------------
-# Phase 4: Optional in-target bootstrap validation.
+# Phase 4: Write the positive downstream scaffold mode marker.
+#
+# `.bootstrap-scaffold-mode` is the positive marker the validator uses to
+# decide between maintainer and downstream mode. The source repository
+# `.gitignore` ignores this file so it cannot be accidentally committed.
+# ---------------------------------------------------------------------------
+
+log "Phase 4: write .bootstrap-scaffold-mode marker"
+if [[ "$apply" -eq 1 ]]; then
+  printf 'downstream\n' >"$target_abs/.bootstrap-scaffold-mode"
+fi
+
+# ---------------------------------------------------------------------------
+# Phase 5: Extracted target contract check.
+#
+# Fail extraction if forbidden paths or upstream owner strings made it into
+# the target, or if generated project-owned files contain bare ProjectGenesis.
+# This check runs even when --no-validate is passed; the only validator that
+# may be skipped via --no-validate is bash SCRIPTS/validate-bootstrap.sh.
+# ---------------------------------------------------------------------------
+
+run_contract_check() {
+  local target="$1"
+  local violations=0
+  local path
+  local file
+  local match_output
+
+  log "Phase 5: extracted-target contract check"
+
+  for path in "${FORBIDDEN_PATHS[@]}"; do
+    if [[ -e "$target/$path" ]]; then
+      log "  CONTRACT FAIL: forbidden path present: $path"
+      violations=$((violations + 1))
+    fi
+  done
+
+  for path in "${EXTRA_EXCLUDED_PATHS[@]}"; do
+    if [[ -e "$target/$path" ]]; then
+      log "  CONTRACT FAIL: extra-excluded path present: $path"
+      violations=$((violations + 1))
+    fi
+  done
+
+  # Search for forbidden upstream strings in active extracted files. The .git
+  # directory is excluded if present, though extraction should not copy it.
+  local grep_pattern
+  grep_pattern="$(printf '%s|' "${FORBIDDEN_STRINGS[@]}")"
+  grep_pattern="${grep_pattern%|}"
+  if match_output="$(grep -RInE "$grep_pattern" \
+        --exclude-dir='.git' \
+        "$target" 2>/dev/null)"; then
+    while IFS= read -r line; do
+      [[ -z "$line" ]] && continue
+      log "  CONTRACT FAIL: forbidden upstream string: $line"
+      violations=$((violations + 1))
+    done <<< "$match_output"
+  fi
+
+  # Bare ProjectGenesis is forbidden in generated project-owned files only.
+  # Bare ProjectGenesis in copied framework documentation is allowed
+  # attribution (see implementation summary).
+  for file in "${PROJECT_OWNED_GENERATED_FILES[@]}"; do
+    if [[ -f "$target/$file" ]]; then
+      if match_output="$(grep -n 'ProjectGenesis' "$target/$file" 2>/dev/null)"; then
+        while IFS= read -r line; do
+          [[ -z "$line" ]] && continue
+          log "  CONTRACT FAIL: bare ProjectGenesis in project-owned file $file: $line"
+          violations=$((violations + 1))
+        done <<< "$match_output"
+      fi
+    else
+      log "  CONTRACT FAIL: missing project-owned file: $file"
+      violations=$((violations + 1))
+    fi
+  done
+
+  if (( violations > 0 )); then
+    echo "ERROR: extracted-target contract check failed with $violations violation(s)." >&2
+    return 1
+  fi
+
+  log "  contract check passed"
+  return 0
+}
+
+if [[ "$apply" -eq 1 ]]; then
+  if ! run_contract_check "$target_abs"; then
+    exit 1
+  fi
+else
+  log "Phase 5: skipped (dry-run; contract check requires --apply)"
+fi
+
+# ---------------------------------------------------------------------------
+# Phase 6: Advisory coherence reporting (non-blocking).
+#
+# Compare the extractor's forbidden-path contract with TEMPLATE_MANIFEST.md
+# to surface drift. This check is advisory: drift is logged with an
+# ADVISORY prefix and does not fail extraction, validation, hooks, or CI in
+# this slice. Source-of-truth resolution stays in the implementation
+# summary, not in this script's exit status.
+# ---------------------------------------------------------------------------
+
+run_advisory_coherence_check() {
+  local manifest="$source_root/TEMPLATE_MANIFEST.md"
+  if [[ ! -f "$manifest" ]]; then
+    log "Phase 6: advisory coherence check skipped (manifest not present)"
+    return 0
+  fi
+
+  log "Phase 6: advisory coherence check (manifest vs extractor)"
+
+  local path
+  local manifest_line
+  for path in "${FORBIDDEN_PATHS[@]}"; do
+    # Only flag if manifest describes the path as `copy` or `copy-clean` in a
+    # table row. Header text and prose mentioning the same path do not count.
+    if manifest_line="$(grep -E "\`$path\`.*\| \`?(copy|copy-clean)\`?" "$manifest" 2>/dev/null)"; then
+      if [[ -n "$manifest_line" ]]; then
+        log "  ADVISORY: extractor excludes \`$path\` but manifest still classifies it as copy: ${manifest_line%% |*}"
+      fi
+    fi
+  done
+
+  # .github/CODEOWNERS-specific advisory: legacy manifest text described it as
+  # reusable. Flag any remaining text-level mention so the manifest and
+  # extractor stay aligned over time.
+  if grep -qE "\`\.github/CODEOWNERS\`.*reusable" "$manifest"; then
+    log "  ADVISORY: \`.github/CODEOWNERS\` described in manifest as reusable, but extractor excludes it."
+  fi
+
+  return 0
+}
+
+run_advisory_coherence_check || true
+
+# ---------------------------------------------------------------------------
+# Phase 7: Optional in-target bootstrap validation.
 # ---------------------------------------------------------------------------
 
 if [[ "$apply" -eq 1 ]] && [[ "$validate" -eq 1 ]]; then
-  log "Phase 4: run bash SCRIPTS/validate-bootstrap.sh inside target"
+  log "Phase 7: run bash SCRIPTS/validate-bootstrap.sh inside target"
   (
     cd "$target_abs"
     bash SCRIPTS/validate-bootstrap.sh
   )
 elif [[ "$apply" -ne 1 ]]; then
-  log "Phase 4: skipped (dry-run mode; pass --apply to write and validate)"
+  log "Phase 7: skipped (dry-run mode; pass --apply to write and validate)"
 else
-  log "Phase 4: skipped (--no-validate)"
+  log "Phase 7: skipped (--no-validate)"
 fi
 
 log "Done."

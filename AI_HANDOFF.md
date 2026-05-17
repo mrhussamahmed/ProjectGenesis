@@ -30,11 +30,11 @@ Reviewer / Merge Steward
 
 ## Current Branch
 
-`main`
+`claude/sharp-shockley-6bd7a3`
 
 ## Current Worktree
 
-repository root
+`.claude/worktrees/sharp-shockley-6bd7a3`
 
 ## Last Completed Task
 

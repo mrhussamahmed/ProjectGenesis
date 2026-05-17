@@ -279,7 +279,7 @@ Hits outside this allowlist are real leaks and must be reclassified.
 |------|-------|-------|
 | `.git` | `exclude` | Git internal state. Never copied; new project initializes its own. |
 | `.githooks/` | `copy` | Reusable commit-msg and pre-commit hooks. Project-neutral. |
-| `.github/` | `copy` | After slice 2 contains `workflows/` and `CODEOWNERS`. PG-branded `ISSUE_TEMPLATE/` moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/`. See nested overrides. |
+| `.github/` | `copy` | After slice 2 contains `workflows/` and `CODEOWNERS`; the reuse-boundary slice excludes `CODEOWNERS` from the extracted scaffold because it carries upstream owner attribution. PG-branded `ISSUE_TEMPLATE/` moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/`. See nested overrides. |
 | `.gitignore` | `copy` | Reusable ignore rules. |
 | `00_intake/` | `copy` | Intake scaffolding; instance files are empty templates. See nested overrides. |
 | `01_context/` | `copy` | Product context scaffolding; instance files are empty templates. See nested overrides. |
@@ -454,8 +454,8 @@ introduced them; consumers may relabel.
 | Nested Path | Class | Notes |
 |-------------|-------|-------|
 | `.github/workflows/` | `copy` | Reusable CI workflows. |
-| `.github/CODEOWNERS` | `copy` | Reusable CODEOWNERS scaffold. |
-| `.github/ISSUE_TEMPLATE/` | (relocated) | Moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` in slice 2. Templates referenced "ProjectGenesis" in `about:` lines, `owner` metadata, and the `mrhussamahmed/ProjectGenesis` repository URL. New projects should provide their own issue templates. |
+| `.github/CODEOWNERS` | `exclude` | Carries upstream-specific owner attribution. Excluded from the extracted scaffold to prevent owner leakage; downstream projects add their own CODEOWNERS as needed. |
+| `.github/ISSUE_TEMPLATE/` | (relocated) | Moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` in slice 2. Templates referenced the upstream scaffold name in `about:` lines, `owner` metadata, and the upstream repository URL. New projects should provide their own issue templates. |
 
 ## Required-Reading Inventory
 
@@ -571,14 +571,13 @@ for d in \
     cp -R "<SRC>/$d" "<DEST>/$d"
 done
 
-# .github with nested overrides: copy workflows + CODEOWNERS only
+# .github with nested overrides: copy workflows only
 mkdir -p "<DEST>/.github"
 if [ -d "<SRC>/.github/workflows" ]; then
     cp -R "<SRC>/.github/workflows" "<DEST>/.github/workflows"
 fi
-if [ -f "<SRC>/.github/CODEOWNERS" ]; then
-    cp "<SRC>/.github/CODEOWNERS" "<DEST>/.github/CODEOWNERS"
-fi
+# .github/CODEOWNERS carries upstream owner attribution and is intentionally
+# NOT copied; downstream projects add their own CODEOWNERS as needed.
 # .github/ISSUE_TEMPLATE/ is maintainer-archive and intentionally NOT copied.
 
 # SCRIPTS with nested overrides: copy reusable scripts only
