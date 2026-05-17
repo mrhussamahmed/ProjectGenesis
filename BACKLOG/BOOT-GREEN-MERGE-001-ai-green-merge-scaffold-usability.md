@@ -1,12 +1,12 @@
 artifact_id: ART-BACKLOG-BOOT-GREEN-MERGE-001
 title: AI Green-Merge For Bootstrap Scaffold Usability
 type: backlog-item
-status: ready
-version: v1.0
+status: done
+version: v1.1
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-05-18
 owner: AI Bootstrap Maintainers
-source: User-requested green-merge plan for new-project bootstrap usability; recurring bootstrap-governance exception in PR_MERGE_POLICY.md
+source: User-requested green-merge plan for new-project bootstrap usability; recurring bootstrap-governance exception in PR_MERGE_POLICY.md; merged via PR #22 at 01310ff
 linked_specs: []
 linked_tickets: [BOOT-GREEN-MERGE-001]
 linked_adrs: []
@@ -144,7 +144,7 @@ P1
 
 ## Readiness Status
 
-ready
+done
 
 ## Readiness Evidence
 
@@ -182,24 +182,28 @@ ready
 
 ## Definition Of Done
 
-- [ ] `PR_MERGE_POLICY.md` requires CI/status, validation, blocker resolution,
-  clean scope, and no failed-check bypass; human/maintainer/Code Owner
-  approval is explicitly not required.
-- [ ] `PR_REVIEW_POLICY.md` frames review as defect detection, not
+- [x] `PR_MERGE_POLICY.md` v1.4 requires CI/status, validation, blocker
+  resolution, clean scope, and no failed-check bypass; human/maintainer/Code
+  Owner approval is explicitly not required.
+- [x] `PR_REVIEW_POLICY.md` v1.4 frames review as defect detection, not
   authorization.
-- [ ] `GOVERNANCE.md` and active role files no longer block AI green-merge.
-- [ ] `.github/CODEOWNERS` is informational only.
-- [ ] `SCRIPTS/validate-bootstrap.sh` fails when active authoritative policy
-  reintroduces required human/maintainer/Code Owner approval as a merge gate.
-- [ ] `SCRIPTS/validate-bootstrap-red-checks.sh` includes a targeted fixture
-  proving the validator fails on that regression.
-- [ ] Traceability, artifact registry, test results, backlog index, review
+- [x] `GOVERNANCE.md` v1.5 and active role files no longer block AI
+  green-merge.
+- [x] `.github/CODEOWNERS` is informational only.
+- [x] `SCRIPTS/validate-bootstrap.sh` v4.2 fails when active authoritative
+  policy reintroduces required human/maintainer/Code Owner approval as a
+  merge gate (prose, wrapped Markdown, and GitHub branch-protection key
+  coverage).
+- [x] `SCRIPTS/validate-bootstrap-red-checks.sh` v4.2 includes targeted
+  fixtures proving the validator fails on that regression and stays silent
+  on disabled forms.
+- [x] Traceability, artifact registry, test results, backlog index, review
   index, and worklog are updated.
-- [ ] GitHub branch protection on `main` keeps required status checks but
-  does not require approving reviews or Code Owner reviews, or any remaining
-  enforcement mismatch is explicitly documented as an external blocker.
-- [ ] Adversarial Codex review has no unresolved P0/P1 or blocking P2
-  findings.
+- [x] GitHub branch protection on `main` keeps the required `validate`
+  status check; `required_pull_request_reviews` and
+  `required_conversation_resolution` are disabled; no rulesets present.
+- [x] Adversarial Codex review across six iterations resolved all P0/P1 and
+  blocking P2 findings; final outcome no blocking findings.
 
 ## Parallelization
 
