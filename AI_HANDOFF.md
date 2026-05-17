@@ -38,16 +38,20 @@ Implementation Agent
 
 ## Last Completed Task
 
-Slice 5 reuse-boundary clean extraction implementation (PR #20). The
-extractor, downstream-aware validator, contract check, advisory coherence
-reporting, manifest update, and red-check fixture all landed on
-`claude/sharp-shockley-6bd7a3` at commit `5e3b9a3`. The follow-up commit
-addresses Codex P1 findings on `TEMPLATE_MANIFEST.md` and state hygiene.
+Slice 5 reuse-boundary clean extraction (PR #20). The extractor,
+downstream-aware validator, contract check, advisory coherence reporting,
+manifest update, and red-check fixture landed at commit `5e3b9a3`. Three
+Codex review-fix commits followed: `fb0e57c` (manifest README starter +
+state hygiene), `f188c83` (allowlist brand-prose and untracked plan-path
+reference), and `c20dc4b` (manifest Step 6 allowlist scope, emitted
+TRACEABILITY_MATRIX and AI_HANDOFF excluded-path leakage, script
+docstring rewrite).
 
 ## Current In-Progress Task
 
-Awaiting fresh-context Codex re-review of PR #20 after P1 fixes; merge
-once review has no blocking findings and CI passes.
+Awaiting final fresh-context Codex re-review of PR #20 at HEAD `c20dc4b`
+plus this handoff-staleness fix; merge once review has no blocking
+findings and CI passes.
 
 ## Files Changed
 
@@ -94,13 +98,16 @@ once review has no blocking findings and CI passes.
 
 ## Dirty Worktree Status
 
-Slice 5 follow-up edits staged on `claude/sharp-shockley-6bd7a3` addressing
-Codex P1 findings; ready to commit and push.
+Clean. Slice 5 implementation (`5e3b9a3`) and three Codex review-fix
+commits (`fb0e57c`, `f188c83`, `c20dc4b`) have landed on
+`claude/sharp-shockley-6bd7a3` and are pushed to origin. The only
+untracked path is `.claude/`, which is worktree-local Claude Code session
+metadata and is never committed.
 
 ## Next Recommended Action
 
-Commit and push the Codex P1 fixes, request fresh-context Codex re-review,
-then merge once review is clean and CI is green.
+Confirm fresh-context Codex review of PR #20 is clean and CI is green,
+then merge.
 
 ## What The Next AI Must Read First
 
@@ -202,5 +209,5 @@ Slice 4: fast-path validation discipline - done (merged to main through PR #19).
   Codex sandbox (sandboxed write restriction), static check confirmed
   guard logic at `SCRIPTS/validate-bootstrap.sh` line 70.
 - Review required: fresh-context Codex re-review after P1 fixes.
-- Next safe action: commit and push the Codex P1 fixes, request re-review,
-  then merge once review is clean and CI is green.
+- Next safe action: confirm Codex re-review is clean and CI is green, then
+  merge PR #20.
