@@ -170,8 +170,9 @@ Slice 4: fast-path validation discipline - done (merged to main through PR #19).
   harness.
 - Required review: fresh-context Codex adversarial review.
 - Traceability impact: scaffold contract change is documented in
-  `TEMPLATE_MANIFEST.md` and via the implementation plan at
-  `research/scientific-review-2026-05-17/08_reuse_boundary_implementation_plan.md`.
+  `TEMPLATE_MANIFEST.md` and in the PR #20 description. The implementation
+  plan that drove this slice is an untracked research artifact local to
+  the maintainer environment.
 - Registry impact: extracted `ARTIFACT_REGISTRY.md` rows for excluded paths
   removed; source registry unchanged.
 - Handoff/state impact: this section and the latest evidence envelope below.
@@ -185,7 +186,7 @@ Slice 4: fast-path validation discipline - done (merged to main through PR #19).
 
 - Operation profile: `strict-protected`
 - Classification confidence: high
-- Files read: implementation plan, `SCRIPTS/scaffold-extract.sh`,
+- Files read: maintainer-local implementation plan, `SCRIPTS/scaffold-extract.sh`,
   `SCRIPTS/validate-bootstrap.sh`, `SCRIPTS/validate-bootstrap-red-checks.sh`,
   `TEMPLATE_MANIFEST.md`, role file `ROLE_IMPLEMENTATION_AGENT.md`,
   `SHARED_AGENT_RULES.md`, `AGENTS.md`.

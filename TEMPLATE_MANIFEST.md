@@ -177,8 +177,8 @@ as ProjectGenesis history leakage:
 2. The reuse-boundary slice replaced the inline `README.md` starter with a
    project-neutral version: "This repository was initialized from an AI
    project bootstrap scaffold." The starter no longer names the upstream
-   scaffold and contains no bare `ProjectGenesis`. The earlier ProjectGenesis-
-   branded starter is retired.
+   scaffold and contains no bare upstream-brand text. The earlier
+   upstream-branded starter is retired.
 3. Reusable bootstrap scripts under `SCRIPTS/` retain four intentional
    categories of hits:
    (a) inline comments in `SCRIPTS/validate-bootstrap.sh` and
