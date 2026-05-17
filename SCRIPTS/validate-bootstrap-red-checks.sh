@@ -593,8 +593,14 @@ case_scaffold_extract_refuses_nonempty_without_force() {
 case_scaffold_extract_registry_includes_kept_framework_paths() {
   # Coverage: the extracted ARTIFACT_REGISTRY.md must mention every kept
   # framework/GitHub config path that the validator does not already check.
-  # This guards against silent registry drift relative to
-  # SCAFFOLD_FORK_CHECKLIST.md "Framework Files To Keep".
+  # This guards against silent registry drift relative to the extraction
+  # contract. Paths that the reuse-boundary slice removed from extracted
+  # output (GITHUB_REPOSITORY_SETUP.md, GOVERNANCE_PERFORMANCE.md,
+  # .github/CODEOWNERS, SCRIPTS/run-seeded-defect-bench.sh,
+  # SCRIPTS/scaffold-extract.sh, TESTS/ACCEPTANCE_CRITERIA_MAP.md,
+  # TESTS/ADVERSARIAL_SEED_BENCHMARK.md, BOOTSTRAP_AUDIT.md,
+  # PARALLEL_EXECUTION_PLAN.md, SCAFFOLD_FORK_CHECKLIST.md,
+  # STALE_ITEMS.md) are intentionally absent from the registry.
   local target="$tmp_root/scaffold-extract-registry-coverage"
   rm -rf "$target"
   local output
@@ -611,9 +617,6 @@ case_scaffold_extract_registry_includes_kept_framework_paths() {
   local path
   for path in \
     "README.md" \
-    "GITHUB_REPOSITORY_SETUP.md" \
-    "GOVERNANCE_PERFORMANCE.md" \
-    ".github/CODEOWNERS" \
     ".gitignore" \
     "COMMANDS/start-requirement-breakdown.md" \
     "00_intake/raw/.gitkeep" \
@@ -622,6 +625,26 @@ case_scaffold_extract_registry_includes_kept_framework_paths() {
     "ARTIFACTS/ARCHIVE/.gitkeep"; do
     if ! grep -Fq "\`$path\`" "$target/ARTIFACT_REGISTRY.md"; then
       echo "FAIL: extracted ARTIFACT_REGISTRY.md does not register kept framework path: $path" >&2
+      failures=$((failures + 1))
+    fi
+  done
+  # Reuse-boundary contract: maintainer-only paths must NOT appear in the
+  # extracted registry. Drift here would silently reintroduce upstream
+  # attribution in a downstream scaffold.
+  for path in \
+    "BOOTSTRAP_AUDIT.md" \
+    "GITHUB_REPOSITORY_SETUP.md" \
+    "GOVERNANCE_PERFORMANCE.md" \
+    "PARALLEL_EXECUTION_PLAN.md" \
+    "SCAFFOLD_FORK_CHECKLIST.md" \
+    "STALE_ITEMS.md" \
+    "TESTS/ACCEPTANCE_CRITERIA_MAP.md" \
+    "TESTS/ADVERSARIAL_SEED_BENCHMARK.md" \
+    "SCRIPTS/scaffold-extract.sh" \
+    "SCRIPTS/run-seeded-defect-bench.sh" \
+    ".github/CODEOWNERS"; do
+    if grep -Fq "\`$path\`" "$target/ARTIFACT_REGISTRY.md"; then
+      echo "FAIL: extracted ARTIFACT_REGISTRY.md still registers maintainer-only path: $path" >&2
       failures=$((failures + 1))
     fi
   done
@@ -817,10 +840,56 @@ EOF
   expect_no_failure_mentioning "provisional spec id passes" "$dir" "cites unregistered spec ID: SPEC-RED-1234"
 }
 
+case_scaffold_extract_contract_detects_forbidden_string_contamination() {
+  # Reuse-boundary slice: the extractor's post-Phase-3 contract check must
+  # detect forbidden paths or upstream owner strings in the extracted
+  # target. We extract once into a temp target with --no-validate, then
+  # inject a forbidden path (.github/CODEOWNERS) which rsync's exclude
+  # list skips on re-extraction. Re-extracting with --force preserves the
+  # injection because rsync does not delete excluded files; the contract
+  # check then runs and must fail with a CONTRACT FAIL line naming the
+  # path.
+  local target="$tmp_root/scaffold-extract-contract-contamination"
+  rm -rf "$target"
+  local output
+  set +e
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply --no-validate "$target" 2>&1)"
+  local status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: scaffold-extract.sh --apply did not exit 0 during contamination setup:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  # Inject a forbidden path. .github/CODEOWNERS is in FORBIDDEN_PATHS and
+  # rsync excludes it on subsequent mirrors, so the file persists across
+  # re-extraction and the contract check must catch it.
+  mkdir -p "$target/.github"
+  printf '* @leaked-owner\n' >"$target/.github/CODEOWNERS"
+  set +e
+  output="$(cd "$repo_root" && bash SCRIPTS/scaffold-extract.sh --apply --force --no-validate "$target" 2>&1)"
+  status=$?
+  set -e
+  if [[ "$status" -eq 0 ]]; then
+    echo "FAIL: scaffold-extract.sh contract check did not detect forbidden path contamination:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+    return
+  fi
+  if ! grep -Fq "CONTRACT FAIL: forbidden path present: .github/CODEOWNERS" <<<"$output"; then
+    echo "FAIL: scaffold-extract.sh contract check did not name the contaminated path:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
 case_scaffold_extract_reset_files_use_header_only_tables() {
   # Coverage: the extracted shared-state reset files must match the
-  # SCAFFOLD_FORK_CHECKLIST.md header-only table contract for STALE_ITEMS.md,
-  # ADR/ADR_INDEX.md, and HANDOFFS/HANDOFF_INDEX.md.
+  # header-only table contract for ADR/ADR_INDEX.md and
+  # HANDOFFS/HANDOFF_INDEX.md. STALE_ITEMS.md was previously checked here
+  # but is excluded from extracted output in the reuse-boundary slice
+  # because it is maintainer-only history.
   local target="$tmp_root/scaffold-extract-reset-shapes"
   rm -rf "$target"
   local output
@@ -834,14 +903,10 @@ case_scaffold_extract_reset_files_use_header_only_tables() {
     failures=$((failures + 1))
     return
   fi
-  # STALE_ITEMS.md: header table row but no body row.
-  if ! grep -Fq "| Item | Type | Detected | Status | Resolution |" "$target/STALE_ITEMS.md"; then
-    echo "FAIL: STALE_ITEMS.md missing header-only stale-items table header" >&2
+  # STALE_ITEMS.md must be absent in extracted output (reuse-boundary slice).
+  if [[ -e "$target/STALE_ITEMS.md" ]]; then
+    echo "FAIL: STALE_ITEMS.md must be excluded from extracted output" >&2
     failures=$((failures + 1))
-  fi
-  if grep -Eq '^\| [^|]+\| [^|]+\| [^|]+\| [^|]+\| [^|]+\|$' "$target/STALE_ITEMS.md" \
-       | grep -v "Item " | grep -v "----" >/dev/null 2>&1; then
-    : # placeholder so set -e does not trip
   fi
   # ADR/ADR_INDEX.md: table header but no body row (no `none none` row).
   if grep -Fq "| none | none | none |" "$target/ADR/ADR_INDEX.md"; then
@@ -1153,6 +1218,7 @@ case_scaffold_extract_refuses_source_as_target
 case_scaffold_extract_refuses_nonempty_without_force
 case_scaffold_extract_registry_includes_kept_framework_paths
 case_scaffold_extract_reset_files_use_header_only_tables
+case_scaffold_extract_contract_detects_forbidden_string_contamination
 case_unregistered_src_id_fails
 case_unregistered_spec_id_fails
 case_registered_src_id_passes

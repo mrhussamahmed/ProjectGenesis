@@ -19,6 +19,33 @@ cd "$repo_root"
 # hook has confirmed that no strict-gate path is in the staged file set.
 BOOTSTRAP_VALIDATE_PROFILE="${BOOTSTRAP_VALIDATE_PROFILE:-strict}"
 
+# Scaffold context detection (reuse-boundary slice).
+#
+# The validator runs in one of two contexts:
+#
+#   maintainer (default) — the source/maintainer ProjectGenesis repository.
+#                          Strict source-repository checks apply, including
+#                          maintainer-only required files such as
+#                          BOOTSTRAP_AUDIT.md and TESTS/ADVERSARIAL_SEED_BENCHMARK.md.
+#
+#   downstream            — a scaffold extracted with `SCRIPTS/scaffold-extract.sh`.
+#                          A positive marker file `.bootstrap-scaffold-mode` whose
+#                          exact content is `downstream` selects this mode. The
+#                          extractor writes this marker. Downstream mode skips
+#                          maintainer-only required files because they are
+#                          excluded by the extraction contract.
+#
+# The marker is positive: absence of the marker keeps the validator in
+# maintainer mode, so a source checkout cannot be misdetected as downstream
+# by deleting files. `.bootstrap-scaffold-mode` is listed in `.gitignore` in
+# the source repository to prevent accidental commits.
+if [[ -f .bootstrap-scaffold-mode ]] && \
+   [[ "$(cat .bootstrap-scaffold-mode)" == "downstream" ]]; then
+  scaffold_context="downstream"
+else
+  scaffold_context="maintainer"
+fi
+
 failures=0
 
 fail() {
@@ -35,6 +62,15 @@ check_dir() {
   local path="$1"
   [[ -d "$path" ]] || fail "missing required directory: $path"
 }
+
+# Mixed-mode guard: a downstream scaffold must not contain the upstream-only
+# extraction script. Catches the case where a maintainer accidentally created
+# `.bootstrap-scaffold-mode` in the source repo, and the case where a
+# downstream consumer copied the extraction script into their tree.
+if [[ "$scaffold_context" == "downstream" ]] && \
+   [[ -f SCRIPTS/scaffold-extract.sh ]]; then
+  fail "Invalid scaffold mode: downstream marker present with maintainer-only source files (SCRIPTS/scaffold-extract.sh)"
+fi
 
 handoff_branch_matches_github_main_merge() {
   local git_branch="$1"
@@ -57,16 +93,15 @@ handoff_branch_matches_github_main_merge() {
   return 1
 }
 
-required_files=(
+# Required files for every scaffold (maintainer + downstream).
+common_required_files=(
   "AI_PROJECT_BOOTSTRAP.md"
   "BOOTSTRAP_USAGE.md"
   "GETTING_STARTED.md"
   "NEW_PROJECT_INITIALIZATION.md"
-  "BOOTSTRAP_AUDIT.md"
   "CLAUDE.md"
   "AGENTS.md"
   "GOVERNANCE.md"
-  "GOVERNANCE_PERFORMANCE.md"
   "OPERATION_ROUTING.md"
   "PROJECT_MEMORY.md"
   "CURRENT_STATE.md"
@@ -77,11 +112,9 @@ required_files=(
   "OPEN_QUESTIONS.md"
   "BACKLOG.md"
   "IMPLEMENTATION_PLAN.md"
-  "PARALLEL_EXECUTION_PLAN.md"
   "BRANCH_AND_WORKTREE_GUIDE.md"
   "ARTIFACT_REGISTRY.md"
   "TRACEABILITY_MATRIX.md"
-  "STALE_ITEMS.md"
   "TEST_STRATEGY.md"
   "TEST_PLAN.md"
   "TEST_RESULTS.md"
@@ -137,26 +170,36 @@ required_files=(
   "REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md"
   "REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md"
   "TESTS/MANUAL_TEST_CHECKLIST.md"
-  "TESTS/ACCEPTANCE_CRITERIA_MAP.md"
   "WORKLOG/WORKLOG_INDEX.md"
   "HANDOFFS/HANDOFF_INDEX.md"
   "SCRIPTS/start-claude.sh"
   "SCRIPTS/operation-profile.sh"
   "SCRIPTS/validate-bootstrap.sh"
   "SCRIPTS/validate-bootstrap-red-checks.sh"
-  "SCRIPTS/scaffold-extract.sh"
   "SCRIPTS/metric-evidence-coverage.sh"
   "SCRIPTS/metric-acceptance-coverage.sh"
   "SCRIPTS/metric-traceability-completeness.sh"
-  "SCRIPTS/run-seeded-defect-bench.sh"
-  "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
   ".githooks/pre-commit"
   ".githooks/commit-msg"
   ".githooks/pre-push"
   ".github/workflows/bootstrap-validation.yml"
 )
 
-required_dirs=(
+# Required files only in the maintainer/source scaffold. These are excluded
+# from extracted downstream scaffolds because they carry ProjectGenesis-
+# specific history, owner attribution, or maintainer-only tooling.
+maintainer_only_required_files=(
+  "BOOTSTRAP_AUDIT.md"
+  "GOVERNANCE_PERFORMANCE.md"
+  "PARALLEL_EXECUTION_PLAN.md"
+  "STALE_ITEMS.md"
+  "TESTS/ACCEPTANCE_CRITERIA_MAP.md"
+  "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
+  "SCRIPTS/scaffold-extract.sh"
+  "SCRIPTS/run-seeded-defect-bench.sh"
+)
+
+common_required_dirs=(
   "SPECS"
   "SPECS/templates"
   "ADR"
@@ -166,9 +209,6 @@ required_dirs=(
   "REVIEWS"
   "REVIEWS/templates"
   "TESTS"
-  "MAINTAINER_ARCHIVE"
-  "MAINTAINER_ARCHIVE/ARTIFACTS"
-  "MAINTAINER_ARCHIVE/ARTIFACTS/ARCHIVE"
   "WORKLOG"
   "HANDOFFS"
   "INPUT"
@@ -186,6 +226,31 @@ required_dirs=(
   ".github/workflows"
 )
 
+maintainer_only_required_dirs=(
+  "MAINTAINER_ARCHIVE"
+  "MAINTAINER_ARCHIVE/ARTIFACTS"
+  "MAINTAINER_ARCHIVE/ARTIFACTS/ARCHIVE"
+)
+
+required_files=("${common_required_files[@]}")
+required_dirs=("${common_required_dirs[@]}")
+if [[ "$scaffold_context" == "maintainer" ]]; then
+  required_files+=("${maintainer_only_required_files[@]}")
+  required_dirs+=("${maintainer_only_required_dirs[@]}")
+fi
+
+# Downstream scaffolds must carry the positive marker file with exact content.
+if [[ "$scaffold_context" == "downstream" ]]; then
+  if [[ -f .bootstrap-scaffold-mode ]]; then
+    marker_content="$(cat .bootstrap-scaffold-mode)"
+    if [[ "$marker_content" != "downstream" ]]; then
+      fail ".bootstrap-scaffold-mode must contain exactly 'downstream' (found: '$marker_content')"
+    fi
+  else
+    fail "downstream scaffold missing required marker: .bootstrap-scaffold-mode"
+  fi
+fi
+
 for path in "${required_files[@]}"; do
   check_file "$path"
 done
@@ -196,7 +261,7 @@ done
 
 while IFS= read -r file; do
   case "$file" in
-    ./AGENTS.md|./CLAUDE.md|./SPECS/templates/*|./ADR/templates/*|./BACKLOG/templates/*|./REVIEWS/templates/*) continue ;;
+    ./AGENTS.md|./CLAUDE.md|./README.md|./SPECS/templates/*|./ADR/templates/*|./BACKLOG/templates/*|./REVIEWS/templates/*) continue ;;
   esac
   file="${file#./}"
   grep -Eq '^artifact_id: .+' "$file" || fail "$file missing non-empty artifact_id metadata"
@@ -241,13 +306,15 @@ while IFS= read -r file; do
   case "$file" in
     SPECS/templates/*|ADR/templates/*|BACKLOG/templates/*|REVIEWS/templates/*) continue ;;
   esac
-  if grep -En "$placeholder_pattern" "$file" >/tmp/bootstrap-placeholder-hit.$$ 2>/dev/null; then
+  # Capture grep output in a shell variable instead of writing through /tmp;
+  # earlier behavior wrote to /tmp/bootstrap-placeholder-hit.$$ and silently
+  # degraded in restricted environments where /tmp was not writable.
+  placeholder_hits="$(grep -En "$placeholder_pattern" "$file" 2>/dev/null || true)"
+  if [[ -n "$placeholder_hits" ]]; then
     echo "Potential unresolved placeholder in $file:" >&2
-    cat /tmp/bootstrap-placeholder-hit.$$ >&2
-    rm -f /tmp/bootstrap-placeholder-hit.$$
+    printf '%s\n' "$placeholder_hits" >&2
     fail "$file contains unresolved placeholder-like text"
   fi
-  rm -f /tmp/bootstrap-placeholder-hit.$$
 done < <(find . \
   \( -path './.git' -o -path './.claude' -o -path './research' \) -prune \
   -o -type f -name '*.md' -print | sed 's#^\./##')

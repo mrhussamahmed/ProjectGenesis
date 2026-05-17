@@ -37,16 +37,17 @@ decision.
 
 ## Active Implementation Phase
 
-Clean scaffold boundary follow-on slices 1-4 are merged. Slice 4 added
-adaptive fast-path validation while keeping strict gates for protected paths.
+Clean scaffold boundary follow-on slices 1-4 are merged. Slice 5
+(reuse-boundary clean extraction) is in review on branch
+`claude/sharp-shockley-6bd7a3` (PR #20).
 
 ## Active Branch
 
-`main`
+`claude/sharp-shockley-6bd7a3`
 
 ## Active Worktree
 
-repository root
+`.claude/worktrees/sharp-shockley-6bd7a3`
 
 ## Active Backlog Focus
 
@@ -74,14 +75,18 @@ None. Prior staleness tracking lives in `MAINTAINER_ARCHIVE/STALE_ITEMS.md`.
 
 ## Next Recommended Action
 
-Verify post-cleanup `main` CI is green after this state reset, then resume
-normal development from the clean scaffold boundary and adaptive validation
-baseline.
+Complete Codex adversarial review of PR #20 (reuse-boundary slice 5),
+address any blocking findings, verify CI is green, then merge.
 
 ## Latest Validation
 
-PR #19 pull_request and push `Bootstrap Validation` CI passed before merge.
-Post-merge `main` CI initially failed only because `AI_HANDOFF.md` still named
-the slice 4 branch; this cleanup resets active state to `main`. Local
-`bash SCRIPTS/validate-bootstrap.sh`, `bash SCRIPTS/validate-bootstrap-red-checks.sh`,
-and `git diff --check` passed after the reset.
+Slice 5 (reuse-boundary clean extraction, PR #20) local checks:
+`bash SCRIPTS/validate-bootstrap.sh`,
+`bash -n SCRIPTS/scaffold-extract.sh SCRIPTS/validate-bootstrap.sh SCRIPTS/validate-bootstrap-red-checks.sh`,
+`git diff --check`, `grep -q '^\.bootstrap-scaffold-mode$' .gitignore`,
+`bash SCRIPTS/scaffold-extract.sh --apply <tmp>` (extracted contract check
+and downstream validator), forbidden upstream string scan against the
+extracted target, project-owned-file bare `ProjectGenesis` scan, and
+`bash SCRIPTS/validate-bootstrap-red-checks.sh` (including the new
+`case_scaffold_extract_contract_detects_forbidden_string_contamination`
+fixture) all passed locally on 2026-05-17.

@@ -174,10 +174,11 @@ as ProjectGenesis history leakage:
    `post-merge cleanup`, `validation envelope`, `Codex re-review`,
    `Claude re-review`, `claude/`, `codex/`, `ProjectGenesis`) as the strings
    to be detected.
-2. The inline `README.md` starter says
-   "initialized from the ProjectGenesis bootstrap scaffold". This is a
-   deliberate lineage attribution that names the upstream scaffold and is
-   reusable across all downstream projects.
+2. The reuse-boundary slice replaced the inline `README.md` starter with a
+   project-neutral version: "This repository was initialized from an AI
+   project bootstrap scaffold." The starter no longer names the upstream
+   scaffold and contains no bare upstream-brand text. The earlier
+   upstream-branded starter is retired.
 3. Reusable bootstrap scripts under `SCRIPTS/` retain four intentional
    categories of hits:
    (a) inline comments in `SCRIPTS/validate-bootstrap.sh` and
@@ -279,7 +280,7 @@ Hits outside this allowlist are real leaks and must be reclassified.
 |------|-------|-------|
 | `.git` | `exclude` | Git internal state. Never copied; new project initializes its own. |
 | `.githooks/` | `copy` | Reusable commit-msg and pre-commit hooks. Project-neutral. |
-| `.github/` | `copy` | After slice 2 contains `workflows/` and `CODEOWNERS`. PG-branded `ISSUE_TEMPLATE/` moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/`. See nested overrides. |
+| `.github/` | `copy` | After slice 2 contains `workflows/` and `CODEOWNERS`; the reuse-boundary slice excludes `CODEOWNERS` from the extracted scaffold because it carries upstream owner attribution. PG-branded `ISSUE_TEMPLATE/` moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/`. See nested overrides. |
 | `.gitignore` | `copy` | Reusable ignore rules. |
 | `00_intake/` | `copy` | Intake scaffolding; instance files are empty templates. See nested overrides. |
 | `01_context/` | `copy` | Product context scaffolding; instance files are empty templates. See nested overrides. |
@@ -322,7 +323,8 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `PR_MERGE_POLICY.md` | `copy-clean` | Reusable merge policy. Metadata references PG specs only. |
 | `PR_REVIEW_POLICY.md` | `copy-clean` | Reusable review policy. Metadata references PG specs only. |
 | `PROJECT_MEMORY.md` | `copy-clean` | Reusable project-memory description. Consumer may overwrite. |
-| `README.md` | `starter-reset` | ProjectGenesis-branded README. New projects should not inherit ProjectGenesis branding. Consumer-owned starter behavior is out of scope for this slice's required mapping; provide a minimal starter or treat as documented exclusion. See Notes. |
+| `README.md` | `starter-reset` | Upstream-branded README in the source repo. New projects must not inherit upstream branding. The reuse-boundary slice generates a project-neutral starter inline (see Step 4). |
+| `RELEASE_NOTES.md` | `exclude` | Upstream release history. Carries upstream release URLs and maintainer-only context. Excluded from the extracted scaffold so downstream consumers do not ship upstream release notes; consumers add their own as needed. |
 | `RELEASE_READINESS.md` | `copy-clean` | Reusable release readiness checklist. |
 | `REVIEWS/` | `copy` | After slice 2 contains only `REVIEW_INDEX.md` and `templates/`. All `PR_REVIEW_PACKAGE-*.md` and `REVIEW-*.md` files moved to `MAINTAINER_ARCHIVE/REVIEWS/`. See nested overrides for the starter-reset `REVIEW_INDEX.md`. |
 | `RISK_MODEL.md` | `copy-clean` | Reusable risk model guidance. |
@@ -454,8 +456,8 @@ introduced them; consumers may relabel.
 | Nested Path | Class | Notes |
 |-------------|-------|-------|
 | `.github/workflows/` | `copy` | Reusable CI workflows. |
-| `.github/CODEOWNERS` | `copy` | Reusable CODEOWNERS scaffold. |
-| `.github/ISSUE_TEMPLATE/` | (relocated) | Moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` in slice 2. Templates referenced "ProjectGenesis" in `about:` lines, `owner` metadata, and the `mrhussamahmed/ProjectGenesis` repository URL. New projects should provide their own issue templates. |
+| `.github/CODEOWNERS` | `exclude` | Carries upstream-specific owner attribution. Excluded from the extracted scaffold to prevent owner leakage; downstream projects add their own CODEOWNERS as needed. |
+| `.github/ISSUE_TEMPLATE/` | (relocated) | Moved to `MAINTAINER_ARCHIVE/.github/ISSUE_TEMPLATE/` in slice 2. Templates referenced the upstream scaffold name in `about:` lines, `owner` metadata, and the upstream repository URL. New projects should provide their own issue templates. |
 
 ## Required-Reading Inventory
 
@@ -571,14 +573,13 @@ for d in \
     cp -R "<SRC>/$d" "<DEST>/$d"
 done
 
-# .github with nested overrides: copy workflows + CODEOWNERS only
+# .github with nested overrides: copy workflows only
 mkdir -p "<DEST>/.github"
 if [ -d "<SRC>/.github/workflows" ]; then
     cp -R "<SRC>/.github/workflows" "<DEST>/.github/workflows"
 fi
-if [ -f "<SRC>/.github/CODEOWNERS" ]; then
-    cp "<SRC>/.github/CODEOWNERS" "<DEST>/.github/CODEOWNERS"
-fi
+# .github/CODEOWNERS carries upstream owner attribution and is intentionally
+# NOT copied; downstream projects add their own CODEOWNERS as needed.
 # .github/ISSUE_TEMPLATE/ is maintainer-archive and intentionally NOT copied.
 
 # SCRIPTS with nested overrides: copy reusable scripts only
@@ -744,13 +745,20 @@ infrastructure tasks, refactors, and acceptance criteria.
 
 #### `README.md`
 
-```md
-# <Project Name>
+The reuse-boundary slice fixes the inline starter so it does not name the
+upstream scaffold. `SCRIPTS/scaffold-extract.sh` emits the same neutral
+content directly:
 
-This repository was initialized from the ProjectGenesis bootstrap scaffold.
-Update this README with the project's own name, description, and entry
-points. See `GETTING_STARTED.md` and `NEW_PROJECT_INITIALIZATION.md` for the
-first-use steps.
+```md
+# Project Name
+
+This repository was initialized from an AI project bootstrap scaffold.
+
+## Next Steps
+
+1. Add product source material to `00_intake/raw/`.
+2. Ask an AI agent that follows `AGENTS.md` to run `Start requirement breakdown`.
+3. Replace this README with the project's own description before publishing.
 ```
 
 ### Step 5: Confirm Exclusions
@@ -803,9 +811,10 @@ codex/
 
 Allowlist only intentional reusable mentions or clearly marked examples
 (for example, generic example ticket IDs like `BOOT-001` used as illustration
-in reusable docs, or the `ProjectGenesis` brand name used to identify the
-scaffold lineage in `TEMPLATE_MANIFEST.md`, `OPERATION_ROUTING.md`, and the
-inline `README.md` starter).
+in reusable docs, or the upstream scaffold brand name used to identify the
+scaffold lineage in `TEMPLATE_MANIFEST.md` and `OPERATION_ROUTING.md`). The
+inline `README.md` starter is project-neutral and must not be allowlisted
+as a brand-attribution site.
 
 The dry run passes only if required-reading active files are clean starter or
 clean reusable files.

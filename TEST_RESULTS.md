@@ -26,7 +26,10 @@ The bootstrap upstream's legacy validation runs are preserved in
 
 | Run Date | Scope | Command | Outcome | Evidence | Notes |
 |----------|-------|---------|---------|----------|-------|
-| 2026-05-16 | local | `bash SCRIPTS/validate-bootstrap.sh` | passed (except obsolete branch-field check on non-main slice 3 branch) | slice-3-shrink-required-reading | Post-slice-3-trim validator run; all required-file and required-dir checks pass against the new MAINTAINER_ARCHIVE/ paths. |
+| 2026-05-17 | local | `bash SCRIPTS/validate-bootstrap.sh` | passed | slice-5-reuse-boundary | Source/maintainer mode validator pass on `claude/sharp-shockley-6bd7a3` after slice 5 reuse-boundary changes (FORBIDDEN_PATHS, downstream-aware required files, mixed-mode guard, README skip). |
+| 2026-05-17 | local | `bash SCRIPTS/scaffold-extract.sh --apply <tmp>` | passed | slice-5-reuse-boundary | Phase 1-7 ran; contract check passed, advisory coherence non-blocking, in-target downstream validator passed. |
+| 2026-05-17 | local | `bash SCRIPTS/validate-bootstrap-red-checks.sh` | passed | slice-5-reuse-boundary | Full red-check harness including new `case_scaffold_extract_contract_detects_forbidden_string_contamination` fixture and updated registry/reset-shape fixtures. |
+| 2026-05-17 | local | extracted-target forbidden-string + project-owned scan | passed | slice-5-reuse-boundary | No `mrhussamahmed/ProjectGenesis`, `github.com/mrhussamahmed/ProjectGenesis`, or `@mrhussamahmed` matches; no bare `ProjectGenesis` in the 13 project-owned generated files. |
 
 ## History
 
