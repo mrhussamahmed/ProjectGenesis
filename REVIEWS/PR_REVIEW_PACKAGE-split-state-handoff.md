@@ -57,16 +57,16 @@ process-heavy.
 - Impact map summary: governance, merge/review policy, role files, hooks,
   validators, red checks, templates, state, registry, traceability, and
   worklog are impacted
-- Skipped reads or validations: CI not run locally; must run after PR push
+- Skipped reads or validations: none; CI passed on PR #21 at current head
 
 ## Branch-Specific State
 
 - Branch: `codex/split-state-plan`
 - Worktree: repository root
 - Owner agent: Codex
-- Current branch status: Path B maintainer approval is recorded; pending PR CI
-  and final merge-readiness check
-- Next branch action: wait for PR CI
+- Current branch status: Path B maintainer approval is recorded and PR CI is
+  green; pending GitHub review gate or merge action
+- Next branch action: resolve GitHub review gate and merge
 - Shared/protected files touched: governance, policy, role, hook, validator,
   template, state, registry, traceability, test-result, and worklog files
 - Coordination notes for parallel agents: do not overlap on the same
@@ -161,7 +161,7 @@ process-heavy.
 - `bash SCRIPTS/validate-bootstrap-red-checks.sh`: passed after adding the PR
   policy contradiction fixture and maintainer authority-boundary fixture
 - `git diff --check`: passed after maintainer-approval boundary fixes
-- CI: pending PR push
+- CI: passed on PR #21 at `ca81bd0` via runs 26001652968 and 26001653803
 
 ## Known Risks
 

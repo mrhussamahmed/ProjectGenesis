@@ -155,7 +155,7 @@ in-review
   fresh-context adversarial reviewer; focused reviewers if implementation
   expands into security, release, architecture, or QA-sensitive behavior
 - Blocked until:
-  PR CI passes
+  GitHub review and branch-protection gates allow merge
 
 ## Test Expectations
 

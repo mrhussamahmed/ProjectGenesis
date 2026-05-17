@@ -24,6 +24,7 @@ Prior ProjectGenesis validation history is preserved in
 
 | Run Date | Scope | Command | Outcome | Evidence | Notes |
 |----------|-------|---------|---------|----------|-------|
+| 2026-05-17 | GitHub Actions (`BOOT-STATE-001`, PR #21 head `ca81bd0`) | `Bootstrap Validation` runs 26001652968 and 26001653803 | passed | split-state-pr-ci | Both current PR CI runs passed after scaffold evidence contamination fix. |
 | 2026-05-17 | local (`BOOT-STATE-001`) | `bash SCRIPTS/scaffold-extract.sh --apply /tmp/split-state-extract-check`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | passed | split-state-ci-fix | Fixed CI run 26001457737 failure by removing upstream GitHub URLs from committed approval evidence; local extraction contract and full red-check harness passed. |
 | 2026-05-17 | local (`BOOT-STATE-001`) | `git check-ignore .ai/SESSION.md` | passed | split-state-local-session | Confirmed local session files are ignored. |
 | 2026-05-17 | local (`BOOT-STATE-001`) | shell syntax loop for operation-profile, hooks, validator, and red checks | passed | split-state-maintainer-approval-boundary | `bash -n` passed for `SCRIPTS/operation-profile.sh`, `.githooks/pre-commit`, `.githooks/pre-push`, `SCRIPTS/validate-bootstrap.sh`, and `SCRIPTS/validate-bootstrap-red-checks.sh` after maintainer-approval boundary fixes. |
@@ -35,7 +36,8 @@ Prior ProjectGenesis validation history is preserved in
 
 ## Pending Validation
 
-- CI for the split-state implementation PR must pass before merge.
+- None for current PR #21 head `ca81bd0`; merge remains subject to GitHub review
+  and branch-protection gates.
 - Path B maintainer approval is recorded in PR #21 comment 4472356122.
 
 ## History
