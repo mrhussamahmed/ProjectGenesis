@@ -323,7 +323,8 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `PR_MERGE_POLICY.md` | `copy-clean` | Reusable merge policy. Metadata references PG specs only. |
 | `PR_REVIEW_POLICY.md` | `copy-clean` | Reusable review policy. Metadata references PG specs only. |
 | `PROJECT_MEMORY.md` | `copy-clean` | Reusable project-memory description. Consumer may overwrite. |
-| `README.md` | `starter-reset` | ProjectGenesis-branded README. New projects should not inherit ProjectGenesis branding. Consumer-owned starter behavior is out of scope for this slice's required mapping; provide a minimal starter or treat as documented exclusion. See Notes. |
+| `README.md` | `starter-reset` | Upstream-branded README in the source repo. New projects must not inherit upstream branding. The reuse-boundary slice generates a project-neutral starter inline (see Step 4). |
+| `RELEASE_NOTES.md` | `exclude` | Upstream release history. Carries upstream release URLs and maintainer-only context. Excluded from the extracted scaffold so downstream consumers do not ship upstream release notes; consumers add their own as needed. |
 | `RELEASE_READINESS.md` | `copy-clean` | Reusable release readiness checklist. |
 | `REVIEWS/` | `copy` | After slice 2 contains only `REVIEW_INDEX.md` and `templates/`. All `PR_REVIEW_PACKAGE-*.md` and `REVIEW-*.md` files moved to `MAINTAINER_ARCHIVE/REVIEWS/`. See nested overrides for the starter-reset `REVIEW_INDEX.md`. |
 | `RISK_MODEL.md` | `copy-clean` | Reusable risk model guidance. |

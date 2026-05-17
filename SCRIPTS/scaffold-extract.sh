@@ -206,11 +206,11 @@ FORBIDDEN_PATHS=(
 )
 
 # RELEASE_NOTES.md carries upstream release URLs (FORBIDDEN_STRINGS matches)
-# and is maintainer-only history. It is excluded by path so that the contract
-# string check does not need to scan and fail on a file that should not be
-# shipped to downstream consumers in the first place. It is not listed in
-# FORBIDDEN_PATHS because the plan's explicit absence list does not require
-# it; instead, the contract string check would naturally fail on it if it
+# and is maintainer-only history. TEMPLATE_MANIFEST.md classifies it as
+# `exclude` so the manifest and the extractor agree the file is not part
+# of a downstream scaffold. It lives in EXTRA_EXCLUDED_PATHS rather than
+# FORBIDDEN_PATHS because the plan's explicit absence list does not name
+# it; the contract string check would catch it as a fallback if it ever
 # slipped through.
 EXTRA_EXCLUDED_PATHS=(
   "RELEASE_NOTES.md"
