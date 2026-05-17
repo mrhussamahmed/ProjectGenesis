@@ -22,11 +22,11 @@ authoritative: false
 
 ## Active Agent
 
-Codex
+Claude
 
 ## Current Role
 
-Reviewer / Merge Steward
+Implementation Agent
 
 ## Current Branch
 
@@ -38,47 +38,69 @@ Reviewer / Merge Steward
 
 ## Last Completed Task
 
-Slice 4 - fast-path validation discipline - merged to `main` through PR #19 at
-merge commit `3926cf07ce9115bfc7128b1f6964a39677743ca7`.
+Slice 5 reuse-boundary clean extraction implementation (PR #20). The
+extractor, downstream-aware validator, contract check, advisory coherence
+reporting, manifest update, and red-check fixture all landed on
+`claude/sharp-shockley-6bd7a3` at commit `5e3b9a3`. The follow-up commit
+addresses Codex P1 findings on `TEMPLATE_MANIFEST.md` and state hygiene.
 
 ## Current In-Progress Task
 
-Post-merge cleanup on `main`: reset active state after PR #19 so the
-validator and red-check fixtures see the real `main` branch.
+Awaiting fresh-context Codex re-review of PR #20 after P1 fixes; merge
+once review has no blocking findings and CI passes.
 
 ## Files Changed
 
-- `AI_HANDOFF.md` (this file, post-merge active-branch reset)
-- `CURRENT_STATE.md` (post-merge active-state reset)
+- `.gitignore`
+- `SCRIPTS/scaffold-extract.sh`
+- `SCRIPTS/validate-bootstrap.sh`
+- `SCRIPTS/validate-bootstrap-red-checks.sh`
+- `TEMPLATE_MANIFEST.md`
+- `AI_HANDOFF.md` (this file)
+- `CURRENT_STATE.md`
 
 ## Tests Run
 
-- PR #19 pull_request and push `Bootstrap Validation` CI passed before merge.
-- Post-merge `main` CI initially failed only in red checks because this active
-  handoff still named the slice 4 branch; this cleanup resets the active
-  branch field to `main`.
-- `bash SCRIPTS/validate-bootstrap.sh` passed after this cleanup.
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh` passed after this cleanup.
-- `git diff --check` passed after this cleanup.
+- `bash SCRIPTS/validate-bootstrap.sh` passed (source/maintainer mode).
+- `bash -n SCRIPTS/scaffold-extract.sh SCRIPTS/validate-bootstrap.sh SCRIPTS/validate-bootstrap-red-checks.sh` passed.
+- `git diff --check` passed.
+- `grep -q '^\.bootstrap-scaffold-mode$' .gitignore` passed.
+- `bash SCRIPTS/scaffold-extract.sh --apply <tmp>` passed; contract check
+  passed, advisory coherence ran non-blocking, downstream validator passed
+  inside the extracted target.
+- Forbidden upstream string scan against extracted output: no matches.
+- Bare `ProjectGenesis` scan against the 13 project-owned generated files:
+  no matches.
+- `bash SCRIPTS/validate-bootstrap-red-checks.sh` passed, including the new
+  `case_scaffold_extract_contract_detects_forbidden_string_contamination`
+  fixture.
 
 ## Tests Not Run
 
-- Full ProjectGenesis regression suite beyond bootstrap validation and
-  red-check harness.
+- Live execution of the mixed-mode guard during the Codex sandboxed review
+  (the sandbox blocked `.bootstrap-scaffold-mode` writes); static inspection
+  confirmed the guard logic at `SCRIPTS/validate-bootstrap.sh` line 70.
 
 ## Known Risks
 
-- This cleanup writes active ProjectGenesis state after merge. It does not
-  change validator, hook, scaffold, or policy implementation files.
+- Pre-existing P2 in the validator's placeholder-pattern check: it writes
+  to `/tmp/bootstrap-placeholder-hit.$$` and silently no-ops in read-only
+  temp environments. This is environmental and predates this slice; out
+  of scope for the reuse-boundary work.
+- Bare `ProjectGenesis` remains intentionally in copied framework docs
+  (`CI_CD_GUIDE.md`, `OPERATION_ROUTING.md`, `TEMPLATE_MANIFEST.md`) and
+  in `SCRIPTS/validate-bootstrap.sh` motivating-context comments. All
+  match `TEMPLATE_MANIFEST.md` allowlist items 1, 5, and 6.
 
 ## Dirty Worktree Status
 
-Post-merge cleanup on `main`.
+Slice 5 follow-up edits staged on `claude/sharp-shockley-6bd7a3` addressing
+Codex P1 findings; ready to commit and push.
 
 ## Next Recommended Action
 
-Push this cleanup to `main`, then verify the post-cleanup `main` CI run is
-green.
+Commit and push the Codex P1 fixes, request fresh-context Codex re-review,
+then merge once review is clean and CI is green.
 
 ## What The Next AI Must Read First
 
@@ -130,6 +152,54 @@ Slice 4: fast-path validation discipline - done (merged to main through PR #19).
 - Validation skipped: none for this cleanup; bootstrap validation, red checks,
   and diff whitespace checks passed locally before push.
 - Review required: PR #19 received clean Codex review before admin merge.
-- Next safe action: push this cleanup, verify post-cleanup `main` CI is green,
-  then resume normal work from the clean scaffold boundary and adaptive
-  validation baseline.
+- Next safe action: (historical) completed; slice 5 is the active envelope.
+
+## Slice 5 Pre-Change Classification
+
+- Target files: `SCRIPTS/scaffold-extract.sh`,
+  `SCRIPTS/validate-bootstrap.sh`,
+  `SCRIPTS/validate-bootstrap-red-checks.sh`, `TEMPLATE_MANIFEST.md`,
+  `.gitignore`.
+- Operation profile: `strict-protected`
+- Protected files touched: true (validators, scaffold tool, manifest).
+- Expected risk: medium — the validator and extraction script gate every
+  downstream consumer.
+- Branch requirement: `claude/sharp-shockley-6bd7a3` worktree, PR-required.
+- Required validation: `bash SCRIPTS/validate-bootstrap.sh`, full extraction
+  with downstream validator, forbidden-path/string scans, and red-check
+  harness.
+- Required review: fresh-context Codex adversarial review.
+- Traceability impact: scaffold contract change is documented in
+  `TEMPLATE_MANIFEST.md` and via the implementation plan at
+  `research/scientific-review-2026-05-17/08_reuse_boundary_implementation_plan.md`.
+- Registry impact: extracted `ARTIFACT_REGISTRY.md` rows for excluded paths
+  removed; source registry unchanged.
+- Handoff/state impact: this section and the latest evidence envelope below.
+- Dirty worktree status: clean before commit; slice 5 commit `5e3b9a3`
+  landed on the branch, with a follow-up commit addressing Codex P1
+  findings.
+- Escalation triggers checked: source-of-truth hierarchy and operation
+  routing reviewed; no triggers active.
+
+## Slice 5 Final Evidence Envelope
+
+- Operation profile: `strict-protected`
+- Classification confidence: high
+- Files read: implementation plan, `SCRIPTS/scaffold-extract.sh`,
+  `SCRIPTS/validate-bootstrap.sh`, `SCRIPTS/validate-bootstrap-red-checks.sh`,
+  `TEMPLATE_MANIFEST.md`, role file `ROLE_IMPLEMENTATION_AGENT.md`,
+  `SHARED_AGENT_RULES.md`, `AGENTS.md`.
+- Files changed: see Files Changed above.
+- Files intentionally not read: `CONTEXT_PACKS/**`, `memory/ai/**`
+  (kept out of scope per the plan).
+- Artifacts not impacted: spec/ADR/backlog templates, CI workflow file
+  (no syntax change needed), commands/context-pack content, role files.
+- Validation run: source validator, shell syntax, whitespace diff,
+  extraction + downstream validator, forbidden-path/string scans,
+  red-check harness with new contamination fixture.
+- Validation skipped: live re-execution of the mixed-mode guard inside the
+  Codex sandbox (sandboxed write restriction), static check confirmed
+  guard logic at `SCRIPTS/validate-bootstrap.sh` line 70.
+- Review required: fresh-context Codex re-review after P1 fixes.
+- Next safe action: commit and push the Codex P1 fixes, request re-review,
+  then merge once review is clean and CI is green.

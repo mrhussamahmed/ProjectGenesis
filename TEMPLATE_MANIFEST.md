@@ -174,10 +174,11 @@ as ProjectGenesis history leakage:
    `post-merge cleanup`, `validation envelope`, `Codex re-review`,
    `Claude re-review`, `claude/`, `codex/`, `ProjectGenesis`) as the strings
    to be detected.
-2. The inline `README.md` starter says
-   "initialized from the ProjectGenesis bootstrap scaffold". This is a
-   deliberate lineage attribution that names the upstream scaffold and is
-   reusable across all downstream projects.
+2. The reuse-boundary slice replaced the inline `README.md` starter with a
+   project-neutral version: "This repository was initialized from an AI
+   project bootstrap scaffold." The starter no longer names the upstream
+   scaffold and contains no bare `ProjectGenesis`. The earlier ProjectGenesis-
+   branded starter is retired.
 3. Reusable bootstrap scripts under `SCRIPTS/` retain four intentional
    categories of hits:
    (a) inline comments in `SCRIPTS/validate-bootstrap.sh` and
@@ -743,13 +744,20 @@ infrastructure tasks, refactors, and acceptance criteria.
 
 #### `README.md`
 
-```md
-# <Project Name>
+The reuse-boundary slice fixes the inline starter so it does not name the
+upstream scaffold. `SCRIPTS/scaffold-extract.sh` emits the same neutral
+content directly:
 
-This repository was initialized from the ProjectGenesis bootstrap scaffold.
-Update this README with the project's own name, description, and entry
-points. See `GETTING_STARTED.md` and `NEW_PROJECT_INITIALIZATION.md` for the
-first-use steps.
+```md
+# Project Name
+
+This repository was initialized from an AI project bootstrap scaffold.
+
+## Next Steps
+
+1. Add product source material to `00_intake/raw/`.
+2. Ask an AI agent that follows `AGENTS.md` to run `Start requirement breakdown`.
+3. Replace this README with the project's own description before publishing.
 ```
 
 ### Step 5: Confirm Exclusions
