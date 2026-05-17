@@ -34,9 +34,9 @@ Prior ProjectGenesis validation history is preserved in
 
 ## Pending Validation
 
-- CI for the split-state implementation PR must run after push.
-- Explicit maintainer approval for Path B, or Path A with an approved/active
-  spec, is still required before merge.
+- CI for the split-state implementation PR must pass before merge.
+- Path B maintainer approval is recorded at
+  `https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`.
 
 ## History
 

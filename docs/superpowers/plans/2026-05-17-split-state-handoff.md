@@ -6,7 +6,7 @@ version: v0.2
 created: 2026-05-17
 updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User-requested planning session after PR #20 post-merge state drift; bootstrap-governance exception permitted by PR_MERGE_POLICY.md; per-PR maintainer approval pending
+source: User-requested planning session after PR #20 post-merge state drift; bootstrap-governance exception permitted by PR_MERGE_POLICY.md; maintainer approval in PR #21 comment 4472356122
 linked_specs: []
 linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
@@ -92,9 +92,8 @@ exception class.
 Task 0 selected Path B as the lowest-overhead candidate path.
 `PR_MERGE_POLICY.md` now permits the bounded recurring bootstrap-governance
 exception, and `BOOT-STATE-001` records the backlog authority for this
-implementation. Path B is still not merge-ready until explicit maintainer
-approval evidence is recorded for this PR. If that approval is not provided,
-use Path A.
+implementation. Path B maintainer approval evidence is recorded at
+`https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`.
 
 ## Acceptance Criteria
 
@@ -179,8 +178,10 @@ Path B is invalid until `PR_MERGE_POLICY.md` is updated to allow it.
 
 Selected candidate authority: Path B, based on the recurring
 bootstrap-governance exception added to `PR_MERGE_POLICY.md`. Explicit
-maintainer approval for this PR is not yet recorded; the second adversarial
-re-review is review evidence only and does not satisfy maintainer approval.
+maintainer approval for this PR is recorded at
+`https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`;
+the second adversarial re-review is review evidence only and does not satisfy
+maintainer approval.
 
 - [x] **Step 2: Add the bounded recurring bootstrap-governance exception**
 
@@ -235,7 +236,7 @@ the new recurring bootstrap-governance exception section in
 Update this plan's `linked_tickets` metadata to include `[BOOT-STATE-001]`,
 keep `linked_specs: []`, and update the source field to mention the
 bootstrap-governance exception permitted by `PR_MERGE_POLICY.md` plus the
-pending per-PR maintainer approval requirement.
+per-PR maintainer approval evidence requirement.
 
 - [x] **Step 5: Re-run review readiness check**
 
@@ -246,8 +247,8 @@ excepted by the new bounded recurring bootstrap-governance exception.
 Review readiness check: future PR evidence can point to
 `PR_MERGE_POLICY.md`, `BACKLOG/BOOT-STATE-001-split-state-handoff.md`,
 `BACKLOG.md`, `BACKLOG/BACKLOG_INDEX.md`, and `TRACEABILITY_MATRIX.md` for
-the candidate Path B policy/backlog authority, but the PR still needs explicit
-maintainer approval evidence before merge.
+the candidate Path B policy/backlog authority. Explicit maintainer approval
+evidence is recorded in PR #21 comment 4472356122.
 
 ## Task 1: Create Local Session Boundary
 

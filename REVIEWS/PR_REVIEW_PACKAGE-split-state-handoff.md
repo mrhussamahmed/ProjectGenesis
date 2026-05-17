@@ -37,9 +37,9 @@ process-heavy.
 
 ## Linked Specs
 
-- none; this PR intends to use the recurring bootstrap-governance exception in
-  `PR_MERGE_POLICY.md`, but merge authority remains blocked until explicit
-  maintainer approval evidence is recorded or Path A is used
+- none; this PR uses the recurring bootstrap-governance exception in
+  `PR_MERGE_POLICY.md`, with explicit maintainer approval recorded at
+  `https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`
 
 ## Linked Backlog Items Or Tickets
 
@@ -64,10 +64,9 @@ process-heavy.
 - Branch: `codex/split-state-plan`
 - Worktree: repository root
 - Owner agent: Codex
-- Current branch status: request-changes finding acknowledged; Path B
-  maintainer approval evidence is not recorded, so merge authority remains
-  blocked pending maintainer approval or Path A
-- Next branch action: request fresh adversarial review
+- Current branch status: Path B maintainer approval is recorded; pending PR CI
+  and final merge-readiness check
+- Next branch action: wait for PR CI
 - Shared/protected files touched: governance, policy, role, hook, validator,
   template, state, registry, traceability, test-result, and worklog files
 - Coordination notes for parallel agents: do not overlap on the same
@@ -179,15 +178,12 @@ process-heavy.
 
 ## Maintainer Exception Approval
 
-- Status: pending.
-- Current evidence: none. `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md`
-  is an adversarial review record and must not be treated as maintainer
-  approval.
-- Required before merge under Path B: explicit maintainer approval using the
-  recurring bootstrap-governance exception for this PR, recorded in a GitHub PR
-  review/comment by a maintainer or in a committed maintainer approval artifact.
-- Fallback if approval is not provided: use Path A with an approved/active spec
-  and keep `BOOT-STATE-001` as the linked backlog item.
+- Status: recorded.
+- Evidence: `https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`
+  explicitly approves using the Recurring Bootstrap Governance Exception for
+  this PR, limited to `BOOT-STATE-001` and excluding product/runtime changes.
+- Boundary: `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md` remains an
+  adversarial review record and is not maintainer approval.
 
 ## Assumptions
 

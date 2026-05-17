@@ -6,7 +6,7 @@ version: v1.0
 created: 2026-05-17
 updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User-requested split-state handoff plan; recurring bootstrap-governance exception in PR_MERGE_POLICY.md; per-PR maintainer approval pending
+source: User-requested split-state handoff plan; recurring bootstrap-governance exception in PR_MERGE_POLICY.md; maintainer approval in PR #21 comment 4472356122
 linked_specs: []
 linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
@@ -61,8 +61,8 @@ Out of scope:
 - Approved assumptions:
   none
 - Maintainer exception approval:
-  pending. `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md` is an
-  adversarial review record and is not maintainer approval.
+  `https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`
+  approves using the Recurring Bootstrap Governance Exception for this PR.
 - Open questions:
   none for Task 0; implementation findings may create open questions later
 - Related ADR:
@@ -75,8 +75,8 @@ Out of scope:
 - Task 0 must establish implementation authority before Task 1 starts.
 - `PR_MERGE_POLICY.md` must contain the bounded recurring
   bootstrap-governance exception before this item can rely on Path B.
-- Path B merge authority also requires explicit maintainer approval evidence for
-  this PR. Without that approval, use Path A with an approved/active spec.
+- Path B merge authority requires explicit maintainer approval evidence for this
+  PR; evidence is recorded in PR #21 comment 4472356122.
 
 ## Risks
 
@@ -137,8 +137,8 @@ in-review
 - Source evidence:
   `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md`
 - Spec status:
-  not applicable only if Path B receives explicit maintainer approval; otherwise
-  Path A requires an approved/active spec
+  not applicable; Path B maintainer approval is recorded in PR #21 comment
+  4472356122
 - Acceptance criteria:
   listed in `docs/superpowers/plans/2026-05-17-split-state-handoff.md`
 - Dependencies:
@@ -155,8 +155,7 @@ in-review
   fresh-context adversarial reviewer; focused reviewers if implementation
   expands into security, release, architecture, or QA-sensitive behavior
 - Blocked until:
-  explicit maintainer approval evidence is recorded for Path B, or Path A is
-  satisfied with an approved/active spec
+  PR CI passes
 
 ## Test Expectations
 
@@ -168,7 +167,7 @@ in-review
 
 ## Definition Of Done
 
-- [ ] Merge authority satisfied by explicit Path B maintainer approval or Path A
+- [x] Merge authority satisfied by explicit Path B maintainer approval or Path A
   approved/active spec.
 - [x] Acceptance criteria satisfied locally.
 - [x] Tests added or updated, or justified.
