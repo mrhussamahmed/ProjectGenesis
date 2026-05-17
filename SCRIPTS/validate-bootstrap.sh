@@ -769,12 +769,168 @@ grep -Fq "not durable operation evidence" OPERATION_ROUTING.md || fail "OPERATIO
 grep -Fq "PR body, PR comment" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing PR durable evidence locations"
 grep -Fq "committed PR review package" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing committed review package evidence location"
 grep -Fq "committed review record" OPERATION_ROUTING.md || fail "OPERATION_ROUTING.md missing committed review record evidence location"
-grep -Fq "adversarial review approval is not maintainer approval" PR_MERGE_POLICY.md || fail "PR_MERGE_POLICY.md missing maintainer-approval authority boundary"
 if grep -Fxq -- "- \`AI_HANDOFF.md\` is updated" PR_MERGE_POLICY.md ||
    grep -Fxq -- "- \`CURRENT_STATE.md\` is updated" PR_MERGE_POLICY.md ||
    grep -Fq "missing AI handoff after significant work" PR_REVIEW_POLICY.md; then
   fail "PR policy contains unconditional committed-state handoff requirement"
 fi
+
+# BOOT-GREEN-MERGE-001 regression guard.
+#
+# Active authoritative policy must NOT reintroduce required human, maintainer,
+# or Code Owner approval as a merge gate. The contract is described in
+# PR_MERGE_POLICY.md and PR_REVIEW_POLICY.md: AI may merge after required
+# CI/status checks pass, required local validation passes, scope is clean,
+# and no P0/P1/blocking P2 findings remain.
+#
+# The check is fail-closed and scoped to a small set of active authoritative
+# policy/role files so it does not false-positive on historical/archived
+# material under `MAINTAINER_ARCHIVE/`, committed review records under
+# `REVIEWS/`, backlog items that describe this work, or the validator and
+# red-check fixtures themselves.
+#
+# The check looks for assertive merge-gate language only, not plain mentions
+# of these terms. Lines that explicitly say a gate is NOT required (e.g.
+# "approval is not required", "is informational only", "must not be
+# reintroduced", "do not require") are not flagged. The forbidden patterns
+# describe positive assertions that approval is required.
+#
+# Before pattern matching, each scoped file is normalized by joining
+# indented Markdown continuation lines onto their preceding top-level
+# line. This catches wrapped regressions such as
+# "- A PR requires\n  maintainer approval before merge." that would
+# otherwise slip past a line-by-line grep.
+#
+# Patterns flagged (case-insensitive, regex; `[[:space:]]+` matches the
+# spaces produced by the wrap-normalization pre-pass as well as plain
+# spaces):
+#
+# - "require[s|d] [<modifier>] approving review"
+# - "require[s|d] [<modifier>] (human|maintainer|code owner) (approval|review)"
+# - "(human|maintainer|code owner) (approval|review) (is|are|must be|shall
+#   be) (required|needed|enforced|a [required ]merge gate)"
+# - "must be approved by (a|the) (human|maintainer|code owner)"
+# - "self-approve" or "self approve" used as a positive directive
+
+green_merge_active_policy_files=(
+  "PR_MERGE_POLICY.md"
+  "PR_REVIEW_POLICY.md"
+  "GOVERNANCE.md"
+  "AI_PROJECT_BOOTSTRAP.md"
+  "GITHUB_REPOSITORY_SETUP.md"
+  "README.md"
+  "memory/ai/SHARED_AGENT_RULES.md"
+  "memory/ai/ROLE_IMPLEMENTATION_AGENT.md"
+  "memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md"
+  "memory/ai/ROLE_QA_REVIEWER.md"
+  "memory/ai/ROLE_SECURITY_REVIEWER.md"
+  "memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md"
+  "memory/ai/ROLE_DOCUMENTATION_CURATOR.md"
+  "memory/ai/ROLE_PRODUCT_ANALYST.md"
+  "memory/ai/ROLE_SPEC_AUTHOR.md"
+  "memory/ai/ROLE_ARCHITECT.md"
+  "memory/ai/ROLE_BACKLOG_PLANNER.md"
+  "memory/ai/ROLE_DIAGRAM_ARCHITECT.md"
+)
+
+# GitHub branch-protection key patterns. Setup guidance must not configure
+# these keys to positive enforcement values: doing so would reintroduce a
+# required human/maintainer/Code Owner approval gate at the GitHub
+# enforcement layer even if the prose policy stays compliant.
+#
+# `required_approving_review_count: <1+>` enforces approving reviews.
+# `require_code_owner_reviews: true` enforces Code Owner reviews.
+# `require_last_push_approval: true` enforces a human re-approval after the
+# last push.
+# `required_pull_request_reviews: { ... }` (any non-null object value)
+# enables PR-review protection on GitHub even if no inner field is set, so
+# a non-null parent object is itself a positive enforcement value. Only the
+# `null` disabled form is allowed.
+# All four are forbidden in setup guidance for the green-merge model.
+green_merge_github_key_patterns=(
+  '"required_approving_review_count"[[:space:]]*:[[:space:]]*[1-9][0-9]*'
+  '"require_code_owner_reviews"[[:space:]]*:[[:space:]]*true'
+  '"require_last_push_approval"[[:space:]]*:[[:space:]]*true'
+  '"required_pull_request_reviews"[[:space:]]*:[[:space:]]*\{'
+)
+
+# Assertive gate-language patterns. Each pattern is anchored to verbs that
+# describe an active requirement (require, must, shall, is/are required).
+green_merge_assertive_patterns=(
+  '[Rr]equire[ds]?[[:space:]]+(at[[:space:]]+least[[:space:]]+(one|[0-9]+)[[:space:]]+)?approving[[:space:]]+review'
+  '[Rr]equire[ds]?[[:space:]]+review[[:space:]]+from[[:space:]]+[Cc]ode[[:space:]]+[Oo]wners?'
+  '[Rr]equire[ds]?[[:space:]]+(a[[:space:]]+|the[[:space:]]+|an[[:space:]]+)?(human|maintainer|[Cc]ode[[:space:]]+[Oo]wner)[[:space:]]+(approval|review)'
+  '(human|maintainer|[Cc]ode[[:space:]]+[Oo]wner)[[:space:]]+(approval|review)[[:space:]]+(is|are|must[[:space:]]+be|shall[[:space:]]+be)[[:space:]]+(required|needed|enforced)'
+  '[Mm]ust[[:space:]]+be[[:space:]]+approved[[:space:]]+by[[:space:]]+(a[[:space:]]+|the[[:space:]]+|an[[:space:]]+)?(human|maintainer|[Cc]ode[[:space:]]+[Oo]wner)'
+  '[Aa]pproving[[:space:]]+review[[:space:]]+(is|are|must[[:space:]]+be|shall[[:space:]]+be)[[:space:]]+(required|needed|enforced)'
+  '(implementers|implementer|the[[:space:]]+implementer)[[:space:]]+(must[[:space:]]+not[[:space:]]+|do[[:space:]]+not[[:space:]]+|cannot[[:space:]]+)?self[-[:space:]]?approve'
+)
+
+# Negation context: if the surrounding line says the gate is NOT required or
+# is informational only, skip it. These patterns describe the line's stance
+# toward the gate, not a global escape hatch.
+green_merge_negation_re='([Nn]ot[[:space:]]+required|[Nn]ot[[:space:]]+a[[:space:]]+(required[[:space:]]+|merge[[:space:]]+)?gate|[Nn]ot[[:space:]]+a[[:space:]]+human[-[:space:]]style|[Mm]ust[[:space:]]+not[[:space:]]+be[[:space:]]+reintroduc|[Mm]ust[[:space:]]+not[[:space:]]+be[[:space:]]+required|[Nn]o[[:space:]]+longer[[:space:]]+(required|a[[:space:]]+(required[[:space:]]+|merge[[:space:]]+)gate)|[Pp]reviously[[:space:]]+required|[Rr]emoved|[Rr]eintroduc[a-z]*[[:space:]]+required|[Ii]nformational[[:space:]]+only|[Dd]oes[[:space:]]+not[[:space:]]+block|[Dd]oes[[:space:]]+not[[:space:]]+gate|[Dd]o[[:space:]]+not[[:space:]]+require|[Oo]ptional|[Ww]ithout[[:space:]]+(waiting[[:space:]]+for[[:space:]]+)?(any[[:space:]]+)?(human|maintainer|[Cc]ode[[:space:]]+[Oo]wner)|approval[[:space:]]+(is|are)[[:space:]]+not[[:space:]]+required|[Nn]ever[[:space:]]+required|[Nn]o[[:space:]]+(human|maintainer|[Cc]ode[[:space:]]+[Oo]wner|approving)[[:space:]]+(approval|review)[[:space:]]+(is|are|must[[:space:]]+be|shall[[:space:]]+be)[[:space:]]+(required|needed|enforced)|[Nn]o[[:space:]]+[^.]{0,100}(approval|review)[[:space:]]+(is|are|must[[:space:]]+be|shall[[:space:]]+be)[[:space:]]+(required|needed|enforced))'
+
+green_merge_check_file() {
+  local file="$1"
+  [[ -f "$file" ]] || return 0
+  local pattern
+  # Normalize wrapped Markdown bullets/paragraphs before pattern matching.
+  # Markdown allows a bullet or paragraph to span multiple physical lines:
+  # the first line starts unindented (or with a bullet marker), and each
+  # wrapped continuation line is indented to align with the bullet text.
+  # A line-by-line grep cannot catch an approval-gate regression that is
+  # split across the wrap boundary (e.g. `- A PR requires\n  maintainer
+  # approval before merge.`).
+  #
+  # The awk pre-pass joins each top-level line with all of its indented
+  # continuation lines into a single logical line. Blank lines flush the
+  # buffer. Each emitted line is then scanned by the existing assertive
+  # patterns and negation logic, so a wrapped regression is detected just
+  # like a single-line regression. Line numbers from `grep -n` would no
+  # longer align with the original file after normalization, so we report
+  # the matched logical line as evidence instead.
+  local normalized
+  normalized="$(awk '
+    BEGIN { buf = "" }
+    /^[[:space:]]+[^[:space:]]/ {
+      if (buf == "") buf = $0
+      else buf = buf " " $0
+      next
+    }
+    /^[[:space:]]*$/ {
+      if (buf != "") { print buf; buf = "" }
+      next
+    }
+    {
+      if (buf != "") print buf
+      buf = $0
+    }
+    END { if (buf != "") print buf }
+  ' "$file")"
+  for pattern in "${green_merge_assertive_patterns[@]}"; do
+    while IFS= read -r line; do
+      # Skip lines that explicitly negate or de-require the phrase.
+      if printf '%s' "$line" | grep -Eiq "$green_merge_negation_re"; then
+        continue
+      fi
+      fail "$file reintroduces required human/maintainer/Code Owner approval as a merge gate: $line"
+    done < <(printf '%s\n' "$normalized" | grep -iE "$pattern" 2>/dev/null || true)
+  done
+  # GitHub branch-protection keys are unconditional: positive enforcement
+  # values are not negated by surrounding prose. Any active occurrence in
+  # the scoped setup guidance reintroduces the gate at the enforcement
+  # layer.
+  for pattern in "${green_merge_github_key_patterns[@]}"; do
+    while IFS= read -r line; do
+      fail "$file reintroduces required human/maintainer/Code Owner approval as a merge gate via GitHub branch-protection key: $line"
+    done < <(printf '%s\n' "$normalized" | grep -E "$pattern" 2>/dev/null || true)
+  done
+}
+
+for green_merge_file in "${green_merge_active_policy_files[@]}"; do
+  green_merge_check_file "$green_merge_file"
+done
 
 while IFS= read -r role_file; do
   if awk '

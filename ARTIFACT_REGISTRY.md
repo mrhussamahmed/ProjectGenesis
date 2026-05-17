@@ -2,13 +2,13 @@ artifact_id: ART-REG-001
 title: Artifact Registry
 type: registry
 status: authoritative
-version: v4.2
+version: v4.3
 created: 2026-05-09
 updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/ARTIFACT_REGISTRY.md-2026-05-16-pre-slice-3.md)
+source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/ARTIFACT_REGISTRY.md-2026-05-16-pre-slice-3.md); BOOT-GREEN-MERGE-001
 linked_specs: []
-linked_tickets: [BOOT-STATE-001]
+linked_tickets: [BOOT-STATE-001, BOOT-GREEN-MERGE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -35,7 +35,7 @@ ProjectGenesis bootstrap scaffold.
 | ART-NEW-PROJECT-INIT | guide | New Project Initialization | `NEW_PROJECT_INITIALIZATION.md` | active | v4.0 | false | New project init steps. |
 | ART-AGENTS-MD | governance | Codex/Other Agent Entry | `AGENTS.md` | active | v4.0 | true | Required reading for Codex and other agents. |
 | ART-CLAUDE-MD | governance | Claude Entry | `CLAUDE.md` | active | v4.0 | true | Required reading for Claude. |
-| ART-GOVERNANCE | governance | Governance | `GOVERNANCE.md` | active | v1.4 | true | Governance hierarchy and rules; includes split-state end-of-session boundary. |
+| ART-GOVERNANCE | governance | Governance | `GOVERNANCE.md` | active | v1.5 | true | Governance hierarchy and rules; includes split-state end-of-session boundary and AI green-merge role-separation language. |
 | ART-OPS-ROUTING-001 | governance | Operation Routing | `OPERATION_ROUTING.md` | active | v1.1 | true | Adaptive governance control plane; defines local session hints and durable evidence locations. |
 | ART-STATE-001 | shared-state | Project Memory | `PROJECT_MEMORY.md` | active | v4.0 | false | Durable project context. |
 | ART-STATE-002 | shared-state | Current State | `CURRENT_STATE.md` | active | v4.0 | false | Current source-of-truth state. |
@@ -51,8 +51,8 @@ ProjectGenesis bootstrap scaffold.
 | ART-TEST-STRATEGY | test-strategy | Test Strategy | `TEST_STRATEGY.md` | active | v4.0 | false | Test strategy. |
 | ART-TEST-PLAN | test-plan | Test Plan | `TEST_PLAN.md` | active | v4.0 | false | Test plan. |
 | ART-TEST-003 | test-results | Test Results | `TEST_RESULTS.md` | active | v4.0 | false | Recent test runs. |
-| ART-PR-REVIEW-POLICY | governance | PR Review Policy | `PR_REVIEW_POLICY.md` | active | v1.2 | true | Review policy; branch-specific state belongs in PR evidence. |
-| ART-PR-MERGE-POLICY | governance | PR Merge Policy | `PR_MERGE_POLICY.md` | active | v1.2 | true | Merge policy; includes bounded recurring bootstrap-governance exception for no-spec bootstrap governance PRs. |
+| ART-PR-REVIEW-POLICY | governance | PR Review Policy | `PR_REVIEW_POLICY.md` | active | v1.4 | true | Review policy; frames adversarial review as defect detection, not authorization; P0/P1/blocking P2 must not be accepted with rationale. |
+| ART-PR-MERGE-POLICY | governance | PR Merge Policy | `PR_MERGE_POLICY.md` | active | v1.4 | true | Merge policy; encodes the AI green-merge contract; P0/P1/blocking P2 must be resolved (not accepted with rationale); human/maintainer/Code Owner approval are not required as merge gates. |
 | ART-REVIEW-PROMPTS | reference | AI Review Prompts | `AI_REVIEW_PROMPTS.md` | active | v4.0 | false | Review prompt library. |
 | ART-RISK-MODEL | governance | Risk Model | `RISK_MODEL.md` | active | v4.0 | false | Risk classification. |
 | ART-HOOKS-GUARDRAILS | governance | Hooks And Guardrails | `HOOKS_AND_GUARDRAILS.md` | active | v4.0 | false | Pre-commit/pre-push hooks. |
@@ -102,12 +102,12 @@ ProjectGenesis bootstrap scaffold.
 | ART-ROLE-SPEC | role | Spec Author | `memory/ai/ROLE_SPEC_AUTHOR.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 | ART-ROLE-ARCH | role | Architect | `memory/ai/ROLE_ARCHITECT.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 | ART-ROLE-BACKLOG | role | Backlog Planner | `memory/ai/ROLE_BACKLOG_PLANNER.md` | active | v1.1 | true | Role doc with split-state stopping and parallel-branch coordination guidance. |
-| ART-ROLE-IMPL | role | Implementation Agent | `memory/ai/ROLE_IMPLEMENTATION_AGENT.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
+| ART-ROLE-IMPL | role | Implementation Agent | `memory/ai/ROLE_IMPLEMENTATION_AGENT.md` | active | v1.2 | true | Role doc with split-state stopping rule and AI green-merge forbidden-actions language. |
 | ART-ROLE-QA | role | QA Reviewer | `memory/ai/ROLE_QA_REVIEWER.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 | ART-ROLE-SECURITY | role | Security Reviewer | `memory/ai/ROLE_SECURITY_REVIEWER.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 | ART-ROLE-DEVOPS | role | DevOps Release Reviewer | `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 | ART-ROLE-DOCS | role | Documentation Curator | `memory/ai/ROLE_DOCUMENTATION_CURATOR.md` | active | v1.2 | true | Role doc with canonical snapshot/history guidance. |
-| ART-ROLE-ADV-REVIEW | role | Adversarial PR Reviewer | `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md` | active | v1.2 | true | Role doc with split-state review check. |
+| ART-ROLE-ADV-REVIEW | role | Adversarial PR Reviewer | `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md` | active | v1.3 | true | Role doc with split-state review check and AI green-merge defect-detection framing. |
 | ART-ROLE-DIAGRAM | role | Diagram Architect | `memory/ai/ROLE_DIAGRAM_ARCHITECT.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 
 ## Indexes And Templates
@@ -126,6 +126,7 @@ ProjectGenesis bootstrap scaffold.
 | ART-REVIEW-SPLIT-STATE-HANDOFF-PLAN-001 | pr-review | Split-State Handoff Boundary Plan Adversarial Review | `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md` | active | v1.2 | false | Codex adversarial review and re-review of the split-state handoff implementation plan; latest outcome approve with minor comments. |
 | ART-PR-REVIEW-PACKAGE-SPLIT-STATE-HANDOFF-001 | pr-review-package | Split-State Handoff Boundary PR Review Package | `REVIEWS/PR_REVIEW_PACKAGE-split-state-handoff.md` | draft | v1.0 | false | Durable branch-specific review package for BOOT-STATE-001 implementation. |
 | ART-REVIEW-SPLIT-STATE-HANDOFF-IMPL-001 | pr-review | Split-State Handoff Boundary Implementation Review | `REVIEWS/REVIEW-2026-05-17-split-state-handoff-implementation.md` | active | v1.2 | false | Fresh implementation adversarial review; latest outcome approve with minor comments, with merge gated on explicit authority and CI. |
+| ART-REVIEW-AI-GREEN-MERGE-IMPL-001 | pr-review | AI Green-Merge For Bootstrap Scaffold Usability Implementation Review | `REVIEWS/REVIEW-2026-05-18-ai-green-merge-scaffold-usability-implementation.md` | active | v1.0 | false | Fresh-context Codex adversarial review (6 iterations) for BOOT-GREEN-MERGE-001; final outcome no blocking findings. |
 | ART-TEST-MANUAL | checklist | Manual Test Checklist | `TESTS/MANUAL_TEST_CHECKLIST.md` | active | v4.0 | false | Manual tests. |
 | ART-WORKLOG-INDEX | worklog | Worklog Index | `WORKLOG/WORKLOG_INDEX.md` | active | v4.0 | false | Worklog registry. Prior sessions archived. |
 | ART-HANDOFF-INDEX | handoff-index | Handoff Index | `HANDOFFS/HANDOFF_INDEX.md` | active | v4.0 | false | Handoff registry. |
@@ -136,8 +137,8 @@ ProjectGenesis bootstrap scaffold.
 |---|---|---|---|---|---|---|---|
 | ART-SCRIPT-START-CLAUDE | script | Claude Role Launcher | `SCRIPTS/start-claude.sh` | active | v4.0 | false | Role launcher. |
 | ART-SCRIPT-OP-PROFILE | script | Operation Profile Extractor | `SCRIPTS/operation-profile.sh` | active | v4.1 | false | Fast-path adapter: reads valid `.ai/SESSION.md` profile hints before legacy AI_HANDOFF fallback and maps to validator level. |
-| ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | active | v4.1 | false | Shape and structure validator; enforces split-state active-section guard. |
-| ART-SCRIPT-RED-CHECKS | script | Red-Check Harness | `SCRIPTS/validate-bootstrap-red-checks.sh` | active | v4.1 | false | Red-check harness with split-state local-session and canonical-state fixtures. |
+| ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | active | v4.2 | false | Shape and structure validator; enforces split-state active-section guard and the BOOT-GREEN-MERGE-001 regression guard against required human/maintainer/Code Owner approval. |
+| ART-SCRIPT-RED-CHECKS | script | Red-Check Harness | `SCRIPTS/validate-bootstrap-red-checks.sh` | active | v4.2 | false | Red-check harness with split-state local-session and canonical-state fixtures and BOOT-GREEN-MERGE-001 green-merge fixtures. |
 | ART-METRIC-EVIDENCE | script | Evidence Coverage Metric | `SCRIPTS/metric-evidence-coverage.sh` | active | v4.0 | false | Metric script. |
 | ART-METRIC-ACCEPTANCE | script | Acceptance Coverage Metric | `SCRIPTS/metric-acceptance-coverage.sh` | active | v4.0 | false | Metric script. |
 | ART-METRIC-TRACE | script | Traceability Completeness Metric | `SCRIPTS/metric-traceability-completeness.sh` | active | v4.0 | false | Metric script. |
@@ -156,8 +157,9 @@ ProjectGenesis bootstrap scaffold.
 
 | Artifact ID | Type | Title | File | Status | Version | Authoritative | Notes |
 |---|---|---|---|---|---|---|---|
-| ART-BACKLOG-BOOT-STATE-001 | backlog-item | Split-State Handoff Boundary | `BACKLOG/BOOT-STATE-001-split-state-handoff.md` | in-review | v1.0 | true | Bootstrap-governance backlog item for split-state handoff implementation; local checks pass and fresh review is pending. |
+| ART-BACKLOG-BOOT-STATE-001 | backlog-item | Split-State Handoff Boundary | `BACKLOG/BOOT-STATE-001-split-state-handoff.md` | done | v1.0 | true | Bootstrap-governance backlog item for split-state handoff implementation; merged via PR #21 at `d4b5161`. |
 | ART-PLAN-SPLIT-STATE-HANDOFF-001 | implementation-plan | Split-State Handoff Boundary Plan | `docs/superpowers/plans/2026-05-17-split-state-handoff.md` | active | v0.2 | false | Plan approved with minor comments; Task 0 selected Path B and established merge-policy authority before Task 1. |
+| ART-BACKLOG-BOOT-GREEN-MERGE-001 | backlog-item | AI Green-Merge For Bootstrap Scaffold Usability | `BACKLOG/BOOT-GREEN-MERGE-001-ai-green-merge-scaffold-usability.md` | ready | v1.0 | true | Bootstrap-governance backlog item for removing human-approval merge gates while preserving objective safety gates. |
 
 ## PG-Specific Files Kept At Active Root (Slice 2 Deferred)
 
@@ -169,7 +171,7 @@ scaffold-extract reset templates are updated.
 | Artifact ID | Type | Title | File | Status | Version | Authoritative | Notes |
 |---|---|---|---|---|---|---|---|
 | ART-BOOT-003 | audit | Bootstrap Audit | `BOOTSTRAP_AUDIT.md` | active | v4.0 | false | PG audit record kept at root; relocation deferred. |
-| ART-GH-SETUP | guide | GitHub Repository Setup | `GITHUB_REPOSITORY_SETUP.md` | active | v4.0 | false | PG-specific setup guide kept at root; relocation deferred. |
+| ART-GH-SETUP | guide | GitHub Repository Setup | `GITHUB_REPOSITORY_SETUP.md` | active | v1.3 | false | PG-specific setup guide kept at root; instructs configuring branch protection with the `validate` status check only — no required PR-review, Code Owner, or conversation-resolution gates per BOOT-GREEN-MERGE-001. |
 | ART-GOV-PERF | measurement | Governance Performance | `GOVERNANCE_PERFORMANCE.md` | active | v4.0 | false | PG perf measurement kept at root; relocation deferred. |
 | ART-PARALLEL-PLAN | execution-plan | Parallel Execution Plan | `PARALLEL_EXECUTION_PLAN.md` | active | v4.0 | false | PG parallel plan kept at root; relocation deferred. |
 | ART-FORK-CHECKLIST | guide | Scaffold Fork Checklist | `SCAFFOLD_FORK_CHECKLIST.md` | active | v4.0 | false | PG-specific fork checklist kept at root; relocation deferred. |

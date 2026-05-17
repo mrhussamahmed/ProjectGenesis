@@ -204,7 +204,10 @@ current state. The reviewer must not rely on implementer conversation history.
 ### Phase 13: Merge Readiness
 
 Apply `PR_MERGE_POLICY.md`. P0 and P1 findings must be resolved. Blocking P2
-findings must be resolved or explicitly accepted with documented rationale.
+findings must be resolved. Acceptance-with-rationale is not permitted for P0,
+P1, or blocking P2. Non-blocking P2 may be tracked and deferred when the
+reviewer explicitly classifies it as non-blocking. AI may merge once these
+gates pass; human, maintainer, or Code Owner approval is not required.
 
 ### Phase 14: Final State Update
 

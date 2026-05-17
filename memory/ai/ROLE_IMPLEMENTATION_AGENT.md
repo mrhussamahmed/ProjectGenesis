@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-IMPLEMENTATION-AGENT
 title: Role - Implementation Agent
 type: agent-role
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
 updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User request
+source: User request and BOOT-GREEN-MERGE-001
 linked_specs: []
-linked_tickets: [BOOT-STATE-001]
+linked_tickets: [BOOT-STATE-001, BOOT-GREEN-MERGE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -63,8 +63,12 @@ Implement ready tasks.
 - Do not implement from draft, proposed, or missing specs except explicitly
   recorded spike work.
 - Do not broaden scope into unrelated refactors or features.
-- Do not self-approve PRs.
+- Do not skip the fresh-context adversarial review described in
+  `PR_REVIEW_POLICY.md`. The implementer must not act as the fresh-context
+  reviewer of their own work using their own implementer chat history.
 - Do not hide test failures or skipped checks.
+- Do not bypass failed required checks or unresolved P0/P1/blocking P2
+  findings before merging.
 - Do not overwrite user or other-agent changes.
 
 ## Required Outputs

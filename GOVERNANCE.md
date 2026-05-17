@@ -2,13 +2,13 @@ artifact_id: ART-GOV-001
 title: Governance
 type: governance
 status: authoritative
-version: v1.4
+version: v1.5
 created: 2026-05-09
 updated: 2026-05-17
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, and BOOT-STATE-001
+source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, BOOT-STATE-001, and BOOT-GREEN-MERGE-001
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
-linked_tickets: [BOOT-STATE-001]
+linked_tickets: [BOOT-STATE-001, BOOT-GREEN-MERGE-001]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -135,10 +135,17 @@ traceability, and artifact registry together.
 
 ## Role Separation
 
-- Implementers do not self-approve PRs.
+- Adversarial review is performed in a fresh context, not by the implementer's
+  conversation. A fresh-context reviewer (which may be the same agent
+  re-entering with no implementer chat history, or a different agent) reports
+  defects per `PR_REVIEW_POLICY.md`. AI may merge after objective gates pass
+  per `PR_MERGE_POLICY.md`; human, maintainer, or Code Owner approval is not a
+  required merge gate.
 - High-risk changes require focused review by security, architecture, QA, and
-  release roles.
+  release roles. These reviews are also defect detection, not authorization.
 - Reviewers use repository evidence, not implementer chat history.
+- Required human/maintainer/Code Owner approval must not be reintroduced as a
+  merge gate in active authoritative policy. The validator enforces this.
 
 ## Direct Main Documentation Exception
 
