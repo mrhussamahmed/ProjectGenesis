@@ -61,8 +61,8 @@ Out of scope:
 - Approved assumptions:
   none
 - Maintainer exception approval:
-  `https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`
-  approves using the Recurring Bootstrap Governance Exception for this PR.
+  PR #21 comment 4472356122 approves using the Recurring Bootstrap Governance
+  Exception for this PR.
 - Open questions:
   none for Task 0; implementation findings may create open questions later
 - Related ADR:

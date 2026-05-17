@@ -93,7 +93,7 @@ Task 0 selected Path B as the lowest-overhead candidate path.
 `PR_MERGE_POLICY.md` now permits the bounded recurring bootstrap-governance
 exception, and `BOOT-STATE-001` records the backlog authority for this
 implementation. Path B maintainer approval evidence is recorded at
-`https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`.
+PR #21 comment 4472356122.
 
 ## Acceptance Criteria
 
@@ -179,7 +179,7 @@ Path B is invalid until `PR_MERGE_POLICY.md` is updated to allow it.
 Selected candidate authority: Path B, based on the recurring
 bootstrap-governance exception added to `PR_MERGE_POLICY.md`. Explicit
 maintainer approval for this PR is recorded at
-`https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`;
+PR #21 comment 4472356122;
 the second adversarial re-review is review evidence only and does not satisfy
 maintainer approval.
 

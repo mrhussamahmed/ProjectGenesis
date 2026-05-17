@@ -39,7 +39,7 @@ process-heavy.
 
 - none; this PR uses the recurring bootstrap-governance exception in
   `PR_MERGE_POLICY.md`, with explicit maintainer approval recorded at
-  `https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`
+  PR #21 comment 4472356122
 
 ## Linked Backlog Items Or Tickets
 
@@ -179,7 +179,7 @@ process-heavy.
 ## Maintainer Exception Approval
 
 - Status: recorded.
-- Evidence: `https://github.com/mrhussamahmed/ProjectGenesis/pull/21#issuecomment-4472356122`
+- Evidence: PR #21 comment 4472356122
   explicitly approves using the Recurring Bootstrap Governance Exception for
   this PR, limited to `BOOT-STATE-001` and excluding product/runtime changes.
 - Boundary: `REVIEWS/REVIEW-2026-05-17-split-state-handoff-plan.md` remains an
