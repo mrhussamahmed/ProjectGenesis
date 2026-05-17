@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# scaffold-extract.sh — Extract a clean downstream scaffold from ProjectGenesis.
+# scaffold-extract.sh — Extract a clean downstream scaffold from the upstream
+# bootstrap repository.
 #
-# Implements the SCAFFOLD_FORK_CHECKLIST.md reset and exclusion policy. Default
-# behavior is dry-run; pass --apply to actually write files. The source
-# repository is never modified.
+# Implements the reuse-boundary contract: maintainer-only paths are excluded,
+# project-owned starters are emitted, a positive `.bootstrap-scaffold-mode`
+# marker is written, a contract check rejects any forbidden-path or
+# upstream-owner-string leakage, and an advisory coherence check compares
+# the contract against TEMPLATE_MANIFEST.md.
 #
-# This is the BOOT-031 deliverable. Scope is intentionally narrow: a single
-# script with a small flag surface, no project-type profiles, no multi-command
-# CLI.
+# Default behavior is dry-run; pass --apply to actually write files. The
+# source repository is never modified.
+#
+# Scope is intentionally narrow: a single script with a small flag surface,
+# no project-type profiles, no multi-command CLI.
 
 usage() {
   cat <<'USAGE'
@@ -24,21 +29,29 @@ Flags:
                   run inside the target.
   -h, --help      Show this help and exit.
 
-The script follows SCAFFOLD_FORK_CHECKLIST.md:
-  1. Mirror framework files (governance including GOVERNANCE_PERFORMANCE.md,
-     roles, templates, validation, hooks, CI workflow, intake, context,
-     requirements, context packs, commands, licensing, README, GitHub
-     repository setup guide, CODEOWNERS, .gitignore).
-  2. Skip ProjectGenesis-specific files (SPEC-BOOT-*, dated PR reviews,
-     BOOT-009+ per-item backlog files, legacy RTFs, examples, launch/demo/
-     roadmap docs, ProjectGenesis issue templates).
+Pipeline:
+  1. Mirror framework files via rsync (governance, roles, templates,
+     validation, hooks, CI workflow, intake, context, requirements,
+     context packs, commands, licensing, .gitignore).
+  2. Skip upstream-specific files (SPEC-BOOT-*, dated PR reviews,
+     BOOT-009+ per-item backlog files, legacy RTFs, examples, launch/
+     demo/roadmap docs, upstream-branded issue templates). The full
+     forbidden-path list is in FORBIDDEN_PATHS below.
   3. Reset shared state files (CURRENT_STATE.md, AI_HANDOFF.md,
      TRACEABILITY_MATRIX.md, BACKLOG.md, SPECS/SPEC_INDEX.md,
-     ARTIFACT_REGISTRY.md, and the rest of the shared-state set) to
-     clean-state contents.
-  4. Skip generated/temporary directories (research/, .claude/,
-     node_modules/, dist/, build/, .venv/, __pycache__/).
-  5. Optionally run `bash SCRIPTS/validate-bootstrap.sh` inside the target.
+     ARTIFACT_REGISTRY.md, README.md, and the rest of the project-owned
+     set) to clean-state contents.
+  4. Write the positive marker `.bootstrap-scaffold-mode=downstream`.
+  5. Run the extracted-target contract check (forbidden paths,
+     upstream-owner strings, bare brand in project-owned files).
+  6. Run advisory coherence reporting (non-blocking) against
+     TEMPLATE_MANIFEST.md.
+  7. Optionally run `bash SCRIPTS/validate-bootstrap.sh` inside the
+     target; this final validator step is skipped by --no-validate.
+     --no-validate cannot bypass the contract check at step 5.
+
+Skipped directories: generated/temporary (`research/`, `.claude/`,
+`node_modules/`, `dist/`, `build/`, `.venv/`, `__pycache__/`).
 
 Safety:
   - The source repository is never modified.
@@ -490,9 +503,8 @@ Awaiting product intake.
 - Classification confidence: high
 - Escalation triggers checked: source-of-truth hierarchy, operation routing,
   branch and worktree state.
-- Files read: SCAFFOLD_FORK_CHECKLIST, AI_PROJECT_BOOTSTRAP, GOVERNANCE,
-  CONTEXT_INDEX, ARTIFACT_REGISTRY, and TRACEABILITY_MATRIX (extracted
-  copies).
+- Files read: AI_PROJECT_BOOTSTRAP, GOVERNANCE, CONTEXT_INDEX,
+  ARTIFACT_REGISTRY, and TRACEABILITY_MATRIX (extracted copies).
 - Files changed: none after extraction.
 - Files intentionally not read: project-specific input has not yet been
   provided.
@@ -597,7 +609,7 @@ instead of a product spec. Product implementation must not use this exception.
 | REQ-BOOT-009: Production-readiness checks | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`RELEASE_READINESS.md\`, \`CI_CD_GUIDE.md\`, \`SECURITY_AND_PRIVACY.md\`, \`OBSERVABILITY.md\` | validator required files | pending | not released | initialized |
 | REQ-BOOT-010: Fresh adversarial PR review | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`PR_REVIEW_POLICY.md\`, \`PR_MERGE_POLICY.md\`, \`AI_REVIEW_PROMPTS.md\`, \`REVIEWS/\` | validator required files | pending | not released | initialized |
 | REQ-BOOT-011: Risk-based model and effort selection | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`RISK_MODEL.md\` | validator required files | pending | not released | initialized |
-| REQ-BOOT-012: Safe parallel AI execution | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`PARALLEL_EXECUTION_PLAN.md\` | validator required files | pending | not released | initialized |
+| REQ-BOOT-012: Safe parallel AI execution | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`BRANCH_AND_WORKTREE_GUIDE.md\`, \`PR_MERGE_POLICY.md\` | validator required files | pending | not released | initialized |
 | REQ-BOOT-013: Shared AI role system for Claude, Codex, and other agents | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`memory/ai/SHARED_AGENT_RULES.md\`, \`memory/ai/ROLE_*.md\`, \`CLAUDE.md\`, \`AGENTS.md\`, \`SCRIPTS/start-claude.sh\` | \`bash SCRIPTS/validate-bootstrap.sh\` | none | not released | initialized |
 
 ## Rules

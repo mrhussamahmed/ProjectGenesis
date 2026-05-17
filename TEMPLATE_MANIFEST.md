@@ -810,9 +810,10 @@ codex/
 
 Allowlist only intentional reusable mentions or clearly marked examples
 (for example, generic example ticket IDs like `BOOT-001` used as illustration
-in reusable docs, or the `ProjectGenesis` brand name used to identify the
-scaffold lineage in `TEMPLATE_MANIFEST.md`, `OPERATION_ROUTING.md`, and the
-inline `README.md` starter).
+in reusable docs, or the upstream scaffold brand name used to identify the
+scaffold lineage in `TEMPLATE_MANIFEST.md` and `OPERATION_ROUTING.md`). The
+inline `README.md` starter is project-neutral and must not be allowlisted
+as a brand-attribution site.
 
 The dry run passes only if required-reading active files are clean starter or
 clean reusable files.
