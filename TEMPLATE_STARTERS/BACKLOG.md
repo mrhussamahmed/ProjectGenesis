@@ -3,7 +3,7 @@ artifact_id: ART-BACKLOG-001
 title: Backlog
 type: backlog
 status: active
-version: v0.1
+version: v0.2
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 owner: <Project Name> Maintainers
@@ -18,28 +18,15 @@ authoritative: true
 
 # Backlog
 
-This file mirrors the current highest-level backlog. Detailed items can live
-under `BACKLOG/`.
+This file is a pointer; it carries no item statuses.
 
-## Status
-
-No active or proposed backlog items yet.
-
-## Conventions
-
-- Use a short, stable ticket prefix (for example `<PRJ>-001`) chosen by the
-  product owner.
-- Register every backlog item in `BACKLOG/BACKLOG_INDEX.md`.
-- Use `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md` to draft new items.
-- Link backlog items to specs, ADRs, traceability rows, tests, and reviews.
-
-## How To Add The First Item
-
-1. Pick a short ticket prefix.
-2. Create a new file `BACKLOG/<PRJ>-001-<short-slug>.md` from
-   `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`.
-3. Register the item in `BACKLOG/BACKLOG_INDEX.md`.
-4. Update this file's status section above.
+- Conventions, granularity rules, and the Linear mapping live in
+  `BACKLOG/BACKLOG_INDEX.md`.
+- Items live as files under `BACKLOG/`, drafted from
+  `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md` with a short, stable ticket
+  prefix (for example `<PRJ>-001`) chosen by the product owner.
+- Per-item status lives in item frontmatter `readiness`; the index row
+  mirrors it.
 
 ## Notes
 

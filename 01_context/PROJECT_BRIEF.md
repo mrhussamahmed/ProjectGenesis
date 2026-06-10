@@ -2,11 +2,11 @@ artifact_id: ART-CONTEXT-PROJECT-BRIEF
 title: Project Brief
 type: product-context
 status: active
-version: v1.0
+version: v1.1
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
+source: SPEC-BOOT-002; GEN-11 value-proposition method and validation sections
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -26,7 +26,22 @@ No downstream product has been initialized yet.
 
 ## Value Proposition
 
-No downstream product value proposition has been confirmed yet.
+No downstream product value proposition has been confirmed yet. Fill with:
+
+- Problem:
+- Existing alternatives and how users cope today:
+- Differentiation - why this wins:
+- Sharpest one-sentence pitch:
+
+## Riskiest Assumptions
+
+Top 3-5 assumptions that could kill the idea, each linked to an ASM- ID in
+`02_requirements/ASSUMPTIONS_REGISTER.md`.
+
+## Alternatives And Market Context
+
+Each alternative or market claim needs a SRC- ID (url or research-note) from
+`00_intake/SOURCE_REGISTRY.md`.
 
 ## Target Users
 

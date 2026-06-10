@@ -52,6 +52,9 @@ not practical and the reason is recorded.
 - Record test results in `TEST_RESULTS.md`, `AI_HANDOFF.md`, or worklog before
   stopping.
 - If tests were not run, state exactly why.
+- Validate once per PR, not per edit: one full validation covering the final
+  diff supersedes per-edit re-runs; the PR evidence note states which run
+  covered the set.
 - Use fast, standard, or strict validation mode from `OPERATION_ROUTING.md`;
   skipped checks require durable rationale.
 - If tests fail, record the failure, likely cause, and next action.

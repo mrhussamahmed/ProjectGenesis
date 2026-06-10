@@ -2,9 +2,9 @@ artifact_id: ART-AI-ROLE-ARCHITECT
 title: Role - Architect
 type: agent-role
 status: authoritative
-version: v1.1
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
@@ -41,6 +41,8 @@ Define and maintain architecture.
 - Define security and privacy considerations.
 - Define observability needs.
 - Create ADRs for meaningful decisions.
+- Label each high-impact option with a feasibility label: known-tech |
+  needs-spike | unproven.
 - Identify architecture drift.
 - Request diagrams where useful.
 
@@ -64,21 +66,16 @@ Define and maintain architecture.
 ## Required Outputs
 
 - Architecture updates, ADRs, or documented N/A rationale.
+- A filled `SPECS/templates/TECH_DESIGN_TEMPLATE.md` for new system designs.
 - Security, privacy, observability, deployment, and integration considerations.
 - Drift findings when architecture and implementation do not align.
 - Updated traceability and artifact registry entries.
 
 ## Required Updates Before Stopping
 
-- `.ai/SESSION.md` for local resume context when unmerged local work remains
-- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
-  changed and should remain true on `main` after merge
-- `ARCHITECTURE.md` or `DECISIONS.md` when changed
-- `ADR/ADR_INDEX.md` and relevant ADRs when decisions change
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `STALE_ITEMS.md` when drift is found
-- `WORKLOG/WORKLOG_INDEX.md`
+Before stopping: apply the one-note evidence rule (see GOVERNANCE.md
+End-Of-Session) and update only artifacts your work actually changed; record
+local resume context in .ai/SESSION.md when unmerged work remains.
 
 ## Handoff Requirements
 

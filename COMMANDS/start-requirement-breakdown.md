@@ -2,11 +2,11 @@ artifact_id: ART-COMMAND-START-REQUIREMENT-BREAKDOWN
 title: Start Requirement Breakdown
 type: command
 status: active
-version: v1.1
+version: v2.0
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: User request on 2026-05-13, SPEC-BOOT-002 command framework, and SPEC-BOOT-003 routing
+source: User request on 2026-05-13, SPEC-BOOT-002 command framework, SPEC-BOOT-003 routing, and GEN-01 tiered read/write contract
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -22,7 +22,7 @@ Run the downstream project intake workflow from rough material in
 `00_intake/raw/`. This command turns rough ideas into registered sources,
 source summaries, product context, controlled requirements, assumptions, risks,
 open questions, backlog candidates, draft specs where appropriate, validation
-plans, traceability, and a readiness classification.
+expectations, traceability, and a readiness classification.
 
 Recognized user triggers:
 
@@ -52,56 +52,34 @@ Read additional role files only when the work reaches that role's scope:
 
 Always read:
 
-- `AGENTS.md` or `CLAUDE.md`, depending on the active agent
 - `memory/ai/SHARED_AGENT_RULES.md`
-- selected role file
-- `AI_PROJECT_BOOTSTRAP.md`
+- `memory/ai/ROLE_PRODUCT_ANALYST.md`
 - `CONTEXT_INDEX.md`
-- `OPERATION_ROUTING.md`
-- `BOOTSTRAP_USAGE.md`
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `GOVERNANCE.md`
-- `BRANCH_AND_WORKTREE_GUIDE.md`
-- `PROJECT_MEMORY.md`
-- `OPEN_QUESTIONS.md`
-- `STALE_ITEMS.md`
+- `CONTEXT_PACKS/product-intake.md`
 - `00_intake/INTAKE_INDEX.md`
 - `00_intake/SOURCE_REGISTRY.md`
-- `CONTEXT_PACKS/product-intake.md`
-- `SPECS/SPEC_INDEX.md`
-- `SPECS/templates/SPEC_TEMPLATE.md`
-- `BACKLOG.md`
-- `BACKLOG/BACKLOG_INDEX.md`
-- `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`
-- `ARCHITECTURE.md`
-- `DECISIONS.md`
-- `ADR/ADR_INDEX.md`
-- `TEST_STRATEGY.md`
-- `TEST_PLAN.md`
-- `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
-- `TESTS/MANUAL_TEST_CHECKLIST.md`
-- `TEST_RESULTS.md`
-- `PR_REVIEW_POLICY.md`
-- `REVIEWS/REVIEW_INDEX.md`
+- `01_context/PROJECT_BRIEF.md`
+- `02_requirements/REQUIREMENTS_INDEX.md`
+- `02_requirements/ASSUMPTIONS_REGISTER.md`
+- `OPEN_QUESTIONS.md`
+- `CURRENT_STATE.md`
 
 Also inspect:
 
 - `git status --short --branch`
 - non-placeholder files under `00_intake/raw/`
 - existing summaries under `00_intake/summaries/`
-- `INPUT/README.md`
-- files under `INPUT/` only when present, treating `INPUT/` as a legacy alias
+
+Every other artifact is read on demand at the workflow step that needs it; the
+steps below name their own reads. Escalate further only per
+`OPERATION_ROUTING.md` read tiers.
 
 ## Inputs
 
 - The user command, usually `Start requirement breakdown`.
 - Raw downstream project materials under `00_intake/raw/`.
-- Optional compatibility input under `INPUT/`.
 - Existing source, requirement, backlog, spec, architecture, test, and review
-  artifacts in the repository.
+  artifacts in the repository, opened on demand.
 
 ## Workflow
 
@@ -118,8 +96,6 @@ Also inspect:
   policy, or source-of-truth hierarchy.
 - If on `main`, create or switch to a task branch before source-of-truth edits
   unless the user explicitly authorizes direct-main work.
-- If the branch changes, immediately update `CURRENT_STATE.md` and
-  `AI_HANDOFF.md` with the active branch and worktree before running validation.
 - If the worktree is dirty, inspect changes and preserve unrelated user or agent
   work. Do not overwrite unrelated dirty files.
 - If `00_intake/raw/` has no non-placeholder files, stop, classify the state as
@@ -130,8 +106,6 @@ Also inspect:
 ### 2. Register Intake Sources
 
 - Read every non-placeholder file in `00_intake/raw/`.
-- If files exist under `INPUT/`, treat `INPUT/` as a legacy alias and register
-  those files through `00_intake/SOURCE_REGISTRY.md`.
 - Assign stable source IDs using `SRC-001`, `SRC-002`, and so on.
 - Update `00_intake/SOURCE_REGISTRY.md` with source ID, file path, type, owner,
   added date, freshness, processing state, sensitivity, summary link, and notes.
@@ -140,7 +114,7 @@ Also inspect:
 - Use only allowed processing states: `pending`, `summarized`, `extracted`,
   `blocked`, `ignored`.
 - Put details like duplicate, unreadable, partial, or unclear in notes,
-  `OPEN_QUESTIONS.md`, or `STALE_ITEMS.md`.
+  `OPEN_QUESTIONS.md`, or `STALE_ITEMS.md` (read on demand).
 
 Sensitive-source rule:
 
@@ -163,18 +137,22 @@ Sensitive-source rule:
 Use rough input as seed material and enhance it into product context, while
 labeling every material claim.
 
-Create or update:
+Create or update (read on demand at this step):
 
 - `01_context/PROJECT_BRIEF.md`
 - `01_context/PROJECT_CHARTER.md`
 - `01_context/GLOSSARY.md`
 - `01_context/CONSTRAINTS.md`
-- `PROJECT_MEMORY.md` as a concise durable summary only
 - `OPEN_QUESTIONS.md`
 
 Produce product description, value proposition, target users, user problems,
 jobs-to-be-done, primary workflows, business context, success metrics, MVP
 boundary, non-goals, constraints, dependencies, risks, and open questions.
+
+Fill the Value Proposition in `01_context/PROJECT_BRIEF.md` using the
+problem/alternatives/differentiation method: state the user problem, the
+existing alternatives, and what makes this product different. List the
+Riskiest Assumptions that would invalidate the idea if wrong.
 
 Use only these product fact labels where applicable:
 
@@ -185,9 +163,24 @@ Use only these product fact labels where applicable:
 If something is a possible direction but not decided, record it as an option in
 notes or open questions, not as a confirmed requirement.
 
-### 5. Extract Requirements
+### 5. Idea Validation (Conditional)
 
-Create or update:
+Run this step only when high-risk or scope-defining assumptions block
+readiness, or when the user asks for idea validation.
+
+- For each such assumption, run agent web research where tools allow.
+- Write one research note per assumption using
+  `00_intake/research/RESEARCH_NOTE_TEMPLATE.md`.
+- Register each research note as a `SRC-` source in
+  `00_intake/SOURCE_REGISTRY.md`.
+- Adjust the assumption's confidence and status in
+  `02_requirements/ASSUMPTIONS_REGISTER.md` from the evidence.
+- If research tools are unavailable, record that on the assumption and
+  continue; do not invent evidence.
+
+### 6. Extract Requirements
+
+Create or update (read `02_requirements/RISK_REGISTER.md` on demand):
 
 - `02_requirements/REQUIREMENTS_INDEX.md`
 - `02_requirements/ASSUMPTIONS_REGISTER.md`
@@ -221,19 +214,27 @@ Rules:
   release safety, or priority must become an open question.
 - Agents may propose assumptions but must not approve their own assumptions.
 
-### 6. Build Draft Backlog Candidates
+### 7. Build Draft Backlog Candidates
 
 Create or update backlog candidates without starting implementation.
 
-Use:
+Read on demand at this step: `BACKLOG/BACKLOG_INDEX.md` and
+`BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`; create detailed files under
+`BACKLOG/` only when useful.
 
-- `BACKLOG.md`
-- `BACKLOG/BACKLOG_INDEX.md`
-- `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`
-- detailed files under `BACKLOG/` only when useful
+Generate candidate epics, features, user stories, spikes, architecture
+decision tasks, and research tasks.
 
-Generate candidate epics, features, user stories, spikes, validation tasks,
-architecture decision tasks, and research tasks.
+Granularity rules:
+
+1. Tests and validation expectations live inside the story (Test Expectations
+   + Definition of Done), never as sibling tickets.
+2. At most one validation ticket per slice or spec, scoped to cross-story
+   integration validation no single story owns.
+3. Re-running checks after a change is evidence in the PR body or
+   TEST_RESULTS.md baseline, never a new ticket.
+4. Before creating any candidate, search the backlog index for an existing
+   item covering the same requirement and extend it instead of duplicating.
 
 Every backlog candidate must include ID, title, purpose, value, linked
 requirements, source IDs, approved assumptions if any, open questions,
@@ -249,10 +250,10 @@ Backlog rules:
   command evidence confirms them.
 - Markdown remains authoritative until external ticket existence is confirmed.
 
-### 7. Draft Specs Only When Appropriate
+### 8. Draft Specs Only When Appropriate
 
-If requirements are clear enough, create draft specs using
-`SPECS/templates/SPEC_TEMPLATE.md`.
+If requirements are clear enough, create draft specs. Read on demand:
+`SPECS/SPEC_INDEX.md` and `SPECS/templates/SPEC_TEMPLATE.md`.
 
 Rules:
 
@@ -263,11 +264,11 @@ Rules:
 - If requirements are too uncertain, create open questions, spikes, or discovery
   backlog items instead.
 
-### 8. Architecture And ADR Readiness
+### 9. Architecture And ADR Readiness
 
 If architecture implications appear:
 
-- Read `ARCHITECTURE.md`, `DECISIONS.md`, `ADR/ADR_INDEX.md`, and
+- Read on demand: `ARCHITECTURE.md`, `DECISIONS.md`, `ADR/ADR_INDEX.md`, and
   `ADR/templates/ADR_TEMPLATE.md`.
 - Identify architecture concerns.
 - List options and trade-offs.
@@ -281,30 +282,33 @@ security or privacy decisions, deployment choices, API boundaries,
 persistence/data model choices, major dependencies, and expensive-to-change
 architecture.
 
-### 9. QA And Validation Planning
+When the project classifies spec-draft-ready or beyond, continue with
+'Start architecture design' (COMMANDS/start-architecture-design.md).
+
+### 10. QA And Validation Planning
 
 Review requirements, stories, and specs for testability.
 
-Update where useful:
-
-- `TEST_STRATEGY.md`
-- `TEST_PLAN.md`
-- `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
-- `TESTS/MANUAL_TEST_CHECKLIST.md`
+- Write validation expectations into each story's Test Expectations and
+  Definition of Done, not into separate validation tickets.
+- Create at most one cross-story validation item per slice or spec, scoped to
+  integration validation no single story owns.
+- Read on demand: `TEST_STRATEGY.md`, `TEST_PLAN.md`,
+  `TESTS/ACCEPTANCE_CRITERIA_MAP.md`, `TESTS/MANUAL_TEST_CHECKLIST.md`; update
+  them only when the validation approach itself changed.
 
 For each meaningful requirement or story, identify acceptance criteria, expected
 test type, manual validation if automation is not practical, edge cases, and
 missing testability details.
 
-### 10. Traceability
+### 11. Traceability
 
-Update `TRACEABILITY_MATRIX.md` to map source files, source IDs, summaries,
-requirements, assumptions, risks, open questions, specs, backlog candidates,
-acceptance criteria, validation needs, and review findings.
+Update `TRACEABILITY_MATRIX.md` (read on demand) when new source-to-requirement
+or requirement-to-spec mappings were created this run.
 
 No important claim should be untraceable.
 
-### 11. Review
+### 12. Review
 
 Use independent read-only reviewers where supported and authorized. Reviewers
 must read repository source-of-truth files directly and must not rely on chat
@@ -323,14 +327,11 @@ fresh-context review checklist and record why independent review was skipped.
 Writing subagents require an approved parallel plan, disjoint file ownership,
 separate worktrees, and clear merge order.
 
-When a durable final review is performed, create or update:
+When a durable final review is performed, create or update
+`REVIEWS/REVIEW-<date>-product-intake-readiness.md` and
+`REVIEWS/REVIEW_INDEX.md` (read on demand).
 
-- `REVIEWS/REVIEW-<date>-product-intake-readiness.md`
-- `REVIEWS/REVIEW_INDEX.md`
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-
-### 12. Readiness Classification
+### 13. Readiness Classification
 
 Classify the project as exactly one of:
 
@@ -351,46 +352,37 @@ branch/worktree strategy is clear.
 
 If those conditions are not met, state the next safest action.
 
-### 13. Validation And State Updates
+### 14. Validation And State Updates
 
-Before stopping, update:
+Before stopping, update only the artifacts this run actually changed, plus
+`.ai/SESSION.md` when unmerged local work remains. Do not touch state or index
+files whose content did not change.
 
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `TEST_RESULTS.md`
-- `WORKLOG/WORKLOG_INDEX.md`
-- `OPEN_QUESTIONS.md`
-- `STALE_ITEMS.md` if needed
-- `REVIEWS/REVIEW_INDEX.md` if review records were created
-- `SPECS/SPEC_INDEX.md` if specs were created or changed
-- `BACKLOG.md` and `BACKLOG/BACKLOG_INDEX.md` if backlog changed
-- `00_intake/INTAKE_INDEX.md`
-- `00_intake/SOURCE_REGISTRY.md`
+Record one validation-evidence note per PR (in the PR body or review package).
+Update TEST_RESULTS.md, TRACEABILITY_MATRIX.md, and ARTIFACT_REGISTRY.md only
+when a durable baseline, requirement mapping, or artifact lifecycle changed -
+at most once per PR, not per session.
 
 Run:
 
-- `bash SCRIPTS/validate-bootstrap.sh`
+- `bash SCRIPTS/validate-bootstrap.sh` (or the session-scoped profile from
+  `SCRIPTS/session.sh`)
 - `git diff --check`
 
-If relevant and safe, also run:
-
-- `bash SCRIPTS/validate-bootstrap-red-checks.sh`
-
-Record passed, failed, and skipped checks honestly in `TEST_RESULTS.md` and
-`AI_HANDOFF.md`.
+Record passed, failed, and skipped checks honestly in the evidence note.
 
 ## Outputs
 
 - Registered source IDs and updated intake index.
 - Source summaries.
-- Product context updates.
+- Product context updates, including value proposition and riskiest
+  assumptions.
+- Research notes for validated high-risk assumptions, when step 5 ran.
 - Controlled requirements, assumptions, risks, and open questions.
 - Backlog candidates and draft specs when appropriate.
 - Architecture or ADR candidates when appropriate.
-- QA/testability findings.
-- Traceability updates.
+- QA/testability findings inside the affected stories.
+- Traceability updates when mappings changed.
 - Review findings.
 - Validation evidence.
 - Readiness classification and next safest action.

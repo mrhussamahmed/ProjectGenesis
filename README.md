@@ -2,11 +2,11 @@ artifact_id: ART-README
 title: ProjectGenesis README
 type: public-readme
 status: active
-version: v1.6
+version: v2.0
 created: 2026-05-13
-updated: 2026-05-18
+updated: 2026-06-10
 owner: ProjectGenesis Maintainers
-source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, Phase 0 validator-scope restoration, v0.2.0 public alpha release notes, and BOOT-GREEN-MERGE-001 AI green-merge
+source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, Phase 0 validator-scope restoration, v0.2.0 public alpha release notes, BOOT-GREEN-MERGE-001 AI green-merge, and GEN-01 canonical quickstart
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: [BOOT-GREEN-MERGE-001]
 linked_adrs: []
@@ -141,7 +141,7 @@ Important folders and files include:
 | `02_requirements/` | Requirements, assumptions, and risk registers. |
 | `SPECS/` | Product, feature, spike, and implementation specs. |
 | `ADR/` | Architecture decision records. |
-| `BACKLOG/` and `BACKLOG.md` | Detailed and summary backlog planning. |
+| `BACKLOG/` | Backlog items; `BACKLOG/BACKLOG_INDEX.md` is the status truth. |
 | `CONTEXT_PACKS/` | Scoped read manifests for common tasks. |
 | `COMMANDS/` | Reusable workflow command prompts. |
 | `REVIEWS/` | Review records and PR review packages. |
@@ -154,26 +154,37 @@ Important folders and files include:
 
 ## Quick Start
 
-1. Copy this scaffold into a new project repository or use this repository as a
-   template.
-2. For a clean downstream scaffold, follow `TEMPLATE_MANIFEST.md` so starter
-   state replaces ProjectGenesis maintainer state.
-3. Put rough project material under `00_intake/raw/`.
-4. Ask your AI agent:
+1. Extract a clean scaffold into your new project:
+
+   ```sh
+   bash SCRIPTS/scaffold-extract.sh --apply <target-directory>
+   ```
+
+   or copy manually following the manifest-mediated rules in
+   `TEMPLATE_MANIFEST.md`.
+2. Drop messy input (notes, PRDs, exports, screenshots, rough ideas) into
+   `00_intake/raw/`. Raw intake files are validation-exempt by design.
+3. Tell your AI agent:
 
    ```text
    Start requirement breakdown.
    ```
 
-5. The agent should resolve that phrase through `COMMANDS/COMMAND_INDEX.md` and
-   run `COMMANDS/start-requirement-breakdown.md`.
-6. Review the generated product context, requirements, assumptions, risks, open
-   questions, backlog candidates, draft specs, and readiness classification.
-7. If you want backlog items stored in Linear, complete the Linear setup in
-   [External Backlog Storage](#external-backlog-storage) before asking an agent
-   to create external tickets.
-8. Do not start implementation until the relevant task satisfies Definition of
-   Ready in `AI_PROJECT_BOOTSTRAP.md`.
+4. Validate:
+
+   ```sh
+   bash SCRIPTS/validate-bootstrap.sh
+   ```
+
+For the full initialization prompt, see `NEW_PROJECT_INITIALIZATION.md`. For
+agent prompt recipes, see `BOOTSTRAP_USAGE.md`. For a worked example, see
+`examples/simple-saas-demo/`. Do not start implementation until the relevant
+task satisfies Definition of Ready in `AI_PROJECT_BOOTSTRAP.md`.
+
+Keep the master scaffold clean: project-specific requirements, specs, ADRs,
+backlog items, source files, and customer context belong in the downstream
+project repository. Do not copy them back into this reusable scaffold unless
+they improve the generic operating model.
 
 
 ## The Main Intake Command
@@ -184,35 +195,19 @@ The primary shortcut is:
 Start requirement breakdown.
 ```
 
-That command asks the agent to:
-
-- register raw sources
-- summarize source material
-- extract and label requirements
-- record assumptions, risks, and open questions
-- generate product context
-- create backlog candidates
-- create draft specs only when appropriate
-- identify architecture or ADR candidates
-- map acceptance criteria and validation needs
-- update traceability and handoff files
-- run scaffold validation
-- classify the project as intake-incomplete, discovery-ready, spec-draft-ready,
-  backlog-draft-ready, implementation-blocked, or implementation-ready
+Agents resolve that phrase through `COMMANDS/COMMAND_INDEX.md` and run
+`COMMANDS/start-requirement-breakdown.md`: register and summarize sources,
+extract labeled requirements, record assumptions, risks, and open questions,
+build product context and backlog candidates, draft specs when appropriate,
+and classify project readiness (from intake-incomplete to
+implementation-ready).
 
 ## How Agents Should Work
 
-Before meaningful work, agents should read:
-
-1. `AGENTS.md` or `CLAUDE.md`
-2. `memory/ai/SHARED_AGENT_RULES.md`
-3. the relevant `memory/ai/ROLE_*.md` file
-4. `CONTEXT_INDEX.md`
-5. `CURRENT_STATE.md`
-6. `AI_HANDOFF.md`
-7. `ARTIFACT_REGISTRY.md`
-8. `TRACEABILITY_MATRIX.md`
-9. relevant specs, ADRs, backlog items, tests, and reviews
+Agents start from `AGENTS.md` or `CLAUDE.md`, read
+`memory/ai/SHARED_AGENT_RULES.md` and the relevant `memory/ai/ROLE_*.md` file,
+then follow the `CONTEXT_INDEX.md` section for the task. `CONTEXT_INDEX.md` is
+the single read-list authority; no other file enumerates required reading.
 
 Agents must not treat chat history as durable truth. If facts matter, they
 belong in repository artifacts.
@@ -228,9 +223,12 @@ ProjectGenesis expects:
 - backlog items linked to specs or discovery tasks
 - test expectations before coding
 - traceability from source to requirement to spec to backlog to test/review
-- fresh-context adversarial review before merge
-- validation results recorded in `TEST_RESULTS.md`
-- updated `CURRENT_STATE.md` and `AI_HANDOFF.md` before stopping
+- review depth routed by operation profile (`OPERATION_ROUTING.md` and
+  `PR_REVIEW_POLICY.md`): self-check for low-risk docs/state changes,
+  fresh-context adversarial review for planning-governance and
+  strict-protected changes
+- one validation-evidence note per PR; durable state files updated only when
+  durable truth changed
 
 Run the baseline validator with:
 
@@ -266,93 +264,42 @@ See `GITHUB_REPOSITORY_SETUP.md` for setup commands and verification steps.
 
 ## External Backlog Storage
 
-ProjectGenesis always works with local Markdown backlog files:
-
-- `BACKLOG.md`
-- `BACKLOG/BACKLOG_INDEX.md`
-- detailed files under `BACKLOG/` when useful
-
-Those files are the default backlog source of truth. External trackers are
-optional. Do not claim external tickets exist until an integration, CLI, API, or
-human-confirmed URL proves they exist.
+Local Markdown is the default backlog source of truth
+(`BACKLOG/BACKLOG_INDEX.md` plus item files under `BACKLOG/`). External
+trackers are optional. Markdown remains authoritative until a real external
+issue ID or URL is recorded.
 
 ### Supported External Tracker: Linear
 
 Linear is the recommended external backlog store when you want a team-facing
-issue tracker. Use it for confirmed or ready backlog items, not as a substitute
-for intake evidence, specs, assumptions, or traceability.
+issue tracker. Setup:
 
-Useful Linear references:
+1. Create or choose a Linear workspace, the team that will own the issues, and
+   optionally a project for the product or release.
+2. Configure workflow statuses (`Backlog`, `Todo`, `In Progress`, `In Review`,
+   `Done`) and labels matching the scaffold vocabulary (`type:<item_type>`,
+   `status:blocked`, `risk:high`).
+3. Connect the agent to Linear. For Codex:
+   `codex mcp add linear --url https://mcp.linear.app/mcp`, then
+   `codex mcp login linear`. For other agents, use the official Linear
+   connector or MCP setup. Do not commit API keys, tokens, OAuth credentials,
+   or exported private Linear data.
 
-- [Linear MCP server setup](https://linear.app/docs/mcp)
-- [Linear issue creation](https://linear.app/docs/creating-issues)
-- [Linear projects](https://linear.app/docs/projects)
-- [Linear issue statuses](https://linear.app/docs/configuring-workflows)
-- [Linear labels](https://linear.app/docs/labels)
+Field mapping from scaffold backlog items to Linear:
 
-Before asking an agent to create Linear issues, prepare Linear:
+| Scaffold field | Linear |
+|----------------|--------|
+| priority `P0` / `P1` / `P2` / `P3` | `Urgent` / `High` / `Medium` / `Low` |
+| readiness `not-ready` | `Backlog` |
+| readiness `ready` | `Todo` |
+| readiness `in-progress` | `In Progress` |
+| readiness `in-review` | `In Review` |
+| readiness `done` | `Done` |
+| readiness `blocked` | label `status:blocked` |
+| estimate `1` / `2` / `3` / `5` / `8` | Linear points |
+| `item_type` and high risk | labels `type:<item_type>`, `risk:high` |
 
-1. Create or choose a Linear workspace.
-2. Create or choose the Linear team that will own the issues. Linear issues are
-   always linked to a single team and require a title and status.
-3. Create a Linear project for the downstream product or release if the work
-   should be grouped under one delivery outcome.
-4. Configure team workflow statuses. The default Linear flow is
-   `Backlog`, `Todo`, `In Progress`, `Done`, and `Canceled`; add statuses such
-   as `In Review` or `Ready to Merge` only if your team will use them.
-5. Create issue labels or label groups that match the scaffold vocabulary. A
-   practical starting set is:
-   - `type:epic`
-   - `type:feature`
-   - `type:story`
-   - `type:spike`
-   - `type:validation`
-   - `status:blocked`
-   - `source:assumption`
-   - `risk:high`
-6. Optionally create issue templates for epics, stories, spikes, validation
-   tasks, and architecture decision tasks. Templates should include fields for
-   requirement IDs, source IDs, assumptions, risks, acceptance criteria, test
-   expectations, and definition of done.
-7. Decide who may create or update Linear issues: human only, agent with review,
-   or agent direct after approval.
-8. Connect the AI agent to Linear.
-
-For Codex, Linear's MCP setup uses:
-
-```sh
-codex mcp add linear --url https://mcp.linear.app/mcp
-```
-
-If this is the first MCP server configured for Codex, enable the remote MCP
-client in `~/.codex/config.toml`:
-
-```toml
-[features]
-experimental_use_rmcp_client = true
-```
-
-Then authenticate:
-
-```sh
-codex mcp login linear
-```
-
-For other agents, use the official Linear connector or MCP setup for that
-agent. Do not commit API keys, tokens, OAuth credentials, or exported private
-Linear data to this repository.
-
-### Linear Operating Rules
-
-- Markdown remains authoritative until a real Linear issue ID or URL is
-  recorded.
-- Every Linear issue created from ProjectGenesis should link back to local
-  requirements, source IDs, assumptions, specs, and acceptance criteria.
-- After creating or updating Linear issues, update `BACKLOG.md`,
-  `BACKLOG/BACKLOG_INDEX.md`, and `TRACEABILITY_MATRIX.md`.
-- If Linear is not configured, agents must keep backlog candidates in Markdown.
-- If Linear data conflicts with repository source-of-truth files, pause and
-  record the conflict in `STALE_ITEMS.md` or `OPEN_QUESTIONS.md`.
+Export workflow and operating rules: `COMMANDS/export-backlog-to-linear.md`.
 
 ## Optional Spec Kit Integration
 
@@ -447,8 +394,10 @@ Before opening a PR:
 2. Link your change to a spec, backlog item, ADR, or documented discovery task.
 3. Keep the change scoped.
 4. Run `bash SCRIPTS/validate-bootstrap.sh`.
-5. Update affected state, registry, traceability, and test-result files.
-6. Provide review evidence under `REVIEWS/` when required.
+5. Record one validation-evidence note in the PR body; update durable state,
+   registry, or traceability files only when durable truth changed.
+6. Provide review evidence under `REVIEWS/` when the operation profile
+   requires it.
 
 ## License
 

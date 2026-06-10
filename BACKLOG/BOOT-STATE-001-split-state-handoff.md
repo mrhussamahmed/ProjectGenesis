@@ -1,10 +1,10 @@
 artifact_id: ART-BACKLOG-BOOT-STATE-001
 title: Split-State Handoff Boundary
 type: backlog-item
-status: in-review
-version: v1.0
+status: done
+version: v1.1
 created: 2026-05-17
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User-requested split-state handoff plan; recurring bootstrap-governance exception in PR_MERGE_POLICY.md; maintainer approval in PR #21 comment 4472356122
 linked_specs: []
@@ -130,7 +130,7 @@ P1
 
 ## Readiness Status
 
-in-review
+done (merged via PR #21)
 
 ## Readiness Evidence
 

@@ -2,9 +2,9 @@ artifact_id: ART-COMMAND-INDEX
 title: Command Index
 type: command-index
 status: active
-version: v1.1
+version: v2.0
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: SPEC-BOOT-002 and SPEC-BOOT-003
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
@@ -27,6 +27,11 @@ validation mode, and durable evidence.
 |---------|---------|--------|
 | `COMMAND_TEMPLATE.md` | Template for future workflow prompts. | active |
 | `start-requirement-breakdown.md` | Runs the downstream project intake and requirement breakdown workflow from `00_intake/raw/`. Trigger: `Start requirement breakdown`. | active |
+| `validate-idea.md` | Researches and validates high-risk assumptions with cited evidence; strengthens the value proposition. Trigger: `Validate the idea`. | active |
+| `start-architecture-design.md` | Produces a tech design plus slim ADRs from validated intent. Trigger: `Start architecture design`. | active |
+| `implement-next-story.md` | Executes the next ready story with scoped checks only. Trigger: `Implement next story`. | active |
+| `resume-work.md` | Reconstructs context from session and state files with minimum reads. Trigger: `Resume work`. | active |
+| `export-backlog-to-linear.md` | Exports Linear-ready items to Linear without duplicates. Trigger: `Export backlog to Linear`. | active |
 
 ## Recognized User Triggers
 
@@ -37,6 +42,13 @@ validation mode, and durable evidence.
 | `Run requirement breakdown` | `COMMANDS/start-requirement-breakdown.md` |
 | `Run project intake` | `COMMANDS/start-requirement-breakdown.md` |
 | `Kick off project intake` | `COMMANDS/start-requirement-breakdown.md` |
+| `Validate the idea` | `COMMANDS/validate-idea.md` |
+| `Run idea validation` | `COMMANDS/validate-idea.md` |
+| `Start architecture design` | `COMMANDS/start-architecture-design.md` |
+| `Implement next story` | `COMMANDS/implement-next-story.md` |
+| `Implement next item` | `COMMANDS/implement-next-story.md` |
+| `Resume work` | `COMMANDS/resume-work.md` |
+| `Export backlog to Linear` | `COMMANDS/export-backlog-to-linear.md` |
 
 ## Rules
 

@@ -2,9 +2,9 @@ artifact_id: ART-AI-ROLE-SPEC-AUTHOR
 title: Role - Spec Author
 type: agent-role
 status: authoritative
-version: v1.1
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
@@ -25,7 +25,6 @@ Create and maintain specs.
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `SPECS/SPEC_INDEX.md`
 - relevant specs
-- `PROJECT_MEMORY.md`
 - `OPEN_QUESTIONS.md`
 - `TRACEABILITY_MATRIX.md`
 - `ARTIFACT_REGISTRY.md`
@@ -68,15 +67,9 @@ Create and maintain specs.
 
 ## Required Updates Before Stopping
 
-- `.ai/SESSION.md` for local resume context when unmerged local work remains
-- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
-  changed and should remain true on `main` after merge
-- `SPECS/SPEC_INDEX.md`
-- changed spec files
-- `OPEN_QUESTIONS.md` when blockers remain
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `WORKLOG/WORKLOG_INDEX.md`
+Before stopping: apply the one-note evidence rule (see GOVERNANCE.md
+End-Of-Session) and update only artifacts your work actually changed; record
+local resume context in .ai/SESSION.md when unmerged work remains.
 
 ## Handoff Requirements
 
@@ -89,7 +82,7 @@ readiness gaps, required reviewers, and next safe action.
 
 ## Evidence Requirements
 
-Each spec requirement must trace to product input, `PROJECT_MEMORY.md`, a user
+Each spec requirement must trace to product input, a user
 instruction, an ADR, a backlog item, or an explicitly labeled assumption.
 
 ## Escalation And Stop Conditions

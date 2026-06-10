@@ -2,11 +2,11 @@ artifact_id: ART-ADR-INDEX
 title: ADR Index
 type: adr-index
 status: active
-version: v1.0
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-09
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
+source: Initial bootstrap scaffold; GEN-12 governance consolidated into DECISIONS.md
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -26,7 +26,5 @@ Architecture Decision Records live in this folder.
 
 ## Rules
 
-- Use `ADR/templates/ADR_TEMPLATE.md`.
-- Create ADRs before implementation for architecture-sensitive work.
-- Update `TRACEABILITY_MATRIX.md` and `ARTIFACT_REGISTRY.md` when ADRs change.
+Governance (triggers, states, register rules): see `DECISIONS.md`.
 

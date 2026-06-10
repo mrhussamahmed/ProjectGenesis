@@ -15,7 +15,17 @@ if [[ -x SCRIPTS/operation-profile.sh ]]; then
   validator_level="$(bash SCRIPTS/operation-profile.sh --validator-level)"
 fi
 
-strict_gate_pattern='^(SCRIPTS/|\.github/workflows/|\.githooks/|memory/ai/|PR_REVIEW_POLICY\.md|PR_MERGE_POLICY\.md|RISK_MODEL\.md|BRANCH_AND_WORKTREE_GUIDE\.md|GOVERNANCE\.md|OPERATION_ROUTING\.md|CONTEXT_PACKS/|COMMANDS/|REVIEWS/templates/|SPECS/templates/|ADR/templates/|BACKLOG/templates/|TEMPLATE_MANIFEST\.md|TEMPLATE_STARTERS/|HOOKS_AND_GUARDRAILS\.md|SECURITY_AND_PRIVACY\.md|CI_CD_GUIDE\.md|MAINTAINER_ARCHIVE/)'
+# The strict-gate pattern's single source of truth is
+# SCRIPTS/strict-gate-paths.sh (also consumed by pre-commit and CI). If the
+# helper is missing or prints nothing, fail closed: run strict.
+strict_gate_pattern=""
+if [[ -x SCRIPTS/strict-gate-paths.sh ]]; then
+  strict_gate_pattern="$(bash SCRIPTS/strict-gate-paths.sh --regex 2>/dev/null || true)"
+fi
+if [[ -z "$strict_gate_pattern" && "$validator_level" != "strict" ]]; then
+  echo "pre-push: SCRIPTS/strict-gate-paths.sh unavailable; failing closed to BOOTSTRAP_VALIDATE_PROFILE=strict." >&2
+  validator_level="strict"
+fi
 
 if [[ "$validator_level" != "strict" ]]; then
   changed_files=""

@@ -2,9 +2,9 @@ artifact_id: ART-GOV-001
 title: Governance
 type: governance
 status: authoritative
-version: v1.5
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, BOOT-STATE-001, and BOOT-GREEN-MERGE-001
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
@@ -28,7 +28,11 @@ authoritative: true
 6. No silent drift: conflicts are documented and resolved.
 7. No fake completion: completion requires implementation, validation,
    documentation, traceability, and handoff evidence.
-8. Fresh adversarial review: every PR receives fresh-context review.
+8. Risk-routed review: Review depth follows the operation profile per
+   OPERATION_ROUTING.md and PR_REVIEW_POLICY.md: docs-trivial,
+   docs-non-authoritative, and state-sync changes require a recorded
+   self-check in the PR body; planning-governance and strict-protected changes
+   require fresh-context adversarial review.
 9. Production readiness: security, reliability, maintainability, observability,
    and release safety are explicit.
 10. Minimize interruption: ask only when missing information blocks progress or
@@ -160,15 +164,13 @@ large documentation changes. When in doubt, use a branch.
 
 ## Required End-Of-Session Updates
 
-Every major work session ends with local or durable updates appropriate to the
-state boundary:
+Record one validation-evidence note per PR (in the PR body or review package).
+Update TEST_RESULTS.md, TRACEABILITY_MATRIX.md, and ARTIFACT_REGISTRY.md only
+when a durable baseline, requirement mapping, or artifact lifecycle changed -
+at most once per PR, not per session.
+
+State updates follow the split-state boundary:
 
 - `.ai/SESSION.md` for local resume context when unmerged local work remains
 - `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
   changed and should remain true on `main` after merge
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `SPECS/SPEC_INDEX.md`, when specs changed
-- `TEST_RESULTS.md`, when checks ran
-- `WORKLOG/WORKLOG_INDEX.md`
-- `STALE_ITEMS.md`, when drift or stale files were found

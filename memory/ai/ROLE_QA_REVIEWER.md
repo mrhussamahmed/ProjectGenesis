@@ -2,9 +2,9 @@ artifact_id: ART-AI-ROLE-QA-REVIEWER
 title: Role - QA Reviewer
 type: agent-role
 status: authoritative
-version: v1.1
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
@@ -38,7 +38,10 @@ Review test coverage and acceptance criteria.
   performance, and manual coverage.
 - Document test gaps.
 - Classify test risks.
-- Update `TEST_RESULTS.md` or review records.
+- Confirm validation scope matches the operation profile: run the checks the
+  change class requires per `OPERATION_ROUTING.md`, validated once per PR.
+- Update `TEST_RESULTS.md` or review records only when a durable gating
+  baseline or finding changed.
 
 ## Allowed Actions
 
@@ -65,13 +68,9 @@ Review test coverage and acceptance criteria.
 
 ## Required Updates Before Stopping
 
-- `.ai/SESSION.md` for local resume context when unmerged local work remains
-- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
-  changed and should remain true on `main` after merge
-- `TEST_RESULTS.md` when checks or findings change results
-- relevant review records
-- `TRACEABILITY_MATRIX.md`
-- `WORKLOG/WORKLOG_INDEX.md`
+Before stopping: apply the one-note evidence rule (see GOVERNANCE.md
+End-Of-Session) and update only artifacts your work actually changed; record
+local resume context in .ai/SESSION.md when unmerged work remains.
 
 ## Handoff Requirements
 

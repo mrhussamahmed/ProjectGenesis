@@ -54,13 +54,13 @@ done < <(awk -F'|' '
     return value
   }
   /^## / {
-    in_bootstrap = ($0 ~ /^## Bootstrap Requirements/)
+    in_rows = ($0 ~ /^## Rows/)
     next
   }
-  in_bootstrap && /^\| REQ-BOOT-/ {
+  in_rows && /^\| TRACE-/ {
     req = trim($2)
-    changed_files = trim($10)
-    tests = trim($11)
+    changed_files = trim($7)
+    tests = trim($8)
     print "total|" req
     if (changed_files != "" && tolower(changed_files) != "none") {
       print "with_changed|" req

@@ -2,11 +2,11 @@ artifact_id: ART-BOOT-002
 title: Bootstrap Usage Guide
 type: guide
 status: authoritative
-version: v1.3
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-13
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, and SPEC-BOOT-002
+source: User request, reference repository audit, SPEC-BOOT-002, and GEN-01 canonical quickstart consolidation
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -16,11 +16,11 @@ authoritative: true
 
 # Bootstrap Usage Guide
 
-Use this package by copying its files into a new project root or by creating a
-new repository from this folder.
-
-For the shortest path, start with `GETTING_STARTED.md` and then use
-`NEW_PROJECT_INITIALIZATION.md` inside the downstream project.
+This guide holds agent prompt recipes. The canonical setup path is the README
+Quick Start: extract the scaffold with `bash SCRIPTS/scaffold-extract.sh
+--apply <target>`, drop input in `00_intake/raw/`, say
+`Start requirement breakdown.`, then validate. Inside the downstream project,
+`NEW_PROJECT_INITIALIZATION.md` is the full initialization prompt.
 
 ## Start From A Product Idea
 
@@ -64,13 +64,6 @@ governance, role files, specs, ADRs, traceability, current state, or handoff.
 4. If any spreadsheet value is ambiguous or conflicting, record it in
    `OPEN_QUESTIONS.md` instead of inventing intent.
 
-## Legacy Input Path
-
-`INPUT/` remains as a legacy alias for older prompts. New source material should
-use `00_intake/raw/`. If an agent finds files under `INPUT/`, it must register
-them in `00_intake/SOURCE_REGISTRY.md` and treat `INPUT/README.md` as the
-compatibility guide.
-
 ## Ask Claude To Use The Bootstrap
 
 Use this prompt:
@@ -78,7 +71,8 @@ Use this prompt:
 ```text
 Read CLAUDE.md, then follow AI_PROJECT_BOOTSTRAP.md. Use the neutral shared
 state files as the source of truth. Do not implement until the relevant spec is
-approved or active. Update CURRENT_STATE.md and AI_HANDOFF.md before stopping.
+approved or active. Update .ai/SESSION.md before stopping; update
+CURRENT_STATE.md and AI_HANDOFF.md only if durable project truth changed.
 ```
 
 ## Ask Codex To Use The Bootstrap
@@ -114,29 +108,18 @@ Example Codex prompt:
 You are Codex working inside this repository.
 Read memory/ai/SHARED_AGENT_RULES.md.
 Then read memory/ai/ROLE_IMPLEMENTATION_AGENT.md.
-Then read CONTEXT_INDEX.md, CURRENT_STATE.md, AI_HANDOFF.md, the linked spec, the linked backlog item, TEST_PLAN.md, TRACEABILITY_MATRIX.md, and ARTIFACT_REGISTRY.md.
+Then follow the Implementation section of CONTEXT_INDEX.md.
 Continue only if the task satisfies Definition of Ready.
 Use TDD where practical.
 Keep changes scoped.
-Update CURRENT_STATE.md and AI_HANDOFF.md before stopping.
+Update .ai/SESSION.md before stopping; update CURRENT_STATE.md and
+AI_HANDOFF.md only if durable project truth changed.
 ```
 
 ## Files An AI Must Read First
 
-Minimum context before any work:
-
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
-- `ARTIFACT_REGISTRY.md`
-- `SPECS/SPEC_INDEX.md`
-- `TRACEABILITY_MATRIX.md`
-- `BRANCH_AND_WORKTREE_GUIDE.md`
-- `GOVERNANCE.md`
-- relevant spec files
-- relevant ADRs
-- `git status --short --branch`
-
-Context by role is defined in `CONTEXT_INDEX.md`.
+`CONTEXT_INDEX.md` is the single read-list authority: read its minimum context,
+then the section for your task. No other file enumerates required reading.
 
 ## Create The First Spec
 
@@ -183,6 +166,9 @@ Run:
 bash SCRIPTS/validate-bootstrap.sh
 ```
 
+Run `SCRIPTS/session.sh start <profile>` to enable scoped validation for the
+session; run `SCRIPTS/doctor.sh` for instant orientation.
+
 If Git is available, also run:
 
 ```sh
@@ -195,16 +181,11 @@ the architecture selects the stack.
 
 ## Hand Off From One AI Agent To Another
 
-Before stopping, update `AI_HANDOFF.md` with:
-
-- date, active agent, role, branch, worktree
-- last completed task and in-progress task
-- files, specs, artifacts, and decisions changed
-- assumptions and open questions
-- tests run, tests not run, failures, and risks
-- dirty worktree status and untracked files
-- next recommended action
-- what the next AI must read first
+Before stopping, write local resume context (branch, in-progress task, next
+action, tests run/not run) to `.ai/SESSION.md` when unmerged local work
+remains. Update committed `CURRENT_STATE.md` and `AI_HANDOFF.md` only when
+durable project truth changed and the update should remain true on `main`
+after merge.
 
 If handoff is stale, reconstruct state from Git, specs, artifacts, tests, and
 worklogs, then update `AI_HANDOFF.md` before continuing.
@@ -226,7 +207,12 @@ Copy `REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md` into `REVIEWS/` and fill:
 
 ## Trigger Fresh Adversarial Review
 
-Give the reviewer this instruction:
+Review depth follows the operation profile per OPERATION_ROUTING.md and
+PR_REVIEW_POLICY.md: docs-trivial, docs-non-authoritative, and state-sync
+changes require a recorded self-check in the PR body; planning-governance and
+strict-protected changes require fresh-context adversarial review.
+
+When adversarial review is required, give the reviewer this instruction:
 
 ```text
 Use REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md. Do not rely on the

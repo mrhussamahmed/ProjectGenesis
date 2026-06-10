@@ -18,41 +18,48 @@ authoritative: false
 
 # Current State
 
+This file was created from `TEMPLATE_STARTERS/CURRENT_STATE.md`. It contains
+no prior project history. Replace section bodies as work actually begins.
+
 ## Active Specs
 
 No active specs yet.
 
-## Active Backlog Items
+## Active Architecture
 
-No active backlog items yet.
+`ARCHITECTURE.md` holds the stack-neutral starting architecture.
 
-## Active Implementation Work
+## Active ADRs
 
-No active implementation yet.
+None yet. `ADR/ADR_INDEX.md` is empty until the first decision.
 
-## Active Reviews
+## Active Implementation Phase
 
-No active reviews yet.
+No implementation work yet.
+Pipeline Stage: intake (no product input registered yet).
 
-## Active Blockers
+## Active Branch
+
+`main`
+
+## Active Backlog Focus
+
+No active backlog focus yet.
+
+## Current Blockers
 
 None.
 
-## Recent Merges
+## Current Source-Of-Truth Files
 
-None.
+- `CONTEXT_INDEX.md` - single read authority (minimum context plus on-demand tiers)
+- `GOVERNANCE.md` - governance rules
+- `OPERATION_ROUTING.md` - operation profiles and validation depth
 
-## Risks Worth Surfacing
+## Known Stale Or Superseded Files
 
-None recorded yet.
+None. Staleness tracking lives in `STALE_ITEMS.md`.
 
-## Next Safe Action
+## Latest Validation
 
-Begin product intake under `00_intake/`, then move into requirements,
-architecture, specs, and backlog as outlined in `GETTING_STARTED.md` and
-`AI_PROJECT_BOOTSTRAP.md`.
-
-## Notes
-
-This file was created from `TEMPLATE_STARTERS/CURRENT_STATE.md`. It contains no
-prior project history. Update fields above as work actually begins.
+No validation run recorded yet.

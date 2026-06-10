@@ -2,9 +2,9 @@ artifact_id: ART-REVIEW-001
 title: PR Review Policy
 type: review-policy
 status: authoritative
-version: v1.4
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-18
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request, reference repository audit, SPEC-BOOT-003, BOOT-STATE-001, and BOOT-GREEN-MERGE-001
 linked_specs: [SPEC-BOOT-003]
@@ -16,9 +16,17 @@ authoritative: true
 
 # PR Review Policy
 
-Every PR requires a fresh-context adversarial review.
+Review depth follows the operation profile per OPERATION_ROUTING.md and
+PR_REVIEW_POLICY.md: docs-trivial, docs-non-authoritative, and state-sync
+changes require a recorded self-check in the PR body; planning-governance and
+strict-protected changes require fresh-context adversarial review.
+`docs-public-claim` changes use light fresh-context review, escalating to
+adversarial when governance, safety, security, release, dependency,
+external-tool, or source-of-truth expectations change. The
+`OPERATION_ROUTING.md` profile table Review column and this policy agree and
+are jointly authoritative for review depth.
 
-Adversarial review is defect detection, not authorization. A clean review does
+Review is defect detection, not authorization. A clean review does
 not unlock a merge by granting a human-style approval; instead, an unresolved
 P0, P1, or blocking P2 finding from the review blocks the merge until it is
 fixed. P0/P1/blocking P2 findings must not be "accepted with rationale" — they
@@ -27,11 +35,36 @@ explicitly classifies it as non-blocking and the deferral is tracked. Once
 required CI/status checks pass, required local validation passes, scope is
 clean, and no P0/P1/blocking P2 findings remain, AI may merge per
 `PR_MERGE_POLICY.md` without waiting for any human, maintainer, or Code Owner
-approval.
+approval. This applies to every tier: a recorded light-tier self-check plus
+green objective gates is sufficient to merge a light-tier PR.
+
+## Review Tiers
+
+- Light tier (self-check): `docs-trivial`, `docs-non-authoritative`, and
+  `state-sync`. The implementer records the five-line self-check below in the
+  PR body. No review package file and no separate reviewer are needed.
+- Fresh-context tier: `docs-public-claim`. A light fresh-context review,
+  escalating to adversarial per the `OPERATION_ROUTING.md` profile table.
+- Adversarial tier: `planning-governance` and `strict-protected`. Fresh-context
+  adversarial review using the Mandatory Checks below.
+
+## Light-Tier Self-Check
+
+The light-tier self-check is exactly these five recorded lines in the PR body:
+
+1. Scope matches profile: yes, with profile named
+2. Spec link or rule-based exception:
+3. Validation evidence line (which run covered the final diff):
+4. No secret or public-claim change: confirmed
+5. State updates in the correct split-state location: confirmed
+
+This is the only place the light-tier self-check is defined. Other files cite
+this policy instead of restating the lines.
 
 ## Fresh Context
 
-The reviewer must not rely on implementer chat history. The reviewer reads:
+At the fresh-context and adversarial tiers, the reviewer must not rely on
+implementer chat history. The reviewer reads:
 
 - review package
 - PR diff or local diff
@@ -75,7 +108,8 @@ are not human-style merge authorizations.
 
 ## Mandatory Checks
 
-The reviewer must check:
+At the adversarial tier (`planning-governance` and `strict-protected`), the
+reviewer must check:
 
 - Does the change match the approved or active spec, or a named exception?
 - Are acceptance criteria satisfied?
@@ -128,7 +162,7 @@ the reviewer explicitly classifies it as non-blocking.
 
 ## Reviewer Output
 
-The reviewer must include:
+The adversarial-tier reviewer must include:
 
 - defect-detection decision (no blocking findings, minor comments only, or
   blocking findings present)
