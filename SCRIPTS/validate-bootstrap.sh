@@ -76,13 +76,11 @@ fi
 common_required_files=(
   "AI_PROJECT_BOOTSTRAP.md"
   "BOOTSTRAP_USAGE.md"
-  "GETTING_STARTED.md"
   "NEW_PROJECT_INITIALIZATION.md"
   "CLAUDE.md"
   "AGENTS.md"
   "GOVERNANCE.md"
   "OPERATION_ROUTING.md"
-  "PROJECT_MEMORY.md"
   "CURRENT_STATE.md"
   "AI_HANDOFF.md"
   "CONTEXT_INDEX.md"
@@ -102,7 +100,8 @@ common_required_files=(
   "AI_REVIEW_PROMPTS.md"
   "00_intake/SOURCE_REGISTRY.md"
   "00_intake/INTAKE_INDEX.md"
-  "INPUT/README.md"
+  "00_intake/research/RESEARCH_NOTE_TEMPLATE.md"
+  "00_intake/summaries/SUMMARY_TEMPLATE.md"
   "01_context/PROJECT_BRIEF.md"
   "01_context/PROJECT_CHARTER.md"
   "01_context/GLOSSARY.md"
@@ -131,7 +130,6 @@ common_required_files=(
   "memory/ai/ROLE_DOCUMENTATION_CURATOR.md"
   "memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md"
   "memory/ai/ROLE_DIAGRAM_ARCHITECT.md"
-  "INPUT/.gitkeep"
   "RISK_MODEL.md"
   "HOOKS_AND_GUARDRAILS.md"
   "RELEASE_READINESS.md"
@@ -150,13 +148,22 @@ common_required_files=(
   "REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md"
   "TESTS/MANUAL_TEST_CHECKLIST.md"
   "WORKLOG/WORKLOG_INDEX.md"
-  "HANDOFFS/HANDOFF_INDEX.md"
+  "COMMANDS/validate-idea.md"
+  "COMMANDS/start-architecture-design.md"
+  "COMMANDS/implement-next-story.md"
+  "COMMANDS/resume-work.md"
+  "COMMANDS/export-backlog-to-linear.md"
+  "SPECS/templates/TECH_DESIGN_TEMPLATE.md"
+  "TEMPLATE_STARTERS/SESSION.md"
+  "TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md"
   "SCRIPTS/start-claude.sh"
   "SCRIPTS/operation-profile.sh"
+  "SCRIPTS/session.sh"
+  "SCRIPTS/doctor.sh"
+  "SCRIPTS/strict-gate-paths.sh"
   "SCRIPTS/validate-bootstrap.sh"
   "SCRIPTS/validate-bootstrap-red-checks.sh"
   "SCRIPTS/metric-evidence-coverage.sh"
-  "SCRIPTS/metric-acceptance-coverage.sh"
   "SCRIPTS/metric-traceability-completeness.sh"
   ".githooks/pre-commit"
   ".githooks/commit-msg"
@@ -173,6 +180,7 @@ maintainer_only_required_files=(
   "PARALLEL_EXECUTION_PLAN.md"
   "STALE_ITEMS.md"
   "TESTS/ACCEPTANCE_CRITERIA_MAP.md"
+  "SCRIPTS/metric-acceptance-coverage.sh"
   "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
   "SCRIPTS/scaffold-extract.sh"
   "SCRIPTS/run-seeded-defect-bench.sh"
@@ -189,10 +197,9 @@ common_required_dirs=(
   "REVIEWS/templates"
   "TESTS"
   "WORKLOG"
-  "HANDOFFS"
-  "INPUT"
   "00_intake"
   "00_intake/raw"
+  "00_intake/research"
   "00_intake/summaries"
   "01_context"
   "02_requirements"
@@ -240,7 +247,7 @@ done
 
 while IFS= read -r file; do
   case "$file" in
-    ./AGENTS.md|./CLAUDE.md|./README.md|./SPECS/templates/*|./ADR/templates/*|./BACKLOG/templates/*|./REVIEWS/templates/*) continue ;;
+    ./AGENTS.md|./CLAUDE.md|./README.md|./SPECS/templates/*|./ADR/templates/*|./BACKLOG/templates/*|./REVIEWS/templates/*|./00_intake/raw/*) continue ;;
   esac
   file="${file#./}"
   grep -Eq '^artifact_id: .+' "$file" || fail "$file missing non-empty artifact_id metadata"
@@ -262,21 +269,12 @@ if [[ "$BOOTSTRAP_VALIDATE_PROFILE" == "shape-only" ]]; then
 fi
 
 for section in \
-  "## Current Date" \
-  "## Active Agent" \
-  "## Current Role" \
-  "## Current Branch" \
-  "## Current Worktree" \
-  "## Last Completed Task" \
-  "## Current In-Progress Task" \
-  "## Files Changed" \
-  "## Tests Run" \
-  "## Tests Not Run" \
-  "## Known Risks" \
-  "## Dirty Worktree Status" \
+  "## Baseline" \
+  "## Last Validated" \
   "## Next Recommended Action" \
-  "## What The Next AI Must Read First" \
-  "## Implementation Status"; do
+  "## Known Risks" \
+  "## Open Threads" \
+  "## Read First"; do
   grep -Fq "$section" AI_HANDOFF.md || fail "AI_HANDOFF.md missing section: $section"
 done
 
@@ -285,11 +283,12 @@ check_canonical_active_state_sections() {
   [[ -f "$target" ]] || return 0
   awk '
     function active_section(name) {
-      return name == "## Current Branch" ||
-        name == "## Current Worktree" ||
-        name == "## Current In-Progress Task" ||
-        name == "## Dirty Worktree Status" ||
-        name == "## Next Recommended Action"
+      return name == "## Next Recommended Action" ||
+        name == "## Open Threads" ||
+        name == "## Active Branch" ||
+        name == "## Active Backlog Focus" ||
+        name == "## Active Implementation Phase" ||
+        name == "## Current Blockers"
     }
     function emit(reason) {
       print FILENAME ":" NR ": " reason ": " $0
@@ -329,7 +328,7 @@ done
 placeholder_pattern='TODO|TBD|FIXME|REPLACE_ME|YOUR_|NEEDS CLARIFICATION'
 while IFS= read -r file; do
   case "$file" in
-    SPECS/templates/*|ADR/templates/*|BACKLOG/templates/*|REVIEWS/templates/*) continue ;;
+    SPECS/templates/*|ADR/templates/*|BACKLOG/templates/*|REVIEWS/templates/*|00_intake/raw/*) continue ;;
   esac
   # Capture grep output in a shell variable instead of writing through /tmp;
   # earlier behavior wrote to /tmp/bootstrap-placeholder-hit.$$ and silently
@@ -381,21 +380,56 @@ while IFS= read -r file; do
 done < <(find SPECS -maxdepth 1 -type f -name '*.md' -print)
 
 while IFS= read -r id; do
-  [[ -n "$id" ]] && fail "BACKLOG.md active backlog item missing linked spec: $id"
+  [[ -n "$id" ]] && fail "BACKLOG/BACKLOG_INDEX.md active backlog item missing linked spec: $id"
 done < <(awk -F'|' '
   function trim(value) {
     gsub(/^[ \t]+|[ \t]+$/, "", value)
     return value
   }
-  /^\| [^|-]/ && $2 !~ /ID/ {
+  /^\| [^|-]/ && $2 !~ /Item ID/ {
     id = trim($2)
-    dependencies = trim($8)
-    readiness = trim($9)
-    if (id !~ /^BOOT-/ && readiness ~ /^(ready|in-progress|in-review|done)$/ && dependencies !~ /(SPEC-|discovery exception)/) {
+    status = trim($5)
+    linked_spec = trim($9)
+    if (id !~ /^BOOT-/ && status ~ /^(ready|in-progress|in-review|done)$/ && linked_spec !~ /(SPEC-|discovery exception|bootstrap-governance exception)/) {
       print id
     }
   }
-' BACKLOG.md)
+' BACKLOG/BACKLOG_INDEX.md)
+
+# Backlog status single-truth check: each index row status must match the
+# item file frontmatter (readiness: preferred, status: fallback).
+while IFS= read -r mismatch; do
+  [[ -n "$mismatch" ]] && fail "backlog status mismatch (index vs item frontmatter): $mismatch"
+done < <(awk -F'|' '
+  function trim(value) {
+    gsub(/^[ \t]+|[ \t]+$/, "", value)
+    return value
+  }
+  /^\| [^|-]/ && $2 !~ /Item ID/ {
+    id = trim($2)
+    file = trim($4)
+    gsub(/`/, "", file)
+    status = trim($5)
+    if (file != "" && status != "") {
+      print id "\t" file "\t" status
+    }
+  }
+' BACKLOG/BACKLOG_INDEX.md | while IFS=$'\t' read -r item_id item_file index_status; do
+  if [[ ! -f "$item_file" ]]; then
+    echo "$item_id index row references missing file $item_file"
+    continue
+  fi
+  item_status="$(awk '
+    NR > 20 { exit }
+    /^readiness:[[:space:]]*[^[:space:]]/ && readiness == "" { sub(/^readiness:[[:space:]]*/, ""); readiness = $0 }
+    /^status:[[:space:]]*[^[:space:]]/ && status == "" { sub(/^status:[[:space:]]*/, ""); status = $0 }
+    END { if (readiness != "") print readiness; else print status }
+  ' "$item_file" | tr -d ' ')"
+  [[ -z "$item_status" ]] && continue
+  if [[ "$item_status" != "$index_status" ]]; then
+    echo "$item_id index=$index_status item=$item_status"
+  fi
+done)
 
 if [[ -d COMMANDS ]]; then
   while IFS= read -r file; do
@@ -910,11 +944,25 @@ green_merge_check_file() {
   ' "$file")"
   for pattern in "${green_merge_assertive_patterns[@]}"; do
     while IFS= read -r line; do
-      # Skip lines that explicitly negate or de-require the phrase.
-      if printf '%s' "$line" | grep -Eiq "$green_merge_negation_re"; then
-        continue
+      # Negation must appear in the same sentence segment as the gate
+      # phrase. A whole-line check is bypassable by co-occurrence, e.g.
+      # "Maintainer approval is required before merge; this gate is not
+      # optional." — the negation word sits in a different clause. Split
+      # the logical line on sentence boundaries and require the negation
+      # next to the assertive phrase it claims to negate.
+      gate_segment=""
+      while IFS= read -r segment; do
+        [[ -z "${segment//[[:space:]]/}" ]] && continue
+        if printf '%s' "$segment" | grep -Eiq "$pattern"; then
+          if ! printf '%s' "$segment" | grep -Eiq "$green_merge_negation_re"; then
+            gate_segment="$segment"
+            break
+          fi
+        fi
+      done < <(printf '%s\n' "$line" | sed 's/[.;][[:space:]]/\n/g')
+      if [[ -n "$gate_segment" ]]; then
+        fail "$file reintroduces required human/maintainer/Code Owner approval as a merge gate: $line"
       fi
-      fail "$file reintroduces required human/maintainer/Code Owner approval as a merge gate: $line"
     done < <(printf '%s\n' "$normalized" | grep -iE "$pattern" 2>/dev/null || true)
   done
   # GitHub branch-protection keys are unconditional: positive enforcement

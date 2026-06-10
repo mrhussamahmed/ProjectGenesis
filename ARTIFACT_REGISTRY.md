@@ -2,11 +2,11 @@ artifact_id: ART-REG-001
 title: Artifact Registry
 type: registry
 status: authoritative
-version: v4.3
+version: v5.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/ARTIFACT_REGISTRY.md-2026-05-16-pre-slice-3.md); BOOT-GREEN-MERGE-001
+source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/ARTIFACT_REGISTRY.md-2026-05-16-pre-slice-3.md); BOOT-GREEN-MERGE-001; GEN-01..16 improvement program
 linked_specs: []
 linked_tickets: [BOOT-STATE-001, BOOT-GREEN-MERGE-001]
 linked_adrs: []
@@ -21,23 +21,21 @@ temporary, superseded, deprecated, cancelled, and archived artifacts. Do not
 use superseded, deprecated, cancelled, or archived artifacts as current truth.
 
 Common fields for all entries below unless stated otherwise: created
-2026-05-09; updated 2026-05-17; owner AI Bootstrap Maintainers; source
+2026-05-09; updated 2026-06-10; owner AI Bootstrap Maintainers; source
 ProjectGenesis bootstrap scaffold.
 
 ## Operating Model And Required-Reading
 
 | Artifact ID | Type | Title | File | Status | Version | Authoritative | Notes |
 |---|---|---|---|---|---|---|---|
-| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v4.0 | true | This registry (self-entry). |
+| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v5.0 | true | This registry (self-entry). |
 | ART-BOOT-001 | governance | AI Project Bootstrap | `AI_PROJECT_BOOTSTRAP.md` | active | v4.0 | true | Operating-model description. |
 | ART-BOOT-002 | usage | Bootstrap Usage | `BOOTSTRAP_USAGE.md` | active | v4.0 | false | Practical usage guide. |
-| ART-GETTING-STARTED | guide | Getting Started | `GETTING_STARTED.md` | active | v4.0 | false | First-use guide. |
 | ART-NEW-PROJECT-INIT | guide | New Project Initialization | `NEW_PROJECT_INITIALIZATION.md` | active | v4.0 | false | New project init steps. |
 | ART-AGENTS-MD | governance | Codex/Other Agent Entry | `AGENTS.md` | active | v4.0 | true | Required reading for Codex and other agents. |
 | ART-CLAUDE-MD | governance | Claude Entry | `CLAUDE.md` | active | v4.0 | true | Required reading for Claude. |
 | ART-GOVERNANCE | governance | Governance | `GOVERNANCE.md` | active | v1.5 | true | Governance hierarchy and rules; includes split-state end-of-session boundary and AI green-merge role-separation language. |
 | ART-OPS-ROUTING-001 | governance | Operation Routing | `OPERATION_ROUTING.md` | active | v1.1 | true | Adaptive governance control plane; defines local session hints and durable evidence locations. |
-| ART-STATE-001 | shared-state | Project Memory | `PROJECT_MEMORY.md` | active | v4.0 | false | Durable project context. |
 | ART-STATE-002 | shared-state | Current State | `CURRENT_STATE.md` | active | v4.0 | false | Current source-of-truth state. |
 | ART-STATE-003 | shared-state | AI Handoff | `AI_HANDOFF.md` | active | v4.0 | false | Active handoff envelope. |
 | ART-STATE-004 | shared-state | Open Questions | `OPEN_QUESTIONS.md` | active | v4.0 | false | Open questions register. |
@@ -62,8 +60,6 @@ ProjectGenesis bootstrap scaffold.
 | ART-OBSERVABILITY | governance | Observability | `OBSERVABILITY.md` | active | v4.0 | false | Observability guidance. |
 | ART-CI-CD-GUIDE | governance | CI/CD Guide | `CI_CD_GUIDE.md` | active | v4.0 | false | CI/CD guidance. |
 | ART-CONTRIBUTING | governance | Contributing | `CONTRIBUTING.md` | active | v4.0 | false | Contributing guide. |
-| ART-INPUT-README | placeholder | Input README | `INPUT/README.md` | active | v4.0 | false | Input directory placeholder. |
-| ART-INPUT-GITKEEP | placeholder | Input gitkeep | `INPUT/.gitkeep` | active | v4.0 | false | Directory keeper. |
 
 ## Intake And Context
 
@@ -129,7 +125,6 @@ ProjectGenesis bootstrap scaffold.
 | ART-REVIEW-AI-GREEN-MERGE-IMPL-001 | pr-review | AI Green-Merge For Bootstrap Scaffold Usability Implementation Review | `REVIEWS/REVIEW-2026-05-18-ai-green-merge-scaffold-usability-implementation.md` | active | v1.0 | false | Fresh-context Codex adversarial review (6 iterations) for BOOT-GREEN-MERGE-001; final outcome no blocking findings. |
 | ART-TEST-MANUAL | checklist | Manual Test Checklist | `TESTS/MANUAL_TEST_CHECKLIST.md` | active | v4.0 | false | Manual tests. |
 | ART-WORKLOG-INDEX | worklog | Worklog Index | `WORKLOG/WORKLOG_INDEX.md` | active | v4.0 | false | Worklog registry. Prior sessions archived. |
-| ART-HANDOFF-INDEX | handoff-index | Handoff Index | `HANDOFFS/HANDOFF_INDEX.md` | active | v4.0 | false | Handoff registry. |
 
 ## Scripts And Hooks
 
@@ -137,6 +132,19 @@ ProjectGenesis bootstrap scaffold.
 |---|---|---|---|---|---|---|---|
 | ART-SCRIPT-START-CLAUDE | script | Claude Role Launcher | `SCRIPTS/start-claude.sh` | active | v4.0 | false | Role launcher. |
 | ART-SCRIPT-OP-PROFILE | script | Operation Profile Extractor | `SCRIPTS/operation-profile.sh` | active | v4.1 | false | Fast-path adapter: reads valid `.ai/SESSION.md` profile hints before legacy AI_HANDOFF fallback and maps to validator level. |
+| ART-SCRIPT-SESSION | script | Session Helper | `SCRIPTS/session.sh` | active | v1.0 | false | Writes/refreshes `.ai/SESSION.md` so the validation fast path is reachable. |
+| ART-SCRIPT-DOCTOR | script | Doctor Status Command | `SCRIPTS/doctor.sh` | active | v1.0 | false | Read-only orientation: branch, hooks, session, handoff freshness, intake queue. |
+| ART-SCRIPT-STRICT-GATE | script | Strict Gate Paths | `SCRIPTS/strict-gate-paths.sh` | active | v1.0 | false | Single source of the strict-gate path pattern for hooks and CI. |
+| ART-STARTER-SESSION | template-starter | Session Starter | `TEMPLATE_STARTERS/SESSION.md` | active | v1.0 | false | Format reference for gitignored `.ai/SESSION.md`. |
+| ART-STARTER-AC-MAP | template-starter | Acceptance Criteria Map Starter | `TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md` | active | v1.0 | false | Clean AC map for downstream projects. |
+| ART-TEMPLATE-TECH-DESIGN | template | Tech Design Template | `SPECS/templates/TECH_DESIGN_TEMPLATE.md` | active | v1.0 | false | One-page solution design skeleton. |
+| ART-TEMPLATE-RESEARCH-NOTE | template | Research Note Template | `00_intake/research/RESEARCH_NOTE_TEMPLATE.md` | active | v1.0 | false | Assumption-to-evidence research note. |
+| ART-TEMPLATE-SUMMARY | template | Source Summary Template | `00_intake/summaries/SUMMARY_TEMPLATE.md` | active | v1.0 | false | Compact source summary schema. |
+| ART-COMMAND-VALIDATE-IDEA | command | Validate The Idea | `COMMANDS/validate-idea.md` | active | v1.0 | false | Evidence-backed idea validation workflow. |
+| ART-COMMAND-START-ARCH | command | Start Architecture Design | `COMMANDS/start-architecture-design.md` | active | v1.0 | false | Intent-to-architecture workflow. |
+| ART-COMMAND-IMPLEMENT-NEXT | command | Implement Next Story | `COMMANDS/implement-next-story.md` | active | v1.0 | false | Scoped-validation story execution workflow. |
+| ART-COMMAND-RESUME-WORK | command | Resume Work | `COMMANDS/resume-work.md` | active | v1.0 | false | Minimum-read session resume workflow. |
+| ART-COMMAND-EXPORT-LINEAR | command | Export Backlog To Linear | `COMMANDS/export-backlog-to-linear.md` | active | v1.0 | false | Deterministic, dedupe-safe Linear export. |
 | ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | active | v4.2 | false | Shape and structure validator; enforces split-state active-section guard and the BOOT-GREEN-MERGE-001 regression guard against required human/maintainer/Code Owner approval. |
 | ART-SCRIPT-RED-CHECKS | script | Red-Check Harness | `SCRIPTS/validate-bootstrap-red-checks.sh` | active | v4.2 | false | Red-check harness with split-state local-session and canonical-state fixtures and BOOT-GREEN-MERGE-001 green-merge fixtures. |
 | ART-METRIC-EVIDENCE | script | Evidence Coverage Metric | `SCRIPTS/metric-evidence-coverage.sh` | active | v4.0 | false | Metric script. |

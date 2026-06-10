@@ -18,9 +18,19 @@ if [[ -x SCRIPTS/operation-profile.sh ]]; then
   validator_level="$(bash SCRIPTS/operation-profile.sh --validator-level)"
 fi
 
-# Strict gates: if any staged file matches these patterns the validator
-# must run strict regardless of the recorded profile.
-strict_gate_pattern='^(SCRIPTS/|\.github/workflows/|\.githooks/|memory/ai/|PR_REVIEW_POLICY\.md|PR_MERGE_POLICY\.md|RISK_MODEL\.md|BRANCH_AND_WORKTREE_GUIDE\.md|GOVERNANCE\.md|OPERATION_ROUTING\.md|CONTEXT_PACKS/|COMMANDS/|REVIEWS/templates/|SPECS/templates/|ADR/templates/|BACKLOG/templates/|TEMPLATE_MANIFEST\.md|TEMPLATE_STARTERS/|HOOKS_AND_GUARDRAILS\.md|SECURITY_AND_PRIVACY\.md|CI_CD_GUIDE\.md|MAINTAINER_ARCHIVE/)'
+# Strict gates: if any staged file matches the strict-gate pattern the
+# validator must run strict regardless of the recorded profile. The pattern's
+# single source of truth is SCRIPTS/strict-gate-paths.sh (also consumed by
+# pre-push and CI). If the helper is missing or prints nothing, fail closed:
+# run strict.
+strict_gate_pattern=""
+if [[ -x SCRIPTS/strict-gate-paths.sh ]]; then
+  strict_gate_pattern="$(bash SCRIPTS/strict-gate-paths.sh --regex 2>/dev/null || true)"
+fi
+if [[ -z "$strict_gate_pattern" && "$validator_level" != "strict" ]]; then
+  echo "pre-commit: SCRIPTS/strict-gate-paths.sh unavailable; failing closed to BOOTSTRAP_VALIDATE_PROFILE=strict." >&2
+  validator_level="strict"
+fi
 
 if [[ "$validator_level" != "strict" ]] && git rev-parse --git-dir >/dev/null 2>&1; then
   # Include deletions (D) so that removing a strict-gate path also forces

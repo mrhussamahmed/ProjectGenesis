@@ -2,9 +2,9 @@ artifact_id: ART-AI-ROLE-BACKLOG-PLANNER
 title: Role - Backlog Planner
 type: agent-role
 status: authoritative
-version: v1.1
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request
 linked_specs: []
@@ -28,7 +28,7 @@ Convert specs and architecture into implementation-ready backlog.
 - `SPECS/SPEC_INDEX.md`
 - relevant specs
 - `IMPLEMENTATION_PLAN.md`
-- `PARALLEL_EXECUTION_PLAN.md`
+- `PARALLEL_EXECUTION_PLAN.md` (maintainer repo only; skip when absent)
 - `TRACEABILITY_MATRIX.md`
 
 ## Responsibilities
@@ -71,17 +71,9 @@ Convert specs and architecture into implementation-ready backlog.
 
 ## Required Updates Before Stopping
 
-- `.ai/SESSION.md` for local resume context when unmerged local work remains
-- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
-  changed and should remain true on `main` after merge
-- `BACKLOG.md`
-- `BACKLOG/BACKLOG_INDEX.md`
-- detailed backlog item files when created
-- `IMPLEMENTATION_PLAN.md` when sequencing changes
-- `PARALLEL_EXECUTION_PLAN.md` when parallelization changes
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `WORKLOG/WORKLOG_INDEX.md`
+Before stopping: apply the one-note evidence rule (see GOVERNANCE.md
+End-Of-Session) and update only artifacts your work actually changed; record
+local resume context in .ai/SESSION.md when unmerged work remains.
 
 ## Handoff Requirements
 

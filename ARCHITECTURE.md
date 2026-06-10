@@ -45,10 +45,10 @@ handoff.
   coding agents.
 - Governance files: `AI_PROJECT_BOOTSTRAP.md`, `GOVERNANCE.md`,
   `CONTEXT_INDEX.md`, `RISK_MODEL.md`.
-- Shared state: `CURRENT_STATE.md`, `AI_HANDOFF.md`, `PROJECT_MEMORY.md`,
+- Shared state: `CURRENT_STATE.md`, `AI_HANDOFF.md`,
   `OPEN_QUESTIONS.md`, `STALE_ITEMS.md`.
 - Planning: `SPECS/`, `ADR/`, `BACKLOG/`, `IMPLEMENTATION_PLAN.md`,
-  `PARALLEL_EXECUTION_PLAN.md`.
+  `PARALLEL_EXECUTION_PLAN.md` (maintainer repo only).
 - Validation: `TEST_STRATEGY.md`, `TEST_PLAN.md`, `TEST_RESULTS.md`,
   `TESTS/`, `SCRIPTS/validate-bootstrap.sh`.
 - Review and release: `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`,

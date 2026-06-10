@@ -93,8 +93,10 @@ when all of these are true:
 - operation classification and final evidence are durable in PR/review
   evidence, not only in local session files
 - `bash SCRIPTS/validate-bootstrap.sh`, relevant red checks, shell syntax checks, `git diff --check`, and CI all pass. A required check that fails or is bypassed cannot be merged. A check may only be skipped when the operation profile explicitly does not apply to it and the rationale is recorded as a non-blocking decision; that record must not effectively bypass a P0/P1/blocking-P2 finding
-- fresh adversarial review is complete with no unresolved P0/P1 findings and
-  no unresolved blocking P2 findings
+- the review tier the operation profile requires per `PR_REVIEW_POLICY.md` is
+  complete: fresh adversarial review with no unresolved P0/P1 findings and no
+  unresolved blocking P2 findings for planning-governance and strict-protected
+  changes; the recorded PR-body self-check for lighter tiers
 
 Human, maintainer, or Code Owner approval is not required to use this
 exception. The exception is governed by objective gates above and by the

@@ -2,9 +2,9 @@ artifact_id: ART-HOOKS-001
 title: Hooks And Guardrails
 type: guide
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request, reference repository audit, and SPEC-BOOT-003
 linked_specs: [SPEC-BOOT-003]
@@ -56,11 +56,35 @@ This package includes:
 - `.githooks/commit-msg`
 - `.githooks/pre-push`
 
-To enable them in a Git repository:
+To enable them in a Git repository (required once per clone; `SCRIPTS/doctor.sh`
+warns when this is missing):
 
 ```sh
 git config core.hooksPath .githooks
 ```
+
+## Strict-Gate Pattern Source
+
+`SCRIPTS/strict-gate-paths.sh` is the single source of truth for the
+strict-gate path pattern. `.githooks/pre-commit`, `.githooks/pre-push`, and
+`.github/workflows/bootstrap-validation.yml` all consume it (`--regex` or
+`--match`); none carries its own copy. If the helper is missing, the hooks
+fail closed and run strict validation. Edit the pattern only in that script.
+
+## Fast-Path Sessions
+
+`SCRIPTS/session.sh` is the entry point for the validation fast path:
+
+```sh
+bash SCRIPTS/session.sh start docs-trivial "short task note"
+```
+
+It writes gitignored `.ai/SESSION.md` (format: `TEMPLATE_STARTERS/SESSION.md`)
+with the keys `SCRIPTS/operation-profile.sh` reads. Light profiles then route
+hooks to shape-only validation unless the change touches a strict-gate path.
+Stale (12-hour TTL), branch-mismatched, or absent sessions route strict —
+fail-closed. Use `session.sh touch` to refresh, `status` to inspect, and
+`clear` to drop back to strict.
 
 ## Guardrail Philosophy
 

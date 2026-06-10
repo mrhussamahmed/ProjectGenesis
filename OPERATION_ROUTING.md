@@ -2,9 +2,9 @@ artifact_id: ART-OPS-ROUTING-001
 title: Operation Routing And Impact Map
 type: governance
 status: authoritative
-version: v1.1
+version: v2.0
 created: 2026-05-14
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: SPEC-BOOT-003, user authorization for BOOT-019 through BOOT-024, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-003]
@@ -20,11 +20,17 @@ This file is the adaptive governance control plane for ProjectGenesis. It makes
 governance proportional to verified impact without weakening source-of-truth
 rules, traceability, validation, review, or multi-agent handoff.
 
-Existing stricter rules still win. If this file conflicts with
-`GOVERNANCE.md`, `RISK_MODEL.md`, `PR_REVIEW_POLICY.md`,
-`PR_MERGE_POLICY.md`, `BRANCH_AND_WORKTREE_GUIDE.md`, an approved or active
-spec, or current user instruction, follow the stricter or higher-priority rule
-and record the conflict.
+Existing stricter rules still win for non-review concerns. If this file
+conflicts with `GOVERNANCE.md`, `RISK_MODEL.md`, `PR_MERGE_POLICY.md`,
+`BRANCH_AND_WORKTREE_GUIDE.md`, an approved or active spec, or current user
+instruction, follow the stricter or higher-priority rule and record the
+conflict. Review depth is profile-routed: the Review column of the operation
+profiles table below and `PR_REVIEW_POLICY.md` agree and are jointly
+authoritative. Review depth follows the operation profile per
+OPERATION_ROUTING.md and PR_REVIEW_POLICY.md: docs-trivial,
+docs-non-authoritative, and state-sync changes require a recorded self-check
+in the PR body; planning-governance and strict-protected changes require
+fresh-context adversarial review.
 
 ## Fast-Path Validator Discipline (Slice 4)
 
@@ -96,11 +102,11 @@ approved bootstrap-governance exception.
 | Profile | Use Only When | Minimum Risk | Branch Rule | Validation | Review |
 |---------|---------------|--------------|-------------|------------|--------|
 | `review-only` | Read-only analysis, review, or a durable review record. | inherited from target | No branch for pure read-only; branch when writing review/state artifacts unless repository policy allows otherwise. | None for pure read-only; `bash SCRIPTS/validate-bootstrap.sh` and `git diff --check` when writing artifacts. | Review decision or durable review record when formal. |
-| `docs-trivial` | Typo, formatting, grammar, or link cleanup with no semantic, claim, setup, process, or governance meaning change. | low | Direct `main` allowed only under the documented direct-main exception. | `git diff --check`; bootstrap validation when the file is registered or context-indexed. | None. |
-| `docs-non-authoritative` | Clarity-only documentation that does not alter source-of-truth meaning, public claims, setup, supported tooling, process, or governance behavior. | low to medium | Branch unless the direct-main exception clearly applies. | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`. | Optional light review when ambiguity remains. |
+| `docs-trivial` | Typo, formatting, grammar, or link cleanup with no semantic, claim, setup, process, or governance meaning change. | low | Direct `main` allowed only under the documented direct-main exception. | `git diff --check`; bootstrap validation when the file is registered or context-indexed. | Recorded self-check in the PR body per `PR_REVIEW_POLICY.md`; none for direct-main edits under the documented exception. |
+| `docs-non-authoritative` | Clarity-only documentation that does not alter source-of-truth meaning, public claims, setup, supported tooling, process, or governance behavior. | low to medium | Branch unless the direct-main exception clearly applies. | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`. | Recorded self-check in the PR body per `PR_REVIEW_POLICY.md`; optional light review when ambiguity remains. |
 | `docs-public-claim` | README, setup, tooling, integration, branch-protection, limitation, capability, or user-trust claim changes. | medium | Branch required unless typo-only. | Bootstrap validation, `git diff --check`, and claim evidence check. | Light fresh-context review; adversarial review when governance, safety, security, release, dependency, external-tool, or source-of-truth expectations change. |
-| `state-sync` | State, handoff, worklog, stale-items, test-results, or review-index alignment that records already-reviewed, already-validated, or already-observed facts and does not change policy meaning. | medium | Branch unless post-merge administrative cleanup is explicitly allowed by current policy and branch state. | Bootstrap validation and `git diff --check`. | Review when resolving conflict, stale state, or drift. |
-| `planning-governance` | Specs, backlog, traceability, registry, ADRs, requirements, assumptions, risks, acceptance criteria, or governance planning without changing validators, hooks, CI, security, release, role, architecture-authority, command-framework, context-pack authority, or review mechanics. | high | Branch required. | Bootstrap validation and `git diff --check`; red checks only if validation behavior changes. | Fresh-context review before approval, activation, or implementation. |
+| `state-sync` | State, handoff, worklog, stale-items, test-results, or review-index alignment that records already-reviewed, already-validated, or already-observed facts and does not change policy meaning. | medium | Branch unless post-merge administrative cleanup is explicitly allowed by current policy and branch state. | Bootstrap validation and `git diff --check`. | Recorded self-check in the PR body per `PR_REVIEW_POLICY.md`; review when resolving conflict, stale state, or drift. |
+| `planning-governance` | Specs, backlog, traceability, registry, ADRs, requirements, assumptions, risks, acceptance criteria, or governance planning without changing validators, hooks, CI, security, release, role, architecture-authority, command-framework, context-pack authority, or review mechanics. | high | Branch required. | Bootstrap validation and `git diff --check`; red checks only if validation behavior changes. | Fresh-context adversarial review before approval, activation, or implementation. |
 | `strict-protected` | Validators, hooks, CI, shared rules, role files, security, privacy, release, branch policy, PR/merge policy, risk model, architecture authority, review policy, command-framework rules, context-pack authority rules, source-of-truth hierarchy, or high-risk and critical changes. | high to critical | Branch required. | Bootstrap validation, relevant red checks, shell syntax checks for scripts/hooks, `git diff --check`, and stack-specific checks when applicable. | Adversarial review mandatory; focused role review when triggered by risk. |
 
 ## Escalation Precedence
@@ -160,7 +166,7 @@ operation. A higher tier is required when lower tiers cannot explain impact.
 
 | Tier | Purpose | Typical Files |
 |------|---------|---------------|
-| Tier 1: route | Classify the operation and detect blockers. | `memory/ai/SHARED_AGENT_RULES.md`, selected role file, `CURRENT_STATE.md`, `AI_HANDOFF.md`, `CONTEXT_INDEX.md`, `ARTIFACT_REGISTRY.md`, `SPECS/SPEC_INDEX.md`, `BACKLOG.md`, `git status --short --branch`. |
+| Tier 1: route | Classify the operation and detect blockers. | The `CONTEXT_INDEX.md` "Minimum Context Before Any Work" list (the single authoritative startup set) plus `git status --short --branch`. |
 | Tier 2: operate | Read operation-specific authority and changed artifacts. | Relevant spec, backlog item, risk/review/branch policy, impact map, touched files, related tests. |
 | Tier 3: verify | Check supporting evidence and cross-artifact consistency. | Traceability, registry, test results, review package, acceptance map, CI/hook scripts, context packs, templates. |
 | Tier 4: history | Resolve disputed facts, regressions, stale state, or review history. | Older review records, worklogs, archived artifacts, legacy intake, Git history. |
@@ -185,7 +191,11 @@ Token budgets are targets, not permission to skip required understanding.
 
 ## Write Plan
 
-Before substantive edits, the operation record must list:
+A Write Plan is REQUIRED only for `planning-governance` and `strict-protected`
+operations; lighter profiles record the operation profile and a validation
+line in the PR body instead.
+
+For those profiles, before substantive edits, the operation record must list:
 
 - operation profile
 - target files
@@ -234,8 +244,8 @@ Escalation triggers checked:
 
 | Changed File Or Family | Must Check | Usually Update | Validation | Review |
 |------------------------|------------|----------------|------------|--------|
-| `README.md`, `GETTING_STARTED.md`, setup docs | Claim evidence, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md` if claims/process change | Registry metadata, test results, handoff/worklog for meaningful edits | Bootstrap validation, `git diff --check`, claim evidence check | Light or adversarial based on claim risk |
-| `CURRENT_STATE.md`, `AI_HANDOFF.md`, `WORKLOG/**`, `TEST_RESULTS.md`, `STALE_ITEMS.md` | Source artifact proving the state, branch status, dirty status | Registry metadata when changed; traceability if evidence/release status changes | Bootstrap validation, `git diff --check` | Only when conflict/drift is resolved |
+| `README.md`, setup docs | Claim evidence, `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md` if claims/process change | Registry metadata, test results, handoff/worklog for meaningful edits | Bootstrap validation, `git diff --check`, claim evidence check | Light or adversarial based on claim risk |
+| `CURRENT_STATE.md`, `AI_HANDOFF.md`, `WORKLOG/**`, `TEST_RESULTS.md`, `STALE_ITEMS.md` | Source artifact proving the state, branch status, dirty status | Registry metadata when changed; traceability if evidence/release status changes | Bootstrap validation, `git diff --check` | Recorded self-check in the PR body; review only when conflict/drift is resolved |
 | `SPECS/**`, `BACKLOG.md`, `BACKLOG/**`, `ADR/**`, `02_requirements/**`, `TESTS/ACCEPTANCE_CRITERIA_MAP.md` | Spec index, traceability, registry, risk model, branch policy | Related indexes, traceability, registry, state/handoff, test results | Bootstrap validation, `git diff --check`; red checks only for validator behavior | Fresh-context review before approval/activation/implementation |
 | `GOVERNANCE.md`, `OPERATION_ROUTING.md`, `AI_PROJECT_BOOTSTRAP.md`, `CONTEXT_INDEX.md`, `BRANCH_AND_WORKTREE_GUIDE.md`, `RISK_MODEL.md`, PR/merge/review policy | Source-of-truth hierarchy, profile mapping, review policy, risk triggers | Registry, traceability, state/handoff, test results, worklog, review package | Bootstrap validation, `git diff --check`; red checks if validator behavior changes | Adversarial review |
 | `SCRIPTS/**`, `.githooks/**`, `.github/workflows/**` | CI/manual boundary, red checks, shell syntax, branch protection assumptions | Registry, traceability, test results, state/handoff, worklog, review package | Bootstrap validation, red checks, shell syntax checks, `git diff --check`, CI validation | Adversarial review; focused QA/release review when high risk |
@@ -253,14 +263,23 @@ the final evidence envelope states the concrete non-impact reason.
 | standard | State-sync, docs-public-claim, docs-non-authoritative, and planning-governance changes without validator behavior changes. | `bash SCRIPTS/validate-bootstrap.sh`; `git diff --check`; claim evidence check when relevant. |
 | strict | Strict-protected changes, validator/hook/CI changes, review-policy changes, source-of-truth hierarchy changes, or high-risk changes. | Bootstrap validation, red checks when validator behavior changes, shell syntax checks for scripts/hooks, `git diff --check`, stack-specific checks when applicable, and CI before merge. |
 
-Skipped validation must be recorded in `TEST_RESULTS.md` or the final evidence
-envelope with a profile rule and reason. Re-running the same check after every
-minor edit is not required when a later full validation covers the edited set,
-but the final evidence must say which validation covered the full diff.
+### Validate Once Per PR
+
+One full validation run covering the final diff supersedes per-edit re-runs.
+Re-running the same check after every minor edit is not required when a later
+full validation covers the edited set. The PR validation-evidence note states
+which run covered the set.
+
+Skipped validation must be recorded in the PR validation-evidence note or the
+final evidence envelope with a profile rule and reason.
 
 ## Evidence Envelope
 
-Meaningful operations must end with a durable final evidence envelope in the
+A full Evidence Envelope is REQUIRED only for `planning-governance` and
+`strict-protected` operations; lighter profiles record the operation profile
+and a validation line in the PR body instead.
+
+Those operations must end with a durable final evidence envelope in the
 same artifact family used for classification. Minimum fields:
 
 ```text

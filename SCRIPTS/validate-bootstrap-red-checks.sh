@@ -25,7 +25,7 @@ copy_repo() {
     --exclude '.git' \
     --exclude '.claude' \
     --exclude '.ai' \
-    --exclude 'research' \
+    --exclude '/research' \
     "$repo_root/" "$dest/"
   git -C "$dest" init -q
   git -C "$dest" symbolic-ref HEAD "refs/heads/$current_branch"
@@ -195,9 +195,9 @@ EOF
 case_active_backlog_missing_spec() {
   local dir
   dir="$(copy_repo active-backlog-missing-spec)"
-  printf '\n' >>"$dir/BACKLOG.md"
-  cat >>"$dir/BACKLOG.md" <<'EOF'
-| RED-001 | Invalid active backlog item | Missing linked spec evidence. | P1 | medium | medium | none | ready | sequential | Implementation Agent |
+  printf '\n' >>"$dir/BACKLOG/BACKLOG_INDEX.md"
+  cat >>"$dir/BACKLOG/BACKLOG_INDEX.md" <<'EOF'
+| RED-001 | Invalid active backlog item | `BACKLOG/RED-001-fixture.md` | ready | P1 | medium | medium | none | sequential |
 EOF
   expect_failure "active backlog missing linked spec" "active backlog item missing linked spec" "$dir"
 }
@@ -327,6 +327,38 @@ EOF
   expect_no_failure_mentioning "research dir does not trip validator" "$dir" "research/phase-0-fixture/note.md"
 }
 
+case_raw_intake_md_does_not_trip_validator() {
+  # GEN-06: messy product input under 00_intake/raw/ must never fail
+  # validation (no metadata block, placeholder-like words allowed).
+  local dir
+  dir="$(copy_repo raw-intake-ignored)"
+  cat >"$dir/00_intake/raw/messy-idea.md" <<'EOF'
+rough idea dump with no metadata block.
+TODO figure out pricing. TBD competitor scan.
+EOF
+  expect_no_failure_mentioning "raw intake md does not trip validator" "$dir" "00_intake/raw/messy-idea.md"
+}
+
+case_backlog_index_item_status_mismatch_fails() {
+  # GEN-08: index row status must match the item file frontmatter status.
+  local dir
+  dir="$(copy_repo backlog-status-mismatch)"
+  printf '\n' >>"$dir/BACKLOG/BACKLOG_INDEX.md"
+  cat >>"$dir/BACKLOG/BACKLOG_INDEX.md" <<'EOF'
+| RED-MM-1 | Mismatch fixture row | `BACKLOG/BOOT-STATE-001-split-state-handoff.md` | in-review | P1 | low | low | SPEC- exempt fixture | sequential |
+EOF
+  expect_failure "backlog index item status mismatch" "backlog status mismatch" "$dir"
+}
+
+case_template_starter_ai_handoff_passes_section_check() {
+  # GEN-07: the shipped starter must satisfy the live AI_HANDOFF section
+  # contract so a fresh fork validates green.
+  local dir
+  dir="$(copy_repo starter-handoff-contract)"
+  cp "$dir/TEMPLATE_STARTERS/AI_HANDOFF.md" "$dir/AI_HANDOFF.md"
+  expect_no_failure_mentioning "starter AI_HANDOFF satisfies section contract" "$dir" "AI_HANDOFF.md missing section"
+}
+
 case_claude_worktree_does_not_trip_validator() {
   local dir
   dir="$(copy_repo claude-worktree-ignored)"
@@ -344,7 +376,7 @@ EOF
 case_canonical_active_state_rejects_volatile_session_text() {
   local dir
   dir="$(copy_repo canonical-active-state-rejects-volatile-session-text)"
-  perl -0pi -e 's/(## Current Worktree\n\n)[^\n]+/$1.claude\/worktrees\/example/' "$dir/AI_HANDOFF.md"
+  perl -0pi -e 's/(## Next Recommended Action\n+)[^\n]+/$1Resume work in .claude\/worktrees\/example/' "$dir/AI_HANDOFF.md"
   expect_failure "canonical active state rejects volatile session text" "canonical state contains active volatile session text" "$dir"
 }
 
@@ -1053,9 +1085,10 @@ case_scaffold_extract_reset_files_use_header_only_tables() {
     echo "FAIL: ADR/ADR_INDEX.md missing ADR table header row" >&2
     failures=$((failures + 1))
   fi
-  # HANDOFFS/HANDOFF_INDEX.md: must contain a header-only handoff table.
-  if ! grep -Fq "| Date | Agent | Role | Branch | Worktree | File |" "$target/HANDOFFS/HANDOFF_INDEX.md"; then
-    echo "FAIL: HANDOFFS/HANDOFF_INDEX.md missing header-only handoff table header" >&2
+  # HANDOFFS/ was removed from the scaffold (GEN-09); extracted output must
+  # not recreate it.
+  if [[ -e "$target/HANDOFFS" ]]; then
+    echo "FAIL: HANDOFFS/ must be absent from extracted output" >&2
     failures=$((failures + 1))
   fi
 }
@@ -1296,6 +1329,9 @@ case_operation_routing_missing_profile
 case_operation_routing_missing_validation_mode
 case_operation_routing_missing_context_reference
 case_research_dir_does_not_trip_validator
+case_raw_intake_md_does_not_trip_validator
+case_backlog_index_item_status_mismatch_fails
+case_template_starter_ai_handoff_passes_section_check
 case_claude_worktree_does_not_trip_validator
 case_canonical_active_state_rejects_volatile_session_text
 case_local_session_ignored_by_validator

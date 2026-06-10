@@ -2,11 +2,11 @@ artifact_id: ART-CONTEXT-PACK-RESUME
 title: Resume Context Pack
 type: context-pack
 status: active
-version: v1.2
+version: v2.0
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002 and SPEC-BOOT-003
+source: SPEC-BOOT-002, SPEC-BOOT-003, and GEN-01 single read contract
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -18,16 +18,10 @@ authoritative: false
 
 ## Files To Read First
 
-- `memory/ai/SHARED_AGENT_RULES.md`
-- selected role file
-- `CONTEXT_INDEX.md`
-- `OPERATION_ROUTING.md`
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `WORKLOG/WORKLOG_INDEX.md`
-- `TEST_RESULTS.md`
+- `.ai/SESSION.md`, when present: the first resume read for local unmerged work
+- the Resume section of `CONTEXT_INDEX.md`, which enumerates the remaining
+  resume reads (minimum context plus the artifacts named in the handoff's next
+  recommended action)
 
 ## Files To Read If Relevant
 
@@ -36,6 +30,8 @@ authoritative: false
 - relevant backlog items
 - `STALE_ITEMS.md`
 - `OPEN_QUESTIONS.md`
+- `WORKLOG/WORKLOG_INDEX.md` and `TEST_RESULTS.md`, when reconstructing stale
+  state
 
 ## Files Not To Scan Unless Needed
 

@@ -46,6 +46,9 @@ authoritative: true
 
 ## PRs
 
-Every PR needs a review package and fresh-context adversarial review. Use
+Review depth follows the operation profile per `OPERATION_ROUTING.md` and
+`PR_REVIEW_POLICY.md`: docs-trivial, docs-non-authoritative, and state-sync
+changes require a recorded self-check in the PR body; planning-governance and
+strict-protected changes require fresh-context adversarial review. Use
 `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, and templates under `REVIEWS/`.
 

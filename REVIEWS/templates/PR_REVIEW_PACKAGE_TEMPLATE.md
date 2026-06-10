@@ -22,6 +22,12 @@ authoritative: false
 ## PR Purpose
 
 
+## Review Tier
+
+- light-self-check | fresh-context | adversarial (per `PR_REVIEW_POLICY.md`;
+  for light tier the PR body alone suffices and no package file is required)
+
+
 ## Linked Specs
 
 - 

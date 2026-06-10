@@ -2,9 +2,9 @@ artifact_id: ART-AI-SHARED-RULES
 title: Shared Agent Rules
 type: agent-rules
 status: authoritative
-version: v1.3
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request, review fix, SPEC-BOOT-003, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-003]
@@ -26,17 +26,13 @@ this file and the selected `memory/ai/ROLE_*.md` file.
 Follow the source-of-truth hierarchy in `AI_PROJECT_BOOTSTRAP.md` and
 `GOVERNANCE.md`.
 
-- Read `CONTEXT_INDEX.md` before meaningful work.
-- Follow `GOVERNANCE.md`.
+- Read the `CONTEXT_INDEX.md` "Minimum Context Before Any Work" list before
+  meaningful work. It is the single authoritative startup read list; do not
+  maintain or follow parallel read lists.
 - Use `OPERATION_ROUTING.md` to classify meaningful operations before target
   file edits and to scope reads, writes, validation, review, and handoff
-  evidence.
-- Use `CURRENT_STATE.md` and `AI_HANDOFF.md` as current operational state.
-- Use `ARTIFACT_REGISTRY.md` before trusting artifacts.
-- Use `TRACEABILITY_MATRIX.md` for requirement, spec, backlog, code, test,
-  review, and diagram mapping.
-- Use `SPECS/SPEC_INDEX.md` and relevant specs before implementation.
-- Use `ADR/ADR_INDEX.md` and relevant ADRs before architecture decisions.
+  evidence. Read deeper artifacts (specs, ADRs, registry, traceability) per
+  its read tiers when the operation needs them.
 - Do not rely on chat memory as source of truth.
 - Do not invent APIs, requirements, tickets, domain rules, files, commands,
   completion status, or external integration state.
@@ -110,30 +106,28 @@ analysis, spike work, backlog preparation, and documentation only.
 - Evidence can include changed files, test results, validation output, review
   records, traceability rows, artifact registry entries, specs, ADRs, backlog
   items, or commits.
-- Record failed or skipped checks honestly in `TEST_RESULTS.md` and
-  `AI_HANDOFF.md`.
+- Record failed or skipped checks honestly in the PR validation-evidence note,
+  or in `TEST_RESULTS.md` when a durable baseline changed.
 - Record the final evidence envelope required by `OPERATION_ROUTING.md` before
   claiming meaningful work is complete.
 - If evidence is incomplete, report the work as incomplete or pending review.
 
 ## Documentation And State Updates
 
-Before stopping after meaningful work, update:
+Record one validation-evidence note per PR (in the PR body or review package).
+Update TEST_RESULTS.md, TRACEABILITY_MATRIX.md, and ARTIFACT_REGISTRY.md only
+when a durable baseline, requirement mapping, or artifact lifecycle changed -
+at most once per PR, not per session.
+
+State updates follow the split-state boundary:
 
 - `.ai/SESSION.md` for local resume context when unmerged local work remains
 - `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
   changed and should remain true on `main` after merge
-- `ARTIFACT_REGISTRY.md` when artifacts were created, changed, superseded, or
-  retired
-- `TRACEABILITY_MATRIX.md` when specs, backlog, implementation, tests, reviews,
-  diagrams, or governance mappings change
-- `TEST_RESULTS.md` when checks ran
-- `WORKLOG/WORKLOG_INDEX.md` for meaningful sessions
 - `STALE_ITEMS.md` or `OPEN_QUESTIONS.md` when conflicts, stale items, missing
   facts, or unresolved assumptions exist
 
-Register important artifacts in `ARTIFACT_REGISTRY.md`. Keep `CLAUDE.md` and
-`AGENTS.md` short and pointing to shared files.
+Keep `CLAUDE.md` and `AGENTS.md` short and pointing to shared files.
 
 ## Diagrams
 
@@ -149,10 +143,13 @@ Mermaid diagrams are governed by the same source-of-truth hierarchy.
 
 ## Review And Handoff
 
-- Every PR requires fresh-context adversarial review using
-  `PR_REVIEW_POLICY.md`.
-- Reviewers must not rely on implementer chat history.
-- The implementation agent must not be the only reviewer of its own work.
+- Review depth follows the operation profile per OPERATION_ROUTING.md and
+  PR_REVIEW_POLICY.md: docs-trivial, docs-non-authoritative, and state-sync
+  changes require a recorded self-check in the PR body; planning-governance
+  and strict-protected changes require fresh-context adversarial review.
+- At the adversarial tier, reviewers must not rely on implementer chat
+  history, and the implementation agent must not be the only reviewer of its
+  own work.
 - Before stopping or switching agents with unmerged local work, update
   `.ai/SESSION.md` with branch, worktree, changed files, tests run, failures,
   risks, assumptions, and the next local action. Put shared branch status in

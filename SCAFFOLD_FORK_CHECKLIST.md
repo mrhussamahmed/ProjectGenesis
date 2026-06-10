@@ -2,9 +2,9 @@ artifact_id: ART-SCAFFOLD-FORK-CHECKLIST
 title: Scaffold Fork Checklist
 type: guide
 status: authoritative
-version: v1.0
+version: v2.0
 created: 2026-05-15
-updated: 2026-05-15
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: BOOT-030 Phase 1 execution planning input and BOOT-029 merged
   sequencing decision in `IMPLEMENTATION_PLAN.md`
@@ -18,15 +18,14 @@ authoritative: true
 # Scaffold Fork Checklist
 
 This file is the human-readable policy for turning ProjectGenesis into a
-clean downstream project scaffold. It is the authoritative reset and
-exclusion policy that future scaffold extraction work (BOOT-031) must
-follow. Until BOOT-031 ships a reviewed extraction tool, downstream forkers
-should follow this checklist manually.
+clean downstream project scaffold. Use `bash SCRIPTS/scaffold-extract.sh`
+(dry-run by default; `--apply` to write). This checklist is the manual
+fallback and the policy reference.
 
-This checklist is documentation. It does not modify validators, hooks, CI,
-shared rules, role files, command files, context packs, templates, ADRs,
-or runtime mechanics. Implementation of an extraction script is tracked
-separately under BOOT-031.
+The extraction tool shipped as the BOOT-031 deliverable. Where this
+checklist and `TEMPLATE_MANIFEST.md` or `SCRIPTS/scaffold-extract.sh`
+disagree on a path's keep/reset/exclude treatment, the manifest and the
+extractor are authoritative and this checklist should be updated.
 
 ## Purpose
 
@@ -55,7 +54,8 @@ files after an extraction.
    `## Manual Extraction Validation` section.
 6. If any step requires changing validators, hooks, CI, role files, ADRs,
    metadata schemas, or repository policy, stop and follow the
-   `## Stop Conditions For BOOT-031` rules instead of expanding scope.
+   `## Stop Conditions For Extraction Changes` rules instead of expanding
+   scope.
 
 The checklist is intentionally explicit about every reused path. When in
 doubt, prefer keeping a registered authoritative artifact unless it is
@@ -88,7 +88,6 @@ Governance and operating model:
 - `RELEASE_READINESS.md`
 - `CONTRIBUTING.md`
 - `BOOTSTRAP_USAGE.md`
-- `GETTING_STARTED.md`
 - `NEW_PROJECT_INITIALIZATION.md`
 - `ARCHITECTURE.md`
 - `DECISIONS.md`
@@ -116,8 +115,6 @@ Intake, context, and requirements scaffolding (canonical empty form):
 - `00_intake/SOURCE_REGISTRY.md`
 - `00_intake/raw/.gitkeep`
 - `00_intake/summaries/.gitkeep`
-- `INPUT/README.md` (legacy alias only)
-- `INPUT/.gitkeep`
 - `01_context/PROJECT_BRIEF.md`
 - `01_context/PROJECT_CHARTER.md`
 - `01_context/GLOSSARY.md`
@@ -166,12 +163,13 @@ This scaffold extraction checklist itself is also framework material:
 
 - `SCAFFOLD_FORK_CHECKLIST.md`
 
-The `README.md`, `GITHUB_REPOSITORY_SETUP.md`, and
-`PROJECT_MEMORY.md` are framework files but their content references the
-ProjectGenesis instance. Downstream forkers should keep the files and
+The `README.md` is a framework file but its content references the
+ProjectGenesis instance. Downstream forkers should keep the file and
 rewrite the project-specific text (project name, public claims, owner,
 launch links, current state summary) for their own project before
-publishing.
+publishing. (`SCRIPTS/scaffold-extract.sh` emits a neutral starter README
+automatically. `GITHUB_REPOSITORY_SETUP.md` is maintainer-only per
+`TEMPLATE_MANIFEST.md` and is not part of the extracted scaffold.)
 
 ### ProjectGenesis Instance Or History Files To Reset Or Remove
 
@@ -185,17 +183,18 @@ Operational state (reset, do not delete):
 - `CURRENT_STATE.md` — reset to clean-state contents.
 - `AI_HANDOFF.md` — reset to clean-state contents.
 - `OPEN_QUESTIONS.md` — reset to clean-state contents.
-- `STALE_ITEMS.md` — reset to clean-state contents.
+- `STALE_ITEMS.md` — maintainer-only; excluded from extracted output
+  (a downstream project can recreate the pattern if needed).
 - `TEST_RESULTS.md` — reset to clean-state contents.
 - `WORKLOG/WORKLOG_INDEX.md` — reset to clean-state contents.
-- `HANDOFFS/HANDOFF_INDEX.md` — reset to clean-state contents.
 
 Planning, backlog, and traceability (reset, do not delete):
 
 - `BACKLOG.md` — reset to clean-state contents.
 - `BACKLOG/BACKLOG_INDEX.md` — reset to clean-state contents.
 - `IMPLEMENTATION_PLAN.md` — reset to clean-state contents.
-- `PARALLEL_EXECUTION_PLAN.md` — reset to clean-state contents.
+- `PARALLEL_EXECUTION_PLAN.md` — maintainer-only; excluded from extracted
+  output.
 - `TRACEABILITY_MATRIX.md` — reset to clean-state contents.
 - `ARTIFACT_REGISTRY.md` — reset to clean-state contents
   (the registry must continue to list every framework file kept above).
@@ -203,22 +202,15 @@ Planning, backlog, and traceability (reset, do not delete):
 Specs and ADRs (reset spec and ADR sets, keep templates and indexes):
 
 - `SPECS/SPEC_INDEX.md` — reset to clean-state contents.
-- `SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md` — remove.
-- `SPECS/SPEC-BOOT-003-adaptive-governance-routing.md` — remove.
-- `SPECS/SPEC-BOOT-004-public-launch-readiness.md` — remove.
+- `SPECS/SPEC-BOOT-*.md` — already relocated to `MAINTAINER_ARCHIVE/SPECS/`
+  in slice 2; confirm none remain under active `SPECS/`.
 - `ADR/ADR_INDEX.md` — reset to clean-state contents.
 
-ProjectGenesis backlog items (remove every per-item file beyond the generic
-scaffold-bringup range BOOT-001 through BOOT-008). At the time this
-checklist is authored, the per-item files in the repository are:
+ProjectGenesis backlog items: the PG per-item files (BOOT-029 through
+BOOT-035) were relocated to `MAINTAINER_ARCHIVE/BACKLOG/` in slice 2 and
+are excluded with the rest of `MAINTAINER_ARCHIVE/`.
 
-- `BACKLOG/BOOT-029-phase-1-execution-plan.md` — remove.
-- `BACKLOG/BOOT-030-scaffold-extract-checklist.md` — remove.
-- `BACKLOG/BOOT-031-scaffold-extract-tool.md` — remove.
-- `BACKLOG/BOOT-032-seeded-defect-benchmark.md` — remove.
-- `BACKLOG/BOOT-033-src-spec-cross-validation.md` — remove.
-
-General rule for forks taken after later BOOT items are added:
+General rule for forks taken after later instance items are added:
 
 - Remove every `BACKLOG/BOOT-*.md` per-item file outside the BOOT-001
   through BOOT-008 range present in the `BACKLOG/` directory at extraction
@@ -248,13 +240,6 @@ files, keep the `REVIEW_INDEX.md` and `REVIEWS/templates/` set):
 - `REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md` — keep.
 - `REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md` — keep.
 
-Legacy onboarding RTF originals (remove, the Markdown migrations remain):
-
-- `start here/Project starting instruction tips.rtf` — remove.
-- `start here/new project initialization prompt.rtf` — remove.
-- The empty `start here/` directory may be deleted once both RTFs are
-  removed.
-
 ### Examples Or Demo Files
 
 These files exist to demonstrate ProjectGenesis to public visitors. They
@@ -269,18 +254,12 @@ illustrative examples.
 - `examples/simple-saas-demo/01_expected_outputs/assumptions-and-open-questions.md`
 - `examples/simple-saas-demo/01_expected_outputs/backlog-candidates.md`
 - `examples/simple-saas-demo/01_expected_outputs/validation-checklist.md`
-- `docs/public_launch_checklist.md`
-- `docs/releases/v0.1.0-public-alpha.md`
-- `docs/demo/60-second-demo-script.md`
-- `docs/launch/social-posts.md`
-- `docs/launch/seed-github-issues.md`
-- `docs/token_efficiency_guidance.md`
-- `docs/roadmap/minimal-cli-bootstrap.md`
-- `.github/ISSUE_TEMPLATE/bug_report.md`
-- `.github/ISSUE_TEMPLATE/feature_request.md`
-- `.github/ISSUE_TEMPLATE/example_request.md`
-- `.github/ISSUE_TEMPLATE/documentation_improvement.md`
-- `.github/ISSUE_TEMPLATE/config.yml`
+
+The PG launch/demo/release notes (`docs/`) and PG-branded
+`.github/ISSUE_TEMPLATE/` files were relocated to `MAINTAINER_ARCHIVE/`
+in slice 2 and are excluded with the rest of that folder. The current
+top-level `docs/` holds maintainer planning history only and is likewise
+excluded from extraction.
 
 Removal guidance:
 
@@ -321,7 +300,7 @@ their fields without tripping the validator.
   other stack-specific generated output that may exist in a downstream
   fork — remove and ignore.
 
-The framework keeps `INPUT/.gitkeep`, `00_intake/raw/.gitkeep`, and
+The framework keeps `00_intake/raw/.gitkeep` and
 `00_intake/summaries/.gitkeep` so the canonical intake directories remain
 present. Do not delete these markers.
 
@@ -417,8 +396,7 @@ extraction is reviewable.
   `00_intake/`, `01_context/`, `02_requirements/`, `CONTEXT_PACKS/`,
   `COMMANDS/`, `SCRIPTS/validate-bootstrap.sh`,
   `SCRIPTS/validate-bootstrap-red-checks.sh`, the templates set, and
-  `GETTING_STARTED.md` / `NEW_PROJECT_INITIALIZATION.md`, which remain
-  framework files.
+  `NEW_PROJECT_INITIALIZATION.md`, which remain framework files.
 - Downstream projects rebuild their own product-specific requirement
   mapping sections as their own specs and backlog items are created.
 
@@ -491,19 +469,12 @@ extraction is reviewable.
 - `OPEN_QUESTIONS.md` — keep only the framework-level open question
   about external ticket integrations being optional. Remove any other
   question.
-- `STALE_ITEMS.md` — empty table with header row only.
 - `BACKLOG/BACKLOG_INDEX.md` — empty items table with header row only;
   `## Rules` kept.
 - `ADR/ADR_INDEX.md` — empty index table with header row only.
 - `IMPLEMENTATION_PLAN.md` — keep the generic plan steps, remove the
   `## Phase 1 Bootstrap Follow-Up Plan` section and any
   ProjectGenesis-specific row.
-- `PARALLEL_EXECUTION_PLAN.md` — keep the rules, reset the
-  `## Current Parallel Streams` table to one row stating no streams are
-  approved, remove `## Phase 1 Bootstrap Follow-Up Decision`.
-- `HANDOFFS/HANDOFF_INDEX.md` — empty handoff table with header row only.
-- `PROJECT_MEMORY.md` — keep the section structure but replace the
-  ProjectGenesis-specific summary text with downstream-neutral wording.
 
 ## Manual Extraction Validation
 
@@ -524,15 +495,15 @@ extracted scaffold:
    checks build temporary fixtures and confirm the validator fails for
    each banned condition. The extracted scaffold should not change red
    checks; if it does, treat that as a stop condition under
-   `## Stop Conditions For BOOT-031`.
+   `## Stop Conditions For Extraction Changes`.
 4. `bash -n SCRIPTS/validate-bootstrap.sh && bash -n
    SCRIPTS/validate-bootstrap-red-checks.sh` — shell syntax sanity.
 5. `git diff --check` — no whitespace issues.
 6. `.githooks/pre-commit` — must pass on a representative staged change
    in the extracted scaffold.
 7. Spot-check `ARTIFACT_REGISTRY.md` to confirm every file under the
-   extracted scaffold is registered, including the new
-   `ART-SCAFFOLD-FORK-CHECKLIST` row.
+   extracted scaffold is registered (this checklist itself is
+   maintainer-only and must not appear in the extracted registry).
 8. Spot-check `CONTEXT_INDEX.md` to confirm it still references
    `ARTIFACT_REGISTRY.md`, `TRACEABILITY_MATRIX.md`,
    `SPECS/SPEC_INDEX.md`, `memory/ai/SHARED_AGENT_RULES.md`,
@@ -544,16 +515,16 @@ extracted scaffold:
 If any step fails, fix the extracted scaffold before publishing. Do not
 silently bypass the validator with `--no-verify`.
 
-## Stop Conditions For BOOT-031
+## Stop Conditions For Extraction Changes
 
-BOOT-031 (the scaffold extraction tool) must follow this checklist as
-authoritative. If the BOOT-031 implementation discovers any of the
-conditions below, the script work must stop, record the blocker in
+`SCRIPTS/scaffold-extract.sh` (shipped as the BOOT-031 deliverable)
+implements this policy. If a change to the extraction tool or to this
+policy hits any of the conditions below, stop, record the blocker in
 `STALE_ITEMS.md` or `OPEN_QUESTIONS.md`, and re-plan before continuing.
 
-1. The checklist needs new per-artifact metadata to flag framework versus
-   instance-history versus example content. BOOT-031 must not invent
-   silent flags; metadata schema changes require their own reviewed slice.
+1. The policy needs new per-artifact metadata to flag framework versus
+   instance-history versus example content. Do not invent silent flags;
+   metadata schema changes require their own reviewed slice.
 2. The reset/exclusion policy needs to change repository governance
    (`GOVERNANCE.md`, `OPERATION_ROUTING.md`, `BRANCH_AND_WORKTREE_GUIDE.md`,
    `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `RISK_MODEL.md`,
@@ -561,39 +532,27 @@ conditions below, the script work must stop, record the blocker in
 3. The reset/exclusion policy needs to change validators, hooks, or CI
    (`SCRIPTS/validate-bootstrap.sh`,
    `SCRIPTS/validate-bootstrap-red-checks.sh`, `.githooks/*`, or
-   `.github/workflows/bootstrap-validation.yml`).
+   `.github/workflows/bootstrap-validation.yml`) outside a reviewed
+   validator slice.
 4. The script needs to touch ADRs, command files, or context packs in a
-   way the checklist did not anticipate.
+   way this policy did not anticipate.
 5. The script needs to mutate runtime product code in a downstream
-   project; BOOT-031 is scaffold-only and must not edit a downstream
+   project; extraction is scaffold-only and must not edit a downstream
    project's product implementation.
-6. The script needs to bundle BOOT-032 benchmark or BOOT-033 SRC/SPEC
-   validator work. Those slices have their own backlog items and review
-   loops.
-7. The script needs network or external service access that is not part
+6. The script needs network or external service access that is not part
    of the scaffold's existing surface (Git, file system, GitHub CLI, and
    user-approved tooling only).
 
-When a stop condition is reached, BOOT-031 must surface the blocker
-through `OPEN_QUESTIONS.md`, `STALE_ITEMS.md`, and `AI_HANDOFF.md` rather
-than expanding scope.
-
-## Out Of Scope For BOOT-030
-
-- Writing `SCRIPTS/scaffold-extract.sh` or any other extraction script.
-- Adding or modifying validator rules, hooks, CI workflow steps, role
-  files, command files, context packs, templates, or ADRs.
-- Editing public README claims beyond the minimal pointers needed to
-  surface this checklist to forkers.
-- Implementing BOOT-031 (scaffold extraction tool), BOOT-032
-  (seeded-defect benchmark), or BOOT-033 (SRC/SPEC cross-validation).
+When a stop condition is reached, surface the blocker through
+`OPEN_QUESTIONS.md`, `STALE_ITEMS.md`, and `AI_HANDOFF.md` rather than
+expanding scope.
 
 ## Related Records
 
-- `BACKLOG/BOOT-030-scaffold-extract-checklist.md`
-- `BACKLOG/BOOT-031-scaffold-extract-tool.md` (blocked until BOOT-030
-  merges)
-- `IMPLEMENTATION_PLAN.md` Phase 1 Bootstrap Follow-Up Plan
-- `TRACEABILITY_MATRIX.md` BOOT-030 row
+- `MAINTAINER_ARCHIVE/BACKLOG/BOOT-030-scaffold-extract-checklist.md`
+  (policy authored)
+- `MAINTAINER_ARCHIVE/BACKLOG/BOOT-031-scaffold-extract-tool.md`
+  (tool shipped)
+- `TEMPLATE_MANIFEST.md` (authoritative path classification)
 - `ARTIFACT_REGISTRY.md` `ART-SCAFFOLD-FORK-CHECKLIST` row
-- `REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`
+- `MAINTAINER_ARCHIVE/REVIEWS/PR_REVIEW_PACKAGE-2026-05-15-boot-030-scaffold-extract-checklist.md`

@@ -16,86 +16,42 @@ authoritative: true
 
 # ADR-000: Decision Title
 
-## Status
+## Context
+Decision pressure, binding constraints, and why now. Three lines maximum.
 
-draft
+## Options
+- Option A: summary - decisive tradeoff.
+- Option B: summary - decisive tradeoff.
 
-## Date
+## Decision
+Selected option and its boundary: what this covers and what it does not.
 
+## Consequences
+- Benefits:
+- Tradeoffs and required follow-up:
 
-## Owner
+## Links
+- Spec / backlog item:
+- Requirement:
 
+The 35-line core above is the whole ADR for most decisions.
 
-## Linked Specs
+## High-Impact Additions
 
-- 
+Required only for strict-protected or high-risk routing per
+`OPERATION_ROUTING.md`. Delete this block otherwise.
 
-## Linked Requirements
-
--
-
-## Source Evidence
+### Source Evidence
 
 | Evidence | Source IDs | Confidence | Notes |
 |----------|------------|------------|-------|
 |  |  |  |  |
 
-## Linked Backlog Items
+### Validation
 
-- 
+How the decision was checked against product, security, privacy, cost, and
+operational constraints.
 
-## Context
+### Rollback
 
-Describe the decision pressure, constraints, source documents reviewed,
-downstream blockers, and why the decision is needed now.
-
-## Options Considered
-
-| Option | Summary | Pros | Cons | Decision |
-|--------|---------|------|------|----------|
-| A |  |  |  |  |
-| B |  |  |  |  |
-
-## Decision Impact
-
-- High-impact decision: yes/no
-- Impact areas: irreversible, external integration, security, deployment, API,
-  persistence, data, dependency, cost, blast radius
-- Required reviewers:
-
-## Decision
-
-State the selected option clearly. Include boundaries: what this decision
-covers and what it does not cover.
-
-## Consequences
-
-- Benefits:
-- Tradeoffs:
-- Required downstream changes:
-- Operational impact:
-
-## Risks
-
-- 
-
-## Validation
-
-Record how this decision was checked against product, architecture, security,
-privacy, reliability, cost, local development, and implementation constraints.
-
-## Rollback Or Recovery
-
-Describe how to reverse, supersede, or safely migrate away from the decision if
-later evidence invalidates it.
-
-## Supersedes Or Superseded By
-
-- Supersedes:
-- Superseded by:
-
-## Change History
-
-| Version | Date | Change | Author |
-|---------|------|--------|--------|
-| v0.1 |  | Initial draft. |  |
+How to reverse, supersede, or migrate away if later evidence invalidates it.

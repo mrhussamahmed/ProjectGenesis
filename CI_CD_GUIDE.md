@@ -2,9 +2,9 @@ artifact_id: ART-CI-001
 title: CI/CD Guide
 type: ci-guide
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request and SPEC-BOOT-003
 linked_specs: [SPEC-BOOT-003]
@@ -19,13 +19,34 @@ authoritative: true
 This bootstrap includes an optional GitHub Actions workflow at
 `.github/workflows/bootstrap-validation.yml`. Adapt it for other CI systems.
 
+## Tiered CI Model
+
+The workflow runs in two tiers so docs-only changes stay fast while
+strict-gate changes always get the full suite:
+
+- triggers: `pull_request`, `push` to `main` only, and `workflow_dispatch`;
+  one concurrent run per ref (`cancel-in-progress: true`), so each PR
+  commit gets exactly one run
+- always: `bash SCRIPTS/validate-bootstrap.sh` plus a `git diff --check`
+  whitespace-hygiene pass against the merge-base
+- conditionally: `bash SCRIPTS/validate-bootstrap-red-checks.sh` and shell
+  syntax checks run only when the PR diff (merge-base vs HEAD) touches a
+  strict-gate path, decided by `SCRIPTS/strict-gate-paths.sh --match`
+- always full suite: pushes to `main` and `workflow_dispatch` runs; the
+  scope decision also fails closed to the full suite when the changed-file
+  diff cannot be computed
+
+`SCRIPTS/strict-gate-paths.sh` is the single source of the strict-gate
+pattern; the same helper drives `.githooks/pre-commit` and
+`.githooks/pre-push`, so local hooks and CI cannot drift apart.
+
 ## Baseline CI Checks
 
 - checkout repository
 - run `bash SCRIPTS/validate-bootstrap.sh`
-- run `bash SCRIPTS/validate-bootstrap-red-checks.sh` for ProjectGenesis
-  governance PRs or other validator-rule changes
-- run shell syntax checks for changed scripts and hooks
+- run `bash SCRIPTS/validate-bootstrap-red-checks.sh` per the tiered model
+  above (strict-gate diffs, `main` pushes, manual dispatch)
+- run shell syntax checks for scripts and hooks per the tiered model above
 - run formatting checks when stack is selected
 - run lint checks when stack is selected
 - run type checks when stack is selected

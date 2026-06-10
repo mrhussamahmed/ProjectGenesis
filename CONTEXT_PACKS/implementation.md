@@ -33,7 +33,7 @@ authoritative: false
 
 - relevant ADRs
 - `BRANCH_AND_WORKTREE_GUIDE.md`
-- `PARALLEL_EXECUTION_PLAN.md`
+- `PARALLEL_EXECUTION_PLAN.md` (maintainer repo only; skip when absent)
 - touched source files and tests
 
 ## Files Not To Scan Unless Needed

@@ -2,9 +2,9 @@ artifact_id: ART-AI-ROLE-PRODUCT-ANALYST
 title: Role - Product Analyst
 type: agent-role
 status: authoritative
-version: v1.2
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request and SPEC-BOOT-002
 linked_specs: [SPEC-BOOT-002]
@@ -25,15 +25,14 @@ rough ideas, or documents.
 
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `CONTEXT_INDEX.md`
-- `PROJECT_MEMORY.md`
+- `01_context/PROJECT_BRIEF.md`
 - `OPEN_QUESTIONS.md`
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 
 Also read source input files under canonical `00_intake/raw/` or other
-user-specified locations when present. `INPUT/` is a legacy alias during
-migration; if files are found there, register or move their source references
-through `00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
+user-specified locations when present; register their source references in
+`00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
 
 ## Responsibilities
 
@@ -45,9 +44,22 @@ through `00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
 - Identify assumptions.
 - Identify open questions.
 - Separate confirmed requirements from inferred requirements.
-- Create or update `PROJECT_MEMORY.md`.
+- Create or update intake context (`01_context/PROJECT_BRIEF.md`,
+  `02_requirements/REQUIREMENTS_INDEX.md`).
 - Create or update `OPEN_QUESTIONS.md`.
 - Prepare input for specs and backlog.
+
+## Idea Validation (bounded)
+
+- Validate only high-risk or scope-defining assumptions; skip when the user
+  says skip. Validation must never block trivial intake.
+- Agent web research is allowed for market context, existing alternatives,
+  and technical-feasibility red flags.
+- Record findings as research notes per
+  `00_intake/research/RESEARCH_NOTE_TEMPLATE.md`, registered as SRC- sources
+  in `00_intake/SOURCE_REGISTRY.md`.
+- Assign a confidence level to each validated assumption.
+- Record evidence gaps as open questions in `OPEN_QUESTIONS.md`.
 
 ## Allowed Actions
 
@@ -68,21 +80,17 @@ through `00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
 ## Required Outputs
 
 - Updated product goals, users, workflows, requirements, assumptions, and open
-  questions in `PROJECT_MEMORY.md` and `OPEN_QUESTIONS.md`.
+  questions in the intake artifacts (`01_context/`, `02_requirements/`) and
+  `OPEN_QUESTIONS.md`.
 - Clear distinction between confirmed and inferred requirements.
 - Inputs ready for `ROLE_SPEC_AUTHOR.md` and `ROLE_BACKLOG_PLANNER.md`.
 - Traceability updates for meaningful requirement sources.
 
 ## Required Updates Before Stopping
 
-- `.ai/SESSION.md` for local resume context when unmerged local work remains
-- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
-  changed and should remain true on `main` after merge
-- `PROJECT_MEMORY.md`
-- `OPEN_QUESTIONS.md`
-- `ARTIFACT_REGISTRY.md` when intake artifacts are added or changed
-- `TRACEABILITY_MATRIX.md` when requirements or source mappings change
-- `WORKLOG/WORKLOG_INDEX.md`
+Before stopping: apply the one-note evidence rule (see GOVERNANCE.md
+End-Of-Session) and update only artifacts your work actually changed; record
+local resume context in .ai/SESSION.md when unmerged work remains.
 
 ## Handoff Requirements
 

@@ -32,8 +32,9 @@ emit_metric() {
 
 map_file="TESTS/ACCEPTANCE_CRITERIA_MAP.md"
 if [[ ! -f "$map_file" ]]; then
-  echo "ERROR: missing acceptance criteria map: $map_file" >&2
-  exit 1
+  printf 'ac_with_test_artifact: 0/0 (n/a)\n'
+  printf 'ac_status_passed: 0/0 (n/a)\n'
+  exit 0
 fi
 
 total=0

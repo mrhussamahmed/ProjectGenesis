@@ -18,51 +18,24 @@ authoritative: false
 
 # AI Handoff
 
-## Current Date
+## Baseline
+No baseline recorded yet. Record the first durable baseline (commit plus
+date) after the first merge to `main`.
 
-YYYY-MM-DD
+## Last Validated
+No validation run recorded yet. Record the first meaningful full validation
+run here.
 
-## Active Agent
+## Next Recommended Action
+Begin product intake under `00_intake/`, then run the `Start requirement
+breakdown` command from `COMMANDS/COMMAND_INDEX.md`.
 
-None
+## Known Risks
+None recorded yet.
 
-## Current Role
-
-None
-
-## Active Branch
-
-`main`
-
-## Active Worktree
-
-`.` (repository root)
-
-## Active Specs
-
-No active specs yet.
-
-## Active Backlog Focus
-
-No active backlog focus yet. Populate after first intake or first spec is
-introduced.
-
-## Recent Decisions
-
+## Open Threads
 None.
 
-## Blockers
-
-None.
-
-## Next Safe Action
-
-Run the first-use steps documented in `GETTING_STARTED.md` and
-`NEW_PROJECT_INITIALIZATION.md`. Replace placeholder values in this file when
-the first agent picks up work.
-
-## Notes For Next Agent
-
-This file was created from `TEMPLATE_STARTERS/AI_HANDOFF.md`. It contains no
-prior project history. Update fields above when actual work begins. Do not copy
-operational history from any other scaffold into this file.
+## Read First
+`CONTEXT_INDEX.md` Minimum Context is the single startup read list.
+`.ai/SESSION.md` (gitignored) holds local resume notes for unmerged work.

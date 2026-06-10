@@ -2,11 +2,11 @@ artifact_id: ART-BOOT-001
 title: AI Project Bootstrap Operating System
 type: governance
 status: authoritative
-version: v1.3
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-14
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, and SPEC-BOOT-003
+source: User request, reference repository audit, SPEC-BOOT-003, and GEN-01 pipeline compaction
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -33,7 +33,6 @@ The bootstrap enforces:
 - architecture decision tracking
 - autonomous backlog creation
 - production-readiness checks
-- fresh-context adversarial PR review
 - risk-based review model and effort selection
 - safe parallel work by multiple agents only when justified
 - adaptive governance routing through `OPERATION_ROUTING.md`
@@ -51,9 +50,8 @@ conflict in `STALE_ITEMS.md` or `OPEN_QUESTIONS.md`.
 6. Code and tests
 7. `CURRENT_STATE.md`
 8. `AI_HANDOFF.md`
-9. `PROJECT_MEMORY.md`
-10. Worklogs and historical notes
-11. Archived, superseded, deprecated, cancelled, or stale artifacts
+9. Worklogs and historical notes
+10. Archived, superseded, deprecated, cancelled, or stale artifacts
 
 Rules:
 
@@ -62,27 +60,13 @@ Rules:
   as current truth.
 - If no authoritative artifact exists for a topic, create one or create an
   open question.
-- If the user changes scope, update specs, backlog, architecture, traceability,
-  artifact registry, current state, and handoff.
+- If the user changes scope, update the affected specs, backlog, architecture,
+  and state artifacts.
 
 ## Required Reading Before Work
 
-Every AI agent must read the minimum context in `CONTEXT_INDEX.md` before
-acting. At minimum, read:
-
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
-- `ARTIFACT_REGISTRY.md`
-- `SPECS/SPEC_INDEX.md`
-- `TRACEABILITY_MATRIX.md`
-- `BRANCH_AND_WORKTREE_GUIDE.md`
-- `GOVERNANCE.md`
-- `OPERATION_ROUTING.md`
-- relevant spec files and ADRs
-- `git status --short --branch`, when Git is available
-
-If an agent cannot read all relevant files because of context limits, it must
-state what was not read and update `AI_HANDOFF.md` before stopping.
+Read the minimum context and the task section in `CONTEXT_INDEX.md`; it is the
+single read-list authority. Escalate only per `OPERATION_ROUTING.md` read tiers.
 
 ## Shared role system for Claude, Codex, and other agents
 
@@ -105,121 +89,52 @@ The repository files remain authoritative.
 rules but no operating role. Meaningful task work requires reading the relevant
 `memory/ai/ROLE_*.md` file or restarting Claude with an allowlisted role mode.
 
-## Workflow
+## Pipeline
 
-### Phase 0: Intake
+The delivery pipeline is a stage table, not a phase narrative. Each stage names
+its trigger (a `COMMANDS/COMMAND_INDEX.md` phrase or an operating role), the
+artifacts it produces, and the criterion that exits the stage.
 
-Read product descriptions, feature lists, Excel files, PRDs, sketches, and user
-instructions. Extract product goals, users, workflows, constraints,
-integrations, data, risks, assumptions, and open questions.
+| Stage | Trigger command or role | Key artifacts | Exit criterion |
+|-------|-------------------------|---------------|----------------|
+| intake | `Start requirement breakdown` | `00_intake/`, `01_context/`, `02_requirements/`, backlog candidates | readiness classified |
+| validate idea (optional) | `Validate the idea` | research notes under `00_intake/research/`, updated assumptions register | high-risk assumptions evidenced |
+| spec | spec author role (`memory/ai/ROLE_SPEC_AUTHOR.md`) | specs under `SPECS/` | spec promoted draft to approved |
+| architecture | `Start architecture design` | tech design (`SPECS/templates/TECH_DESIGN_TEMPLATE.md`) plus slim ADRs | design approved |
+| backlog | backlog planner role (`memory/ai/ROLE_BACKLOG_PLANNER.md`) | epics and stories with readiness gate fields | items implementation-ready |
+| implement | `Implement next story` | code, tests, PR | merged with evidence note |
+| handoff | always, before stopping | `.ai/SESSION.md` or committed state files | next action recorded |
 
-Create assumptions only when safe and reversible. Create open questions when
-missing information blocks implementation or could cause major rework.
+## Stage Rules
 
-### Phase 1: Repository Scan
+- Create assumptions only when safe and reversible. Create open questions when
+  missing information blocks implementation or could cause major rework.
+- Implementation may begin only from an approved or active spec unless
+  provisional risk is explicitly recorded.
+- High-impact decisions (irreversible choices, external integrations, security
+  or privacy decisions, deployment choices, API boundaries, persistence and
+  data model choices, major dependencies) require an ADR before
+  implementation.
+- Never work directly on `main` unless explicitly allowed. Use one branch per
+  feature, spike, or implementation phase per `BRANCH_AND_WORKTREE_GUIDE.md`.
+- Use separate worktrees for concurrent agents only when file ownership is
+  disjoint and contracts are stable.
+- Keep changes scoped. Use test-driven development where practical.
+- Merge readiness follows `PR_MERGE_POLICY.md`. P0, P1, and blocking P2
+  findings must be resolved. AI may merge once these gates pass; human,
+  maintainer, or Code Owner approval is not required.
 
-Inspect structure, source-of-truth files, stale artifacts, Git status, branches,
-worktrees, hooks, CI, tests, and documentation. Record findings in
-`BOOTSTRAP_AUDIT.md`.
+## Review And Evidence
 
-### Phase 2: Governance Bootstrap
+Review depth follows the operation profile per OPERATION_ROUTING.md and
+PR_REVIEW_POLICY.md: docs-trivial, docs-non-authoritative, and state-sync
+changes require a recorded self-check in the PR body; planning-governance and
+strict-protected changes require fresh-context adversarial review.
 
-Create or update the governance files, source-of-truth hierarchy, artifact
-registry, handoff protocol, branch/worktree rules, stale item tracking, review
-policies, and validation script.
-
-### Phase 3: Spec Creation
-
-Create or update `SPECS/SPEC_INDEX.md` and one spec per feature, spike,
-integration, infrastructure change, major refactor, or product behavior change.
-Implementation may begin only from an approved or active spec unless
-provisional risk is explicitly recorded.
-
-### Phase 4: Architecture
-
-Create or update `ARCHITECTURE.md`. Create ADRs for meaningful technology,
-boundary, persistence, API, security, deployment, or expensive-to-change
-decisions.
-
-### Phase 5: Backlog
-
-Create implementation-ready backlog items sequenced by dependency, not only by
-feature order. Mark priority, complexity, risk, readiness, dependencies,
-review needs, and parallelization status.
-
-### Phase 6: Test Strategy
-
-Create `TEST_STRATEGY.md`, `TEST_PLAN.md`, `TESTS/ACCEPTANCE_CRITERIA_MAP.md`,
-and `TESTS/MANUAL_TEST_CHECKLIST.md`. Acceptance criteria should map to tests
-where practical.
-
-### Phase 7: Guardrails
-
-Install or recommend lightweight local hooks and heavier CI checks. Local hooks
-should be fast. CI should run the complete validation suite for the selected
-stack.
-
-### Phase 8: Branch And Worktree Setup
-
-Never work directly on `main` unless explicitly allowed. Use one branch per
-feature, spike, or implementation phase. Use separate worktrees for concurrent
-AI agents only when file ownership is disjoint and contracts are stable.
-
-### Phase 9: Implementation Readiness
-
-Before implementation, confirm the task has:
-
-- durable operation classification from `OPERATION_ROUTING.md`
-- linked approved or active spec
-- clear acceptance criteria
-- known dependencies
-- known architecture impact or explicit N/A
-- test expectations
-- artifact status
-- stale/conflicting artifacts checked
-- branch/worktree strategy
-- risk classification
-- required reviewers
-- parallelization risk assessment
-
-### Phase 10: Implementation
-
-Use test-driven development where practical. Keep changes scoped. Run relevant
-checks. Update documentation, traceability, artifact registry, current state,
-and handoff.
-
-### Phase 11: PR Preparation
-
-Create a PR review package using
-`REVIEWS/templates/PR_REVIEW_PACKAGE_TEMPLATE.md`. Include specs, backlog
-items, ADRs, changed files, tests, risk, assumptions, rollout, rollback,
-traceability, artifact updates, and branch/worktree status.
-
-### Phase 12: Adversarial PR Review
-
-Every PR requires fresh-context adversarial review. The reviewer must read the
-review package, diff, relevant specs, ADRs, tests, backlog, traceability, and
-current state. The reviewer must not rely on implementer conversation history.
-
-### Phase 13: Merge Readiness
-
-Apply `PR_MERGE_POLICY.md`. P0 and P1 findings must be resolved. Blocking P2
-findings must be resolved. Acceptance-with-rationale is not permitted for P0,
-P1, or blocking P2. Non-blocking P2 may be tracked and deferred when the
-reviewer explicitly classifies it as non-blocking. AI may merge once these
-gates pass; human, maintainer, or Code Owner approval is not required.
-
-### Phase 14: Final State Update
-
-Before stopping, update:
-
-- `CURRENT_STATE.md`
-- `AI_HANDOFF.md`
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
-- `TEST_RESULTS.md`
-- `STALE_ITEMS.md`, if needed
-- `WORKLOG/WORKLOG_INDEX.md`
+Record one validation-evidence note per PR (in the PR body or review package).
+Update TEST_RESULTS.md, TRACEABILITY_MATRIX.md, and ARTIFACT_REGISTRY.md only
+when a durable baseline, requirement mapping, or artifact lifecycle changed -
+at most once per PR, not per session.
 
 ## Definition Of Ready
 
@@ -227,39 +142,39 @@ A task is ready for implementation only when:
 
 - it has a linked spec or approved equivalent
 - acceptance criteria are clear
+- its readiness gate fields are filled:
+  - `User value (1 sentence):`
+  - `Measurable success criterion:`
+  - `Observability expectation:`
+  - `Security triggers checked (per SECURITY_AND_PRIVACY.md): yes | no | n-a`
 - dependencies are known or documented
 - architecture impact is known or explicitly not applicable
 - test expectations are defined
-- artifact status is clear
 - stale or conflicting artifacts have been checked
 - branch and worktree strategy is clear
 - risk level has been assessed
-- required reviewers are known
 - parallelization risk has been assessed if another agent may work concurrently
 
 ## Definition Of Done
 
 A task is done only when:
 
-- implementation matches the spec
-- acceptance criteria are satisfied
-- required tests are added or updated
-- relevant tests pass, or failures are documented
-- affected specs are updated
-- artifact registry is updated
-- traceability matrix is updated
-- architecture or ADRs are updated if needed
+- implementation matches the spec and acceptance criteria are satisfied
+- required tests are added or updated, and relevant tests pass or failures are
+  documented
+- affected specs, architecture documents, or ADRs are updated when behavior or
+  design changed
 - backlog or Linear status is updated
-- `AI_HANDOFF.md` is updated
-- `CURRENT_STATE.md` is updated
-- dirty worktree status is documented
-- PR review requirements are satisfied or pending review is clearly recorded
-- merge readiness status is documented
+- the validation-evidence note and any durable state updates follow the Review
+  And Evidence rules above
+- review and merge readiness for the operation profile are satisfied or the
+  pending review is clearly recorded
 
 ## Agent Roles
 
-Agents must record their active role in `WORKLOG/WORKLOG_INDEX.md` and
-`AI_HANDOFF.md`. Canonical role definitions live in `memory/ai/`.
+Agents record their active role in `.ai/SESSION.md` for local work, or in
+`AI_HANDOFF.md` when durable truth changed. Canonical role definitions live in
+`memory/ai/`.
 
 - Product Analyst: extract requirements, ambiguity, assumptions, open questions.
 - Spec Author: create specs, acceptance criteria, and traceability links.

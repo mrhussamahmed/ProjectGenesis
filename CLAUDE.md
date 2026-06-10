@@ -9,8 +9,9 @@ Claude follows the same shared role files as Codex:
 
 1. Read `memory/ai/SHARED_AGENT_RULES.md`.
 2. Read the relevant `memory/ai/ROLE_*.md` file for the task.
-3. Follow `CONTEXT_INDEX.md`, `GOVERNANCE.md`, current specs, ADRs, backlog,
-   traceability, artifact registry, current state, handoff, and review policy.
+3. Read the `CONTEXT_INDEX.md` section for your task. `CONTEXT_INDEX.md` is
+   the single read-list authority; do not read beyond it unless
+   `OPERATION_ROUTING.md` read tiers require escalation.
 
 Claude can optionally use `SCRIPTS/start-claude.sh` to load the role files at
 startup. Claude-specific startup is convenience only. The source of truth
@@ -46,20 +47,13 @@ is restarted with an allowlisted role mode.
 
 ## Required Reading
 
-After selecting the shared role, read:
+Read `memory/ai/SHARED_AGENT_RULES.md`, then the relevant `memory/ai/ROLE_*.md`
+file, then the `CONTEXT_INDEX.md` section for your task. `CONTEXT_INDEX.md` is
+the single read-list authority. Also inspect `git status --short --branch`
+when Git is available.
 
-1. `AI_PROJECT_BOOTSTRAP.md`
-2. `CONTEXT_INDEX.md`
-3. `CURRENT_STATE.md`
-4. `AI_HANDOFF.md`
-5. `ARTIFACT_REGISTRY.md`
-6. `SPECS/SPEC_INDEX.md`
-7. `TRACEABILITY_MATRIX.md`
-8. `GOVERNANCE.md`
-9. `BRANCH_AND_WORKTREE_GUIDE.md`
-10. relevant specs, ADRs, backlog items, and tests
-
-Also inspect `git status --short --branch` when Git is available.
+Run SCRIPTS/session.sh start <profile> to enable scoped validation for the
+session; run SCRIPTS/doctor.sh for instant orientation.
 
 ## Validation
 

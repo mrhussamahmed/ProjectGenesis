@@ -2,11 +2,11 @@ artifact_id: ART-CONTEXT-PACK-PRODUCT-INTAKE
 title: Product Intake Context Pack
 type: context-pack
 status: active
-version: v1.2
+version: v2.0
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002 and SPEC-BOOT-003
+source: SPEC-BOOT-002, SPEC-BOOT-003, and GEN-01 tiered read contract
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -21,18 +21,23 @@ authoritative: false
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `memory/ai/ROLE_PRODUCT_ANALYST.md`
 - `CONTEXT_INDEX.md`
-- `OPERATION_ROUTING.md`
 - `00_intake/INTAKE_INDEX.md`
 - `00_intake/SOURCE_REGISTRY.md`
+- `01_context/PROJECT_BRIEF.md`
+- `02_requirements/REQUIREMENTS_INDEX.md`
+- `02_requirements/ASSUMPTIONS_REGISTER.md`
 - `OPEN_QUESTIONS.md`
-- `PROJECT_MEMORY.md`
+- `CURRENT_STATE.md`
+- non-placeholder files under `00_intake/raw/`
 
 ## Files To Read If Relevant
 
-- files under `00_intake/raw/`
-- files under `INPUT/`
-- `01_context/PROJECT_BRIEF.md`
-- `02_requirements/REQUIREMENTS_INDEX.md`
+- research notes under `00_intake/research/`, when validating assumptions
+- existing summaries under `00_intake/summaries/`
+- `02_requirements/RISK_REGISTER.md`
+- `01_context/PROJECT_CHARTER.md`, `01_context/GLOSSARY.md`,
+  `01_context/CONSTRAINTS.md`
+- templates named by the workflow step that needs them
 
 ## Files Not To Scan Unless Needed
 

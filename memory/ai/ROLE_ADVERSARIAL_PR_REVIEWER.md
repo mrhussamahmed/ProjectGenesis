@@ -2,9 +2,9 @@ artifact_id: ART-AI-ROLE-ADVERSARIAL-PR-REVIEWER
 title: Role - Adversarial PR Reviewer
 type: agent-role
 status: authoritative
-version: v1.3
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request, SPEC-BOOT-003, and BOOT-GREEN-MERGE-001
 linked_specs: [SPEC-BOOT-003]
@@ -97,14 +97,9 @@ human, maintainer, or Code Owner approval.
 
 ## Required Updates Before Stopping
 
-- `.ai/SESSION.md` for local resume context when unmerged local work remains
-- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
-  changed and should remain true on `main` after merge
-- review record under `REVIEWS/` when a review is performed
-- `ARTIFACT_REGISTRY.md` for new review artifacts
-- `TRACEABILITY_MATRIX.md`
-- `TEST_RESULTS.md` when checks run
-- `WORKLOG/WORKLOG_INDEX.md`
+Before stopping: apply the one-note evidence rule (see GOVERNANCE.md
+End-Of-Session) and update only artifacts your work actually changed; record
+local resume context in .ai/SESSION.md when unmerged work remains.
 
 ## Handoff Requirements
 

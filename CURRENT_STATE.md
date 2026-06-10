@@ -2,13 +2,13 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v5.0
+version: v6.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
-source: ProjectGenesis bootstrap scaffold; split-state boundary from BOOT-STATE-001
+source: ProjectGenesis bootstrap scaffold; split-state boundary from BOOT-STATE-001; state compaction from GEN-07
 linked_specs: []
-linked_tickets: [BOOT-STATE-001]
+linked_tickets: [BOOT-STATE-001, GEN-07]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -18,13 +18,8 @@ authoritative: false
 
 ## Active Specs
 
-No ProjectGenesis-specific specs are currently active. The legacy SPEC-BOOT-*
-specs that introduced the original bootstrap mechanics are preserved under
-`MAINTAINER_ARCHIVE/SPECS/` for audit.
-
-## Proposed Specs
-
-None.
+No ProjectGenesis-specific specs are active. Legacy SPEC-BOOT-* specs are
+preserved under `MAINTAINER_ARCHIVE/SPECS/` for audit.
 
 ## Active Architecture
 
@@ -37,22 +32,21 @@ decision.
 
 ## Active Implementation Phase
 
-Clean scaffold boundary follow-on slices 1-5 are merged. Canonical state is a
-merge-safe baseline snapshot; branch-specific implementation status belongs in
-PR evidence, not in this file.
+Scaffold operating-model improvement arc: the GEN-01..16 program (compact
+reads, risk-tiered review, pipeline commands; Linear HUS-219..235) is the
+current operating-model baseline; the P2 batch (GEN-17 / HUS-235) remains
+open.
+Pipeline Stage: implement (the scaffold itself; no downstream product
+intake yet).
 
 ## Active Branch
 
 `main`
 
-## Active Worktree
-
-repository root
-
 ## Active Backlog Focus
 
-No active canonical backlog focus on `main`. Branch-specific work should link
-its backlog item in PR evidence.
+GEN improvement program (Linear HUS-219..235); next batch is GEN-17 /
+HUS-235. See `IMPLEMENTATION_PLAN.md`.
 
 ## Current Blockers
 
@@ -60,28 +54,17 @@ None.
 
 ## Current Source-Of-Truth Files
 
-- `AI_PROJECT_BOOTSTRAP.md` - operating-model description
-- `CONTEXT_INDEX.md` - required-reading index
-- `GOVERNANCE.md` - governance rules
-- `OPERATION_ROUTING.md` - adaptive routing
+- `CONTEXT_INDEX.md` - single read authority (minimum context plus on-demand tiers)
+- `OPERATION_ROUTING.md` - operation profiles and validation depth
 - `TEMPLATE_MANIFEST.md` - scaffold boundary classification
-- `TEMPLATE_STARTERS/` - clean starter content
+- `TEMPLATE_STARTERS/` - clean starter content for forks
 - `MAINTAINER_ARCHIVE/` - relocated ProjectGenesis maintainer history
-- `MAINTAINER_ARCHIVE/snapshots/*-2026-05-16-pre-slice-3.md` - pre-trim
-  snapshots of required-reading files
 
 ## Known Stale Or Superseded Files
 
-None. Prior staleness tracking lives in `MAINTAINER_ARCHIVE/STALE_ITEMS.md`.
-
-## Next Recommended Action
-
-Resume normal development from the clean scaffold boundary baseline. Use PR
-evidence for branch-specific shared status and `.ai/SESSION.md` for local
-resume notes.
+None. Staleness tracking lives in `STALE_ITEMS.md`.
 
 ## Latest Validation
 
-Latest durable baseline validation: post-cleanup `main` Bootstrap Validation
-run 25990646864 passed on 2026-05-17. Prior post-merge drift from PR #20 was
-resolved by cleanup commit `05f01f2` and finalization commit `2fee759`.
+Durable baseline: `main` Bootstrap Validation run 25990646864 passed on
+2026-05-17. The GEN-01..16 program baseline is recorded in `TEST_RESULTS.md`.

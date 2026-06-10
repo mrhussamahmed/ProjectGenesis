@@ -33,6 +33,8 @@ archived under `MAINTAINER_ARCHIVE/REVIEWS/`.
 
 ## Conventions
 
-- Reviews use fresh-context adversarial review for every PR.
+- Review depth follows the operation profile per `PR_REVIEW_POLICY.md`:
+  light self-checks live in the PR body; fresh-context adversarial reviews
+  for planning-governance and strict-protected changes are registered here.
 - Register every review record here.
 - Link reviews to specs, backlog items, tickets, and traceability rows.

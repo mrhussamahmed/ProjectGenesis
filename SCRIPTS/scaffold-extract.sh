@@ -228,7 +228,6 @@ PROJECT_OWNED_GENERATED_FILES=(
   "AI_HANDOFF.md"
   "ARTIFACT_REGISTRY.md"
   "TEST_RESULTS.md"
-  "PROJECT_MEMORY.md"
   "IMPLEMENTATION_PLAN.md"
   "BACKLOG.md"
   "TRACEABILITY_MATRIX.md"
@@ -245,7 +244,7 @@ PROJECT_OWNED_GENERATED_FILES=(
 rsync_excludes=(
   --exclude='.git'
   --exclude='.claude'
-  --exclude='research'
+  --exclude='/research'
   --exclude='node_modules'
   --exclude='dist'
   --exclude='build'
@@ -266,8 +265,8 @@ rsync_excludes=(
   --exclude='SPECS/SPEC-BOOT-002-scaffold-intake-and-governance.md'
   --exclude='SPECS/SPEC-BOOT-003-adaptive-governance-routing.md'
   --exclude='SPECS/SPEC-BOOT-004-public-launch-readiness.md'
-  --exclude='REVIEWS/REVIEW-20*.md'
-  --exclude='REVIEWS/PR_REVIEW_PACKAGE-20*.md'
+  --exclude='REVIEWS/REVIEW-*.md'
+  --exclude='REVIEWS/PR_REVIEW_PACKAGE-*.md'
   --exclude='docs/public_launch_checklist.md'
   --exclude='docs/releases/'
   --exclude='docs/demo/'
@@ -276,17 +275,8 @@ rsync_excludes=(
   --exclude='docs/token_efficiency_guidance.md'
   --exclude='examples/'
   --exclude='.github/ISSUE_TEMPLATE/'
-  --exclude='start here/'
-  --exclude='BACKLOG/BOOT-009*'
-  --exclude='BACKLOG/BOOT-01*'
-  --exclude='BACKLOG/BOOT-02*'
-  --exclude='BACKLOG/BOOT-03*'
-  --exclude='BACKLOG/BOOT-04*'
-  --exclude='BACKLOG/BOOT-05*'
-  --exclude='BACKLOG/BOOT-06*'
-  --exclude='BACKLOG/BOOT-07*'
-  --exclude='BACKLOG/BOOT-08*'
-  --exclude='BACKLOG/BOOT-09*'
+  --exclude='BACKLOG/BOOT-*'
+  --exclude='docs/superpowers/'
 )
 
 # Reuse the shared contract lists so excluded paths cannot drift between
@@ -433,6 +423,7 @@ Run the \`Start requirement breakdown\` command or follow
   extracted scaffold.
 EOF
 
+
 emit "AI_HANDOFF.md" <<EOF
 artifact_id: ART-STATE-003
 title: AI Handoff
@@ -452,112 +443,31 @@ authoritative: false
 
 # AI Handoff
 
-## Current Date
+## Baseline
 
-$extract_date
+Initial bootstrap scaffold extraction on $extract_date.
 
-## Active Agent
+## Last Validated
 
-none yet
-
-## Current Role
-
-none yet
-
-## Current Branch
-
-\`main\`
-
-## Current Worktree
-
-none yet
-
-## Last Completed Task
-
-Initial bootstrap scaffold extraction.
-
-## Current In-Progress Task
-
-Awaiting product intake.
-
-## Pre-Change Classification
-
-- Operation profile: \`review-only\`
-- Target files: none
-- Protected files touched: false
-- Expected risk: low
-- Branch requirement: any future meaningful work requires its own branch and
-  routed review path; this initial scaffold record describes no edits.
-- Required validation: \`bash SCRIPTS/validate-bootstrap.sh\`
-- Required review: none for this initial scaffold record.
-- Traceability impact: none.
-- Registry impact: none.
-- Handoff/state impact: none beyond recording the extracted scaffold.
-- Dirty worktree status: clean.
-- Escalation triggers checked: source-of-truth hierarchy and operation routing
-  rules reviewed; no triggers are active in the extracted scaffold.
-
-## Final Evidence Envelope
-
-- Operation profile: \`review-only\`
-- Classification confidence: high
-- Escalation triggers checked: source-of-truth hierarchy, operation routing,
-  branch and worktree state.
-- Files read: AI_PROJECT_BOOTSTRAP, GOVERNANCE, CONTEXT_INDEX,
-  ARTIFACT_REGISTRY, and TRACEABILITY_MATRIX (extracted copies).
-- Files changed: none after extraction.
-- Files intentionally not read: project-specific input has not yet been
-  provided.
-- Artifacts not impacted: validators, hooks, CI workflow, role files, command
-  files, context packs, templates, and ADRs were preserved by the extraction
-  and have not been changed.
-- Validation run: \`bash SCRIPTS/validate-bootstrap.sh\`.
-- Validation skipped: stack-specific product tests because no product runtime
-  code exists yet in the extracted scaffold.
-- Review required: none for this initial scaffold record.
-- Next safe action: run \`Start requirement breakdown\` or follow
-  \`NEW_PROJECT_INITIALIZATION.md\` to begin downstream intake.
-
-## Files Changed
-
-- none.
-
-## Tests Run
-
-- \`bash SCRIPTS/validate-bootstrap.sh\` on the extracted scaffold.
-
-## Tests Not Run
-
-- Stack-specific product tests; no product runtime code exists yet in the
-  extracted scaffold.
-
-## Known Risks
-
-- None for the initial extracted scaffold state.
-
-## Dirty Worktree Status
-
-- Clean.
+Not validated yet; run \`bash SCRIPTS/validate-bootstrap.sh\`.
 
 ## Next Recommended Action
 
-Run \`Start requirement breakdown\` or follow \`NEW_PROJECT_INITIALIZATION.md\`
-to begin downstream intake.
+Drop product input in \`00_intake/raw/\` and tell the agent
+\`Start requirement breakdown\`.
 
-## What The Next AI Must Read First
+## Known Risks
 
-- \`memory/ai/SHARED_AGENT_RULES.md\`
-- \`CONTEXT_INDEX.md\`
-- \`CURRENT_STATE.md\`
-- \`AI_HANDOFF.md\`
-- \`ARTIFACT_REGISTRY.md\`
-- \`SPECS/SPEC_INDEX.md\`
-- \`OPERATION_ROUTING.md\`
-- \`BRANCH_AND_WORKTREE_GUIDE.md\`
+None recorded.
 
-## Implementation Status
+## Open Threads
 
-- Not started; awaiting product intake.
+None.
+
+## Read First
+
+\`CONTEXT_INDEX.md\` Minimum Context Before Any Work; \`.ai/SESSION.md\` for
+local resume notes.
 EOF
 
 emit "TRACEABILITY_MATRIX.md" <<EOF
@@ -605,7 +515,7 @@ instead of a product spec. Product implementation must not use this exception.
 | REQ-BOOT-005: Anti-hallucination and source-of-truth rules | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_PROJECT_BOOTSTRAP.md\`, \`GOVERNANCE.md\`, \`CONTEXT_INDEX.md\` | validator required files | pending | not released | initialized |
 | REQ-BOOT-006: Autonomous backlog creation | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`BACKLOG.md\`, \`BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md\` | validator required files | pending | not released | initialized |
 | REQ-BOOT-007: Architecture decision tracking | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`DECISIONS.md\`, \`ADR/ADR_INDEX.md\`, \`ADR/templates/ADR_TEMPLATE.md\` | validator required files | pending | not released | initialized |
-| REQ-BOOT-008: Shared AI handoff | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_HANDOFF.md\`, \`HANDOFFS/HANDOFF_INDEX.md\` | handoff section checks | pending | not released | initialized |
+| REQ-BOOT-008: Shared AI handoff | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_HANDOFF.md\` | handoff section checks | pending | not released | initialized |
 | REQ-BOOT-009: Production-readiness checks | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`RELEASE_READINESS.md\`, \`CI_CD_GUIDE.md\`, \`SECURITY_AND_PRIVACY.md\`, \`OBSERVABILITY.md\` | validator required files | pending | not released | initialized |
 | REQ-BOOT-010: Fresh adversarial PR review | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`PR_REVIEW_POLICY.md\`, \`PR_MERGE_POLICY.md\`, \`AI_REVIEW_PROMPTS.md\`, \`REVIEWS/\` | validator required files | pending | not released | initialized |
 | REQ-BOOT-011: Risk-based model and effort selection | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`RISK_MODEL.md\` | validator required files | pending | not released | initialized |
@@ -911,52 +821,6 @@ implementation.
   backlog, traceability, current state, and handoff.
 EOF
 
-emit "PROJECT_MEMORY.md" <<EOF
-artifact_id: ART-STATE-001
-title: Project Memory
-type: shared-state
-status: active
-version: v1.0
-created: $extract_date
-updated: $extract_date
-owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
-linked_specs: []
-linked_tickets: []
-linked_adrs: []
-replaces:
-replaced_by:
-authoritative: false
-
-# Project Memory
-
-This file summarizes durable project context for AI agents. It is not the
-highest source of truth. When this file conflicts with specs, architecture,
-ADRs, backlog, code, tests, \`CURRENT_STATE.md\`, or \`AI_HANDOFF.md\`, follow
-the higher-priority source and update this summary later.
-
-## Project Purpose
-
-- Downstream project intake using the reusable bootstrap scaffold.
-  Replace this section with the downstream project purpose once product
-  intake begins.
-
-## Users And Stakeholders
-
-- To be defined during downstream intake.
-
-## Key Constraints
-
-- To be defined during downstream intake.
-
-## Active Risks
-
-- To be defined during downstream intake.
-
-## Recent Decisions
-
-- Initial bootstrap scaffold extraction on $extract_date.
-EOF
 
 emit "ADR/ADR_INDEX.md" <<EOF
 artifact_id: ART-ADR-INDEX
@@ -985,31 +849,6 @@ Architecture Decision Records live in this folder.
 |--------|-------|------|--------|------|-------|--------------|----------------------|------------|---------------|
 EOF
 
-emit "HANDOFFS/HANDOFF_INDEX.md" <<EOF
-artifact_id: ART-HANDOFF-INDEX
-title: Handoff Index
-type: handoff-index
-status: active
-version: v1.0
-created: $extract_date
-updated: $extract_date
-owner: AI Bootstrap Maintainers
-source: Initial bootstrap scaffold
-linked_specs: []
-linked_tickets: []
-linked_adrs: []
-replaces:
-replaced_by:
-authoritative: false
-
-# Handoff Index
-
-\`AI_HANDOFF.md\` is the current handoff. Historical handoff snapshots can be
-stored in this folder when needed.
-
-| Date | Agent | Role | Branch | Worktree | File |
-|------|-------|------|--------|----------|------|
-EOF
 
 emit "IMPLEMENTATION_PLAN.md" <<EOF
 artifact_id: ART-PLAN-001
@@ -1155,7 +994,6 @@ Common fields for all entries below unless stated otherwise:
 | ART-AI-ROLE-DIAGRAM-ARCHITECT | agent-role | Diagram Architect Role | \`memory/ai/ROLE_DIAGRAM_ARCHITECT.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Mermaid diagram creation and review role definition. |
 | ART-BOOT-001 | governance | AI Project Bootstrap Operating System | \`AI_PROJECT_BOOTSTRAP.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Primary entrypoint. |
 | ART-BOOT-002 | guide | Bootstrap Usage Guide | \`BOOTSTRAP_USAGE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | How to use the package. |
-| ART-GETTING-STARTED | guide | Getting Started | \`GETTING_STARTED.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Primary getting-started guide. |
 | ART-NEW-PROJECT-INIT | guide | New Project Initialization | \`NEW_PROJECT_INITIALIZATION.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | New downstream project initialization prompt. |
 | ART-GOV-001 | governance | Governance | \`GOVERNANCE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Core governance rules. |
 | ART-OPS-ROUTING-001 | governance | Operation Routing And Impact Map | \`OPERATION_ROUTING.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Adaptive governance control plane. |
@@ -1182,7 +1020,6 @@ Common fields for all entries below unless stated otherwise:
 
 | Artifact ID | Type | Title | File Path | Status | Version | Source Input | Linked Specs | Linked ADRs | Authoritative | Notes |
 |-------------|------|-------|-----------|--------|---------|--------------|--------------|-------------|---------------|-------|
-| ART-STATE-001 | shared-state | Project Memory | \`PROJECT_MEMORY.md\` | active | v1.0 | extracted scaffold | none | none | false | Summary only. |
 | ART-STATE-002 | shared-state | Current State | \`CURRENT_STATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Current operational view. |
 | ART-STATE-003 | shared-state | AI Handoff | \`AI_HANDOFF.md\` | active | v1.0 | extracted scaffold | none | none | false | Agent transition state. |
 | ART-STATE-004 | shared-state | Open Questions | \`OPEN_QUESTIONS.md\` | active | v1.0 | extracted scaffold | none | none | false | Unresolved blockers. |
@@ -1205,11 +1042,8 @@ Common fields for all entries below unless stated otherwise:
 | ART-REVIEW-ADVERSARIAL-TEMPLATE | template | Adversarial PR Review Template | \`REVIEWS/templates/ADVERSARIAL_PR_REVIEW_TEMPLATE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Adversarial PR review template. |
 | ART-TEST-MANUAL-CHECKLIST | manual-test-checklist | Manual Test Checklist | \`TESTS/MANUAL_TEST_CHECKLIST.md\` | active | v1.0 | extracted scaffold | none | none | false | Manual test checklist. |
 | ART-WORKLOG-INDEX | worklog | Worklog Index | \`WORKLOG/WORKLOG_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | false | Session worklog. |
-| ART-HANDOFF-INDEX | handoff-index | Handoff Index | \`HANDOFFS/HANDOFF_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | false | Handoff index. |
 | ART-INTAKE-INDEX | intake-index | Intake Index | \`00_intake/INTAKE_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | true | Canonical intake folder index. |
 | ART-SOURCE-REGISTRY | source-registry | Source Registry | \`00_intake/SOURCE_REGISTRY.md\` | active | v1.0 | extracted scaffold | none | none | true | Source registry with stable SRC-* IDs. |
-| ART-INPUT-README | guide | Legacy INPUT Alias | \`INPUT/README.md\` | active | v1.0 | extracted scaffold | none | none | false | Legacy INPUT alias pointing back to canonical intake. |
-| ART-INPUT-GITKEEP | placeholder | INPUT Gitkeep | \`INPUT/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Empty marker preserved so the legacy directory remains present. |
 | ART-PROJECT-BRIEF | guide | Project Brief | \`01_context/PROJECT_BRIEF.md\` | active | v1.0 | extracted scaffold | none | none | false | Downstream project brief template. |
 | ART-PROJECT-CHARTER | guide | Project Charter | \`01_context/PROJECT_CHARTER.md\` | active | v1.0 | extracted scaffold | none | none | false | Downstream project charter template. |
 | ART-GLOSSARY | guide | Glossary | \`01_context/GLOSSARY.md\` | active | v1.0 | extracted scaffold | none | none | false | Downstream glossary template. |
@@ -1227,6 +1061,19 @@ Common fields for all entries below unless stated otherwise:
 | ART-COMMAND-INDEX | command-index | Command Index | \`COMMANDS/COMMAND_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | true | Command index. |
 | ART-COMMAND-TEMPLATE | template | Command Template | \`COMMANDS/COMMAND_TEMPLATE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Command authoring template. |
 | ART-COMMAND-START-REQUIREMENT-BREAKDOWN | command | Start Requirement Breakdown | \`COMMANDS/start-requirement-breakdown.md\` | active | v1.0 | extracted scaffold | none | none | false | Reusable downstream project intake and requirement breakdown workflow command triggered by \`Start requirement breakdown\`. |
+| ART-COMMAND-VALIDATE-IDEA | command | Validate The Idea | \`COMMANDS/validate-idea.md\` | active | v1.0 | extracted scaffold | none | none | false | Evidence-backed idea validation workflow. |
+| ART-COMMAND-START-ARCH | command | Start Architecture Design | \`COMMANDS/start-architecture-design.md\` | active | v1.0 | extracted scaffold | none | none | false | Intent-to-architecture workflow. |
+| ART-COMMAND-IMPLEMENT-NEXT | command | Implement Next Story | \`COMMANDS/implement-next-story.md\` | active | v1.0 | extracted scaffold | none | none | false | Scoped-validation story execution workflow. |
+| ART-COMMAND-RESUME-WORK | command | Resume Work | \`COMMANDS/resume-work.md\` | active | v1.0 | extracted scaffold | none | none | false | Minimum-read session resume workflow. |
+| ART-COMMAND-EXPORT-LINEAR | command | Export Backlog To Linear | \`COMMANDS/export-backlog-to-linear.md\` | active | v1.0 | extracted scaffold | none | none | false | Deterministic, dedupe-safe Linear export. |
+| ART-SCRIPT-SESSION | script | Session Helper | \`SCRIPTS/session.sh\` | active | v1.0 | extracted scaffold | none | none | false | Writes \`.ai/SESSION.md\` so the validation fast path is reachable. |
+| ART-SCRIPT-DOCTOR | script | Doctor Status Command | \`SCRIPTS/doctor.sh\` | active | v1.0 | extracted scaffold | none | none | false | Read-only orientation status. |
+| ART-SCRIPT-STRICT-GATE | script | Strict Gate Paths | \`SCRIPTS/strict-gate-paths.sh\` | active | v1.0 | extracted scaffold | none | none | false | Single source of the strict-gate path pattern. |
+| ART-STARTER-SESSION | template-starter | Session Starter | \`TEMPLATE_STARTERS/SESSION.md\` | active | v1.0 | extracted scaffold | none | none | false | Format reference for \`.ai/SESSION.md\`. |
+| ART-STARTER-AC-MAP | template-starter | Acceptance Criteria Map Starter | \`TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md\` | active | v1.0 | extracted scaffold | none | none | false | Clean acceptance-criteria map starter. |
+| ART-TEMPLATE-TECH-DESIGN | template | Tech Design Template | \`SPECS/templates/TECH_DESIGN_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | One-page solution design skeleton. |
+| ART-TEMPLATE-RESEARCH-NOTE | template | Research Note Template | \`00_intake/research/RESEARCH_NOTE_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Assumption-to-evidence research note. |
+| ART-TEMPLATE-SUMMARY | template | Source Summary Template | \`00_intake/summaries/SUMMARY_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Compact source summary schema. |
 | ART-INTAKE-RAW-DIR | input-directory | Raw Intake Directory | \`00_intake/raw/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the canonical raw intake directory present. |
 | ART-INTAKE-SUMMARIES-DIR | input-directory | Intake Summaries Directory | \`00_intake/summaries/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the intake summaries directory present. |
 | ART-ARTIFACTS-DIR | input-directory | Artifacts Directory | \`ARTIFACTS/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the artifacts directory present. |

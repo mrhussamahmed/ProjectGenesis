@@ -2,9 +2,9 @@ artifact_id: ART-GIT-001
 title: Branch And Worktree Guide
 type: guide
 status: authoritative
-version: v1.3
+version: v1.4
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, and BOOT-STATE-001
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
@@ -97,6 +97,12 @@ Recommended branch names:
 Agents may use `.ai/SESSION.md` as a gitignored local resume aid for one
 worktree. It is not source of truth and must not contain decisions, accepted
 risks, review findings, spec changes, or merge evidence.
+
+Manage it with `SCRIPTS/session.sh` (`start <profile> [task-note]`, `touch`,
+`status`, `clear`); the file format lives in `TEMPLATE_STARTERS/SESSION.md`.
+The recorded operation profile drives the hooks' validation fast path via
+`SCRIPTS/operation-profile.sh` and fail-closes to strict when stale,
+branch-mismatched, or absent.
 
 Allowed local-session content:
 

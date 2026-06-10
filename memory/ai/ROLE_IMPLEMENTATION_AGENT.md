@@ -2,9 +2,9 @@ artifact_id: ART-AI-ROLE-IMPLEMENTATION-AGENT
 title: Role - Implementation Agent
 type: agent-role
 status: authoritative
-version: v1.2
+version: v2.0
 created: 2026-05-09
-updated: 2026-05-17
+updated: 2026-06-10
 owner: AI Bootstrap Maintainers
 source: User request and BOOT-GREEN-MERGE-001
 linked_specs: []
@@ -43,10 +43,10 @@ Implement ready tasks.
 - Avoid unrelated refactors.
 - Avoid editing shared contracts, schemas, auth, CI/CD, deployment,
   dependencies, or global config unless the task requires it.
-- Run relevant tests.
-- Update `TEST_RESULTS.md`.
-- Update `TRACEABILITY_MATRIX.md`.
-- Update `ARTIFACT_REGISTRY.md`.
+- Run the checks the change class requires per `OPERATION_ROUTING.md`
+  profiles; validate once per PR, not per edit.
+- Record validation evidence per the one-note evidence rule in
+  `GOVERNANCE.md` End-Of-Session.
 - Update committed state only when durable project truth changed and should
   remain true on `main` after merge.
 - Prepare PR review package if PR-ready.
@@ -63,8 +63,8 @@ Implement ready tasks.
 - Do not implement from draft, proposed, or missing specs except explicitly
   recorded spike work.
 - Do not broaden scope into unrelated refactors or features.
-- Do not skip the fresh-context adversarial review described in
-  `PR_REVIEW_POLICY.md`. The implementer must not act as the fresh-context
+- Do not skip the review tier that `PR_REVIEW_POLICY.md` assigns to the
+  operation profile. The implementer must not act as the fresh-context
   reviewer of their own work using their own implementer chat history.
 - Do not hide test failures or skipped checks.
 - Do not bypass failed required checks or unresolved P0/P1/blocking P2
@@ -81,14 +81,14 @@ Implement ready tasks.
 
 ## Required Updates Before Stopping
 
-- `.ai/SESSION.md` for local resume context when unmerged local work remains
-- `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth
-  changed and should remain true on `main` after merge
-- `TEST_RESULTS.md`
-- `ARTIFACT_REGISTRY.md`
-- `TRACEABILITY_MATRIX.md`
+Before stopping: apply the one-note evidence rule (see GOVERNANCE.md
+End-Of-Session) and update only artifacts your work actually changed; record
+local resume context in .ai/SESSION.md when unmerged work remains.
+
+Role-specific conditional updates:
+
+- `TEST_RESULTS.md` when a durable gating baseline changed
 - relevant specs, backlog items, or ADRs only when implementation exposed drift
-- `WORKLOG/WORKLOG_INDEX.md`
 
 ## Handoff Requirements
 

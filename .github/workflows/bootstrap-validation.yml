@@ -1,9 +1,19 @@
 name: Bootstrap Validation
 
+# Tiered CI (see CI_CD_GUIDE.md):
+# - validator + whitespace hygiene run on every event;
+# - red checks + shell syntax run only when the diff touches a strict-gate
+#   path (single pattern source: SCRIPTS/strict-gate-paths.sh), or on every
+#   push to main and manual dispatch (fail-closed full suite).
 on:
   pull_request:
   push:
+    branches: [main]
   workflow_dispatch:
+
+concurrency:
+  group: bootstrap-validation-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
@@ -11,18 +21,61 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v5
+        with:
+          # Full history so the merge-base diff against the PR base is
+          # computable without third-party actions.
+          fetch-depth: 0
 
       - name: Validate bootstrap package
         run: bash SCRIPTS/validate-bootstrap.sh
 
+      - name: Check whitespace hygiene
+        run: |
+          if [ -n "${GITHUB_BASE_REF:-}" ]; then
+            git diff --check "origin/${GITHUB_BASE_REF}...HEAD"
+          elif git rev-parse --quiet --verify 'HEAD~1' >/dev/null; then
+            git diff --check 'HEAD~1' HEAD
+          else
+            echo "No parent commit; skipping whitespace diff check."
+          fi
+
+      - name: Decide validation scope
+        id: scope
+        run: |
+          run_full=false
+          reason=""
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            run_full=true
+            reason="event=${{ github.event_name }} always runs the full suite"
+          else
+            changed="$(git diff --name-only "origin/${GITHUB_BASE_REF}...HEAD" 2>/dev/null)" || changed=""
+            if [ -z "$changed" ]; then
+              run_full=true
+              reason="could not compute changed files vs merge-base; failing closed to full suite"
+            else
+              match_status=0
+              printf '%s\n' "$changed" | bash SCRIPTS/strict-gate-paths.sh --match || match_status=$?
+              if [ "$match_status" -eq 0 ]; then
+                run_full=true
+                reason="changed files touch strict-gate paths (SCRIPTS/strict-gate-paths.sh)"
+              elif [ "$match_status" -eq 1 ]; then
+                reason="diff stays outside strict-gate paths; red checks and shell syntax skipped"
+              else
+                run_full=true
+                reason="strict-gate-paths.sh exited $match_status (usage error or broken script); failing closed to full suite"
+              fi
+            fi
+          fi
+          echo "run_full=$run_full" >> "$GITHUB_OUTPUT"
+          echo "Scope decision: run_full=$run_full ($reason)"
+
       - name: Run bootstrap red checks
+        if: steps.scope.outputs.run_full == 'true'
         run: bash SCRIPTS/validate-bootstrap-red-checks.sh
 
       - name: Check shell syntax
+        if: steps.scope.outputs.run_full == 'true'
         run: |
-          bash -n SCRIPTS/validate-bootstrap.sh
-          bash -n SCRIPTS/validate-bootstrap-red-checks.sh
-          bash -n SCRIPTS/start-claude.sh
-          bash -n .githooks/pre-commit
-          bash -n .githooks/pre-push
-          bash -n .githooks/commit-msg
+          for script in SCRIPTS/*.sh .githooks/pre-commit .githooks/pre-push .githooks/commit-msg; do
+            bash -n "$script"
+          done
