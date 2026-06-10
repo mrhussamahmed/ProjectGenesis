@@ -20,11 +20,15 @@ This is illustrative expected output, not a claim of live generated output.
 
 ## Assumptions
 
-| ID | Assumption | Confidence | Expiry | Related Requirement | Notes |
-|----|------------|------------|--------|---------------------|-------|
-| EX-ASM-001 | The first version can focus on a single freelancer account. | medium | Before spec approval | EX-REQ-004 | Team and agency workflows are not in the source. |
-| EX-ASM-002 | Manual invoice and expense entry is acceptable for the first version. | medium | Before spec approval | EX-REQ-001, EX-REQ-002 | Imports and integrations are not in the source. |
-| EX-ASM-003 | Late payment status can be calculated from due date and paid state. | medium | Before implementation | EX-REQ-003 | Needs product approval and edge-case review. |
+This table uses the canonical `02_requirements/ASSUMPTIONS_REGISTER.md`
+schema. Status `proposed` reflects that no approval evidence exists yet;
+agents must not approve their own assumptions.
+
+| Assumption ID | Statement | Risk | Owner | Status | Expiry | Approval Evidence | Linked Requirement | Linked Spec | Notes |
+|---------------|-----------|------|-------|--------|--------|-------------------|--------------------|-------------|-------|
+| EX-ASM-001 | The first version can focus on a single freelancer account. | medium | product owner | proposed | before spec approval | none | EX-REQ-004 | none | Team and agency workflows are not in the source. |
+| EX-ASM-002 | Manual invoice and expense entry is acceptable for the first version. | medium | product owner | proposed | before spec approval | none | EX-REQ-001, EX-REQ-002 | none | Imports and integrations are not in the source. |
+| EX-ASM-003 | Late payment status can be calculated from due date and paid state. | medium | product owner | proposed | before implementation | none | EX-REQ-003 | none | Needs product approval and edge-case review. |
 
 ## Open Questions
 
@@ -38,8 +42,10 @@ This is illustrative expected output, not a claim of live generated output.
 
 ## Risks
 
-| ID | Risk | Severity | Mitigation |
-|----|------|----------|------------|
-| EX-RISK-001 | Building AI reminders too early could add unclear safety and privacy requirements. | medium | Defer AI reminders until requirements are confirmed. |
-| EX-RISK-002 | Invoice compliance assumptions may be wrong for target markets. | high | Confirm geography and invoice fields before implementation. |
-| EX-RISK-003 | Expense tracking can expand into accounting scope. | medium | Keep first version to simple records unless sources require more. |
+This table uses the canonical `02_requirements/RISK_REGISTER.md` schema.
+
+| Risk ID | Risk | Category | Severity | Source IDs | Owner | Mitigation | Status | Linked Specs |
+|---------|------|----------|----------|------------|-------|------------|--------|--------------|
+| EX-RISK-001 | Building AI reminders too early could add unclear safety and privacy requirements. | product | medium | EX-SRC-001 | product owner | Defer AI reminders until requirements are confirmed. | open | none |
+| EX-RISK-002 | Invoice compliance assumptions may be wrong for target markets. | product | high | EX-SRC-001 | product owner | Confirm geography and invoice fields before implementation. | open | none |
+| EX-RISK-003 | Expense tracking can expand into accounting scope. | delivery | medium | EX-SRC-001 | product owner | Keep first version to simple records unless sources require more. | open | none |
