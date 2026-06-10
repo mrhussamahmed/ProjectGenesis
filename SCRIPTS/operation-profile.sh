@@ -17,7 +17,8 @@
 # caller passes the `--validator-level` flag instead of the raw profile.
 # Validator levels:
 #   - shape-only: required files + YAML metadata only (fast path)
-#   - state-sync: shape-only + AI_HANDOFF sections + registry registration
+#   - state-sync: shape-only + AI_HANDOFF sections + canonical-state guard
+#     + registry registration (GEN-17/QUAL-4)
 #   - strict: everything (default)
 #
 # Strict gates remain strict: this script reports a profile hint only. The
@@ -163,13 +164,17 @@ extract_profile() {
 
 profile_to_validator_level() {
   local p="$1"
-  # In slice 4 the validator supports two levels: strict (default) and
-  # shape-only (fast path). Future slices may add an intermediate
-  # state-sync level. Until then, only the two lightest profiles route to
-  # shape-only; everything else stays strict.
+  # The validator supports three levels: strict (default), state-sync
+  # (GEN-17/QUAL-4 intermediate level: shape + handoff sections +
+  # canonical-state guard + registry registration), and shape-only (fast
+  # path). Only the two lightest profiles route to shape-only; state-sync
+  # routes to the intermediate level; everything else stays strict.
   case "$p" in
     docs-trivial|process-light-exception)
       echo "shape-only"
+      ;;
+    state-sync)
+      echo "state-sync"
       ;;
     *)
       echo "strict"

@@ -4,12 +4,12 @@ set -euo pipefail
 repo_root="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 cd "$repo_root"
 
-# Validator profile (slice 4 adaptive routing).
+# Validator profile (slice 4 adaptive routing; state-sync level GEN-17/QUAL-4).
 #
 #   strict (default)     — run all checks.
-#   state-sync           — run shape + AI_HANDOFF sections + registry path
-#                          registration checks; skip cross-validation and
-#                          deep awk-based content checks.
+#   state-sync           — run shape + AI_HANDOFF sections + canonical-state
+#                          guard + registry path registration checks; skip
+#                          cross-validation and deep awk-based content checks.
 #   shape-only           — run only required-files / required-dirs and
 #                          YAML metadata checks. Used for docs-trivial
 #                          and process-light-exception operations.
@@ -17,7 +17,14 @@ cd "$repo_root"
 # The default remains strict; non-strict levels are only used when the
 # hook layer explicitly opts in via BOOTSTRAP_VALIDATE_PROFILE, AND the
 # hook has confirmed that no strict-gate path is in the staged file set.
+#
+# Changed-file scoping (GEN-17/AUTO-6): in shape-only mode the hook layer
+# may pass BOOTSTRAP_CHANGED_FILES (newline-separated paths). When present,
+# the YAML metadata scan covers only those files; when absent or empty the
+# full scan runs (fail-closed). Required-files/dirs checks always run in
+# full.
 BOOTSTRAP_VALIDATE_PROFILE="${BOOTSTRAP_VALIDATE_PROFILE:-strict}"
+BOOTSTRAP_CHANGED_FILES="${BOOTSTRAP_CHANGED_FILES:-}"
 
 # Scaffold context detection (reuse-boundary slice).
 #
@@ -51,6 +58,10 @@ failures=0
 fail() {
   echo "FAIL: $*" >&2
   failures=$((failures + 1))
+}
+
+warn() {
+  echo "WARN: $*" >&2
 }
 
 check_file() {
@@ -185,6 +196,49 @@ maintainer_only_required_files=(
   "SCRIPTS/prune-history.sh"
 )
 
+# Downstream required-file floor split (GEN-17/CART-7). In a downstream
+# scaffold these convenience-layer files are optional: a missing one emits
+# WARN instead of FAIL, so a downstream team can prune guides, packs,
+# commands, starters, and metric scripts without breaking validation. The
+# maintainer repository still requires every file (no upstream change).
+# Governance, state, indexes, roles, validators, hooks, and CI stay in the
+# hard floor for both contexts.
+downstream_optional_files=(
+  "AI_REVIEW_PROMPTS.md"
+  "OBSERVABILITY.md"
+  "CI_CD_GUIDE.md"
+  "CONTRIBUTING.md"
+  "RELEASE_READINESS.md"
+  "00_intake/research/RESEARCH_NOTE_TEMPLATE.md"
+  "00_intake/summaries/SUMMARY_TEMPLATE.md"
+  "CONTEXT_PACKS/product-intake.md"
+  "CONTEXT_PACKS/spec-authoring.md"
+  "CONTEXT_PACKS/architecture.md"
+  "CONTEXT_PACKS/implementation.md"
+  "CONTEXT_PACKS/review.md"
+  "CONTEXT_PACKS/resume.md"
+  "COMMANDS/validate-idea.md"
+  "COMMANDS/start-architecture-design.md"
+  "COMMANDS/implement-next-story.md"
+  "COMMANDS/resume-work.md"
+  "COMMANDS/export-backlog-to-linear.md"
+  "TEMPLATE_STARTERS/SESSION.md"
+  "TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md"
+  "TESTS/MANUAL_TEST_CHECKLIST.md"
+  "SCRIPTS/start-claude.sh"
+  "SCRIPTS/doctor.sh"
+  "SCRIPTS/metric-evidence-coverage.sh"
+  "SCRIPTS/metric-traceability-completeness.sh"
+)
+
+is_downstream_optional() {
+  local candidate="$1" entry
+  for entry in "${downstream_optional_files[@]}"; do
+    [[ "$entry" == "$candidate" ]] && return 0
+  done
+  return 1
+}
+
 common_required_dirs=(
   "SPECS"
   "SPECS/templates"
@@ -237,6 +291,10 @@ if [[ "$scaffold_context" == "downstream" ]]; then
 fi
 
 for path in "${required_files[@]}"; do
+  if [[ "$scaffold_context" == "downstream" ]] && is_downstream_optional "$path" && [[ ! -f "$path" ]]; then
+    warn "optional downstream file missing (allowed): $path"
+    continue
+  fi
   check_file "$path"
 done
 
@@ -244,18 +302,44 @@ for path in "${required_dirs[@]}"; do
   check_dir "$path"
 done
 
-while IFS= read -r file; do
-  case "$file" in
-    ./AGENTS.md|./CLAUDE.md|./README.md|./SPECS/templates/*|./ADR/templates/*|./BACKLOG/templates/*|./REVIEWS/templates/*|./00_intake/raw/*) continue ;;
-  esac
-  file="${file#./}"
+check_md_metadata() {
+  local file="$1"
   grep -Eq '^artifact_id: .+' "$file" || fail "$file missing non-empty artifact_id metadata"
   grep -Eq '^status: .+' "$file" || fail "$file missing status metadata"
   grep -Eq '^version: .+' "$file" || fail "$file missing version metadata"
   grep -Eq '^authoritative: (true|false)$' "$file" || fail "$file missing authoritative metadata"
-done < <(find . \
-  \( -path './.git' -o -path './.claude' -o -path './.ai' -o -path './research' \) -prune \
-  -o -type f -name '*.md' -print)
+}
+
+metadata_scan_scope="full"
+if [[ "$BOOTSTRAP_VALIDATE_PROFILE" == "shape-only" && -n "$BOOTSTRAP_CHANGED_FILES" ]]; then
+  metadata_scan_scope="changed"
+fi
+
+if [[ "$metadata_scan_scope" == "changed" ]]; then
+  # GEN-17/AUTO-6: shape-only fast path scoped to the changed-file set the
+  # hook layer verified against the strict gates. Only Markdown files are
+  # metadata-checked; deleted paths are skipped.
+  while IFS= read -r file; do
+    [[ -z "$file" ]] && continue
+    [[ "$file" == *.md ]] || continue
+    [[ -f "$file" ]] || continue
+    case "$file" in
+      AGENTS.md|CLAUDE.md|README.md|SPECS/templates/*|ADR/templates/*|BACKLOG/templates/*|REVIEWS/templates/*|00_intake/raw/*) continue ;;
+      .git/*|.claude/*|.ai/*|research/*) continue ;;
+    esac
+    check_md_metadata "$file"
+  done <<< "$BOOTSTRAP_CHANGED_FILES"
+else
+  while IFS= read -r file; do
+    case "$file" in
+      ./AGENTS.md|./CLAUDE.md|./README.md|./SPECS/templates/*|./ADR/templates/*|./BACKLOG/templates/*|./REVIEWS/templates/*|./00_intake/raw/*) continue ;;
+    esac
+    file="${file#./}"
+    check_md_metadata "$file"
+  done < <(find . \
+    \( -path './.git' -o -path './.claude' -o -path './.ai' -o -path './research' \) -prune \
+    -o -type f -name '*.md' -print)
+fi
 
 # Fast-path early-exit for shape-only profile (slice 4).
 if [[ "$BOOTSTRAP_VALIDATE_PROFILE" == "shape-only" ]]; then
@@ -323,6 +407,22 @@ for canonical_state_file in AI_HANDOFF.md CURRENT_STATE.md; do
     fail "$canonical_state_file canonical state contains active volatile session text"
   fi
 done
+
+# Intermediate early-exit for the state-sync profile (GEN-17/QUAL-4):
+# shape, metadata, handoff sections, and the canonical-state guard ran
+# above; registry path registration runs here. Cross-validation and the
+# deep awk-based content checks are skipped for pure state alignment.
+if [[ "$BOOTSTRAP_VALIDATE_PROFILE" == "state-sync" ]]; then
+  for path in "${required_files[@]}"; do
+    grep -Fq "\`$path\`" ARTIFACT_REGISTRY.md || fail "ARTIFACT_REGISTRY.md does not register $path"
+  done
+  if (( failures > 0 )); then
+    echo "Bootstrap validation failed with $failures issue(s) (state-sync profile)." >&2
+    exit 1
+  fi
+  echo "Bootstrap validation passed (state-sync profile; cross-validation and deep content checks skipped per BOOTSTRAP_VALIDATE_PROFILE=state-sync)."
+  exit 0
+fi
 
 placeholder_pattern='TODO|TBD|FIXME|REPLACE_ME|YOUR_|NEEDS CLARIFICATION'
 while IFS= read -r file; do
@@ -523,6 +623,111 @@ if [[ -f "02_requirements/ASSUMPTIONS_REGISTER.md" ]]; then
     }
   ' 02_requirements/ASSUMPTIONS_REGISTER.md)
 fi
+
+# GEN-17/REQU-5 controlled-vocabulary enforcement.
+#
+# Requirement rows in 02_requirements/REQUIREMENTS_INDEX.md must use the
+# documented Status vocabulary (confirmed, inferred, assumption,
+# needs-clarification, rejected, superseded) and Confidence levels (high,
+# medium, low). Risk rows in 02_requirements/RISK_REGISTER.md must use the
+# documented Category set (product, technical, delivery, security, privacy,
+# operational, release, dependency) and a low/medium/high/critical Severity.
+# Placeholder rows whose ID cell is "none" are skipped. Row detection keys
+# on the ID cell containing "REQ-" / "RISK-" so headers and separators are
+# ignored.
+
+if [[ -f "02_requirements/REQUIREMENTS_INDEX.md" ]]; then
+  while IFS='|' read -r kind id value; do
+    case "$kind" in
+      status) fail "02_requirements/REQUIREMENTS_INDEX.md requirement row has invalid status vocabulary: $id ($value)" ;;
+      confidence) fail "02_requirements/REQUIREMENTS_INDEX.md requirement row has invalid confidence vocabulary: $id ($value)" ;;
+    esac
+  done < <(awk -F'|' '
+    function trim(value) {
+      gsub(/^[ \t]+|[ \t]+$/, "", value)
+      return value
+    }
+    /^\|/ {
+      id = trim($2)
+      if (id !~ /REQ-[A-Za-z0-9]/) next
+      confidence = tolower(trim($7))
+      status = tolower(trim($8))
+      if (status != "" && status !~ /^(confirmed|inferred|assumption|needs-clarification|rejected|superseded)$/) {
+        print "status|" id "|" status
+      }
+      if (confidence != "" && confidence !~ /^(high|medium|low)$/) {
+        print "confidence|" id "|" confidence
+      }
+    }
+  ' 02_requirements/REQUIREMENTS_INDEX.md)
+fi
+
+if [[ -f "02_requirements/RISK_REGISTER.md" ]]; then
+  while IFS='|' read -r kind id value; do
+    case "$kind" in
+      category) fail "02_requirements/RISK_REGISTER.md risk row has invalid category vocabulary: $id ($value)" ;;
+      severity) fail "02_requirements/RISK_REGISTER.md risk row has invalid severity vocabulary: $id ($value)" ;;
+    esac
+  done < <(awk -F'|' '
+    function trim(value) {
+      gsub(/^[ \t]+|[ \t]+$/, "", value)
+      return value
+    }
+    /^\|/ {
+      id = trim($2)
+      if (id !~ /RISK-[A-Za-z0-9]/) next
+      category = tolower(trim($4))
+      severity = tolower(trim($5))
+      if (category != "" && category !~ /^(product|technical|delivery|security|privacy|operational|release|dependency)$/) {
+        print "category|" id "|" category
+      }
+      if (severity != "" && severity !~ /^(low|medium|high|critical)$/) {
+        print "severity|" id "|" severity
+      }
+    }
+  ' 02_requirements/RISK_REGISTER.md)
+fi
+
+# GEN-17/DX-6 onboarding link-integrity and superseded-file guard.
+#
+# Backtick-quoted repository paths referenced by the onboarding entry files
+# must exist, and none of them may point at a superseded artifact (status:
+# superseded or a non-empty replaced_by: frontmatter value). Glob patterns,
+# gitignored `.ai/` paths, and conditional `DIAGRAMS/` paths are skipped.
+# Maintainer context only: downstream scaffolds legitimately exclude
+# maintainer-only files that entry docs mention, and forks rewrite their
+# entry docs.
+
+onboarding_files=(
+  "CLAUDE.md"
+  "AGENTS.md"
+  "CONTEXT_INDEX.md"
+  "BOOTSTRAP_USAGE.md"
+  "NEW_PROJECT_INITIALIZATION.md"
+)
+
+for onboarding_file in "${onboarding_files[@]}"; do
+  [[ "$scaffold_context" == "maintainer" ]] || break
+  [[ -f "$onboarding_file" ]] || continue
+  while IFS= read -r ref; do
+    [[ -z "$ref" ]] && continue
+    case "$ref" in
+      *'*'*) continue ;;
+      .ai/*) continue ;;
+      DIAGRAMS/*) continue ;;
+      SPECS/SPEC-*) continue ;; # illustrative downstream spec naming examples
+    esac
+    if [[ ! -f "$ref" ]]; then
+      fail "$onboarding_file references missing file: $ref (onboarding link integrity)"
+      continue
+    fi
+    if [[ "$ref" == *.md ]]; then
+      if grep -Eq '^status: superseded$' "$ref" || grep -Eq '^replaced_by: .+' "$ref"; then
+        fail "$onboarding_file references superseded file: $ref"
+      fi
+    fi
+  done < <(grep -oE '`[A-Za-z0-9_][A-Za-z0-9_./*-]*\.(md|sh|yml)`' "$onboarding_file" | tr -d '`' | sort -u)
+done
 
 # BOOT-033 SRC/SPEC cross-validation.
 #

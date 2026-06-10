@@ -1315,6 +1315,252 @@ EOF
   expect_success "fenced code next safe action ignored" "$dir"
 }
 
+# --- GEN-17 validator additions ---------------------------------------------
+
+case_requirements_index_invalid_status_fails() {
+  local dir
+  dir="$(copy_repo requirements-invalid-status)"
+  python3 - "$dir/02_requirements/REQUIREMENTS_INDEX.md" <<'PYEOF'
+import sys
+path = sys.argv[1]
+s = open(path).read()
+anchor = "| none | none | none | none | none | none | none | none | none | No downstream requirements have been extracted yet. |"
+row = "\n| REQ-RED-001 | Red-check row with bad status. | functional | P1 | none | high | banana | none | none | seeded defect |"
+assert anchor in s
+open(path, "w").write(s.replace(anchor, anchor + row))
+PYEOF
+  expect_failure "requirements index invalid status vocabulary" "invalid status vocabulary" "$dir"
+}
+
+case_requirements_index_invalid_confidence_fails() {
+  local dir
+  dir="$(copy_repo requirements-invalid-confidence)"
+  python3 - "$dir/02_requirements/REQUIREMENTS_INDEX.md" <<'PYEOF'
+import sys
+path = sys.argv[1]
+s = open(path).read()
+anchor = "| none | none | none | none | none | none | none | none | none | No downstream requirements have been extracted yet. |"
+row = "\n| REQ-RED-002 | Red-check row with bad confidence. | functional | P1 | none | absolute | confirmed | none | none | seeded defect |"
+assert anchor in s
+open(path, "w").write(s.replace(anchor, anchor + row))
+PYEOF
+  expect_failure "requirements index invalid confidence vocabulary" "invalid confidence vocabulary" "$dir"
+}
+
+case_requirements_index_valid_row_passes() {
+  local dir
+  dir="$(copy_repo requirements-valid-row)"
+  python3 - "$dir/02_requirements/REQUIREMENTS_INDEX.md" <<'PYEOF'
+import sys
+path = sys.argv[1]
+s = open(path).read()
+anchor = "| none | none | none | none | none | none | none | none | none | No downstream requirements have been extracted yet. |"
+row = "\n| REQ-RED-003 | Red-check row with valid vocabulary. | functional | P1 | none | high | confirmed | none | none | control row |"
+assert anchor in s
+open(path, "w").write(s.replace(anchor, anchor + row))
+PYEOF
+  expect_success "requirements index valid vocabulary row passes" "$dir"
+}
+
+case_risk_register_invalid_severity_fails() {
+  local dir
+  dir="$(copy_repo risk-invalid-severity)"
+  python3 - "$dir/02_requirements/RISK_REGISTER.md" <<'PYEOF'
+import sys
+path = sys.argv[1]
+s = open(path).read()
+anchor = "| none | none | none | none | none | none | none | none | none |"
+row = "\n| RISK-RED-001 | Red-check risk with bad severity. | product | catastrophic | none | none | none | open | none |"
+assert anchor in s
+open(path, "w").write(s.replace(anchor, anchor + row, 1))
+PYEOF
+  expect_failure "risk register invalid severity vocabulary" "invalid severity vocabulary" "$dir"
+}
+
+case_risk_register_invalid_category_fails() {
+  local dir
+  dir="$(copy_repo risk-invalid-category)"
+  python3 - "$dir/02_requirements/RISK_REGISTER.md" <<'PYEOF'
+import sys
+path = sys.argv[1]
+s = open(path).read()
+anchor = "| none | none | none | none | none | none | none | none | none |"
+row = "\n| RISK-RED-002 | Red-check risk with bad category. | weather | high | none | none | none | open | none |"
+assert anchor in s
+open(path, "w").write(s.replace(anchor, anchor + row, 1))
+PYEOF
+  expect_failure "risk register invalid category vocabulary" "invalid category vocabulary" "$dir"
+}
+
+case_onboarding_missing_reference_fails() {
+  local dir
+  dir="$(copy_repo onboarding-missing-reference)"
+  cat >>"$dir/BOOTSTRAP_USAGE.md" <<'EOF'
+
+## Red Check Reference
+
+See `NOT_A_REAL_ONBOARDING_TARGET.md` for details.
+EOF
+  expect_failure "onboarding reference to missing file" "onboarding link integrity" "$dir"
+}
+
+case_onboarding_superseded_reference_fails() {
+  local dir
+  dir="$(copy_repo onboarding-superseded-reference)"
+  mkdir -p "$dir/docs"
+  cat >"$dir/docs/red-superseded-guide.md" <<'EOF'
+artifact_id: ART-RED-SUPERSEDED
+title: Red Check Superseded Guide
+type: guide
+status: superseded
+version: v1.0
+created: 2026-06-11
+updated: 2026-06-11
+owner: AI Bootstrap Maintainers
+source: red check
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by: BOOTSTRAP_USAGE.md
+authoritative: false
+
+# Red Check Superseded Guide
+
+Historical content.
+EOF
+  cat >>"$dir/BOOTSTRAP_USAGE.md" <<'EOF'
+
+## Red Check Superseded Reference
+
+See `docs/red-superseded-guide.md` for details.
+EOF
+  expect_failure "onboarding reference to superseded file" "references superseded file" "$dir"
+}
+
+case_state_sync_profile_maps_state_sync_level() {
+  local dir branch
+  dir="$(copy_repo state-sync-profile-level)"
+  branch="$(git -C "$dir" branch --show-current 2>/dev/null || true)"
+  [[ -z "$branch" ]] && branch="main"
+  mkdir -p "$dir/.ai"
+  cat >"$dir/.ai/SESSION.md" <<EOF
+operation_profile: state-sync
+branch: $branch
+updated_at_epoch: $(date +%s)
+EOF
+  expect_command_output "state-sync profile maps to state-sync validator level" "$dir" "state-sync" \
+    bash SCRIPTS/operation-profile.sh --validator-level
+}
+
+case_state_sync_level_skips_deep_checks_but_passes() {
+  local dir output status
+  dir="$(copy_repo state-sync-level-passes)"
+  set +e
+  output="$(cd "$dir" && BOOTSTRAP_VALIDATE_PROFILE=state-sync bash SCRIPTS/validate-bootstrap.sh 2>&1)"
+  status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: state-sync level unexpectedly failed:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  elif ! grep -Fq "state-sync profile" <<<"$output"; then
+    echo "FAIL: state-sync level did not report state-sync early exit" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+case_shape_only_scoped_scan_skips_unchanged_bad_file() {
+  local dir output status
+  dir="$(copy_repo shape-only-scope-skips)"
+  mkdir -p "$dir/docs"
+  printf '# No metadata here\n' >"$dir/docs/red-bad-meta.md"
+  set +e
+  output="$(cd "$dir" && BOOTSTRAP_VALIDATE_PROFILE=shape-only BOOTSTRAP_CHANGED_FILES="README.md" bash SCRIPTS/validate-bootstrap.sh 2>&1)"
+  status=$?
+  set -e
+  if [[ "$status" -ne 0 ]]; then
+    echo "FAIL: shape-only scoped scan flagged a file outside the changed set:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+case_shape_only_scoped_scan_catches_changed_bad_file() {
+  local dir output status
+  dir="$(copy_repo shape-only-scope-catches)"
+  mkdir -p "$dir/docs"
+  printf '# No metadata here\n' >"$dir/docs/red-bad-meta.md"
+  set +e
+  output="$(cd "$dir" && BOOTSTRAP_VALIDATE_PROFILE=shape-only BOOTSTRAP_CHANGED_FILES="docs/red-bad-meta.md" bash SCRIPTS/validate-bootstrap.sh 2>&1)"
+  status=$?
+  set -e
+  if [[ "$status" -eq 0 ]]; then
+    echo "FAIL: shape-only scoped scan missed a bad changed file" >&2
+    failures=$((failures + 1))
+  elif ! grep -Fq "docs/red-bad-meta.md missing non-empty artifact_id metadata" <<<"$output"; then
+    echo "FAIL: shape-only scoped scan failed for an unexpected reason:" >&2
+    echo "$output" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+case_shape_only_without_changed_files_scans_everything() {
+  local dir output status
+  dir="$(copy_repo shape-only-full-scan)"
+  mkdir -p "$dir/docs"
+  printf '# No metadata here\n' >"$dir/docs/red-bad-meta.md"
+  set +e
+  output="$(cd "$dir" && BOOTSTRAP_VALIDATE_PROFILE=shape-only bash SCRIPTS/validate-bootstrap.sh 2>&1)"
+  status=$?
+  set -e
+  if [[ "$status" -eq 0 ]]; then
+    echo "FAIL: shape-only without changed-file scope missed a bad file (fail-closed regression)" >&2
+    failures=$((failures + 1))
+  fi
+}
+
+make_downstream_fixture() {
+  local dir="$1"
+  printf 'downstream' >"$dir/.bootstrap-scaffold-mode"
+  rm -rf "$dir/MAINTAINER_ARCHIVE"
+  rm -f \
+    "$dir/BOOTSTRAP_AUDIT.md" \
+    "$dir/GOVERNANCE_PERFORMANCE.md" \
+    "$dir/PARALLEL_EXECUTION_PLAN.md" \
+    "$dir/STALE_ITEMS.md" \
+    "$dir/TESTS/ACCEPTANCE_CRITERIA_MAP.md" \
+    "$dir/TESTS/ADVERSARIAL_SEED_BENCHMARK.md" \
+    "$dir/SCRIPTS/metric-acceptance-coverage.sh" \
+    "$dir/SCRIPTS/scaffold-extract.sh" \
+    "$dir/SCRIPTS/run-seeded-defect-bench.sh" \
+    "$dir/SCRIPTS/prune-history.sh"
+}
+
+case_downstream_optional_file_missing_passes() {
+  local dir
+  dir="$(copy_repo downstream-optional-missing)"
+  make_downstream_fixture "$dir"
+  rm -f "$dir/CONTEXT_PACKS/review.md" "$dir/SCRIPTS/doctor.sh"
+  expect_success "downstream scaffold with missing optional files passes" "$dir"
+}
+
+case_downstream_core_file_missing_fails() {
+  local dir
+  dir="$(copy_repo downstream-core-missing)"
+  make_downstream_fixture "$dir"
+  rm -f "$dir/GOVERNANCE.md"
+  expect_failure "downstream scaffold with missing core file" "missing required file: GOVERNANCE.md" "$dir"
+}
+
+case_maintainer_optional_file_missing_still_fails() {
+  local dir
+  dir="$(copy_repo maintainer-optional-missing)"
+  rm -f "$dir/CONTEXT_PACKS/review.md"
+  expect_failure "maintainer context still requires downstream-optional files" "missing required file: CONTEXT_PACKS/review.md" "$dir"
+}
+
 case_approved_spec_missing_source
 case_approved_spec_empty_source
 case_active_backlog_missing_spec
@@ -1377,6 +1623,21 @@ case_marker_word_mid_payload_is_not_marker
 case_empty_next_safe_action_payload_is_unmarked
 case_multiline_marked_next_safe_action_passes
 case_fenced_code_next_safe_action_ignored
+case_requirements_index_invalid_status_fails
+case_requirements_index_invalid_confidence_fails
+case_requirements_index_valid_row_passes
+case_risk_register_invalid_severity_fails
+case_risk_register_invalid_category_fails
+case_onboarding_missing_reference_fails
+case_onboarding_superseded_reference_fails
+case_state_sync_profile_maps_state_sync_level
+case_state_sync_level_skips_deep_checks_but_passes
+case_shape_only_scoped_scan_skips_unchanged_bad_file
+case_shape_only_scoped_scan_catches_changed_bad_file
+case_shape_only_without_changed_files_scans_everything
+case_downstream_optional_file_missing_passes
+case_downstream_core_file_missing_fails
+case_maintainer_optional_file_missing_still_fails
 
 if [[ "$failures" -ne 0 ]]; then
   echo "Bootstrap red checks failed with $failures issue(s)." >&2

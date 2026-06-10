@@ -2,11 +2,11 @@ artifact_id: ART-TEST-SEED-BENCH
 title: Adversarial Seed Benchmark
 type: benchmark-plan
 status: active
-version: v1.0
+version: v2.0
 created: 2026-05-16
-updated: 2026-05-16
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: BOOT-032 first empirical benchmark for review and anti-hallucination claims
+source: BOOT-032 first empirical benchmark for review and anti-hallucination claims; GEN-17 baseline refresh (HUS-235)
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -102,21 +102,26 @@ invoked. As of BOOT-032 baseline (2026-05-16), the catalog covers:
 - scaffold extraction golden, dry-run safety, source-as-target safety,
   non-empty-target-without-force safety, registry coverage, and
   reset-file shape contracts
-
-New BOOT-033 SRC/SPEC cross-validation work is expected to add seeded
-defects for cited but unregistered `SRC-*` and `SPEC-*` identifiers
-once the validator gains those rules. Until then, those defect classes
-are explicitly out of scope for the BOOT-032 baseline.
+- BOOT-033 SRC/SPEC cross-validation (cited but unregistered `SRC-*`
+  and `SPEC-*` identifiers, provisional/pending allowances)
+- BOOT-034 stale `Next safe action:` envelope staleness guard
+- split-state local-session routing, canonical-state volatile-text
+  guard, and BOOT-GREEN-MERGE-001 approval-gate regression fixtures
+- GEN-17 additions: REQ-/RISK-row controlled-vocabulary enforcement,
+  onboarding link-integrity and superseded-file guard, state-sync
+  validator level routing, shape-only changed-file scoping, and the
+  downstream core/optional required-file floor split
 
 ## Baseline Result
 
-Recorded on the BOOT-032 implementation branch
-`claude/boot-032-seeded-defect-benchmark` cut from latest green `main`
-after BOOT-031 merged (`a460dbf`):
+Refreshed in the GEN-17 batch (HUS-235) on branch
+`claude/compassionate-agnesi-10f676`, 2026-06-11. The prior BOOT-032
+baseline (25 cases, recorded 2026-05-16) had gone stale against the
+grown catalog and is preserved in git history.
 
 ```
-seeded_defect_cases: 25
-seeded_defect_detected: 25
+seeded_defect_cases: 77
+seeded_defect_detected: 77
 seeded_defect_detection_rate: 100%
 red_check_harness_status: 0
 ```
@@ -124,37 +129,33 @@ red_check_harness_status: 0
 Coverage metrics on the same baseline:
 
 ```
-spec_fr_source_coverage: 48/48 (100%)
-backlog_source_coverage: 0/5 (0%)
+spec_fr_source_coverage: 0/0 (n/a)
+backlog_source_coverage: 0/2 (0%)
 ac_with_test_artifact: 24/24 (100%)
 ac_status_passed: 24/24 (100%)
-req_with_changed_files: 13/13 (100%)
-req_with_test_evidence: 13/13 (100%)
+req_with_changed_files: 3/3 (100%)
+req_with_test_evidence: 3/3 (100%)
 ```
 
 Interpretation:
 
 - The validator detects 100% of the currently seeded defect catalog,
   which means the catalog is well-aligned with the existing validator
-  rules. This is the floor, not the ceiling. As BOOT-033 and future
-  slices add new defect classes, the catalog and the detection-rate
-  baseline should both expand and the runner output should explicitly
-  show the gap.
-- `backlog_source_coverage: 0/5` reflects that no BOOT-029 through
-  BOOT-033 backlog items currently cite registered `SRC-*` IDs; their
-  source evidence is the durable Phase 1 planning narrative recorded
-  in `CURRENT_STATE.md` and `IMPLEMENTATION_PLAN.md`. The metric is
-  designed to grow as downstream product intake adds real `SRC-*` IDs.
-- `spec_fr_source_coverage: 48/48 (100%)` is enforced by the bootstrap
-  validator already; the metric exists so that any future regression is
-  observable independently of validator failures.
+  rules. This is the floor, not the ceiling: new defect classes should
+  keep expanding the catalog ahead of the rules.
+- `spec_fr_source_coverage: 0/0` reflects that legacy SPEC-BOOT-* specs
+  moved to `MAINTAINER_ARCHIVE/SPECS/` and no downstream product specs
+  exist yet; the metric re-activates with the first real spec.
+- `backlog_source_coverage: 0/2` reflects that the two active
+  bootstrap-governance backlog items cite planning narrative rather
+  than registered `SRC-*` IDs; the metric grows with real product
+  intake.
 - `ac_with_test_artifact` and `req_with_*` metrics confirm the
-  acceptance-criteria map and bootstrap-requirement rows already cite
-  evidence; this is the current ceiling for the framework itself.
+  acceptance-criteria map and bootstrap-requirement rows cite evidence.
 
-The baseline is the first empirical evidence. Improvements come from
-adding new defect classes (BOOT-033 cross-validation, future
-benchmarks) and from real downstream product intake.
+The baseline number should be re-recorded whenever the catalog grows or
+validator behavior changes (this is what went stale between BOOT-032
+and GEN-17).
 
 ## Limitations
 

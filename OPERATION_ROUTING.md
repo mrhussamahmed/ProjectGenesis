@@ -45,6 +45,9 @@ when strict gates are not touched:
    to legacy `AI_HANDOFF.md` extraction only when no valid local session hint
    exists. It then maps the profile to a validator level:
    - `docs-trivial` and `process-light-exception` → `shape-only`
+   - `state-sync` → `state-sync` (intermediate level: shape, metadata,
+     handoff sections, canonical-state guard, and registry registration;
+     cross-validation and deep content checks skipped)
    - any other profile (including missing or unrecognized) → `strict`
 2. `.githooks/pre-commit` and `.githooks/pre-push` read this mapping and
    export `BOOTSTRAP_VALIDATE_PROFILE`. They also enforce a strict-gate
@@ -61,7 +64,12 @@ when strict gates are not touched:
 3. `SCRIPTS/validate-bootstrap.sh` honors `BOOTSTRAP_VALIDATE_PROFILE`.
    In `shape-only` mode it runs only the required-files,
    required-dirs, and YAML metadata checks, then exits early with a
-   passing message. In `strict` mode (default) it runs every check.
+   passing message; when the hook layer also passes
+   `BOOTSTRAP_CHANGED_FILES`, the metadata scan covers only that
+   changed-file set (full scan when absent — fail-closed). In
+   `state-sync` mode it additionally runs the handoff-section,
+   canonical-state, and registry-registration checks before exiting
+   early. In `strict` mode (default) it runs every check.
 
 The default everywhere remains strict, so a missing, stale, branch-mismatched,
 or unrecognized profile never weakens validation. The fast path is opt-in via

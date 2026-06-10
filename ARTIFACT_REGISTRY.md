@@ -133,8 +133,8 @@ superseded, archived) are called out in the Notes column.
 
 | Artifact ID | Type | Title | File | Authoritative | Notes |
 |---|---|---|---|---|---|
-| ART-SCRIPT-START-CLAUDE | script | Claude Role Launcher | `SCRIPTS/start-claude.sh` | false | Role launcher. |
-| ART-SCRIPT-OP-PROFILE | script | Operation Profile Extractor | `SCRIPTS/operation-profile.sh` | false | Fast-path adapter: reads valid `.ai/SESSION.md` profile hints before legacy AI_HANDOFF fallback and maps to validator level. |
+| ART-SCRIPT-START-CLAUDE | script | Claude Role Launcher | `SCRIPTS/start-claude.sh` | false | Role launcher with GEN-17 session-state injection (branch, local session, next recommended action). |
+| ART-SCRIPT-OP-PROFILE | script | Operation Profile Extractor | `SCRIPTS/operation-profile.sh` | false | Fast-path adapter: reads valid `.ai/SESSION.md` profile hints before legacy AI_HANDOFF fallback and maps to validator level (shape-only / state-sync / strict per GEN-17). |
 | ART-SCRIPT-SESSION | script | Session Helper | `SCRIPTS/session.sh` | false | Writes/refreshes `.ai/SESSION.md` so the validation fast path is reachable. |
 | ART-SCRIPT-DOCTOR | script | Doctor Status Command | `SCRIPTS/doctor.sh` | false | Read-only orientation: branch, hooks, session, handoff freshness, intake queue. |
 | ART-SCRIPT-STRICT-GATE | script | Strict Gate Paths | `SCRIPTS/strict-gate-paths.sh` | false | Single source of the strict-gate path pattern for hooks and CI. |
@@ -148,14 +148,14 @@ superseded, archived) are called out in the Notes column.
 | ART-COMMAND-IMPLEMENT-NEXT | command | Implement Next Story | `COMMANDS/implement-next-story.md` | false | Scoped-validation story execution workflow. |
 | ART-COMMAND-RESUME-WORK | command | Resume Work | `COMMANDS/resume-work.md` | false | Minimum-read session resume workflow. |
 | ART-COMMAND-EXPORT-LINEAR | command | Export Backlog To Linear | `COMMANDS/export-backlog-to-linear.md` | false | Deterministic, dedupe-safe Linear export. |
-| ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | false | Shape and structure validator; enforces split-state active-section guard and the BOOT-GREEN-MERGE-001 regression guard against required human/maintainer/Code Owner approval. |
-| ART-SCRIPT-RED-CHECKS | script | Red-Check Harness | `SCRIPTS/validate-bootstrap-red-checks.sh` | false | Red-check harness with split-state local-session and canonical-state fixtures and BOOT-GREEN-MERGE-001 green-merge fixtures. |
+| ART-SCRIPT-VALIDATE | script | Bootstrap Validator | `SCRIPTS/validate-bootstrap.sh` | false | Shape and structure validator; split-state and green-merge guards; GEN-17 adds the state-sync level, REQ-/RISK vocabulary enforcement, downstream core/optional floor split, shape-only changed-file scoping, and the onboarding link-integrity guard. |
+| ART-SCRIPT-RED-CHECKS | script | Red-Check Harness | `SCRIPTS/validate-bootstrap-red-checks.sh` | false | Red-check harness with split-state, green-merge, and GEN-17 fixtures (vocabulary, link-integrity, state-sync level, scoped scan, downstream floor split). |
 | ART-METRIC-EVIDENCE | script | Evidence Coverage Metric | `SCRIPTS/metric-evidence-coverage.sh` | false | Metric script. |
 | ART-METRIC-ACCEPTANCE | script | Acceptance Coverage Metric | `SCRIPTS/metric-acceptance-coverage.sh` | false | Metric script. |
 | ART-METRIC-TRACE | script | Traceability Completeness Metric | `SCRIPTS/metric-traceability-completeness.sh` | false | Metric script. |
 | ART-HOOK-PRE-COMMIT | hook | Pre-Commit Hook | `.githooks/pre-commit` | false | Hook; GEN-17 secret-scan hygiene (staged-blob scan, mktemp-only, fail-closed grep). |
 | ART-HOOK-COMMIT-MSG | hook | Commit-Msg Hook | `.githooks/commit-msg` | false | Hook. |
-| ART-HOOK-PRE-PUSH | hook | Pre-Push Hook | `.githooks/pre-push` | false | Hook. |
+| ART-HOOK-PRE-PUSH | hook | Pre-Push Hook | `.githooks/pre-push` | false | Hook; GEN-17 shape-only changed-file scoping. |
 | ART-CI-WORKFLOW | ci | Bootstrap Validation CI | `.github/workflows/bootstrap-validation.yml` | false | CI workflow. |
 
 ## Templates And Manifest
