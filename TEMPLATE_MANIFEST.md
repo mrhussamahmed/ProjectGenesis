@@ -70,6 +70,7 @@ classified as `maintainer-archive`; one mode additionally resets the
    - `STALE_ITEMS.md`
    - `SCRIPTS/scaffold-extract.sh`
    - `SCRIPTS/run-seeded-defect-bench.sh`
+   - `SCRIPTS/prune-history.sh`
    - `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
    - `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
 
@@ -162,6 +163,7 @@ rsync mirror depend on them at their active paths):
 - `STALE_ITEMS.md`
 - `SCRIPTS/scaffold-extract.sh`
 - `SCRIPTS/run-seeded-defect-bench.sh`
+- `SCRIPTS/prune-history.sh`
 - `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
 - `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
 
@@ -448,6 +450,7 @@ introduced them; consumers may relabel.
 | `SCRIPTS/validate-bootstrap.sh` | `copy` | Reusable validator. Inline comments and fixture strings reference PG ticket numbers; these are motivating-context comments only (see Documented Allowlist). |
 | `SCRIPTS/validate-bootstrap-red-checks.sh` | `copy` | Reusable red-check harness. Inline fixture content uses `claude/` and `codex/` strings as test data (see Documented Allowlist). |
 | `SCRIPTS/run-seeded-defect-bench.sh` | `maintainer-archive` | BOOT-032 benchmark runner; PG-specific. |
+| `SCRIPTS/prune-history.sh` | `maintainer-archive` | GEN-17 WORKLOG/REVIEWS rotation tool; targets `MAINTAINER_ARCHIVE/`, PG-specific. |
 | `SCRIPTS/scaffold-extract.sh` | `maintainer-archive` | BOOT-031 deliverable embedding ProjectGenesis REQ-BOOT rows. |
 
 ### `COMMANDS/` (parent: `copy`)

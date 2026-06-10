@@ -202,6 +202,7 @@ FORBIDDEN_PATHS=(
   "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
   "SCRIPTS/run-seeded-defect-bench.sh"
   "SCRIPTS/scaffold-extract.sh"
+  "SCRIPTS/prune-history.sh"
   ".github/CODEOWNERS"
 )
 

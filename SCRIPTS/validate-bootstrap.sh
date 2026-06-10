@@ -182,6 +182,7 @@ maintainer_only_required_files=(
   "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
   "SCRIPTS/scaffold-extract.sh"
   "SCRIPTS/run-seeded-defect-bench.sh"
+  "SCRIPTS/prune-history.sh"
 )
 
 common_required_dirs=(

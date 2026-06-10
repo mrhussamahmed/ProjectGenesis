@@ -186,6 +186,7 @@ scaffold-extract reset templates are updated.
 | ART-SEED-BENCH-PLAN | benchmark-plan | Seed Benchmark Plan | `TESTS/ADVERSARIAL_SEED_BENCHMARK.md` | active | v4.0 | false | PG seeded-defect plan kept at root; relocation deferred. |
 | ART-SCAFFOLD-EXTRACT | script | Scaffold Extract Script | `SCRIPTS/scaffold-extract.sh` | active | v4.0 | false | PG scaffold extractor kept at root; relocation deferred. |
 | ART-SEED-BENCH-RUNNER | script | Seed Benchmark Runner | `SCRIPTS/run-seeded-defect-bench.sh` | active | v4.0 | false | PG benchmark runner kept at root; relocation deferred. |
+| ART-SCRIPT-PRUNE-HISTORY | script | History Pruner | `SCRIPTS/prune-history.sh` | active | v1.0 | false | Maintainer-only WORKLOG/REVIEWS rotation to `MAINTAINER_ARCHIVE/` with --dry-run/--apply (GEN-17/AUTO-8). |
 
 ## Maintainer Archive References
 
