@@ -26,7 +26,7 @@ authoritative: false
 
 ## Candidate Requirements
 
-- 
+-
 
 ## Conflicts
 
