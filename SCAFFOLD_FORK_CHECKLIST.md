@@ -107,7 +107,6 @@ Agent entrypoints and shared role system:
 - `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md`
 - `memory/ai/ROLE_DOCUMENTATION_CURATOR.md`
 - `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md`
-- `memory/ai/ROLE_DIAGRAM_ARCHITECT.md`
 
 Intake, context, and requirements scaffolding (canonical empty form):
 

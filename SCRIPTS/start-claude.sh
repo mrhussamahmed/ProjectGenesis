@@ -48,9 +48,6 @@ memory/ai/ROLE_*.md file or restart with an allowlisted role mode."
   review)
     role_prompt="memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md"
     ;;
-  diagrams)
-    role_prompt="memory/ai/ROLE_DIAGRAM_ARCHITECT.md"
-    ;;
   handoff)
     role_prompt="memory/ai/ROLE_DOCUMENTATION_CURATOR.md"
     ;;
@@ -70,7 +67,6 @@ Allowed modes:
   devops
   docs
   review
-  diagrams
   handoff
 USAGE
     exit 2

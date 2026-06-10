@@ -41,7 +41,6 @@ is restarted with an allowlisted role mode.
 ./SCRIPTS/start-claude.sh devops
 ./SCRIPTS/start-claude.sh docs
 ./SCRIPTS/start-claude.sh review
-./SCRIPTS/start-claude.sh diagrams
 ./SCRIPTS/start-claude.sh handoff
 ```
 

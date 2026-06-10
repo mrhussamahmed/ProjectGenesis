@@ -33,7 +33,7 @@ Codex must not rely on chat history as source of truth.
 | DevOps/release | `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md` |
 | Documentation/state cleanup | `memory/ai/ROLE_DOCUMENTATION_CURATOR.md` |
 | PR review | `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md` |
-| Diagrams | `memory/ai/ROLE_DIAGRAM_ARCHITECT.md` |
+| Diagrams | `memory/ai/ROLE_ARCHITECT.md` |
 
 ## Required Reading
 

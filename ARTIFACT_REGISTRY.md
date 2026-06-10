@@ -96,7 +96,7 @@ ProjectGenesis bootstrap scaffold.
 | ART-ROLE-SHARED | governance | Shared Agent Rules | `memory/ai/SHARED_AGENT_RULES.md` | active | v1.3 | true | Shared role rules; defines split-state boundary. |
 | ART-ROLE-PRODUCT | role | Product Analyst | `memory/ai/ROLE_PRODUCT_ANALYST.md` | active | v1.2 | true | Role doc with split-state stopping rule. |
 | ART-ROLE-SPEC | role | Spec Author | `memory/ai/ROLE_SPEC_AUTHOR.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
-| ART-ROLE-ARCH | role | Architect | `memory/ai/ROLE_ARCHITECT.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
+| ART-ROLE-ARCH | role | Architect | `memory/ai/ROLE_ARCHITECT.md` | active | v2.1 | true | Role doc with split-state stopping rule; absorbed the former Diagram Architect role (GEN-17). |
 | ART-ROLE-BACKLOG | role | Backlog Planner | `memory/ai/ROLE_BACKLOG_PLANNER.md` | active | v1.1 | true | Role doc with split-state stopping and parallel-branch coordination guidance. |
 | ART-ROLE-IMPL | role | Implementation Agent | `memory/ai/ROLE_IMPLEMENTATION_AGENT.md` | active | v1.2 | true | Role doc with split-state stopping rule and AI green-merge forbidden-actions language. |
 | ART-ROLE-QA | role | QA Reviewer | `memory/ai/ROLE_QA_REVIEWER.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
@@ -104,7 +104,6 @@ ProjectGenesis bootstrap scaffold.
 | ART-ROLE-DEVOPS | role | DevOps Release Reviewer | `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 | ART-ROLE-DOCS | role | Documentation Curator | `memory/ai/ROLE_DOCUMENTATION_CURATOR.md` | active | v1.2 | true | Role doc with canonical snapshot/history guidance. |
 | ART-ROLE-ADV-REVIEW | role | Adversarial PR Reviewer | `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md` | active | v1.3 | true | Role doc with split-state review check and AI green-merge defect-detection framing. |
-| ART-ROLE-DIAGRAM | role | Diagram Architect | `memory/ai/ROLE_DIAGRAM_ARCHITECT.md` | active | v1.1 | true | Role doc with split-state stopping rule. |
 
 ## Indexes And Templates
 

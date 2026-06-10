@@ -129,7 +129,6 @@ common_required_files=(
   "memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md"
   "memory/ai/ROLE_DOCUMENTATION_CURATOR.md"
   "memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md"
-  "memory/ai/ROLE_DIAGRAM_ARCHITECT.md"
   "RISK_MODEL.md"
   "HOOKS_AND_GUARDRAILS.md"
   "RELEASE_READINESS.md"
@@ -864,7 +863,6 @@ green_merge_active_policy_files=(
   "memory/ai/ROLE_SPEC_AUTHOR.md"
   "memory/ai/ROLE_ARCHITECT.md"
   "memory/ai/ROLE_BACKLOG_PLANNER.md"
-  "memory/ai/ROLE_DIAGRAM_ARCHITECT.md"
 )
 
 # GitHub branch-protection key patterns. Setup guidance must not configure
@@ -999,7 +997,7 @@ done
 
 [[ -x "SCRIPTS/start-claude.sh" ]] || fail "SCRIPTS/start-claude.sh is not executable"
 
-for mode in default product spec architecture backlog implementation qa security devops docs review diagrams handoff; do
+for mode in default product spec architecture backlog implementation qa security devops docs review handoff; do
   grep -Eq "^[[:space:]]*$mode\\)" SCRIPTS/start-claude.sh || fail "SCRIPTS/start-claude.sh missing allowlisted mode: $mode"
 done
 
