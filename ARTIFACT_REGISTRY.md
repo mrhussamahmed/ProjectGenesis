@@ -148,7 +148,7 @@ ProjectGenesis bootstrap scaffold.
 | ART-METRIC-EVIDENCE | script | Evidence Coverage Metric | `SCRIPTS/metric-evidence-coverage.sh` | active | v4.0 | false | Metric script. |
 | ART-METRIC-ACCEPTANCE | script | Acceptance Coverage Metric | `SCRIPTS/metric-acceptance-coverage.sh` | active | v4.0 | false | Metric script. |
 | ART-METRIC-TRACE | script | Traceability Completeness Metric | `SCRIPTS/metric-traceability-completeness.sh` | active | v4.0 | false | Metric script. |
-| ART-HOOK-PRE-COMMIT | hook | Pre-Commit Hook | `.githooks/pre-commit` | active | v4.0 | false | Hook. |
+| ART-HOOK-PRE-COMMIT | hook | Pre-Commit Hook | `.githooks/pre-commit` | active | v4.1 | false | Hook; GEN-17 secret-scan hygiene (staged-blob scan, mktemp-only, fail-closed grep). |
 | ART-HOOK-COMMIT-MSG | hook | Commit-Msg Hook | `.githooks/commit-msg` | active | v4.0 | false | Hook. |
 | ART-HOOK-PRE-PUSH | hook | Pre-Push Hook | `.githooks/pre-push` | active | v4.0 | false | Hook. |
 | ART-CI-WORKFLOW | ci | Bootstrap Validation CI | `.github/workflows/bootstrap-validation.yml` | active | v4.0 | false | CI workflow. |

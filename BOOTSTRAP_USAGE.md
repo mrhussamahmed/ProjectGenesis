@@ -160,6 +160,13 @@ spike/SPEC-001-critical-unknown
 
 ## Run Validation Checks
 
+Enable the bundled Git hooks once per clone so validation runs automatically
+on commit and push (`SCRIPTS/doctor.sh` warns when this is missing):
+
+```sh
+git config core.hooksPath .githooks
+```
+
 Run:
 
 ```sh

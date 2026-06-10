@@ -51,19 +51,44 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
   anthropic_key_pattern='ANTHROPIC_API_''KEY='
   token_pattern='s''k-[A-Za-z0-9_-]{20,}'
   secret_pattern="${private_key_pattern}|${openai_key_pattern}|${anthropic_key_pattern}|${token_pattern}"
-  staged_tmp="$(mktemp)"
-  git diff --cached --name-only -z --diff-filter=ACM > "$staged_tmp"
-  if [[ -s "$staged_tmp" ]]; then
-    if xargs -0 grep -InE "$secret_pattern" < "$staged_tmp" >/tmp/precommit-secret-hit.$$ 2>/dev/null; then
-      echo "Potential secret detected in staged files:" >&2
-      cat /tmp/precommit-secret-hit.$$ >&2
-      rm -f /tmp/precommit-secret-hit.$$
-      rm -f "$staged_tmp"
-      exit 1
+
+  # Secret scan hygiene (GEN-17/AUTO-7):
+  # - Scan the staged blob (`git show :path`), not the worktree copy: the
+  #   commit contains the staged content, and the worktree file may differ
+  #   from what is actually being committed or may have been deleted.
+  # - Use mktemp-managed files only; never predictable /tmp/<name>.$$ paths.
+  # - Fail closed: a git or grep failure (grep exit status > 1) blocks the
+  #   commit instead of silently skipping the scan.
+  secret_hits_tmp="$(mktemp)"
+  secret_scan_error=0
+  trap 'rm -f "$secret_hits_tmp"' EXIT
+  while IFS= read -r -d '' staged_path; do
+    set +e
+    git show ":$staged_path" 2>/dev/null \
+      | grep -InE "$secret_pattern" \
+      | sed "s|^|$staged_path:|" >> "$secret_hits_tmp"
+    pipe_status=("${PIPESTATUS[@]}")
+    set -e
+    show_status="${pipe_status[0]}"
+    grep_status="${pipe_status[1]}"
+    if [[ "$show_status" -ne 0 ]]; then
+      echo "pre-commit: cannot read staged blob for '$staged_path'; failing closed." >&2
+      secret_scan_error=1
     fi
-    rm -f /tmp/precommit-secret-hit.$$
+    if [[ "$grep_status" -gt 1 ]]; then
+      echo "pre-commit: secret scan grep error (exit $grep_status) on '$staged_path'; failing closed." >&2
+      secret_scan_error=1
+    fi
+  done < <(git diff --cached --name-only -z --diff-filter=ACM)
+  if [[ -s "$secret_hits_tmp" ]]; then
+    echo "Potential secret detected in staged files:" >&2
+    cat "$secret_hits_tmp" >&2
+    exit 1
   fi
-  rm -f "$staged_tmp"
+  if [[ "$secret_scan_error" -ne 0 ]]; then
+    echo "pre-commit: secret scan could not verify all staged blobs; commit blocked (fail-closed)." >&2
+    exit 1
+  fi
 fi
 
 echo "pre-commit checks passed (validator profile: $validator_level)"
