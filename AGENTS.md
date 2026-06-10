@@ -49,4 +49,4 @@ session; run SCRIPTS/doctor.sh for instant orientation.
 
 Run `bash SCRIPTS/validate-bootstrap.sh` for bootstrap consistency. For product
 implementation, also run the stack-specific checks defined in the active spec,
-test plan, or CI configuration.
+test strategy, or CI configuration.

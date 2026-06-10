@@ -230,7 +230,7 @@ as ProjectGenesis history leakage:
    to: `AI_PROJECT_BOOTSTRAP.md`, `CONTEXT_INDEX.md`, `GOVERNANCE.md`,
    `BRANCH_AND_WORKTREE_GUIDE.md`, `OPERATION_ROUTING.md`,
    `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `BOOTSTRAP_USAGE.md`,
-   `CI_CD_GUIDE.md`, `RISK_MODEL.md`, `TEST_PLAN.md`, `TEST_STRATEGY.md`,
+   `CI_CD_GUIDE.md`, `RISK_MODEL.md`, `TEST_STRATEGY.md`,
    `HOOKS_AND_GUARDRAILS.md`,
    `NEW_PROJECT_INITIALIZATION.md`, `memory/ai/SHARED_AGENT_RULES.md`,
    `memory/ai/ROLE_*.md`, `CONTEXT_PACKS/*.md`, the `00_intake/`,
@@ -338,7 +338,6 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `TEMPLATE_MANIFEST.md` | `copy-clean` | This manifest. Copied unchanged. |
 | `TEMPLATE_STARTERS/` | `copy` | Starter source folder. Copied unchanged so consumers can re-run starter resets later. |
 | `TESTS/` | `copy` | Reusable test framework scaffolding. |
-| `TEST_PLAN.md` | `copy-clean` | Reusable test plan stub. |
 | `TEST_RESULTS.md` | `starter-reset` | Heavy ProjectGenesis test history. Replace from `TEMPLATE_STARTERS/TEST_RESULTS.md`. |
 | `TEST_STRATEGY.md` | `copy-clean` | Reusable test strategy. |
 | `TRACEABILITY_MATRIX.md` | `starter-reset` | Heavy ProjectGenesis traceability history. Replace from `TEMPLATE_STARTERS/TRACEABILITY_MATRIX.md`. |
@@ -568,7 +567,6 @@ for f in \
   RISK_MODEL.md \
   SECURITY_AND_PRIVACY.md \
   TEMPLATE_MANIFEST.md \
-  TEST_PLAN.md \
   TEST_STRATEGY.md; do
     cp "<SRC>/$f" "<DEST>/$f"
 done

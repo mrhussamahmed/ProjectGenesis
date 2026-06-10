@@ -203,4 +203,4 @@ explicit and reviewable rather than introducing an analytics pipeline.
 - `SCRIPTS/validate-bootstrap-red-checks.sh`
 - `BACKLOG/BOOT-032-seeded-defect-benchmark.md`
 - `BACKLOG/BOOT-033-src-spec-cross-validation.md`
-- `TEST_PLAN.md`
+- `TEST_STRATEGY.md`

@@ -46,8 +46,7 @@ ProjectGenesis bootstrap scaffold.
 | ART-IMPL-PLAN-001 | implementation-plan | Implementation Plan | `IMPLEMENTATION_PLAN.md` | active | v4.0 | false | Current implementation phase. |
 | ART-BRANCH-GUIDE | governance | Branch And Worktree Guide | `BRANCH_AND_WORKTREE_GUIDE.md` | active | v1.3 | true | Git workflow and local session handoff boundary. |
 | ART-TRACE-001 | traceability | Traceability Matrix | `TRACEABILITY_MATRIX.md` | authoritative | v4.0 | true | Requirements-to-tests trace. |
-| ART-TEST-STRATEGY | test-strategy | Test Strategy | `TEST_STRATEGY.md` | active | v4.0 | false | Test strategy. |
-| ART-TEST-PLAN | test-plan | Test Plan | `TEST_PLAN.md` | active | v4.0 | false | Test plan. |
+| ART-TEST-STRATEGY | test-strategy | Test Strategy | `TEST_STRATEGY.md` | active | v2.0 | false | Test strategy; absorbed the former `TEST_PLAN.md` bootstrap validation plan (GEN-17). |
 | ART-TEST-003 | test-results | Test Results | `TEST_RESULTS.md` | active | v4.0 | false | Recent test runs. |
 | ART-PR-REVIEW-POLICY | governance | PR Review Policy | `PR_REVIEW_POLICY.md` | active | v1.4 | true | Review policy; frames adversarial review as defect detection, not authorization; P0/P1/blocking P2 must not be accepted with rationale. |
 | ART-PR-MERGE-POLICY | governance | PR Merge Policy | `PR_MERGE_POLICY.md` | active | v1.4 | true | Merge policy; encodes the AI green-merge contract; P0/P1/blocking P2 must be resolved (not accepted with rationale); human/maintainer/Code Owner approval are not required as merge gates. |

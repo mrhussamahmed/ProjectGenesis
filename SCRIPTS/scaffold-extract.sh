@@ -509,7 +509,7 @@ instead of a product spec. Product implementation must not use this exception.
 | Product Requirement | Spec ID | Backlog Item | Linear Ticket | ADR | Architecture Doc | Implementation Branch | Changed Files | Tests | Review Record | Release Status | Current Status |
 |---------------------|---------|--------------|---------------|-----|------------------|-----------------------|---------------|-------|---------------|----------------|----------------|
 | REQ-BOOT-001: Spec-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_PROJECT_BOOTSTRAP.md\`, \`GOVERNANCE.md\`, \`SPECS/templates/SPEC_TEMPLATE.md\` | \`SCRIPTS/validate-bootstrap.sh\` existence checks | pending | not released | initialized |
-| REQ-BOOT-002: Test-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`TEST_STRATEGY.md\`, \`TEST_PLAN.md\` | validator plus future stack tests | pending | not released | initialized |
+| REQ-BOOT-002: Test-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`TEST_STRATEGY.md\` | validator plus future stack tests | pending | not released | initialized |
 | REQ-BOOT-003: Artifact lifecycle control | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`ARTIFACT_REGISTRY.md\`, \`GOVERNANCE.md\` | metadata checks with documented \`AGENTS.md\` and \`CLAUDE.md\` exception | pending | not released | initialized |
 | REQ-BOOT-004: Branch and worktree hygiene | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`BRANCH_AND_WORKTREE_GUIDE.md\`, \`.githooks/\` | hook templates and validator | pending | not released | initialized |
 | REQ-BOOT-005: Anti-hallucination and source-of-truth rules | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_PROJECT_BOOTSTRAP.md\`, \`GOVERNANCE.md\`, \`CONTEXT_INDEX.md\` | validator required files | pending | not released | initialized |
@@ -1003,7 +1003,6 @@ Common fields for all entries below unless stated otherwise:
 | ART-REG-001 | registry | Artifact Registry | \`ARTIFACT_REGISTRY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Artifact inventory. |
 | ART-TRACE-001 | traceability | Traceability Matrix | \`TRACEABILITY_MATRIX.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Requirement-to-evidence map. |
 | ART-TEST-001 | test-strategy | Test Strategy | \`TEST_STRATEGY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Testing principles. |
-| ART-TEST-002 | test-plan | Test Plan | \`TEST_PLAN.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Current test plan. |
 | ART-REVIEW-001 | review-policy | PR Review Policy | \`PR_REVIEW_POLICY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Adversarial review rules. |
 | ART-REVIEW-002 | merge-policy | PR Merge Policy | \`PR_MERGE_POLICY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Merge gate. |
 | ART-REVIEW-003 | prompt-library | AI Review Prompts | \`AI_REVIEW_PROMPTS.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reviewer prompt library. |

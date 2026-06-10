@@ -93,7 +93,6 @@ common_required_files=(
   "ARTIFACT_REGISTRY.md"
   "TRACEABILITY_MATRIX.md"
   "TEST_STRATEGY.md"
-  "TEST_PLAN.md"
   "TEST_RESULTS.md"
   "PR_REVIEW_POLICY.md"
   "PR_MERGE_POLICY.md"

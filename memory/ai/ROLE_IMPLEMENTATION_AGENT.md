@@ -30,7 +30,6 @@ Implement ready tasks.
 - `IMPLEMENTATION_PLAN.md`
 - relevant spec
 - relevant backlog item
-- `TEST_PLAN.md`
 - `TRACEABILITY_MATRIX.md`
 - `ARTIFACT_REGISTRY.md`
 

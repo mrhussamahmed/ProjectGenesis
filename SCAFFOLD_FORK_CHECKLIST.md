@@ -154,7 +154,6 @@ Tests, audit, and bootstrap baseline:
 
 - `BOOTSTRAP_AUDIT.md`
 - `TEST_STRATEGY.md`
-- `TEST_PLAN.md`
 - `TESTS/MANUAL_TEST_CHECKLIST.md`
 - `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
 
