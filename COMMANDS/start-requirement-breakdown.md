@@ -294,7 +294,9 @@ Review requirements, stories, and specs for testability.
 - Create at most one cross-story validation item per slice or spec, scoped to
   integration validation no single story owns.
 - Read on demand: `TEST_STRATEGY.md`, `TEST_PLAN.md`,
-  `TESTS/ACCEPTANCE_CRITERIA_MAP.md`, `TESTS/MANUAL_TEST_CHECKLIST.md`; update
+  `TESTS/ACCEPTANCE_CRITERIA_MAP.md` (seed from
+  `TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md` when absent),
+  `TESTS/MANUAL_TEST_CHECKLIST.md`; update
   them only when the validation approach itself changed.
 
 For each meaningful requirement or story, identify acceptance criteria, expected

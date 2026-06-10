@@ -223,7 +223,8 @@ state. Findings must use P0, P1, P2, and P3 severity.
 
 ## Run Multiple Agents In Parallel
 
-Parallel work is allowed only when `PARALLEL_EXECUTION_PLAN.md` says it is
+Parallel work is allowed only when a parallel-execution plan (maintainer
+repo: `PARALLEL_EXECUTION_PLAN.md`; downstream: create one) says it is
 safe. Each stream must have:
 
 - separate spec or separate acceptance criteria

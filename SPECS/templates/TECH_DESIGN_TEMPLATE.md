@@ -12,7 +12,7 @@ linked_tickets: []
 linked_adrs: []
 replaces:
 replaced_by:
-authoritative: true
+authoritative: false
 
 # TECH_DESIGN-<project>: Solution Design
 

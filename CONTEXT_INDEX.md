@@ -78,7 +78,8 @@ clarification.
 - relevant ADRs
 - `TEST_PLAN.md` and the item's test expectations
 - `BRANCH_AND_WORKTREE_GUIDE.md`, when branching is unclear
-- `PARALLEL_EXECUTION_PLAN.md`, only when concurrent work exists
+- `PARALLEL_EXECUTION_PLAN.md`, only when concurrent work exists (maintainer
+  repo only; downstream projects create their own plan when needed)
 
 ## Review
 

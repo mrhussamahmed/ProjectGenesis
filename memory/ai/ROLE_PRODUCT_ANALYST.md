@@ -31,9 +31,8 @@ rough ideas, or documents.
 - `TRACEABILITY_MATRIX.md`
 
 Also read source input files under canonical `00_intake/raw/` or other
-user-specified locations when present. `INPUT/` is a legacy alias during
-migration; if files are found there, register or move their source references
-through `00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
+user-specified locations when present; register their source references in
+`00_intake/SOURCE_REGISTRY.md` before treating them as current intake.
 
 ## Responsibilities
 

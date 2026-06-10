@@ -43,7 +43,6 @@ requirements, specs, backlog items, and open questions.
 - `00_intake/raw/` is the canonical raw intake folder. It holds messy source
   material as-is and is exempt from bootstrap metadata and placeholder
   validation.
-- `INPUT/` is a legacy alias during migration.
 - Do not treat unprocessed raw files as confirmed requirements.
 - Use open questions when intake conflicts or missing information would change
   scope, security, architecture, data model, release safety, or priority.

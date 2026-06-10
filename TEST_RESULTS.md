@@ -24,7 +24,7 @@ validation history is preserved in
 
 | Run Date | Scope | Command | Outcome | Evidence | Notes |
 |----------|-------|---------|---------|----------|-------|
-| 2026-06-10 | local (GEN-01..16 improvement program) | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh` | this PR (pending CI) | gen-program-baseline | Full validation runs before commit on the improvement-program branch; CI on the program PR completes this baseline. |
+| 2026-06-10 | GEN-01..16 improvement program (PR #24) | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; PR #24 CI run 27298251158 | passed | gen-program-baseline | Local full validation plus the PR #24 Bootstrap Validation run. Per-PR detail lives in the PR evidence. |
 | 2026-05-18 | merge baseline (BOOT-GREEN-MERGE-001) | validator; red checks; Codex adversarial review; GitHub branch-protection alignment | passed | green-merge-baseline | Merged via PRs #22/#23. Regression guard against required human/maintainer/Code Owner approval is active. Per-PR run detail lives in the PR evidence. |
 | 2026-05-17 | merge baseline (BOOT-STATE-001) | validator; red checks; PR #21 CI runs 26001652968 and 26001653803 | passed | split-state-baseline | Split-state handoff merged via PR #21 at `d4b5161`. Per-PR run detail lives in the PR evidence. |
 | 2026-05-17 | `main` baseline | `Bootstrap Validation` run 25990646864 | passed | slice-5-post-cleanup-baseline | Durable baseline after slice 5 post-merge cleanup and finalization. |

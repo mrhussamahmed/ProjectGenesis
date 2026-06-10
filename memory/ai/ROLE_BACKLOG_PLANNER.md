@@ -28,7 +28,7 @@ Convert specs and architecture into implementation-ready backlog.
 - `SPECS/SPEC_INDEX.md`
 - relevant specs
 - `IMPLEMENTATION_PLAN.md`
-- `PARALLEL_EXECUTION_PLAN.md`
+- `PARALLEL_EXECUTION_PLAN.md` (maintainer repo only; skip when absent)
 - `TRACEABILITY_MATRIX.md`
 
 ## Responsibilities

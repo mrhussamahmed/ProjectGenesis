@@ -32,8 +32,8 @@ emit_metric() {
 
 map_file="TESTS/ACCEPTANCE_CRITERIA_MAP.md"
 if [[ ! -f "$map_file" ]]; then
-  printf 'acceptance_criteria_with_tests: 0/0 (n/a)\n'
-  printf 'acceptance_criteria_passed: 0/0 (n/a)\n'
+  printf 'ac_with_test_artifact: 0/0 (n/a)\n'
+  printf 'ac_status_passed: 0/0 (n/a)\n'
   exit 0
 fi
 

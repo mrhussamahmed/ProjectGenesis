@@ -52,11 +52,18 @@ jobs:
             if [ -z "$changed" ]; then
               run_full=true
               reason="could not compute changed files vs merge-base; failing closed to full suite"
-            elif printf '%s\n' "$changed" | bash SCRIPTS/strict-gate-paths.sh --match; then
-              run_full=true
-              reason="changed files touch strict-gate paths (SCRIPTS/strict-gate-paths.sh)"
             else
-              reason="diff stays outside strict-gate paths; red checks and shell syntax skipped"
+              match_status=0
+              printf '%s\n' "$changed" | bash SCRIPTS/strict-gate-paths.sh --match || match_status=$?
+              if [ "$match_status" -eq 0 ]; then
+                run_full=true
+                reason="changed files touch strict-gate paths (SCRIPTS/strict-gate-paths.sh)"
+              elif [ "$match_status" -eq 1 ]; then
+                reason="diff stays outside strict-gate paths; red checks and shell syntax skipped"
+              else
+                run_full=true
+                reason="strict-gate-paths.sh exited $match_status (usage error or broken script); failing closed to full suite"
+              fi
             fi
           fi
           echo "run_full=$run_full" >> "$GITHUB_OUTPUT"

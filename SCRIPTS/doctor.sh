@@ -95,7 +95,7 @@ if [[ -d 00_intake/raw ]]; then
     [[ -f "$raw_file" ]] || continue
     intake_total=$((intake_total + 1))
     raw_base="$(basename "$raw_file")"
-    if ! grep -Fq "$raw_base" 00_intake/SOURCE_REGISTRY.md 2>/dev/null; then
+    if ! grep -Eq "(^|[ \`/])${raw_base}([ \`|]|$)" 00_intake/SOURCE_REGISTRY.md 2>/dev/null; then
       intake_unregistered=$((intake_unregistered + 1))
     fi
   done

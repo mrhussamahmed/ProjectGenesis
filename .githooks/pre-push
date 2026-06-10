@@ -28,12 +28,14 @@ if [[ -z "$strict_gate_pattern" && "$validator_level" != "strict" ]]; then
 fi
 
 if [[ "$validator_level" != "strict" ]]; then
-  changed_files=""
   if git rev-parse --verify origin/main >/dev/null 2>&1; then
     changed_files="$(git diff --name-only origin/main...HEAD 2>/dev/null || true)"
-  fi
-  if [[ -n "$changed_files" ]] && echo "$changed_files" | grep -Eq "$strict_gate_pattern"; then
-    echo "pre-push: strict gate touched on branch; forcing BOOTSTRAP_VALIDATE_PROFILE=strict regardless of recorded Operation profile ($validator_level)." >&2
+    if [[ -n "$changed_files" ]] && echo "$changed_files" | grep -Eq "$strict_gate_pattern"; then
+      echo "pre-push: strict gate touched on branch; forcing BOOTSTRAP_VALIDATE_PROFILE=strict regardless of recorded Operation profile ($validator_level)." >&2
+      validator_level="strict"
+    fi
+  else
+    echo "pre-push: origin/main not resolvable; cannot prove the diff avoids strict-gate paths. Failing closed to BOOTSTRAP_VALIDATE_PROFILE=strict." >&2
     validator_level="strict"
   fi
 fi

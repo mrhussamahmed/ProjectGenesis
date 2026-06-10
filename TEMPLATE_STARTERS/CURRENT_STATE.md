@@ -58,7 +58,7 @@ None.
 
 ## Known Stale Or Superseded Files
 
-None. Staleness tracking lives in `STALE_ITEMS.md`.
+None. Record stale or superseded files in this section as they appear.
 
 ## Latest Validation
 

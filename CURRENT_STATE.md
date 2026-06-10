@@ -33,8 +33,9 @@ decision.
 ## Active Implementation Phase
 
 Scaffold operating-model improvement arc: the GEN-01..16 program (compact
-reads, risk-tiered review, pipeline commands) lands with the
-improvement-program PR; the P2 batch (GEN-17 / HUS-235) remains open.
+reads, risk-tiered review, pipeline commands; Linear HUS-219..235) is the
+current operating-model baseline; the P2 batch (GEN-17 / HUS-235) remains
+open.
 Pipeline Stage: implement (the scaffold itself; no downstream product
 intake yet).
 

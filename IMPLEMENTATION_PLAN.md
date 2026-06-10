@@ -27,7 +27,7 @@ split-state handoff (BOOT-STATE-001), and AI green-merge
 | Clean scaffold boundary (slices 1-5) | done | Merged through PR #20; cleanup commits `05f01f2` and `2fee759`. |
 | Split-state handoff (BOOT-STATE-001) | done | Merged via PR #21 at `d4b5161`. |
 | AI green-merge (BOOT-GREEN-MERGE-001) | done | Merged via PRs #22/#23. |
-| GEN-01..16 improvement program (Linear HUS-219..235) | in-progress (this PR) | Single read contract, risk-tiered review, evidence diet, CI tiering, session fast path, handoff compaction, backlog truth, manifest truth and deletions, Linear contract, research and architecture paths, pipeline commands. Flip to done in the post-merge state sync. |
+| GEN-01..16 improvement program (Linear HUS-219..235) | delivered via PR #24 | Single read contract, risk-tiered review, evidence diet, CI tiering, session fast path, handoff compaction, backlog truth, manifest truth and deletions, Linear contract, research and architecture paths, pipeline commands. Flip to done in the post-merge state sync. |
 
 ## Next
 

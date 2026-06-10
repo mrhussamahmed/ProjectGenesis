@@ -300,7 +300,7 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `MAINTAINER_ARCHIVE/` | `maintainer-archive` | Consolidated ProjectGenesis maintainer history folder (added in slice 2). Contains BACKLOG/BOOT-029..035, REVIEWS/PR_REVIEW_PACKAGE-*, REVIEWS/REVIEW-*, SPECS/SPEC-BOOT-*, .github/ISSUE_TEMPLATE/, docs/ (PG launch/demo/release notes), ARTIFACTS/, and snapshots/. The deferred-relocation files (see "NOT relocated in slice 2" above) remain at top level and carry their own `maintainer-archive` rows below. Required-reading is unaffected. A consumer may `rm -rf MAINTAINER_ARCHIVE/` after `cp -R` if they do not want to keep the upstream audit copy. |
 | `ARTIFACT_REGISTRY.md` | `starter-reset` | Heavy ProjectGenesis registry history. Treat as starter-reset; see Mapping table. |
 | `BACKLOG.md` | `starter-reset` | Top-level backlog summary contains ProjectGenesis BOOT history. Replace from `TEMPLATE_STARTERS/BACKLOG.md`. |
-| `BACKLOG/` | `copy` | After slice 2 contains only `BACKLOG_INDEX.md` and `templates/`. All `BOOT-*.md` ticket files moved to `MAINTAINER_ARCHIVE/BACKLOG/`. See nested overrides for the starter-reset `BACKLOG_INDEX.md`. |
+| `BACKLOG/` | `copy` | Ships `BACKLOG_INDEX.md` and `templates/` to new projects. Maintainer `BOOT-*.md` ticket files remain tracked here in the source repo but are excluded from extraction (`BACKLOG/BOOT-*`); older BOOT history lives in `MAINTAINER_ARCHIVE/BACKLOG/`. See nested overrides for the starter-reset `BACKLOG_INDEX.md`. |
 | `BOOTSTRAP_AUDIT.md` | `maintainer-archive` | PG audit history. Remains at top level (red-check harness depends on this path); relocation deferred. Excluded from extraction. |
 | `BOOTSTRAP_USAGE.md` | `copy-clean` | Reusable usage guide. Metadata references PG specs only. |
 | `BRANCH_AND_WORKTREE_GUIDE.md` | `copy-clean` | Reusable branch/worktree guidance. Metadata references PG specs only. |
@@ -328,7 +328,7 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `README.md` | `starter-reset` | Upstream-branded README in the source repo. New projects must not inherit upstream branding. The reuse-boundary slice generates a project-neutral starter inline (see Step 4). |
 | `RELEASE_NOTES.md` | `exclude` | Upstream release history. Carries upstream release URLs and maintainer-only context. Excluded from the extracted scaffold so downstream consumers do not ship upstream release notes; consumers add their own as needed. |
 | `RELEASE_READINESS.md` | `copy-clean` | Reusable release readiness checklist. |
-| `REVIEWS/` | `copy` | After slice 2 contains only `REVIEW_INDEX.md` and `templates/`. All `PR_REVIEW_PACKAGE-*.md` and `REVIEW-*.md` files moved to `MAINTAINER_ARCHIVE/REVIEWS/`. See nested overrides for the starter-reset `REVIEW_INDEX.md`. |
+| `REVIEWS/` | `copy` | Ships `REVIEW_INDEX.md` and `templates/` to new projects. Maintainer `PR_REVIEW_PACKAGE-*.md` and `REVIEW-*.md` records remain tracked here in the source repo but are excluded from extraction; older records live in `MAINTAINER_ARCHIVE/REVIEWS/`. See nested overrides for the starter-reset `REVIEW_INDEX.md`. |
 | `RISK_MODEL.md` | `copy-clean` | Reusable risk model guidance. |
 | `SCAFFOLD_FORK_CHECKLIST.md` | `maintainer-archive` | Manual fallback and policy reference for `SCRIPTS/scaffold-extract.sh`. Remains at top level; relocation deferred. Excluded from extraction. |
 | `SCRIPTS/` | `copy` | Reusable scripts. |

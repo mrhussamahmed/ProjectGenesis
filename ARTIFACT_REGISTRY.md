@@ -28,7 +28,7 @@ ProjectGenesis bootstrap scaffold.
 
 | Artifact ID | Type | Title | File | Status | Version | Authoritative | Notes |
 |---|---|---|---|---|---|---|---|
-| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v4.0 | true | This registry (self-entry). |
+| ART-REG-001 | registry | Artifact Registry | `ARTIFACT_REGISTRY.md` | authoritative | v5.0 | true | This registry (self-entry). |
 | ART-BOOT-001 | governance | AI Project Bootstrap | `AI_PROJECT_BOOTSTRAP.md` | active | v4.0 | true | Operating-model description. |
 | ART-BOOT-002 | usage | Bootstrap Usage | `BOOTSTRAP_USAGE.md` | active | v4.0 | false | Practical usage guide. |
 | ART-NEW-PROJECT-INIT | guide | New Project Initialization | `NEW_PROJECT_INITIALIZATION.md` | active | v4.0 | false | New project init steps. |

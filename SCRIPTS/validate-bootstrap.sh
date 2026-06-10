@@ -415,8 +415,16 @@ done < <(awk -F'|' '
     }
   }
 ' BACKLOG/BACKLOG_INDEX.md | while IFS=$'\t' read -r item_id item_file index_status; do
-  [[ -f "$item_file" ]] || continue
-  item_status="$(awk -F': ' '/^readiness:/ { print $2; exit } /^status:/ { print $2; exit }' "$item_file" | tr -d ' ')"
+  if [[ ! -f "$item_file" ]]; then
+    echo "$item_id index row references missing file $item_file"
+    continue
+  fi
+  item_status="$(awk '
+    NR > 20 { exit }
+    /^readiness:[[:space:]]*[^[:space:]]/ && readiness == "" { sub(/^readiness:[[:space:]]*/, ""); readiness = $0 }
+    /^status:[[:space:]]*[^[:space:]]/ && status == "" { sub(/^status:[[:space:]]*/, ""); status = $0 }
+    END { if (readiness != "") print readiness; else print status }
+  ' "$item_file" | tr -d ' ')"
   [[ -z "$item_status" ]] && continue
   if [[ "$item_status" != "$index_status" ]]; then
     echo "$item_id index=$index_status item=$item_status"
@@ -936,11 +944,25 @@ green_merge_check_file() {
   ' "$file")"
   for pattern in "${green_merge_assertive_patterns[@]}"; do
     while IFS= read -r line; do
-      # Skip lines that explicitly negate or de-require the phrase.
-      if printf '%s' "$line" | grep -Eiq "$green_merge_negation_re"; then
-        continue
+      # Negation must appear in the same sentence segment as the gate
+      # phrase. A whole-line check is bypassable by co-occurrence, e.g.
+      # "Maintainer approval is required before merge; this gate is not
+      # optional." — the negation word sits in a different clause. Split
+      # the logical line on sentence boundaries and require the negation
+      # next to the assertive phrase it claims to negate.
+      gate_segment=""
+      while IFS= read -r segment; do
+        [[ -z "${segment//[[:space:]]/}" ]] && continue
+        if printf '%s' "$segment" | grep -Eiq "$pattern"; then
+          if ! printf '%s' "$segment" | grep -Eiq "$green_merge_negation_re"; then
+            gate_segment="$segment"
+            break
+          fi
+        fi
+      done < <(printf '%s\n' "$line" | sed 's/[.;][[:space:]]/\n/g')
+      if [[ -n "$gate_segment" ]]; then
+        fail "$file reintroduces required human/maintainer/Code Owner approval as a merge gate: $line"
       fi
-      fail "$file reintroduces required human/maintainer/Code Owner approval as a merge gate: $line"
     done < <(printf '%s\n' "$normalized" | grep -iE "$pattern" 2>/dev/null || true)
   done
   # GitHub branch-protection keys are unconditional: positive enforcement
