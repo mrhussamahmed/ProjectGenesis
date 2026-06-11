@@ -2,11 +2,11 @@ artifact_id: ART-AI-ROLE-SPEC-AUTHOR
 title: Role - Spec Author
 type: agent-role
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request
+source: User request; BOOT-RESEARCH-001 UX-brief and research-brief inputs
 linked_specs: []
 linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
@@ -25,6 +25,9 @@ Create and maintain specs.
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `SPECS/SPEC_INDEX.md`
 - relevant specs
+- `01_context/UX_BRIEF.md`, when the spec covers user-facing behavior
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md`
+  (`status: accepted`), when requirements cite its SRC- evidence
 - `OPEN_QUESTIONS.md`
 - `TRACEABILITY_MATRIX.md`
 - `ARTIFACT_REGISTRY.md`

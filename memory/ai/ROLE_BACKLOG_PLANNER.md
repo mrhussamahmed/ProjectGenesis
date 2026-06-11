@@ -2,11 +2,11 @@ artifact_id: ART-AI-ROLE-BACKLOG-PLANNER
 title: Role - Backlog Planner
 type: agent-role
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request
+source: User request; BOOT-RESEARCH-001 research evidence links
 linked_specs: []
 linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
@@ -40,6 +40,9 @@ Convert specs and architecture into implementation-ready backlog.
 - Define file ownership boundaries.
 - Identify blockers.
 - Prepare Linear-ticket-ready items if Linear is available.
+- Link research-derived epics and stories to their evidence: the accepted
+  research brief's SRC- ID and the related ASM-/RSK- rows in the item's
+  Links section.
 - Avoid fake ticket claims.
 - Use PRs or issues to coordinate parallel branches. Do not use
   `CURRENT_STATE.md` as a live board of every active branch.

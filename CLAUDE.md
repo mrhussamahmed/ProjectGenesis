@@ -32,6 +32,8 @@ is restarted with an allowlisted role mode.
 ```sh
 ./SCRIPTS/start-claude.sh # orientation only
 ./SCRIPTS/start-claude.sh product
+./SCRIPTS/start-claude.sh research
+./SCRIPTS/start-claude.sh ux
 ./SCRIPTS/start-claude.sh spec
 ./SCRIPTS/start-claude.sh architecture
 ./SCRIPTS/start-claude.sh backlog

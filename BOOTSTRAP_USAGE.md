@@ -2,11 +2,11 @@ artifact_id: ART-BOOT-002
 title: Bootstrap Usage Guide
 type: guide
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, SPEC-BOOT-002, and GEN-01 canonical quickstart consolidation
+source: User request, reference repository audit, SPEC-BOOT-002, GEN-01 canonical quickstart consolidation, and BOOT-RESEARCH-001 research shortcut
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -39,6 +39,13 @@ shortcut is:
 
 ```text
 Start requirement breakdown.
+```
+
+For evidence-backed research before product definition, the optional research
+orchestration shortcut is:
+
+```text
+Start research.
 ```
 
 Agents must match short workflow phrases through `COMMANDS/COMMAND_INDEX.md`.

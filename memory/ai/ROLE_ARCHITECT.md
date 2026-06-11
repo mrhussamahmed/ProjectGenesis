@@ -2,11 +2,11 @@ artifact_id: ART-AI-ROLE-ARCHITECT
 title: Role - Architect
 type: agent-role
 status: authoritative
-version: v2.1
+version: v2.2
 created: 2026-05-09
 updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request; GEN-17 role consolidation (absorbs ROLE_DIAGRAM_ARCHITECT)
+source: User request; GEN-17 role consolidation (absorbs ROLE_DIAGRAM_ARCHITECT); BOOT-RESEARCH-001 research-brief consumption
 linked_specs: []
 linked_tickets: [BOOT-STATE-001, HUS-235]
 linked_adrs: []
@@ -29,6 +29,9 @@ work follows the Diagrams section of `memory/ai/SHARED_AGENT_RULES.md`.
 - `DECISIONS.md`
 - `ADR/ADR_INDEX.md`
 - relevant specs
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md`
+  (`status: accepted`), for feasibility, regulatory, and risk evidence,
+  when one exists
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
 - `DIAGRAMS/DIAGRAM_INDEX.md` if diagrams exist
@@ -44,7 +47,8 @@ work follows the Diagrams section of `memory/ai/SHARED_AGENT_RULES.md`.
 - Define observability needs.
 - Create ADRs for meaningful decisions.
 - Label each high-impact option with a feasibility label: known-tech |
-  needs-spike | unproven.
+  needs-spike | unproven. When an accepted research brief exists, labels
+  must not contradict its evidence without a recorded open question.
 - Identify architecture drift.
 - Create Mermaid diagrams only where they clarify architecture; avoid
   hallucinated architecture and mark inferred or proposed components clearly.

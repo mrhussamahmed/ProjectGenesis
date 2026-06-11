@@ -2,11 +2,11 @@ artifact_id: ART-BOOT-001
 title: AI Project Bootstrap Operating System
 type: governance
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, SPEC-BOOT-003, and GEN-01 pipeline compaction
+source: User request, reference repository audit, SPEC-BOOT-003, GEN-01 pipeline compaction, and BOOT-RESEARCH-001 research stage and roles
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -98,6 +98,7 @@ artifacts it produces, and the criterion that exits the stage.
 | Stage | Trigger command or role | Key artifacts | Exit criterion |
 |-------|-------------------------|---------------|----------------|
 | intake | `Start requirement breakdown` | `00_intake/`, `01_context/`, `02_requirements/`, backlog candidates | readiness classified |
+| research (optional) | `Start research` | research plan, track reports, critic review, and research brief under `00_intake/research/`; updated registers | brief accepted by user |
 | validate idea (optional) | `Validate the idea` | research notes under `00_intake/research/`, updated assumptions register | high-risk assumptions evidenced |
 | spec | spec author role (`memory/ai/ROLE_SPEC_AUTHOR.md`) | specs under `SPECS/` | spec promoted draft to approved |
 | architecture | `Start architecture design` | tech design (`SPECS/templates/TECH_DESIGN_TEMPLATE.md`) plus slim ADRs | design approved |
@@ -177,6 +178,13 @@ Agents record their active role in `.ai/SESSION.md` for local work, or in
 `memory/ai/`.
 
 - Product Analyst: extract requirements, ambiguity, assumptions, open questions.
+- Research Planner: plan research depth and tracks, orchestrate research runs,
+  hold the brief approval gates.
+- Researcher: execute one assigned research track and produce evidence-only
+  reports.
+- Research Critic: challenge research reports from a fresh context.
+- Research Synthesizer: merge accepted reports into a decision-ready brief.
+- UX Designer: turn evidence-backed user needs into the UX brief for specs.
 - Spec Author: create specs, acceptance criteria, and traceability links.
 - Architect: define boundaries, data flow, security, observability, ADRs.
 - Backlog Planner: sequence implementation tasks and identify safe parallelism.

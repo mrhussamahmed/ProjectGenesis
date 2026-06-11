@@ -2,11 +2,11 @@ artifact_id: ART-AI-ROLE-PRODUCT-ANALYST
 title: Role - Product Analyst
 type: agent-role
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request and SPEC-BOOT-002
+source: User request and SPEC-BOOT-002; BOOT-RESEARCH-001 research-brief consumption
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
@@ -26,6 +26,8 @@ rough ideas, or documents.
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `CONTEXT_INDEX.md`
 - `01_context/PROJECT_BRIEF.md`
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md`
+  (`status: accepted`), when one exists
 - `OPEN_QUESTIONS.md`
 - `ARTIFACT_REGISTRY.md`
 - `TRACEABILITY_MATRIX.md`
@@ -48,6 +50,19 @@ user-specified locations when present; register their source references in
   `02_requirements/REQUIREMENTS_INDEX.md`).
 - Create or update `OPEN_QUESTIONS.md`.
 - Prepare input for specs and backlog.
+
+## Research Brief Consumption
+
+- Derive product direction, value proposition, and feature candidates from
+  the accepted research brief; the brief is the single door from research
+  to requirements.
+- Brief recommendations enter `02_requirements/REQUIREMENTS_INDEX.md` as
+  `inferred` rows citing the brief's SRC- ID; they become `confirmed` only
+  through user confirmation.
+- Do not cite raw research reports (`RR-*.md`) as requirement sources; they
+  are audit evidence behind the brief.
+- Recommendations from a `draft` (non-accepted) brief are inferred-only
+  context and cannot support readiness.
 
 ## Idea Validation (bounded)
 
@@ -76,6 +91,8 @@ user-specified locations when present; register their source references in
 - Do not invent users, workflows, domain rules, integrations, or priorities.
 - Do not create fake external tickets or claim external tool state without
   evidence.
+- Do not copy raw research claims into confirmed requirements; research
+  enters only through the accepted brief and user confirmation.
 
 ## Required Outputs
 

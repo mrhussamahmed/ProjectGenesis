@@ -2,11 +2,11 @@ artifact_id: ART-NEW-PROJECT-INIT
 title: New Project Initialization
 type: guide
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-13
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: Migrated from legacy initialization prompt, compacted per GEN-01 single read contract
+source: Migrated from legacy initialization prompt, compacted per GEN-01 single read contract; BOOT-RESEARCH-001 research shortcut
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -40,6 +40,14 @@ Start requirement breakdown.
 
 The agent must resolve that phrase through COMMANDS/COMMAND_INDEX.md and follow
 COMMANDS/start-requirement-breakdown.md.
+
+For evidence-backed research before product definition (optional), say:
+
+Start research.
+
+That phrase resolves to COMMANDS/start-research.md, which plans research
+depth and tracks, runs focused research with critic review and synthesis,
+and produces a research brief gated on explicit user approval.
 
 Use the bootstrap scaffold to prepare this repository for AI-assisted
 development:

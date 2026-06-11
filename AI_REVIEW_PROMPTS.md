@@ -2,11 +2,11 @@ artifact_id: ART-REVIEW-003
 title: AI Review Prompts
 type: prompt-library
 status: authoritative
-version: v1.1
+version: v1.2
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request; GEN-11 product evidence review prompt
+source: User request; GEN-11 product evidence review prompt; BOOT-RESEARCH-001 research brief review prompt
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -83,5 +83,24 @@ present, and each claim matches its cited source. Confirm readiness-gate
 fields (user value, measurable success criterion, observability expectation,
 security triggers checked) are complete before items are marked ready. Use
 severity levels P0-P3 and cite evidence for every finding.
+```
+
+## Research Brief Review Prompt
+
+```text
+Review research artifact quality for a PR that adds or changes research
+output under 00_intake/research/. Check that every research report claim has
+an EV- evidence row with source URL, access date, evidence type, confidence,
+and freshness, and that confidence follows the report template's rules (no
+single-source high confidence; no stale source solely supporting a volatile
+claim). Check the critic review exists, records its context mode honestly,
+and that unresolved P0 findings surface in the brief's Gaps And Unknowns.
+Check every brief recommendation cites RR-NNN-<track>/EV-MMM evidence, the
+brief links its plan, reports, and critic review, and an accepted brief
+records explicit user approval in its Approval section. Check register
+integration: SRC- rows for reports and brief, and assumption/risk rows
+citing them. Flag any requirement or backlog item citing a raw report
+instead of the brief. Use severity levels P0-P3 and cite evidence for every
+finding.
 ```
 

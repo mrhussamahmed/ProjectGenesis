@@ -2,11 +2,11 @@ artifact_id: ART-AI-ROLE-QA-REVIEWER
 title: Role - QA Reviewer
 type: agent-role
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request
+source: User request; BOOT-RESEARCH-001 research-derived validation coverage
 linked_specs: []
 linked_tickets: [BOOT-STATE-001]
 linked_adrs: []
@@ -40,6 +40,10 @@ Review test coverage and acceptance criteria.
 - Classify test risks.
 - Confirm validation scope matches the operation profile: run the checks the
   change class requires per `OPERATION_ROUTING.md`, validated once per PR.
+- Verify that readiness-blocking assumptions and risks backed by research
+  evidence (ASM-/RSK- rows citing research SRC- IDs) have validation
+  coverage in the spec's Acceptance Criteria or Test Requirements, or in
+  `TEST_STRATEGY.md`; record uncovered ones as test gaps.
 - Update `TEST_RESULTS.md` or review records only when a durable gating
   baseline or finding changed.
 
