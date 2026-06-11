@@ -16,4 +16,6 @@ coverage/
 tmp/
 *.log
 .ai/
+.claude/
+research/
 .bootstrap-scaffold-mode
