@@ -1,7 +1,7 @@
 artifact_id: ART-BACKLOG-BOOT-RESEARCH-001
 title: Research Orchestration Layer
 type: backlog-item
-status: in-progress
+status: done
 version: v1.0
 created: 2026-06-11
 updated: 2026-06-11
@@ -19,7 +19,7 @@ estimate: 8
 labels: []
 parent:
 blocked_by: []
-readiness: in-progress
+readiness: done
 tracker: {name: linear, id_or_url: "https://linear.app/hussamahmed/issue/HUS-236", evidence: "HUS-236 created 2026-06-11 with approved plan and baseline-correction comment"}
 
 # BOOT-RESEARCH-001: Research Orchestration Layer
@@ -81,10 +81,11 @@ changes.
 
 ## Definition Of Done
 
-- [ ] Acceptance criteria satisfied; checks named in Test Expectations pass or
-  deviations are justified.
-- [ ] Frontmatter `readiness` updated; `BACKLOG/BACKLOG_INDEX.md` row mirrors it.
-- [ ] One validation-evidence note recorded in the PR body.
+- [x] Acceptance criteria satisfied; checks named in Test Expectations pass or
+  deviations are justified (PR #26, red checks 82/82, bench 82/82).
+- [x] Frontmatter `readiness` updated; `BACKLOG/BACKLOG_INDEX.md` row mirrors it.
+- [x] One validation-evidence note recorded in the PR body (PR #26 evidence
+  envelope and adversarial review record).
 
 ## Links
 
