@@ -2,11 +2,11 @@ artifact_id: ART-TEST-SEED-BENCH
 title: Adversarial Seed Benchmark
 type: benchmark-plan
 status: active
-version: v2.0
+version: v2.1
 created: 2026-05-16
 updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: BOOT-032 first empirical benchmark for review and anti-hallucination claims; GEN-17 baseline refresh (HUS-235)
+source: BOOT-032 first empirical benchmark for review and anti-hallucination claims; GEN-17 baseline refresh (HUS-235); BOOT-RESEARCH-001 baseline refresh (HUS-236)
 linked_specs: [SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -111,17 +111,19 @@ invoked. As of BOOT-032 baseline (2026-05-16), the catalog covers:
   onboarding link-integrity and superseded-file guard, state-sync
   validator level routing, shape-only changed-file scoping, and the
   downstream core/optional required-file floor split
+- BOOT-RESEARCH-001 additions: accepted-research-brief acceptance checks
+  (approval line, critic reference, draft/accepted routing) and extended
+  scaffold-registry kept-framework-path pins
 
 ## Baseline Result
 
-Refreshed in the GEN-17 batch (HUS-235) on branch
-`claude/compassionate-agnesi-10f676`, 2026-06-11. The prior BOOT-032
-baseline (25 cases, recorded 2026-05-16) had gone stale against the
-grown catalog and is preserved in git history.
+Refreshed in the BOOT-RESEARCH-001 batch (HUS-236) on branch
+`claude/lucid-lehmann-4ce44e`, 2026-06-11. The prior GEN-17 baseline
+(77 cases, recorded 2026-06-11) is preserved in git history.
 
 ```
-seeded_defect_cases: 77
-seeded_defect_detected: 77
+seeded_defect_cases: 81
+seeded_defect_detected: 81
 seeded_defect_detection_rate: 100%
 red_check_harness_status: 0
 ```
@@ -130,11 +132,11 @@ Coverage metrics on the same baseline:
 
 ```
 spec_fr_source_coverage: 0/0 (n/a)
-backlog_source_coverage: 0/2 (0%)
+backlog_source_coverage: 0/3 (0%)
 ac_with_test_artifact: 24/24 (100%)
 ac_status_passed: 24/24 (100%)
-req_with_changed_files: 3/3 (100%)
-req_with_test_evidence: 3/3 (100%)
+req_with_changed_files: 4/4 (100%)
+req_with_test_evidence: 4/4 (100%)
 ```
 
 Interpretation:
@@ -146,7 +148,7 @@ Interpretation:
 - `spec_fr_source_coverage: 0/0` reflects that legacy SPEC-BOOT-* specs
   moved to `MAINTAINER_ARCHIVE/SPECS/` and no downstream product specs
   exist yet; the metric re-activates with the first real spec.
-- `backlog_source_coverage: 0/2` reflects that the two active
+- `backlog_source_coverage: 0/3` reflects that the three active
   bootstrap-governance backlog items cite planning narrative rather
   than registered `SRC-*` IDs; the metric grows with real product
   intake.

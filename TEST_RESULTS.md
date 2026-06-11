@@ -2,11 +2,11 @@ artifact_id: ART-TEST-003
 title: Test Results
 type: test-results
 status: active
-version: v7.0
+version: v7.1
 created: 2026-05-09
 updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: ProjectGenesis bootstrap scaffold; split-state boundary from BOOT-STATE-001; AI green-merge from BOOT-GREEN-MERGE-001; durable-baseline convention from GEN-03
+source: ProjectGenesis bootstrap scaffold; split-state boundary from BOOT-STATE-001; AI green-merge from BOOT-GREEN-MERGE-001; durable-baseline convention from GEN-03; BOOT-RESEARCH-001 baseline
 linked_specs: []
 linked_tickets: [BOOT-STATE-001, BOOT-GREEN-MERGE-001]
 linked_adrs: []
@@ -24,6 +24,7 @@ validation history is preserved in
 
 | Run Date | Scope | Command | Outcome | Evidence | Notes |
 |----------|-------|---------|---------|----------|-------|
+| 2026-06-11 | BOOT-RESEARCH-001 research orchestration (HUS-236) | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `bash SCRIPTS/run-seeded-defect-bench.sh` | passed | research-orchestration-baseline | Red checks 81/81 with 4 new research-brief fixtures; seeded-defect baseline refreshed in `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`. Per-PR detail lives in the implementing PR evidence. |
 | 2026-06-11 | GEN-17 P2 batch (HUS-235, PR #25) | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; `bash SCRIPTS/run-seeded-defect-bench.sh` | passed | gen-17-baseline | Red checks 77/77 with 15 new GEN-17 fixtures; seeded-defect baseline refreshed in `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`. Per-PR detail lives in the PR #25 evidence. |
 | 2026-06-10 | GEN-01..16 improvement program (PR #24) | `bash SCRIPTS/validate-bootstrap.sh`; `bash SCRIPTS/validate-bootstrap-red-checks.sh`; PR #24 CI run 27298251158 | passed | gen-program-baseline | Local full validation plus the PR #24 Bootstrap Validation run. Per-PR detail lives in the PR evidence. |
 | 2026-05-18 | merge baseline (BOOT-GREEN-MERGE-001) | validator; red checks; Codex adversarial review; GitHub branch-protection alignment | passed | green-merge-baseline | Merged via PRs #22/#23. Regression guard against required human/maintainer/Code Owner approval is active. Per-PR run detail lives in the PR evidence. |
