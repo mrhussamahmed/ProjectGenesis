@@ -2,11 +2,11 @@ artifact_id: ART-COMMAND-START-ARCHITECTURE-DESIGN
 title: Start Architecture Design
 type: command
 status: active
-version: v1.0
+version: v1.1
 created: 2026-06-10
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: GEN-12 architecture path
+source: GEN-12 architecture path; BOOT-RESEARCH-001 research-brief consumption
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -41,6 +41,9 @@ Recognized user triggers: `Start architecture design`,
 - `SPECS/SPEC_INDEX.md` and relevant draft or approved specs
 - `DECISIONS.md`
 - `SPECS/templates/TECH_DESIGN_TEMPLATE.md`
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md` (`status: accepted`),
+  when one exists — especially its Technical Feasibility And Constraints and
+  Regulatory And Compliance Constraints sections
 
 ## Inputs
 
@@ -57,6 +60,9 @@ Recognized user triggers: `Start architecture design`,
    operational readiness, security and observability hooks, failure modes.
 3. Label every high-impact option with feasibility: known-tech, needs-spike,
    or unproven. Convert needs-spike items into spike backlog candidates.
+   When an accepted research brief exists, feasibility labels must not
+   contradict its evidence without recording the contradiction as an open
+   question in `OPEN_QUESTIONS.md`.
 4. For each decision matching the `DECISIONS.md` trigger list, write one slim
    ADR from `ADR/templates/ADR_TEMPLATE.md` (core sections only unless the
    change routes strict-protected) and register it in `ADR/ADR_INDEX.md`.
