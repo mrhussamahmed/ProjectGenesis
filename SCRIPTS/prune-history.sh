@@ -158,14 +158,35 @@ fi
 
 # --- 2. REVIEWS file rotation -----------------------------------------------
 
+# Each review file gets a date key: the YYYY-MM-DD embedded in the
+# filename when present, otherwise the file's last git commit date, with
+# the filesystem mtime as a final fallback. Sorting on the key (oldest
+# first) keeps undated PR_REVIEW_PACKAGE-* records in true age order
+# instead of always rotating first by alphabetical accident.
+review_file_date_key() {
+  local f="$1" base key
+  base="$(basename "$f")"
+  key="$(printf '%s' "$base" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -n 1 || true)"
+  if [[ -z "$key" ]] && git_available; then
+    key="$(git log -1 --format=%cs -- "$f" 2>/dev/null || true)"
+  fi
+  if [[ -z "$key" ]]; then
+    key="$(date -r "$f" +%Y-%m-%d 2>/dev/null || echo 0000-00-00)"
+  fi
+  printf '%s' "$key"
+}
+
 review_files="$(find REVIEWS -maxdepth 1 -type f \( -name 'REVIEW-*.md' -o -name 'PR_REVIEW_PACKAGE-*.md' \) | sort)"
 if [[ -n "$review_files" ]]; then
   review_count="$(printf '%s\n' "$review_files" | wc -l | tr -d ' ')"
   if (( review_count > keep_review_files )); then
     excess=$((review_count - keep_review_files))
-    # Filename sort embeds the date for REVIEW-YYYY-MM-DD-* records, so the
-    # head of the sorted list is the oldest set.
-    rotate_files="$(printf '%s\n' "$review_files" | head -n "$excess")"
+    rotate_files="$(while IFS= read -r f; do
+        printf '%s\t%s\n' "$(review_file_date_key "$f")" "$f"
+      done <<< "$review_files" \
+      | sort -t$'\t' -k1,1 -k2,2 \
+      | head -n "$excess" \
+      | cut -f2-)"
     while IFS= read -r src; do
       base="$(basename "$src")"
       dest="MAINTAINER_ARCHIVE/REVIEWS/$base"

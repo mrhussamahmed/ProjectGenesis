@@ -70,20 +70,28 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
   secret_scan_error=0
   trap 'rm -f "$secret_hits_tmp"' EXIT
   while IFS= read -r -d '' staged_path; do
+    # Prefix hits with the path via awk ENVIRON (not sed): a path containing
+    # the sed delimiter or backslashes must not break the pipeline, and the
+    # prefix stage's exit status is checked fail-closed like the others.
     set +e
     git show ":$staged_path" 2>/dev/null \
       | grep -InE "$secret_pattern" \
-      | sed "s|^|$staged_path:|" >> "$secret_hits_tmp"
+      | SECRET_SCAN_PATH="$staged_path" awk '{ print ENVIRON["SECRET_SCAN_PATH"] ":" $0 }' >> "$secret_hits_tmp"
     pipe_status=("${PIPESTATUS[@]}")
     set -e
     show_status="${pipe_status[0]}"
     grep_status="${pipe_status[1]}"
+    prefix_status="${pipe_status[2]}"
     if [[ "$show_status" -ne 0 ]]; then
       echo "pre-commit: cannot read staged blob for '$staged_path'; failing closed." >&2
       secret_scan_error=1
     fi
     if [[ "$grep_status" -gt 1 ]]; then
       echo "pre-commit: secret scan grep error (exit $grep_status) on '$staged_path'; failing closed." >&2
+      secret_scan_error=1
+    fi
+    if [[ "$prefix_status" -ne 0 ]]; then
+      echo "pre-commit: secret scan prefix error (exit $prefix_status) on '$staged_path'; failing closed." >&2
       secret_scan_error=1
     fi
   done < <(git diff --cached --name-only -z --diff-filter=ACM)
