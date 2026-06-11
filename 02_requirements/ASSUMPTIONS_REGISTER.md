@@ -2,11 +2,11 @@ artifact_id: ART-REQ-ASSUMPTIONS
 title: Assumptions Register
 type: assumptions-registry
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002
+source: SPEC-BOOT-002; BOOT-RESEARCH-001 research-evidence marker note
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -47,6 +47,9 @@ becoming implementation authority.
   it: `explicit user approval`, `user approval`, `approved spec`,
   `active spec`, `accepted ADR`, `maintainer-approved`, `verified external`,
   `SPEC-*`, `ADR-*`, or `SRC-*`.
+- Registered research output counts as `verified external` evidence: a
+  research note, a research report, or an accepted research brief cited by
+  its SRC- ID from `00_intake/SOURCE_REGISTRY.md`.
 - Self-approval by the assumption author is not valid approval evidence.
 
 ## Expiry Rules

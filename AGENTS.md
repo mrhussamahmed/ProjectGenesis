@@ -24,6 +24,11 @@ Codex must not rely on chat history as source of truth.
 | Task type | Codex must read |
 |-----------|-----------------|
 | Product discovery | `memory/ai/ROLE_PRODUCT_ANALYST.md` |
+| Research planning/orchestration | `memory/ai/ROLE_RESEARCH_PLANNER.md` |
+| Track research | `memory/ai/ROLE_RESEARCHER.md` |
+| Research critique | `memory/ai/ROLE_RESEARCH_CRITIC.md` |
+| Research synthesis | `memory/ai/ROLE_RESEARCH_SYNTHESIZER.md` |
+| UX design | `memory/ai/ROLE_UX_DESIGNER.md` |
 | Spec creation | `memory/ai/ROLE_SPEC_AUTHOR.md` |
 | Architecture | `memory/ai/ROLE_ARCHITECT.md` |
 | Backlog planning | `memory/ai/ROLE_BACKLOG_PLANNER.md` |

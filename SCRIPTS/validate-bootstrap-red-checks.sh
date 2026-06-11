@@ -292,6 +292,124 @@ EOF
   expect_failure "approved assumption unsupported evidence" "approved assumption missing allowed approval evidence" "$dir"
 }
 
+# BOOT-RESEARCH-001 research-brief acceptance checks. Shared fixture writer:
+# write_research_brief_fixture <dir> <status> <approval-line|-> <rcr-ref|->
+write_research_brief_fixture() {
+  local dir="$1"
+  local brief_status="$2"
+  local approval_line="$3"
+  local rcr_ref="$4"
+  [[ "$approval_line" == "-" ]] && approval_line="Approval pending."
+  if [[ "$approval_line" == "guidance" ]]; then
+    # Realistic instantiation shape: the template's guidance prose retained
+    # verbatim (mentions "user approval" and shows the recorded-line form in
+    # backticks) plus the unfilled bullet — but no real recorded approval.
+    approval_line='Acceptance requires explicit user approval. Record it as a line of the form
+`Approval: user approval - name, date` and flip frontmatter
+`status:` to `accepted` only after that line exists.
+
+- Approval:'
+  fi
+  [[ "$rcr_ref" == "-" ]] && rcr_ref="none recorded yet"
+  cat >"$dir/00_intake/research/RESEARCH_BRIEF-900.md" <<EOF
+artifact_id: ART-RESEARCH-BRIEF-900
+title: Research Brief Fixture
+type: research-brief
+status: $brief_status
+version: v1.0
+created: 2026-06-11
+updated: 2026-06-11
+owner: AI Bootstrap Maintainers
+source: red-check fixture
+linked_specs: []
+linked_tickets: []
+linked_adrs: []
+replaces:
+replaced_by:
+authoritative: false
+
+# Research Brief: Fixture
+
+## Decision Summary
+
+Fixture summary citing RR-900-market/EV-001.
+
+## Consolidated Findings
+
+Fixture finding citing RR-900-market/EV-001.
+
+## Differentiation Opportunities
+
+Fixture opportunity citing RR-900-market/EV-002.
+
+## Assumption And Risk Candidates
+
+| Candidate | Type | Proposed Register Row | Supporting Citations | Suggested Confidence Or Severity |
+|-----------|------|------------------------|----------------------|----------------------------------|
+| fixture | assumption | ASM | RR-900-market/EV-001 | medium |
+
+## Gaps And Unknowns
+
+No open gaps in this fixture.
+
+## Recommendations
+
+| Recommendation | Citations | Confidence | Decision Impact |
+|----------------|-----------|------------|------------------|
+| fixture option | RR-900-market/EV-001 | medium | low |
+
+## Approval
+
+$approval_line
+
+## Source Links
+
+- Plan: RESEARCH_PLAN-900
+- Reports reviewed: RR-900-market
+- Critic review: $rcr_ref
+EOF
+}
+
+case_accepted_research_brief_passes() {
+  local dir
+  dir="$(copy_repo accepted-research-brief-passes)"
+  write_research_brief_fixture "$dir" "accepted" \
+    "Approval: user approval - fixture user, 2026-06-11" "RCR-900"
+  expect_success "accepted research brief with approval and references passes" "$dir"
+}
+
+case_draft_research_brief_passes() {
+  local dir
+  dir="$(copy_repo draft-research-brief-passes)"
+  write_research_brief_fixture "$dir" "draft" "-" "-"
+  expect_success "draft research brief without approval passes" "$dir"
+}
+
+case_accepted_research_brief_missing_approval_fails() {
+  local dir
+  dir="$(copy_repo accepted-research-brief-missing-approval)"
+  write_research_brief_fixture "$dir" "accepted" "-" "RCR-900"
+  expect_failure "accepted research brief missing approval" \
+    "accepted research brief missing user approval line" "$dir"
+}
+
+case_accepted_research_brief_template_guidance_fails() {
+  local dir
+  dir="$(copy_repo accepted-research-brief-template-guidance)"
+  write_research_brief_fixture "$dir" "accepted" "guidance" "RCR-900"
+  expect_failure "accepted research brief with only template guidance text" \
+    "accepted research brief missing user approval line" "$dir"
+}
+
+case_accepted_research_brief_missing_critic_ref_fails() {
+  local dir
+  dir="$(copy_repo accepted-research-brief-missing-critic-ref)"
+  write_research_brief_fixture "$dir" "accepted" \
+    "Approval: user approval - fixture user, 2026-06-11" "-"
+  expect_failure "accepted research brief missing critic reference" \
+    "accepted research brief missing RCR- critic-review reference" "$dir"
+}
+
 case_operation_routing_missing_profile() {
   local dir
   dir="$(copy_repo operation-routing-missing-profile)"
@@ -787,6 +905,10 @@ case_scaffold_extract_registry_includes_kept_framework_paths() {
     "README.md" \
     ".gitignore" \
     "COMMANDS/start-requirement-breakdown.md" \
+    "COMMANDS/start-research.md" \
+    "memory/ai/ROLE_RESEARCH_PLANNER.md" \
+    "00_intake/research/RESEARCH_BRIEF_TEMPLATE.md" \
+    "01_context/UX_BRIEF.md" \
     "00_intake/raw/.gitkeep" \
     "00_intake/summaries/.gitkeep" \
     "ARTIFACTS/.gitkeep" \
@@ -1571,6 +1693,11 @@ case_assumption_missing_expiry
 case_approved_assumption_missing_evidence
 case_approved_assumption_self_approved
 case_approved_assumption_unsupported_evidence
+case_accepted_research_brief_passes
+case_draft_research_brief_passes
+case_accepted_research_brief_missing_approval_fails
+case_accepted_research_brief_template_guidance_fails
+case_accepted_research_brief_missing_critic_ref_fails
 case_operation_routing_missing_profile
 case_operation_routing_missing_validation_mode
 case_operation_routing_missing_context_reference

@@ -426,6 +426,11 @@ introduced them; consumers may relabel.
 | `00_intake/summaries/SUMMARY_TEMPLATE.md` | `copy` | Reusable intake summary template (added 2026-06-10). |
 | `00_intake/research/` | `copy` | Research notes directory (added 2026-06-10). |
 | `00_intake/research/RESEARCH_NOTE_TEMPLATE.md` | `copy` | Reusable research note template (added 2026-06-10). |
+| `00_intake/research/RESEARCH_PLAN_TEMPLATE.md` | `copy` | Reusable research plan template (added 2026-06-11, BOOT-RESEARCH-001). |
+| `00_intake/research/RESEARCH_REPORT_TEMPLATE.md` | `copy` | Reusable research report template (added 2026-06-11, BOOT-RESEARCH-001). |
+| `00_intake/research/RESEARCH_CRITIC_REVIEW_TEMPLATE.md` | `copy` | Reusable research critic review template (added 2026-06-11, BOOT-RESEARCH-001). |
+| `00_intake/research/RESEARCH_BRIEF_TEMPLATE.md` | `copy` | Reusable research brief template (added 2026-06-11, BOOT-RESEARCH-001). |
+| `01_context/UX_BRIEF.md` | `copy` | Empty-state UX brief (added 2026-06-11, BOOT-RESEARCH-001). |
 
 ### `TESTS/` (parent: `copy`)
 
@@ -458,6 +463,7 @@ introduced them; consumers may relabel.
 | Nested Path | Class | Notes |
 |-------------|-------|-------|
 | `COMMANDS/validate-idea.md` | `copy` | Reusable command (added 2026-06-10). |
+| `COMMANDS/start-research.md` | `copy` | Reusable command (added 2026-06-11, BOOT-RESEARCH-001). |
 | `COMMANDS/start-architecture-design.md` | `copy` | Reusable command (added 2026-06-10). |
 | `COMMANDS/implement-next-story.md` | `copy` | Reusable command (added 2026-06-10). |
 | `COMMANDS/resume-work.md` | `copy` | Reusable command (added 2026-06-10). |

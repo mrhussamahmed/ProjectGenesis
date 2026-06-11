@@ -2,11 +2,11 @@ artifact_id: ART-COMMAND-START-REQUIREMENT-BREAKDOWN
 title: Start Requirement Breakdown
 type: command
 status: active
-version: v2.0
+version: v2.1
 created: 2026-05-13
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request on 2026-05-13, SPEC-BOOT-002 command framework, SPEC-BOOT-003 routing, and GEN-01 tiered read/write contract
+source: User request on 2026-05-13, SPEC-BOOT-002 command framework, SPEC-BOOT-003 routing, GEN-01 tiered read/write contract, and BOOT-RESEARCH-001 research-brief consumption
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -154,6 +154,13 @@ problem/alternatives/differentiation method: state the user problem, the
 existing alternatives, and what makes this product different. List the
 Riskiest Assumptions that would invalidate the idea if wrong.
 
+When an accepted research brief exists
+(`00_intake/research/RESEARCH_BRIEF-*.md` with `status: accepted`), read it
+and refresh the Value Proposition, Riskiest Assumptions, and Alternatives
+And Market Context sections from its findings, citing the brief's
+registered SRC- ID. Treat the brief's recommendations as evidence-backed
+inputs, not as decisions already taken.
+
 Use only these product fact labels where applicable:
 
 - `confirmed`
@@ -166,7 +173,10 @@ notes or open questions, not as a confirmed requirement.
 ### 5. Idea Validation (Conditional)
 
 Run this step only when high-risk or scope-defining assumptions block
-readiness, or when the user asks for idea validation.
+readiness, or when the user asks for idea validation. An accepted research
+brief satisfies validation for the assumptions its evidence covers (cite the
+brief's SRC- ID); research only the uncovered ones. For full multi-track
+research instead of per-assumption notes, use `COMMANDS/start-research.md`.
 
 - For each such assumption, run agent web research where tools allow.
 - Write one research note per assumption using
@@ -213,6 +223,19 @@ Rules:
 - Missing information that changes scope, security, architecture, data model,
   release safety, or priority must become an open question.
 - Agents may propose assumptions but must not approve their own assumptions.
+- Recommendations from an accepted research brief enter as `inferred`
+  requirements citing the brief's SRC- ID; they become `confirmed` only
+  through user confirmation. Raw research reports (`RR-*.md`) are audit
+  evidence and must not be cited as requirement sources directly — the
+  brief is the single door from research to requirements.
+
+### 6b. UX Brief (Conditional)
+
+Run this step when an accepted research brief contains customer-needs or UX
+findings, or when the user asks for UX preparation. Read
+`memory/ai/ROLE_UX_DESIGNER.md` and create or refresh
+`01_context/UX_BRIEF.md` from the brief's Customer Needs And UX
+Expectations section before spec drafting, so specs can consume UX intent.
 
 ### 7. Build Draft Backlog Candidates
 

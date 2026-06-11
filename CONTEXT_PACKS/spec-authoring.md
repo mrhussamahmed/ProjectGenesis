@@ -2,11 +2,11 @@ artifact_id: ART-CONTEXT-PACK-SPEC-AUTHORING
 title: Spec Authoring Context Pack
 type: context-pack
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002 and SPEC-BOOT-003
+source: SPEC-BOOT-002 and SPEC-BOOT-003; BOOT-RESEARCH-001 UX and research-brief inputs
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -32,6 +32,9 @@ authoritative: false
 
 - relevant source summaries under `00_intake/summaries/`
 - `01_context/PROJECT_BRIEF.md`
+- `01_context/UX_BRIEF.md`, when specs cover user-facing behavior
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md`
+  (`status: accepted`), when requirements cite its SRC- evidence
 - `01_context/CONSTRAINTS.md`
 - `ADR/ADR_INDEX.md`
 

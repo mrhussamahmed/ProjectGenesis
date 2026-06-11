@@ -21,6 +21,12 @@ memory/ai/ROLE_*.md file or restart with an allowlisted role mode."
   product)
     role_prompt="memory/ai/ROLE_PRODUCT_ANALYST.md"
     ;;
+  research)
+    role_prompt="memory/ai/ROLE_RESEARCH_PLANNER.md"
+    ;;
+  ux)
+    role_prompt="memory/ai/ROLE_UX_DESIGNER.md"
+    ;;
   spec)
     role_prompt="memory/ai/ROLE_SPEC_AUTHOR.md"
     ;;
@@ -58,6 +64,8 @@ Usage: ./SCRIPTS/start-claude.sh [mode]
 Allowed modes:
   default
   product
+  research
+  ux
   spec
   architecture
   backlog

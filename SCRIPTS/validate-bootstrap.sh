@@ -111,16 +111,22 @@ common_required_files=(
   "00_intake/SOURCE_REGISTRY.md"
   "00_intake/INTAKE_INDEX.md"
   "00_intake/research/RESEARCH_NOTE_TEMPLATE.md"
+  "00_intake/research/RESEARCH_PLAN_TEMPLATE.md"
+  "00_intake/research/RESEARCH_REPORT_TEMPLATE.md"
+  "00_intake/research/RESEARCH_CRITIC_REVIEW_TEMPLATE.md"
+  "00_intake/research/RESEARCH_BRIEF_TEMPLATE.md"
   "00_intake/summaries/SUMMARY_TEMPLATE.md"
   "01_context/PROJECT_BRIEF.md"
   "01_context/PROJECT_CHARTER.md"
   "01_context/GLOSSARY.md"
   "01_context/CONSTRAINTS.md"
+  "01_context/UX_BRIEF.md"
   "02_requirements/REQUIREMENTS_INDEX.md"
   "02_requirements/ASSUMPTIONS_REGISTER.md"
   "02_requirements/RISK_REGISTER.md"
   "CONTEXT_PACKS/README.md"
   "CONTEXT_PACKS/product-intake.md"
+  "CONTEXT_PACKS/research.md"
   "CONTEXT_PACKS/spec-authoring.md"
   "CONTEXT_PACKS/architecture.md"
   "CONTEXT_PACKS/implementation.md"
@@ -130,6 +136,11 @@ common_required_files=(
   "COMMANDS/COMMAND_TEMPLATE.md"
   "memory/ai/SHARED_AGENT_RULES.md"
   "memory/ai/ROLE_PRODUCT_ANALYST.md"
+  "memory/ai/ROLE_RESEARCH_PLANNER.md"
+  "memory/ai/ROLE_RESEARCHER.md"
+  "memory/ai/ROLE_RESEARCH_CRITIC.md"
+  "memory/ai/ROLE_RESEARCH_SYNTHESIZER.md"
+  "memory/ai/ROLE_UX_DESIGNER.md"
   "memory/ai/ROLE_SPEC_AUTHOR.md"
   "memory/ai/ROLE_ARCHITECT.md"
   "memory/ai/ROLE_BACKLOG_PLANNER.md"
@@ -158,6 +169,7 @@ common_required_files=(
   "TESTS/MANUAL_TEST_CHECKLIST.md"
   "WORKLOG/WORKLOG_INDEX.md"
   "COMMANDS/validate-idea.md"
+  "COMMANDS/start-research.md"
   "COMMANDS/start-architecture-design.md"
   "COMMANDS/implement-next-story.md"
   "COMMANDS/resume-work.md"
@@ -210,14 +222,21 @@ downstream_optional_files=(
   "CONTRIBUTING.md"
   "RELEASE_READINESS.md"
   "00_intake/research/RESEARCH_NOTE_TEMPLATE.md"
+  "00_intake/research/RESEARCH_PLAN_TEMPLATE.md"
+  "00_intake/research/RESEARCH_REPORT_TEMPLATE.md"
+  "00_intake/research/RESEARCH_CRITIC_REVIEW_TEMPLATE.md"
+  "00_intake/research/RESEARCH_BRIEF_TEMPLATE.md"
   "00_intake/summaries/SUMMARY_TEMPLATE.md"
+  "01_context/UX_BRIEF.md"
   "CONTEXT_PACKS/product-intake.md"
+  "CONTEXT_PACKS/research.md"
   "CONTEXT_PACKS/spec-authoring.md"
   "CONTEXT_PACKS/architecture.md"
   "CONTEXT_PACKS/implementation.md"
   "CONTEXT_PACKS/review.md"
   "CONTEXT_PACKS/resume.md"
   "COMMANDS/validate-idea.md"
+  "COMMANDS/start-research.md"
   "COMMANDS/start-architecture-design.md"
   "COMMANDS/implement-next-story.md"
   "COMMANDS/resume-work.md"
@@ -622,6 +641,42 @@ if [[ -f "02_requirements/ASSUMPTIONS_REGISTER.md" ]]; then
       }
     }
   ' 02_requirements/ASSUMPTIONS_REGISTER.md)
+fi
+
+# Research brief acceptance checks (BOOT-RESEARCH-001). Accepted research
+# briefs are the single door from research to product definition, so an
+# accepted brief must carry its required sections, a recorded user-approval
+# line, and references to its report (RR-) and critic-review (RCR-)
+# artifacts. The glob matches only hyphenated instances
+# (RESEARCH_BRIEF-*.md); the underscore-named template is never matched.
+# Draft briefs and repositories with no briefs pass vacuously.
+if [[ -d 00_intake/research ]]; then
+  while IFS= read -r brief_file; do
+    grep -Eq '^status: accepted$' "$brief_file" || continue
+    for section in \
+      "## Decision Summary" \
+      "## Consolidated Findings" \
+      "## Differentiation Opportunities" \
+      "## Assumption And Risk Candidates" \
+      "## Gaps And Unknowns" \
+      "## Recommendations" \
+      "## Approval" \
+      "## Source Links"; do
+      grep -Fq "$section" "$brief_file" || \
+        fail "$brief_file accepted research brief missing section: $section"
+    done
+    # Anchored to the recorded-line form so the template's own guidance
+    # sentence (which mentions "user approval" in prose and shows the line
+    # form inside backticks) can never satisfy the gate.
+    if ! awk '/^## Approval$/{inside=1; next} /^## /{inside=0} inside' "$brief_file" | \
+      grep -Eqi '^[-*[:space:]]*Approval:[[:space:]]*user approval -'; then
+      fail "$brief_file accepted research brief missing user approval line in ## Approval"
+    fi
+    grep -Eq 'RR-[0-9]+' "$brief_file" || \
+      fail "$brief_file accepted research brief missing RR- report reference"
+    grep -Eq 'RCR-[0-9]+' "$brief_file" || \
+      fail "$brief_file accepted research brief missing RCR- critic-review reference"
+  done < <(find 00_intake/research -maxdepth 1 -type f -name 'RESEARCH_BRIEF-*.md' -print)
 fi
 
 # GEN-17/REQU-5 controlled-vocabulary enforcement.
@@ -1068,6 +1123,11 @@ green_merge_active_policy_files=(
   "memory/ai/ROLE_SPEC_AUTHOR.md"
   "memory/ai/ROLE_ARCHITECT.md"
   "memory/ai/ROLE_BACKLOG_PLANNER.md"
+  "memory/ai/ROLE_RESEARCH_PLANNER.md"
+  "memory/ai/ROLE_RESEARCHER.md"
+  "memory/ai/ROLE_RESEARCH_CRITIC.md"
+  "memory/ai/ROLE_RESEARCH_SYNTHESIZER.md"
+  "memory/ai/ROLE_UX_DESIGNER.md"
 )
 
 # GitHub branch-protection key patterns. Setup guidance must not configure
@@ -1202,7 +1262,7 @@ done
 
 [[ -x "SCRIPTS/start-claude.sh" ]] || fail "SCRIPTS/start-claude.sh is not executable"
 
-for mode in default product spec architecture backlog implementation qa security devops docs review handoff; do
+for mode in default product research ux spec architecture backlog implementation qa security devops docs review handoff; do
   grep -Eq "^[[:space:]]*$mode\\)" SCRIPTS/start-claude.sh || fail "SCRIPTS/start-claude.sh missing allowlisted mode: $mode"
 done
 

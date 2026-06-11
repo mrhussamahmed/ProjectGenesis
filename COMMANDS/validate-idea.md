@@ -2,11 +2,11 @@ artifact_id: ART-COMMAND-VALIDATE-IDEA
 title: Validate The Idea
 type: command
 status: active
-version: v1.0
+version: v1.1
 created: 2026-06-10
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: GEN-11 research and validation capability
+source: GEN-11 research and validation capability; BOOT-RESEARCH-001 start-research boundary
 linked_specs: []
 linked_tickets: []
 linked_adrs: []
@@ -27,6 +27,16 @@ differentiation, pitch).
 
 Recognized user triggers: `Validate the idea`, `Validate idea`,
 `Run idea validation`.
+
+## Relationship To Start Research
+
+This command validates individual existing assumption and open-question rows
+with up to three sources each. For full pre-product research — depth and
+track planning, focused research agents, critic review, and a synthesized
+research brief — use `COMMANDS/start-research.md`. When an accepted research
+brief (`00_intake/research/RESEARCH_BRIEF-*.md`, `status: accepted`, source
+freshness `active`) already covers an assumption, cite the brief's SRC- ID
+as its evidence instead of re-researching.
 
 ## Required Role
 
