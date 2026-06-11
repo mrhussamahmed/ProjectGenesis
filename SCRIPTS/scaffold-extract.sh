@@ -992,6 +992,11 @@ Common fields for all entries below unless stated otherwise:
 | ART-AI-ROLE-DEVOPS-RELEASE-REVIEWER | agent-role | DevOps Release Reviewer Role | \`memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | CI/CD, release, rollback, and observability review role definition. |
 | ART-AI-ROLE-DOCUMENTATION-CURATOR | agent-role | Documentation Curator Role | \`memory/ai/ROLE_DOCUMENTATION_CURATOR.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Shared state and documentation alignment role definition. |
 | ART-AI-ROLE-ADVERSARIAL-PR-REVIEWER | agent-role | Adversarial PR Reviewer Role | \`memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Fresh-context PR review role definition. |
+| ART-AI-ROLE-RESEARCH-PLANNER | agent-role | Research Planner Role | \`memory/ai/ROLE_RESEARCH_PLANNER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Research orchestration role definition. |
+| ART-AI-ROLE-RESEARCHER | agent-role | Researcher Role | \`memory/ai/ROLE_RESEARCHER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reusable one-track research role definition. |
+| ART-AI-ROLE-RESEARCH-CRITIC | agent-role | Research Critic Role | \`memory/ai/ROLE_RESEARCH_CRITIC.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Fresh-context research challenge role definition. |
+| ART-AI-ROLE-RESEARCH-SYNTHESIZER | agent-role | Research Synthesizer Role | \`memory/ai/ROLE_RESEARCH_SYNTHESIZER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Research brief synthesis role definition. |
+| ART-AI-ROLE-UX-DESIGNER | agent-role | UX Designer Role | \`memory/ai/ROLE_UX_DESIGNER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Evidence-backed UX brief role definition. |
 | ART-BOOT-001 | governance | AI Project Bootstrap Operating System | \`AI_PROJECT_BOOTSTRAP.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Primary entrypoint. |
 | ART-BOOT-002 | guide | Bootstrap Usage Guide | \`BOOTSTRAP_USAGE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | How to use the package. |
 | ART-NEW-PROJECT-INIT | guide | New Project Initialization | \`NEW_PROJECT_INITIALIZATION.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | New downstream project initialization prompt. |
@@ -1047,11 +1052,13 @@ Common fields for all entries below unless stated otherwise:
 | ART-PROJECT-CHARTER | guide | Project Charter | \`01_context/PROJECT_CHARTER.md\` | active | v1.0 | extracted scaffold | none | none | false | Downstream project charter template. |
 | ART-GLOSSARY | guide | Glossary | \`01_context/GLOSSARY.md\` | active | v1.0 | extracted scaffold | none | none | false | Downstream glossary template. |
 | ART-CONSTRAINTS | guide | Constraints | \`01_context/CONSTRAINTS.md\` | active | v1.0 | extracted scaffold | none | none | false | Downstream constraints template. |
+| ART-CONTEXT-UX-BRIEF | guide | UX Brief | \`01_context/UX_BRIEF.md\` | active | v1.0 | extracted scaffold | none | none | true | Downstream UX brief template. |
 | ART-REQUIREMENTS-INDEX | requirements-index | Requirements Index | \`02_requirements/REQUIREMENTS_INDEX.md\` | active | v1.0 | extracted scaffold | none | none | true | Downstream requirements index. |
 | ART-ASSUMPTIONS-REGISTER | assumptions-register | Assumptions Register | \`02_requirements/ASSUMPTIONS_REGISTER.md\` | active | v1.0 | extracted scaffold | none | none | true | Downstream assumptions register. |
 | ART-RISK-REGISTER | risk-register | Risk Register | \`02_requirements/RISK_REGISTER.md\` | active | v1.0 | extracted scaffold | none | none | true | Downstream risk register. |
 | ART-CONTEXT-PACK-README | guide | Context Packs README | \`CONTEXT_PACKS/README.md\` | active | v1.0 | extracted scaffold | none | none | false | Context pack index. |
 | ART-CONTEXT-PACK-PRODUCT | context-pack | Product Intake Context Pack | \`CONTEXT_PACKS/product-intake.md\` | active | v1.0 | extracted scaffold | none | none | true | Product intake context pack. |
+| ART-CONTEXT-PACK-RESEARCH | context-pack | Research Context Pack | \`CONTEXT_PACKS/research.md\` | active | v1.0 | extracted scaffold | none | none | true | Research orchestration context pack. |
 | ART-CONTEXT-PACK-SPEC | context-pack | Spec Authoring Context Pack | \`CONTEXT_PACKS/spec-authoring.md\` | active | v1.0 | extracted scaffold | none | none | true | Spec authoring context pack. |
 | ART-CONTEXT-PACK-ARCH | context-pack | Architecture Context Pack | \`CONTEXT_PACKS/architecture.md\` | active | v1.0 | extracted scaffold | none | none | true | Architecture context pack. |
 | ART-CONTEXT-PACK-IMPL | context-pack | Implementation Context Pack | \`CONTEXT_PACKS/implementation.md\` | active | v1.0 | extracted scaffold | none | none | true | Implementation context pack. |
@@ -1061,6 +1068,7 @@ Common fields for all entries below unless stated otherwise:
 | ART-COMMAND-TEMPLATE | template | Command Template | \`COMMANDS/COMMAND_TEMPLATE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Command authoring template. |
 | ART-COMMAND-START-REQUIREMENT-BREAKDOWN | command | Start Requirement Breakdown | \`COMMANDS/start-requirement-breakdown.md\` | active | v1.0 | extracted scaffold | none | none | false | Reusable downstream project intake and requirement breakdown workflow command triggered by \`Start requirement breakdown\`. |
 | ART-COMMAND-VALIDATE-IDEA | command | Validate The Idea | \`COMMANDS/validate-idea.md\` | active | v1.0 | extracted scaffold | none | none | false | Evidence-backed idea validation workflow. |
+| ART-COMMAND-START-RESEARCH | command | Start Research | \`COMMANDS/start-research.md\` | active | v1.0 | extracted scaffold | none | none | false | Research orchestration pipeline to a user-gated brief. |
 | ART-COMMAND-START-ARCH | command | Start Architecture Design | \`COMMANDS/start-architecture-design.md\` | active | v1.0 | extracted scaffold | none | none | false | Intent-to-architecture workflow. |
 | ART-COMMAND-IMPLEMENT-NEXT | command | Implement Next Story | \`COMMANDS/implement-next-story.md\` | active | v1.0 | extracted scaffold | none | none | false | Scoped-validation story execution workflow. |
 | ART-COMMAND-RESUME-WORK | command | Resume Work | \`COMMANDS/resume-work.md\` | active | v1.0 | extracted scaffold | none | none | false | Minimum-read session resume workflow. |
@@ -1072,6 +1080,10 @@ Common fields for all entries below unless stated otherwise:
 | ART-STARTER-AC-MAP | template-starter | Acceptance Criteria Map Starter | \`TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md\` | active | v1.0 | extracted scaffold | none | none | false | Clean acceptance-criteria map starter. |
 | ART-TEMPLATE-TECH-DESIGN | template | Tech Design Template | \`SPECS/templates/TECH_DESIGN_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | One-page solution design skeleton. |
 | ART-TEMPLATE-RESEARCH-NOTE | template | Research Note Template | \`00_intake/research/RESEARCH_NOTE_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Assumption-to-evidence research note. |
+| ART-TEMPLATE-RESEARCH-PLAN | template | Research Plan Template | \`00_intake/research/RESEARCH_PLAN_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Research run depth, tracks, caps, and gates. |
+| ART-TEMPLATE-RESEARCH-REPORT | template | Research Report Template | \`00_intake/research/RESEARCH_REPORT_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Per-track evidence log with counterexamples. |
+| ART-TEMPLATE-RESEARCH-CRITIC-REVIEW | template | Research Critic Review Template | \`00_intake/research/RESEARCH_CRITIC_REVIEW_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Critic checklist, findings, and verdicts. |
+| ART-TEMPLATE-RESEARCH-BRIEF | template | Research Brief Template | \`00_intake/research/RESEARCH_BRIEF_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Decision-ready brief gated on explicit user approval. |
 | ART-TEMPLATE-SUMMARY | template | Source Summary Template | \`00_intake/summaries/SUMMARY_TEMPLATE.md\` | active | v1.0 | extracted scaffold | none | none | false | Compact source summary schema. |
 | ART-INTAKE-RAW-DIR | input-directory | Raw Intake Directory | \`00_intake/raw/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the canonical raw intake directory present. |
 | ART-INTAKE-SUMMARIES-DIR | input-directory | Intake Summaries Directory | \`00_intake/summaries/.gitkeep\` | active | v1.0 | extracted scaffold | none | none | false | Placeholder keeps the intake summaries directory present. |

@@ -2,11 +2,11 @@ artifact_id: ART-REG-001
 title: Artifact Registry
 type: registry
 status: authoritative
-version: v6.0
+version: v6.1
 created: 2026-05-09
 updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/ARTIFACT_REGISTRY.md-2026-05-16-pre-slice-3.md); BOOT-GREEN-MERGE-001; GEN-01..16 improvement program; GEN-17 status/version column de-dup
+source: ProjectGenesis bootstrap scaffold; slice 3 required-reading shrink (full prior history preserved at MAINTAINER_ARCHIVE/snapshots/ARTIFACT_REGISTRY.md-2026-05-16-pre-slice-3.md); BOOT-GREEN-MERGE-001; GEN-01..16 improvement program; GEN-17 status/version column de-dup; BOOT-RESEARCH-001 research orchestration artifacts
 linked_specs: []
 linked_tickets: [BOOT-STATE-001, BOOT-GREEN-MERGE-001]
 linked_adrs: []
@@ -75,6 +75,7 @@ superseded, archived) are called out in the Notes column.
 | ART-CONTEXT-PROJECT-CHARTER | product-context | Project Charter | `01_context/PROJECT_CHARTER.md` | true | Charter. |
 | ART-CONTEXT-GLOSSARY | glossary | Glossary | `01_context/GLOSSARY.md` | true | Terms. |
 | ART-CONTEXT-CONSTRAINTS | product-context | Constraints | `01_context/CONSTRAINTS.md` | true | Constraints. |
+| ART-CONTEXT-UX-BRIEF | product-context | UX Brief | `01_context/UX_BRIEF.md` | true | Experience intent from evidence-backed user needs (BOOT-RESEARCH-001). |
 | ART-REQ-INDEX | requirements-registry | Requirements Index | `02_requirements/REQUIREMENTS_INDEX.md` | true | Requirements. |
 | ART-REQ-ASSUMPTIONS | assumptions-registry | Assumptions Register | `02_requirements/ASSUMPTIONS_REGISTER.md` | true | Assumptions. |
 | ART-REQ-RISK-REGISTER | risk-register | Risk Register | `02_requirements/RISK_REGISTER.md` | true | Risks. |
@@ -85,6 +86,7 @@ superseded, archived) are called out in the Notes column.
 |---|---|---|---|---|---|
 | ART-CONTEXT-PACK-README | reference | Context Packs README | `CONTEXT_PACKS/README.md` | false | Pack index. |
 | ART-CONTEXT-PACK-INTAKE | reference | Product Intake Pack | `CONTEXT_PACKS/product-intake.md` | false | Pack. |
+| ART-CONTEXT-PACK-RESEARCH | reference | Research Pack | `CONTEXT_PACKS/research.md` | false | Pack (BOOT-RESEARCH-001). |
 | ART-CONTEXT-PACK-SPEC | reference | Spec Authoring Pack | `CONTEXT_PACKS/spec-authoring.md` | false | Pack. |
 | ART-CONTEXT-PACK-ARCH | reference | Architecture Pack | `CONTEXT_PACKS/architecture.md` | false | Pack. |
 | ART-CONTEXT-PACK-IMPL | reference | Implementation Pack | `CONTEXT_PACKS/implementation.md` | false | Pack. |
@@ -108,6 +110,11 @@ superseded, archived) are called out in the Notes column.
 | ART-ROLE-DEVOPS | role | DevOps Release Reviewer | `memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md` | true | Role doc with split-state stopping rule. |
 | ART-ROLE-DOCS | role | Documentation Curator | `memory/ai/ROLE_DOCUMENTATION_CURATOR.md` | true | Role doc with canonical snapshot/history guidance. |
 | ART-ROLE-ADV-REVIEW | role | Adversarial PR Reviewer | `memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md` | true | Role doc with split-state review check and AI green-merge defect-detection framing. |
+| ART-ROLE-RESEARCH-PLANNER | role | Research Planner | `memory/ai/ROLE_RESEARCH_PLANNER.md` | true | Research orchestration owner: depth, tracks, caps, gates (BOOT-RESEARCH-001). |
+| ART-ROLE-RESEARCHER | role | Researcher | `memory/ai/ROLE_RESEARCHER.md` | true | Reusable one-track evidence researcher (BOOT-RESEARCH-001). |
+| ART-ROLE-RESEARCH-CRITIC | role | Research Critic | `memory/ai/ROLE_RESEARCH_CRITIC.md` | true | Fresh-context research-report challenger (BOOT-RESEARCH-001). |
+| ART-ROLE-RESEARCH-SYNTHESIZER | role | Research Synthesizer | `memory/ai/ROLE_RESEARCH_SYNTHESIZER.md` | true | Merges accepted reports into the research brief (BOOT-RESEARCH-001). |
+| ART-ROLE-UX-DESIGNER | role | UX Designer | `memory/ai/ROLE_UX_DESIGNER.md` | true | Evidence-backed UX brief author feeding spec authoring (BOOT-RESEARCH-001). |
 
 ## Indexes And Templates
 
@@ -142,8 +149,13 @@ superseded, archived) are called out in the Notes column.
 | ART-STARTER-AC-MAP | template-starter | Acceptance Criteria Map Starter | `TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md` | false | Clean AC map for downstream projects. |
 | ART-TEMPLATE-TECH-DESIGN | template | Tech Design Template | `SPECS/templates/TECH_DESIGN_TEMPLATE.md` | false | One-page solution design skeleton. |
 | ART-TEMPLATE-RESEARCH-NOTE | template | Research Note Template | `00_intake/research/RESEARCH_NOTE_TEMPLATE.md` | false | Assumption-to-evidence research note. |
+| ART-TEMPLATE-RESEARCH-PLAN | template | Research Plan Template | `00_intake/research/RESEARCH_PLAN_TEMPLATE.md` | false | Depth, tracks, caps, and gates for a research run (BOOT-RESEARCH-001). |
+| ART-TEMPLATE-RESEARCH-REPORT | template | Research Report Template | `00_intake/research/RESEARCH_REPORT_TEMPLATE.md` | false | Per-track evidence log with counterexamples and candidates (BOOT-RESEARCH-001). |
+| ART-TEMPLATE-RESEARCH-CRITIC-REVIEW | template | Research Critic Review Template | `00_intake/research/RESEARCH_CRITIC_REVIEW_TEMPLATE.md` | false | Critic checklist, findings, and verdicts (BOOT-RESEARCH-001). |
+| ART-TEMPLATE-RESEARCH-BRIEF | template | Research Brief Template | `00_intake/research/RESEARCH_BRIEF_TEMPLATE.md` | false | Decision-ready brief gated on explicit user approval (BOOT-RESEARCH-001). |
 | ART-TEMPLATE-SUMMARY | template | Source Summary Template | `00_intake/summaries/SUMMARY_TEMPLATE.md` | false | Compact source summary schema. |
 | ART-COMMAND-VALIDATE-IDEA | command | Validate The Idea | `COMMANDS/validate-idea.md` | false | Evidence-backed idea validation workflow. |
+| ART-COMMAND-START-RESEARCH | command | Start Research | `COMMANDS/start-research.md` | false | Research orchestration pipeline to a user-gated brief (BOOT-RESEARCH-001). |
 | ART-COMMAND-START-ARCH | command | Start Architecture Design | `COMMANDS/start-architecture-design.md` | false | Intent-to-architecture workflow. |
 | ART-COMMAND-IMPLEMENT-NEXT | command | Implement Next Story | `COMMANDS/implement-next-story.md` | false | Scoped-validation story execution workflow. |
 | ART-COMMAND-RESUME-WORK | command | Resume Work | `COMMANDS/resume-work.md` | false | Minimum-read session resume workflow. |
