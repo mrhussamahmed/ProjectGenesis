@@ -2,11 +2,11 @@ artifact_id: ART-INTAKE-SOURCE-REGISTRY
 title: Source Registry
 type: source-registry
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-13
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002; GEN-11 url and research-note source types
+source: SPEC-BOOT-002; GEN-11 url and research-note source types; BOOT-RESEARCH-001 research-report and research-brief source types
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: []
 linked_adrs: []
@@ -26,6 +26,13 @@ belong in `00_intake/research/`.
 - `url` — external web evidence; File Path holds the URL.
 - `research-note` — agent research output in `00_intake/research/` written
   from `00_intake/research/RESEARCH_NOTE_TEMPLATE.md`.
+- `research-report` — a per-track report in `00_intake/research/` written
+  from `00_intake/research/RESEARCH_REPORT_TEMPLATE.md`.
+- `research-brief` — a synthesized brief in `00_intake/research/` written
+  from `00_intake/research/RESEARCH_BRIEF_TEMPLATE.md`. Downstream reuse of
+  a brief's evidence requires the brief's frontmatter `status: accepted`
+  and this registry row's freshness `active`; mark the row `stale` or
+  `superseded` when the product idea or market context changes.
 
 ## Sources
 

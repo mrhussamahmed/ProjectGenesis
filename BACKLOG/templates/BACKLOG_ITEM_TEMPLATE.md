@@ -70,6 +70,8 @@ expectations live here, never as sibling tickets.
 ## Links
 
 Trigger: the item cites specs, sources, assumptions, ADRs, or open questions.
+Research-derived items cite the accepted research brief's SRC- ID in Source
+IDs, never raw research reports.
 
 - Linked spec:
 - Source IDs:
