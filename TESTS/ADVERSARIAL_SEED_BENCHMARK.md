@@ -112,7 +112,8 @@ invoked. As of BOOT-032 baseline (2026-05-16), the catalog covers:
   validator level routing, shape-only changed-file scoping, and the
   downstream core/optional required-file floor split
 - BOOT-RESEARCH-001 additions: accepted-research-brief acceptance checks
-  (approval line, critic reference, draft/accepted routing) and extended
+  (anchored approval line incl. the template-guidance bypass fixture,
+  critic reference, draft/accepted routing) and extended
   scaffold-registry kept-framework-path pins
 
 ## Baseline Result
@@ -122,8 +123,8 @@ Refreshed in the BOOT-RESEARCH-001 batch (HUS-236) on branch
 (77 cases, recorded 2026-06-11) is preserved in git history.
 
 ```
-seeded_defect_cases: 81
-seeded_defect_detected: 81
+seeded_defect_cases: 82
+seeded_defect_detected: 82
 seeded_defect_detection_rate: 100%
 red_check_harness_status: 0
 ```

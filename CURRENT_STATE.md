@@ -47,8 +47,8 @@ intake yet).
 
 ## Active Backlog Focus
 
-GEN improvement program (Linear HUS-219..235) complete; BOOT-RESEARCH-001
-(Linear HUS-236) in review. Next focus: downstream product intake via
+GEN improvement program (Linear HUS-219..235) and BOOT-RESEARCH-001
+(Linear HUS-236) complete. Next focus: downstream product intake via
 `COMMANDS/COMMAND_INDEX.md` (optionally starting with `Start research`) or
 a new improvement milestone. See `IMPLEMENTATION_PLAN.md`.
 

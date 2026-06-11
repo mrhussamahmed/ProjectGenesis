@@ -23,7 +23,7 @@ orchestration layer (HUS-236) merged.
 
 ## Last Validated
 BOOT-RESEARCH-001 baseline (2026-06-11): strict validation, red checks
-81/81, and the refreshed seeded-defect benchmark are recorded in
+82/82, and the refreshed seeded-defect benchmark are recorded in
 `TEST_RESULTS.md` and `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`.
 
 ## Next Recommended Action

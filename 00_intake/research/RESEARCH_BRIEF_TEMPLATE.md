@@ -23,7 +23,7 @@ becomes `accepted` only when explicit user approval is recorded in the
 Approval section; the validator enforces required sections, the approval
 line, and RR-/RCR- references on accepted briefs. The brief consolidates
 evidence into decision-ready options; it does not make feature decisions.
-Cross-report evidence citations use the form RR-NNN-track/EV-MMM. Instances
+Cross-report evidence citations use the form RR-NNN-<track>/EV-MMM. Instances
 must not contain placeholder tokens; record open items under Gaps And
 Unknowns instead.
 
@@ -38,7 +38,7 @@ the biggest risk, and what decision the product analyst now faces.
 
 ## Consolidated Findings
 
-Per theme, citing report evidence (RR-NNN-track/EV-MMM). Conflicts between
+Per theme, citing report evidence (RR-NNN-<track>/EV-MMM). Conflicts between
 reports are resolved explicitly here or recorded under Gaps And Unknowns.
 
 ## Differentiation Opportunities
@@ -82,7 +82,7 @@ gaps; each names the follow-up that would close it.
 Decision-ready options, not feature decisions. Every recommendation cites
 evidence.
 
-| Recommendation | Citations (RR-NNN-track/EV-MMM) | Confidence | Decision Impact |
+| Recommendation | Citations (RR-NNN-<track>/EV-MMM) | Confidence | Decision Impact |
 |----------------|----------------------------------|------------|------------------|
 |  |  |  |  |
 

@@ -300,6 +300,16 @@ write_research_brief_fixture() {
   local approval_line="$3"
   local rcr_ref="$4"
   [[ "$approval_line" == "-" ]] && approval_line="Approval pending."
+  if [[ "$approval_line" == "guidance" ]]; then
+    # Realistic instantiation shape: the template's guidance prose retained
+    # verbatim (mentions "user approval" and shows the recorded-line form in
+    # backticks) plus the unfilled bullet — but no real recorded approval.
+    approval_line='Acceptance requires explicit user approval. Record it as a line of the form
+`Approval: user approval - name, date` and flip frontmatter
+`status:` to `accepted` only after that line exists.
+
+- Approval:'
+  fi
   [[ "$rcr_ref" == "-" ]] && rcr_ref="none recorded yet"
   cat >"$dir/00_intake/research/RESEARCH_BRIEF-900.md" <<EOF
 artifact_id: ART-RESEARCH-BRIEF-900
@@ -380,6 +390,14 @@ case_accepted_research_brief_missing_approval_fails() {
   dir="$(copy_repo accepted-research-brief-missing-approval)"
   write_research_brief_fixture "$dir" "accepted" "-" "RCR-900"
   expect_failure "accepted research brief missing approval" \
+    "accepted research brief missing user approval line" "$dir"
+}
+
+case_accepted_research_brief_template_guidance_fails() {
+  local dir
+  dir="$(copy_repo accepted-research-brief-template-guidance)"
+  write_research_brief_fixture "$dir" "accepted" "guidance" "RCR-900"
+  expect_failure "accepted research brief with only template guidance text" \
     "accepted research brief missing user approval line" "$dir"
 }
 
@@ -1678,6 +1696,7 @@ case_approved_assumption_unsupported_evidence
 case_accepted_research_brief_passes
 case_draft_research_brief_passes
 case_accepted_research_brief_missing_approval_fails
+case_accepted_research_brief_template_guidance_fails
 case_accepted_research_brief_missing_critic_ref_fails
 case_operation_routing_missing_profile
 case_operation_routing_missing_validation_mode

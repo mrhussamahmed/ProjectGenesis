@@ -665,7 +665,11 @@ if [[ -d 00_intake/research ]]; then
       grep -Fq "$section" "$brief_file" || \
         fail "$brief_file accepted research brief missing section: $section"
     done
-    if ! awk '/^## Approval$/{inside=1; next} /^## /{inside=0} inside' "$brief_file" | grep -qi "user approval"; then
+    # Anchored to the recorded-line form so the template's own guidance
+    # sentence (which mentions "user approval" in prose and shows the line
+    # form inside backticks) can never satisfy the gate.
+    if ! awk '/^## Approval$/{inside=1; next} /^## /{inside=0} inside' "$brief_file" | \
+      grep -Eqi '^[-*[:space:]]*Approval:[[:space:]]*user approval -'; then
       fail "$brief_file accepted research brief missing user approval line in ## Approval"
     fi
     grep -Eq 'RR-[0-9]+' "$brief_file" || \
