@@ -26,7 +26,6 @@ authoritative: false
 - `AI_HANDOFF.md`
 - relevant active spec
 - relevant backlog item
-- `TEST_PLAN.md`
 - `TRACEABILITY_MATRIX.md`
 
 ## Files To Read If Relevant

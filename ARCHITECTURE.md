@@ -49,7 +49,7 @@ handoff.
   `OPEN_QUESTIONS.md`, `STALE_ITEMS.md`.
 - Planning: `SPECS/`, `ADR/`, `BACKLOG/`, `IMPLEMENTATION_PLAN.md`,
   `PARALLEL_EXECUTION_PLAN.md` (maintainer repo only).
-- Validation: `TEST_STRATEGY.md`, `TEST_PLAN.md`, `TEST_RESULTS.md`,
+- Validation: `TEST_STRATEGY.md`, `TEST_RESULTS.md`,
   `TESTS/`, `SCRIPTS/validate-bootstrap.sh`.
 - Review and release: `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`,
   `AI_REVIEW_PROMPTS.md`, `REVIEWS/`, `RELEASE_READINESS.md`.
@@ -110,7 +110,7 @@ in project-specific architecture and ADRs.
 ## Testing Strategy
 
 Bootstrap validation is file-based and lightweight. Downstream product testing
-is defined in `TEST_STRATEGY.md`, `TEST_PLAN.md`, and project-specific specs.
+is defined in `TEST_STRATEGY.md` and project-specific specs.
 
 ## Observability Needs
 

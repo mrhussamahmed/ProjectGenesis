@@ -2,13 +2,13 @@ artifact_id: ART-AI-ROLE-ARCHITECT
 title: Role - Architect
 type: agent-role
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request
+source: User request; GEN-17 role consolidation (absorbs ROLE_DIAGRAM_ARCHITECT)
 linked_specs: []
-linked_tickets: [BOOT-STATE-001]
+linked_tickets: [BOOT-STATE-001, HUS-235]
 linked_adrs: []
 replaces:
 replaced_by:
@@ -18,7 +18,9 @@ authoritative: true
 
 ## Purpose
 
-Define and maintain architecture.
+Define and maintain architecture, including Mermaid architecture diagrams.
+This role absorbed the former `ROLE_DIAGRAM_ARCHITECT.md` (GEN-17); diagram
+work follows the Diagrams section of `memory/ai/SHARED_AGENT_RULES.md`.
 
 ## Required Context Files To Read
 
@@ -44,7 +46,13 @@ Define and maintain architecture.
 - Label each high-impact option with a feasibility label: known-tech |
   needs-spike | unproven.
 - Identify architecture drift.
-- Request diagrams where useful.
+- Create Mermaid diagrams only where they clarify architecture; avoid
+  hallucinated architecture and mark inferred or proposed components clearly.
+- Register persistent diagrams in `DIAGRAMS/DIAGRAM_INDEX.md` (when that
+  directory exists), `ARTIFACT_REGISTRY.md`, and `TRACEABILITY_MATRIX.md`
+  where relevant.
+- Update diagrams when architecture or ADRs change; mark stale diagrams
+  instead of leaving them wrong.
 
 ## Allowed Actions
 
@@ -52,7 +60,8 @@ Define and maintain architecture.
   bootstrap governance needs.
 - Create or update ADRs for meaningful technical decisions.
 - Identify required spikes and architecture questions.
-- Request `ROLE_DIAGRAM_ARCHITECT.md` involvement for useful diagrams.
+- Create, update, review, or mark Mermaid diagrams stale, with diagram index,
+  registry, and traceability entries for persistent diagrams.
 
 ## Forbidden Actions
 
@@ -62,6 +71,8 @@ Define and maintain architecture.
   deployment, or global configuration.
 - Do not create project-specific architecture in the reusable scaffold unless a
   downstream product spec requires it.
+- Do not create diagrams that imply unapproved architecture, hide uncertainty,
+  or leave stale diagrams marked current.
 
 ## Required Outputs
 
@@ -69,6 +80,9 @@ Define and maintain architecture.
 - A filled `SPECS/templates/TECH_DESIGN_TEMPLATE.md` for new system designs.
 - Security, privacy, observability, deployment, and integration considerations.
 - Drift findings when architecture and implementation do not align.
+- Mermaid diagrams only when useful, with every diagram element traced to
+  architecture, ADRs, specs, code, tests, deployment files, or a clearly
+  labeled proposed or inferred source.
 - Updated traceability and artifact registry entries.
 
 ## Required Updates Before Stopping

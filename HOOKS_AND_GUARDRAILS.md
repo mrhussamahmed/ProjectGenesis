@@ -81,10 +81,12 @@ bash SCRIPTS/session.sh start docs-trivial "short task note"
 
 It writes gitignored `.ai/SESSION.md` (format: `TEMPLATE_STARTERS/SESSION.md`)
 with the keys `SCRIPTS/operation-profile.sh` reads. Light profiles then route
-hooks to shape-only validation unless the change touches a strict-gate path.
-Stale (12-hour TTL), branch-mismatched, or absent sessions route strict —
-fail-closed. Use `session.sh touch` to refresh, `status` to inspect, and
-`clear` to drop back to strict.
+hooks to shape-only validation (scoped to the staged/changed file set) and
+the `state-sync` profile routes to the intermediate state-sync validator
+level, unless the change touches a strict-gate path. Stale (12-hour TTL),
+branch-mismatched, or absent sessions route strict — fail-closed. Use
+`session.sh touch` to refresh, `status` to inspect, and `clear` to drop back
+to strict.
 
 ## Guardrail Philosophy
 

@@ -41,6 +41,13 @@ if [[ "$validator_level" != "strict" ]]; then
 fi
 
 export BOOTSTRAP_VALIDATE_PROFILE="$validator_level"
+# GEN-17/AUTO-6: in the shape-only fast path, scope the validator's
+# metadata scan to the branch's changed files vs origin/main (already
+# proven clear of strict-gate paths above).
+if [[ "$validator_level" == "shape-only" ]] && git rev-parse --verify origin/main >/dev/null 2>&1; then
+  BOOTSTRAP_CHANGED_FILES="$(git diff --name-only --diff-filter=ACMR origin/main...HEAD 2>/dev/null || true)"
+  export BOOTSTRAP_CHANGED_FILES
+fi
 bash SCRIPTS/validate-bootstrap.sh
 
 echo "pre-push checks passed (validator profile: $validator_level)"

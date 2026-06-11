@@ -34,6 +34,13 @@ Use this example to see how ProjectGenesis separates:
 - deferred AI reminder ideas
 - backlog candidates
 - validation checks
+- a tech-design exemplar (`01_expected_outputs/tech-design.md`)
+- an ADR exemplar (`01_expected_outputs/adr-001-stack-choice.md`)
+
+The tabular outputs use the canonical schemas from
+`02_requirements/REQUIREMENTS_INDEX.md`, `02_requirements/ASSUMPTIONS_REGISTER.md`,
+`02_requirements/RISK_REGISTER.md`, and `BACKLOG/BACKLOG_INDEX.md`, so the
+example doubles as a golden-path reference for real intake output.
 
 For a real project, place source material in `00_intake/raw/` and run:
 

@@ -49,3 +49,16 @@ For ProjectGenesis itself, run:
 ```sh
 bash SCRIPTS/validate-bootstrap.sh
 ```
+
+## Validation-Evidence Note Exemplar
+
+The one-note-per-PR validation evidence record (per `OPERATION_ROUTING.md`
+and `GOVERNANCE.md` End-Of-Session) for an intake PR like this example
+would read:
+
+```text
+Operation profile: planning-governance
+Validation run: bash SCRIPTS/validate-bootstrap.sh (passed, covers final diff)
+Validation skipped: none
+Review required: fresh-context adversarial review before spec activation
+```

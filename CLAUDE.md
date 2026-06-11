@@ -41,7 +41,6 @@ is restarted with an allowlisted role mode.
 ./SCRIPTS/start-claude.sh devops
 ./SCRIPTS/start-claude.sh docs
 ./SCRIPTS/start-claude.sh review
-./SCRIPTS/start-claude.sh diagrams
 ./SCRIPTS/start-claude.sh handoff
 ```
 
@@ -59,4 +58,4 @@ session; run SCRIPTS/doctor.sh for instant orientation.
 
 Run `bash SCRIPTS/validate-bootstrap.sh` for bootstrap consistency. For product
 implementation, also run the stack-specific checks defined in the active spec,
-test plan, or CI configuration.
+test strategy, or CI configuration.

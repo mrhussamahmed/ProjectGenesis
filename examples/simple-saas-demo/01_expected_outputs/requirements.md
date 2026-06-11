@@ -18,14 +18,17 @@ authoritative: false
 
 This is illustrative expected output, not a claim of live generated output.
 
-| ID | Requirement | Status | Confidence | Source Or Basis | Scope |
-|----|-------------|--------|------------|-----------------|-------|
-| EX-REQ-001 | Freelancers can create, view, edit, and mark invoices by payment state. | confirmed | high | `EX-SRC-001` | initial |
-| EX-REQ-002 | Freelancers can record expenses. | confirmed | high | `EX-SRC-001` | initial |
-| EX-REQ-003 | Freelancers can identify late payments. | confirmed | high | `EX-SRC-001` | initial |
-| EX-REQ-004 | The product should be usable as a SaaS app with user accounts. | inferred | medium | SaaS wording in `EX-SRC-001` | initial candidate |
-| EX-REQ-005 | Users should see a summary of unpaid and overdue invoices. | inferred | medium | Late payment tracking need in `EX-SRC-001` | initial candidate |
-| EX-REQ-006 | AI reminders should be explored later, not included in the initial build. | inferred | high | "Maybe add AI reminders later" in `EX-SRC-001` | deferred |
+This table uses the canonical `02_requirements/REQUIREMENTS_INDEX.md` schema
+so intake output can be pasted into a real project without reshaping.
+
+| Requirement ID | Statement | Type | Priority | Source IDs | Confidence | Status | Linked Specs | Linked Backlog | Notes |
+|----------------|-----------|------|----------|------------|------------|--------|--------------|----------------|-------|
+| EX-REQ-001 | Freelancers can create, view, edit, and mark invoices by payment state. | functional | P1 | EX-SRC-001 | high | confirmed | none | EX-BL-001, EX-BL-003 | Initial scope. |
+| EX-REQ-002 | Freelancers can record expenses. | functional | P1 | EX-SRC-001 | high | confirmed | none | EX-BL-002, EX-BL-004 | Initial scope. |
+| EX-REQ-003 | Freelancers can identify late payments. | functional | P1 | EX-SRC-001 | high | confirmed | none | EX-BL-005 | Initial scope. |
+| EX-REQ-004 | The product should be usable as a SaaS app with user accounts. | non-functional | P2 | EX-SRC-001 | medium | inferred | none | none | Inferred from SaaS wording; initial candidate. |
+| EX-REQ-005 | Users should see a summary of unpaid and overdue invoices. | functional | P2 | EX-SRC-001 | medium | inferred | none | EX-BL-005 | Inferred from late-payment tracking need; initial candidate. |
+| EX-REQ-006 | AI reminders should be explored later, not included in the initial build. | functional | P3 | EX-SRC-001 | high | inferred | none | EX-BL-006 | Deferred; from "Maybe add AI reminders later". |
 
 ## Not Yet Requirements
 

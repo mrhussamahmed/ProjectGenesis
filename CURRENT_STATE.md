@@ -2,9 +2,9 @@ artifact_id: ART-STATE-002
 title: Current State
 type: shared-state
 status: active
-version: v6.0
+version: v7.0
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
 source: ProjectGenesis bootstrap scaffold; split-state boundary from BOOT-STATE-001; state compaction from GEN-07
 linked_specs: []
@@ -32,10 +32,9 @@ decision.
 
 ## Active Implementation Phase
 
-Scaffold operating-model improvement arc: the GEN-01..16 program (compact
-reads, risk-tiered review, pipeline commands; Linear HUS-219..235) is the
-current operating-model baseline; the P2 batch (GEN-17 / HUS-235) remains
-open.
+Scaffold operating-model improvement arc complete: GEN-01..16 (PR #24) and
+the GEN-17 P2 batch (HUS-235, PR #25) are the current operating-model
+baseline.
 Pipeline Stage: implement (the scaffold itself; no downstream product
 intake yet).
 
@@ -45,8 +44,9 @@ intake yet).
 
 ## Active Backlog Focus
 
-GEN improvement program (Linear HUS-219..235); next batch is GEN-17 /
-HUS-235. See `IMPLEMENTATION_PLAN.md`.
+GEN improvement program (Linear HUS-219..235) complete. Next focus:
+downstream product intake via `COMMANDS/COMMAND_INDEX.md` or a new
+improvement milestone. See `IMPLEMENTATION_PLAN.md`.
 
 ## Current Blockers
 

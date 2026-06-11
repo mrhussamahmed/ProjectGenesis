@@ -45,7 +45,9 @@ Use the bootstrap scaffold to prepare this repository for AI-assisted
 development:
 
 1. Inspect repository state (git status --short --branch) and record gaps or
-   stale artifacts where they belong.
+   stale artifacts where they belong. Enable the bundled Git hooks once per
+   clone with: git config core.hooksPath .githooks (SCRIPTS/doctor.sh warns
+   when this is missing).
 2. Register and summarize intake sources under 00_intake/.
 3. Extract goals, users, workflows, requirements, assumptions, open questions,
    risks, constraints, security, privacy, and observability needs into

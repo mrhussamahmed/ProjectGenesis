@@ -70,6 +70,7 @@ classified as `maintainer-archive`; one mode additionally resets the
    - `STALE_ITEMS.md`
    - `SCRIPTS/scaffold-extract.sh`
    - `SCRIPTS/run-seeded-defect-bench.sh`
+   - `SCRIPTS/prune-history.sh`
    - `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
    - `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
 
@@ -162,6 +163,7 @@ rsync mirror depend on them at their active paths):
 - `STALE_ITEMS.md`
 - `SCRIPTS/scaffold-extract.sh`
 - `SCRIPTS/run-seeded-defect-bench.sh`
+- `SCRIPTS/prune-history.sh`
 - `TESTS/ACCEPTANCE_CRITERIA_MAP.md`
 - `TESTS/ADVERSARIAL_SEED_BENCHMARK.md`
 
@@ -230,7 +232,7 @@ as ProjectGenesis history leakage:
    to: `AI_PROJECT_BOOTSTRAP.md`, `CONTEXT_INDEX.md`, `GOVERNANCE.md`,
    `BRANCH_AND_WORKTREE_GUIDE.md`, `OPERATION_ROUTING.md`,
    `PR_REVIEW_POLICY.md`, `PR_MERGE_POLICY.md`, `BOOTSTRAP_USAGE.md`,
-   `CI_CD_GUIDE.md`, `RISK_MODEL.md`, `TEST_PLAN.md`, `TEST_STRATEGY.md`,
+   `CI_CD_GUIDE.md`, `RISK_MODEL.md`, `TEST_STRATEGY.md`,
    `HOOKS_AND_GUARDRAILS.md`,
    `NEW_PROJECT_INITIALIZATION.md`, `memory/ai/SHARED_AGENT_RULES.md`,
    `memory/ai/ROLE_*.md`, `CONTEXT_PACKS/*.md`, the `00_intake/`,
@@ -338,7 +340,6 @@ Hits outside this allowlist are real leaks and must be reclassified.
 | `TEMPLATE_MANIFEST.md` | `copy-clean` | This manifest. Copied unchanged. |
 | `TEMPLATE_STARTERS/` | `copy` | Starter source folder. Copied unchanged so consumers can re-run starter resets later. |
 | `TESTS/` | `copy` | Reusable test framework scaffolding. |
-| `TEST_PLAN.md` | `copy-clean` | Reusable test plan stub. |
 | `TEST_RESULTS.md` | `starter-reset` | Heavy ProjectGenesis test history. Replace from `TEMPLATE_STARTERS/TEST_RESULTS.md`. |
 | `TEST_STRATEGY.md` | `copy-clean` | Reusable test strategy. |
 | `TRACEABILITY_MATRIX.md` | `starter-reset` | Heavy ProjectGenesis traceability history. Replace from `TEMPLATE_STARTERS/TRACEABILITY_MATRIX.md`. |
@@ -449,6 +450,7 @@ introduced them; consumers may relabel.
 | `SCRIPTS/validate-bootstrap.sh` | `copy` | Reusable validator. Inline comments and fixture strings reference PG ticket numbers; these are motivating-context comments only (see Documented Allowlist). |
 | `SCRIPTS/validate-bootstrap-red-checks.sh` | `copy` | Reusable red-check harness. Inline fixture content uses `claude/` and `codex/` strings as test data (see Documented Allowlist). |
 | `SCRIPTS/run-seeded-defect-bench.sh` | `maintainer-archive` | BOOT-032 benchmark runner; PG-specific. |
+| `SCRIPTS/prune-history.sh` | `maintainer-archive` | GEN-17 WORKLOG/REVIEWS rotation tool; targets `MAINTAINER_ARCHIVE/`, PG-specific. |
 | `SCRIPTS/scaffold-extract.sh` | `maintainer-archive` | BOOT-031 deliverable embedding ProjectGenesis REQ-BOOT rows. |
 
 ### `COMMANDS/` (parent: `copy`)
@@ -568,7 +570,6 @@ for f in \
   RISK_MODEL.md \
   SECURITY_AND_PRIVACY.md \
   TEMPLATE_MANIFEST.md \
-  TEST_PLAN.md \
   TEST_STRATEGY.md; do
     cp "<SRC>/$f" "<DEST>/$f"
 done

@@ -48,9 +48,6 @@ memory/ai/ROLE_*.md file or restart with an allowlisted role mode."
   review)
     role_prompt="memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md"
     ;;
-  diagrams)
-    role_prompt="memory/ai/ROLE_DIAGRAM_ARCHITECT.md"
-    ;;
   handoff)
     role_prompt="memory/ai/ROLE_DOCUMENTATION_CURATOR.md"
     ;;
@@ -70,7 +67,6 @@ Allowed modes:
   devops
   docs
   review
-  diagrams
   handoff
 USAGE
     exit 2
@@ -99,5 +95,39 @@ elif [[ -n "$default_notice" ]]; then
 
 ${default_notice}"
 fi
+
+# GEN-17/HAND-7 state injection: append a compact, read-only snapshot of
+# current repository state so a fresh session starts oriented without
+# re-deriving it. Repository files remain the source of truth; this block
+# is convenience context only.
+state_block="## Current Repository State (auto-injected by start-claude.sh)
+"
+if git rev-parse --git-dir >/dev/null 2>&1; then
+  current_branch="$(git branch --show-current 2>/dev/null || true)"
+  dirty_count="$(git status --porcelain 2>/dev/null | wc -l | tr -d ' ')"
+  state_block+="
+Branch: ${current_branch:-detached}; dirty files: ${dirty_count}."
+fi
+if [[ -f .ai/SESSION.md ]]; then
+  state_block+="
+
+Local session (.ai/SESSION.md, gitignored):
+$(head -n 12 .ai/SESSION.md)"
+fi
+if [[ -f AI_HANDOFF.md ]]; then
+  next_action="$(awk '/^## Next Recommended Action/{flag=1; next} /^## /{flag=0} flag && NF' AI_HANDOFF.md | head -n 6)"
+  if [[ -n "$next_action" ]]; then
+    state_block+="
+
+AI_HANDOFF.md next recommended action:
+$next_action"
+  fi
+fi
+
+prompt_text="${prompt_text}
+
+---
+
+${state_block}"
 
 exec claude --append-system-prompt "$prompt_text"

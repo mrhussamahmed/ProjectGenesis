@@ -202,6 +202,7 @@ FORBIDDEN_PATHS=(
   "TESTS/ADVERSARIAL_SEED_BENCHMARK.md"
   "SCRIPTS/run-seeded-defect-bench.sh"
   "SCRIPTS/scaffold-extract.sh"
+  "SCRIPTS/prune-history.sh"
   ".github/CODEOWNERS"
 )
 
@@ -509,7 +510,7 @@ instead of a product spec. Product implementation must not use this exception.
 | Product Requirement | Spec ID | Backlog Item | Linear Ticket | ADR | Architecture Doc | Implementation Branch | Changed Files | Tests | Review Record | Release Status | Current Status |
 |---------------------|---------|--------------|---------------|-----|------------------|-----------------------|---------------|-------|---------------|----------------|----------------|
 | REQ-BOOT-001: Spec-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_PROJECT_BOOTSTRAP.md\`, \`GOVERNANCE.md\`, \`SPECS/templates/SPEC_TEMPLATE.md\` | \`SCRIPTS/validate-bootstrap.sh\` existence checks | pending | not released | initialized |
-| REQ-BOOT-002: Test-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`TEST_STRATEGY.md\`, \`TEST_PLAN.md\` | validator plus future stack tests | pending | not released | initialized |
+| REQ-BOOT-002: Test-driven development | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`TEST_STRATEGY.md\` | validator plus future stack tests | pending | not released | initialized |
 | REQ-BOOT-003: Artifact lifecycle control | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`ARTIFACT_REGISTRY.md\`, \`GOVERNANCE.md\` | metadata checks with documented \`AGENTS.md\` and \`CLAUDE.md\` exception | pending | not released | initialized |
 | REQ-BOOT-004: Branch and worktree hygiene | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`BRANCH_AND_WORKTREE_GUIDE.md\`, \`.githooks/\` | hook templates and validator | pending | not released | initialized |
 | REQ-BOOT-005: Anti-hallucination and source-of-truth rules | none | BOOT-001 | none | none | \`ARCHITECTURE.md\` | none | \`AI_PROJECT_BOOTSTRAP.md\`, \`GOVERNANCE.md\`, \`CONTEXT_INDEX.md\` | validator required files | pending | not released | initialized |
@@ -991,7 +992,6 @@ Common fields for all entries below unless stated otherwise:
 | ART-AI-ROLE-DEVOPS-RELEASE-REVIEWER | agent-role | DevOps Release Reviewer Role | \`memory/ai/ROLE_DEVOPS_RELEASE_REVIEWER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | CI/CD, release, rollback, and observability review role definition. |
 | ART-AI-ROLE-DOCUMENTATION-CURATOR | agent-role | Documentation Curator Role | \`memory/ai/ROLE_DOCUMENTATION_CURATOR.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Shared state and documentation alignment role definition. |
 | ART-AI-ROLE-ADVERSARIAL-PR-REVIEWER | agent-role | Adversarial PR Reviewer Role | \`memory/ai/ROLE_ADVERSARIAL_PR_REVIEWER.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Fresh-context PR review role definition. |
-| ART-AI-ROLE-DIAGRAM-ARCHITECT | agent-role | Diagram Architect Role | \`memory/ai/ROLE_DIAGRAM_ARCHITECT.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Mermaid diagram creation and review role definition. |
 | ART-BOOT-001 | governance | AI Project Bootstrap Operating System | \`AI_PROJECT_BOOTSTRAP.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Primary entrypoint. |
 | ART-BOOT-002 | guide | Bootstrap Usage Guide | \`BOOTSTRAP_USAGE.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | How to use the package. |
 | ART-NEW-PROJECT-INIT | guide | New Project Initialization | \`NEW_PROJECT_INITIALIZATION.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | New downstream project initialization prompt. |
@@ -1004,7 +1004,6 @@ Common fields for all entries below unless stated otherwise:
 | ART-REG-001 | registry | Artifact Registry | \`ARTIFACT_REGISTRY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Artifact inventory. |
 | ART-TRACE-001 | traceability | Traceability Matrix | \`TRACEABILITY_MATRIX.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Requirement-to-evidence map. |
 | ART-TEST-001 | test-strategy | Test Strategy | \`TEST_STRATEGY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Testing principles. |
-| ART-TEST-002 | test-plan | Test Plan | \`TEST_PLAN.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Current test plan. |
 | ART-REVIEW-001 | review-policy | PR Review Policy | \`PR_REVIEW_POLICY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Adversarial review rules. |
 | ART-REVIEW-002 | merge-policy | PR Merge Policy | \`PR_MERGE_POLICY.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Merge gate. |
 | ART-REVIEW-003 | prompt-library | AI Review Prompts | \`AI_REVIEW_PROMPTS.md\` | authoritative | v1.0 | extracted scaffold | none | none | true | Reviewer prompt library. |

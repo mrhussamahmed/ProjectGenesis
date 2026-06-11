@@ -24,7 +24,6 @@ Review test coverage and acceptance criteria.
 
 - `memory/ai/SHARED_AGENT_RULES.md`
 - `TEST_STRATEGY.md`
-- `TEST_PLAN.md`
 - `TEST_RESULTS.md`
 - `TESTS/ACCEPTANCE_CRITERIA_MAP.md` (seed from
   `TEMPLATE_STARTERS/ACCEPTANCE_CRITERIA_MAP.md` when absent)
