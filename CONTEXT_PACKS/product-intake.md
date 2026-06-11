@@ -2,11 +2,11 @@ artifact_id: ART-CONTEXT-PACK-PRODUCT-INTAKE
 title: Product Intake Context Pack
 type: context-pack
 status: active
-version: v2.0
+version: v2.1
 created: 2026-05-13
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002, SPEC-BOOT-003, and GEN-01 tiered read contract
+source: SPEC-BOOT-002, SPEC-BOOT-003, GEN-01 tiered read contract, and BOOT-RESEARCH-001 research-brief consumption
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -32,6 +32,9 @@ authoritative: false
 
 ## Files To Read If Relevant
 
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md`
+  (`status: accepted`), when one exists — evidence-backed input for product
+  context and requirements
 - research notes under `00_intake/research/`, when validating assumptions
 - existing summaries under `00_intake/summaries/`
 - `02_requirements/RISK_REGISTER.md`

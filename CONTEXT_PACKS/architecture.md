@@ -2,11 +2,11 @@ artifact_id: ART-CONTEXT-PACK-ARCHITECTURE
 title: Architecture Context Pack
 type: context-pack
 status: active
-version: v1.2
+version: v1.3
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: SPEC-BOOT-002 and SPEC-BOOT-003
+source: SPEC-BOOT-002 and SPEC-BOOT-003; BOOT-RESEARCH-001 research-brief consumption
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -31,6 +31,8 @@ authoritative: false
 ## Files To Read If Relevant
 
 - `01_context/CONSTRAINTS.md`
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md`
+  (`status: accepted`), for its feasibility, regulatory, and risk evidence
 - `02_requirements/RISK_REGISTER.md`
 - `SECURITY_AND_PRIVACY.md`
 - `OBSERVABILITY.md`

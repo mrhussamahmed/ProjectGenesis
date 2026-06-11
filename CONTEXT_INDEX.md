@@ -2,11 +2,11 @@ artifact_id: ART-CTX-001
 title: Context Index
 type: guide
 status: authoritative
-version: v2.0
+version: v2.1
 created: 2026-05-09
-updated: 2026-06-10
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
-source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, and GEN-01 single read contract
+source: User request, reference repository audit, SPEC-BOOT-002, SPEC-BOOT-003, GEN-01 single read contract, and BOOT-RESEARCH-001 research section
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
 linked_tickets: []
 linked_adrs: []
@@ -55,11 +55,25 @@ clarification.
 - `OPEN_QUESTIONS.md`
 - product input files under `00_intake/raw/`
 - research notes under `00_intake/research/`, when validating assumptions
+- the accepted `00_intake/research/RESEARCH_BRIEF-*.md`, when one exists
+
+## Research
+
+- `CONTEXT_PACKS/research.md`
+- `COMMANDS/start-research.md`
+- `00_intake/research/RESEARCH_PLAN_TEMPLATE.md`
+- `00_intake/research/RESEARCH_REPORT_TEMPLATE.md`
+- `00_intake/research/RESEARCH_CRITIC_REVIEW_TEMPLATE.md`
+- `00_intake/research/RESEARCH_BRIEF_TEMPLATE.md`
+- `00_intake/SOURCE_REGISTRY.md`
+- `02_requirements/ASSUMPTIONS_REGISTER.md` and
+  `02_requirements/RISK_REGISTER.md`, when registering brief candidates
 
 ## Spec And Backlog
 
 - `SPECS/SPEC_INDEX.md`
 - `SPECS/templates/SPEC_TEMPLATE.md`, for new specs
+- `01_context/UX_BRIEF.md`, for specs covering user-facing behavior
 - `02_requirements/REQUIREMENTS_INDEX.md`
 - `BACKLOG/BACKLOG_INDEX.md`
 - `BACKLOG/templates/BACKLOG_ITEM_TEMPLATE.md`, for new items

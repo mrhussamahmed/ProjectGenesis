@@ -2,9 +2,9 @@ artifact_id: ART-CONTEXT-PACKS-README
 title: Context Packs Guide
 type: context-pack-index
 status: active
-version: v1.1
+version: v1.2
 created: 2026-05-13
-updated: 2026-05-14
+updated: 2026-06-11
 owner: AI Bootstrap Maintainers
 source: SPEC-BOOT-002 and SPEC-BOOT-003
 linked_specs: [SPEC-BOOT-002, SPEC-BOOT-003]
@@ -25,6 +25,7 @@ that must be used with the read tiers and impact rules in
 | Pack | Purpose |
 |------|---------|
 | `product-intake.md` | Read source material and extract product context. |
+| `research.md` | Run the research orchestration pipeline to a user-gated brief. |
 | `spec-authoring.md` | Create or revise specs from controlled requirements. |
 | `architecture.md` | Prepare architecture updates and ADRs. |
 | `implementation.md` | Implement ready backlog items. |
