@@ -2,11 +2,11 @@ artifact_id: ART-README
 title: ProjectGenesis README
 type: public-readme
 status: active
-version: v3.0
+version: v3.1
 created: 2026-05-13
-updated: 2026-06-11
+updated: 2026-06-27
 owner: ProjectGenesis Maintainers
-source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, Phase 0 validator-scope restoration, v0.2.0 public alpha release notes, BOOT-GREEN-MERGE-001 AI green-merge, GEN-01 canonical quickstart, BOOT-RESEARCH-001 research orchestration layer
+source: Public repository publication, tooling prerequisite documentation, public positioning, public launch asset links, Phase 0 validator-scope restoration, v0.2.0 public alpha release notes, BOOT-GREEN-MERGE-001 AI green-merge, GEN-01 canonical quickstart, BOOT-RESEARCH-001 research orchestration layer, and 2026-06-27 README user-guide refresh
 linked_specs: [SPEC-BOOT-002]
 linked_tickets: [BOOT-GREEN-MERGE-001, BOOT-RESEARCH-001]
 linked_adrs: []
@@ -16,530 +16,326 @@ authoritative: true
 
 # ProjectGenesis
 
-**Build with AI speed without losing project control.**
+ProjectGenesis helps you turn rough product input into source-linked research, requirements, specs, backlog items, implementation work, and review evidence that AI agents can use across sessions.
 
-ProjectGenesis is a reusable, AI-native software delivery scaffold for founders,
-solo builders, vibe coders, product teams, and engineering teams who want AI
-agents to help plan and build software without turning rough ideas into
-unverifiable guesses.
+Estimated reading time: 9 minutes
 
-Latest release: [ProjectGenesis v0.2.0 Public Alpha](https://github.com/mrhussamahmed/ProjectGenesis/releases/tag/v0.2.0-public-alpha).
+[Release history](RELEASE_NOTES.md) | [Full usage guide](BOOTSTRAP_USAGE.md) | [New project initialization prompt](NEW_PROJECT_INITIALIZATION.md)
 
-See [RELEASE_NOTES.md](RELEASE_NOTES.md) for release history.
+## Why teams use it
 
----
+AI coding agents move quickly, but they can lose the thread when project truth lives only in chat. ProjectGenesis gives agents a file-based operating model: where to read context, where to record decisions, when to stop, what must be validated, and how another agent can resume the work.
 
-## The Problem
+Use it when you want AI help without accepting undocumented requirements, hidden assumptions, stale handoffs, or broad unreviewable diffs.
 
-AI-assisted development often breaks down when agents:
+| If this is your problem | ProjectGenesis gives you |
+|---|---|
+| Your idea is still rough | Intake folders, source IDs, research workflows, assumptions, risks, and open questions |
+| Agents keep inventing details | Source-of-truth rules, evidence labels, traceability, and validation checks |
+| Work spans many sessions | Shared state, role files, handoff files, and resume commands |
+| Specs and backlog drift apart | Linked specs, backlog items, acceptance criteria, and test expectations |
+| Implementation starts too early | Definition of Ready gates before coding |
+| Reviews depend on memory | Fresh-context review using repository evidence |
 
-- invent requirements or architecture from weak context
-- forget decisions across sessions
-- make large unreviewable changes
-- skip validation or handoff updates
-- create specs, backlog, and reviews that do not trace back to evidence
+ProjectGenesis is not an app framework, package manager, database starter, hosting template, or autonomous project manager. It is a reusable operating scaffold for AI-assisted software delivery.
 
-ProjectGenesis reduces those risks by putting project truth in versioned files
-that every agent reads, updates, and traces before doing meaningful work.
+## Who this is for
 
----
+ProjectGenesis fits:
 
-## What It Covers
+- founders and solo builders turning an idea into an implementation-ready plan
+- AI-first developers who want agents to work from repository truth, not chat memory
+- product and engineering teams that need requirements, architecture, backlog, QA, review, and handoff to stay connected
+- teams using Codex, Claude, or another coding agent across repeated sessions
 
-ProjectGenesis covers the full upstream pipeline — from raw idea to
-implementation-ready tasks:
+For a one-hour throwaway experiment, this may feel heavier than necessary. For work you expect to revisit, hand off, review, or ship, the structure pays for itself by making decisions traceable.
 
-| Stage | Command | What Happens |
-|-------|---------|-------------|
-| **Research** (optional) | `Start research.` | AI researches the market, competitors, user needs, feasibility, and risks. A critic challenges the findings. You approve the brief before it feeds product definition. |
-| **Intake** | `Start requirement breakdown.` | Raw notes and ideas are registered, summarized, and labeled — confirmed, inferred, or assumption. |
-| **Requirements** | (part of intake) | Requirements are extracted with source IDs, confidence levels, and traceability links. Assumptions and risks are recorded explicitly. |
-| **Specs** | `Start spec authoring.` | Draft specs are written when appropriate. Specs gate backlog items and block implementation for unclear or high-risk requirements. |
-| **Backlog** | `Start backlog planning.` | Epics, features, stories, spikes, and validation tasks are created with acceptance criteria and Definition of Ready. |
-| **Architecture** | `Start architecture design.` | High-impact decisions go into Architecture Decision Records with options, evidence, trade-offs, and approval status. |
-| **Validation** | `Start QA plan.` | Acceptance criteria, manual checklists, and test expectations are mapped before coding. |
-| **Implementation** | (your agent) | Code is written only after the task satisfies Definition of Ready. Fresh-context adversarial review is required before merging. |
+## What you need before you start
 
----
+Required:
 
-## Quick Start
+| Requirement | Why it is needed |
+|---|---|
+| Git | Branches, diffs, pull requests, and traceable changes |
+| Bash | Runs the bundled scripts |
+| `rsync` | Used by `SCRIPTS/scaffold-extract.sh` when creating a clean downstream scaffold |
+| An AI coding agent | Reads the role files, edits repository artifacts, and runs the workflow commands |
+| Product input | Notes, a product idea, a PRD, customer feedback, a feature list, or equivalent source material |
 
-### Option A — Research-first (recommended for new product ideas)
+Optional:
 
-```sh
-# 1. Extract a clean scaffold into your new project
-bash SCRIPTS/scaffold-extract.sh --apply <target-directory>
-# — or copy manually following TEMPLATE_MANIFEST.md —
+| Tool or service | Use it when |
+|---|---|
+| Agent web research tools | You want `Start research` or `Validate the idea` to gather external evidence |
+| GitHub | You want hosted pull requests, branch protection, and GitHub Actions validation |
+| GitHub CLI (`gh`) | You want to configure repository protection from the command line |
+| Linear | You want a team-facing issue tracker; Markdown remains authoritative until real Linear URLs are written back |
+| Claude CLI | You want to use `SCRIPTS/start-claude.sh`; Codex reads role files directly |
+| GitHub Spec Kit | You intentionally want Spec Kit alongside this scaffold |
+| Document conversion tools | Your input is in PDFs, slides, spreadsheets, or images the agent cannot read directly |
 
-# 2. Drop raw material (notes, PRDs, rough ideas, screenshots) into intake
-cp your-notes.md 00_intake/raw/
+No frontend, backend, database, cloud provider, or deployment stack is selected by default.
 
-# 3. Run research first to gather evidence before defining requirements
-# (tell your AI agent:)
-Start research.
+## Create a clean project scaffold
 
-# 4. Review and approve the Research Brief when the agent asks for approval
-#    (the agent pauses; you write your approval into the brief)
-
-# 5. Run requirement breakdown — it reads the accepted brief automatically
-Start requirement breakdown.
-```
-
-### Option B — Intake-first (when you have enough context already)
+Run extraction from a ProjectGenesis checkout. The parent directory of the target must already exist, and the target cannot be inside the source repository.
 
 ```sh
-# 1. Extract or copy the scaffold
-bash SCRIPTS/scaffold-extract.sh --apply <target-directory>
-
-# 2. Drop raw material into intake
-cp your-notes.md 00_intake/raw/
-
-# 3. Start requirement breakdown directly
-Start requirement breakdown.
-
-# 4. Validate the scaffold
-bash SCRIPTS/validate-bootstrap.sh
+bash SCRIPTS/scaffold-extract.sh --apply ../my-product
 ```
 
-For the full initialization prompt, see `NEW_PROJECT_INITIALIZATION.md`. For
-agent prompt recipes, see `BOOTSTRAP_USAGE.md`. For a worked example, see
-`examples/simple-saas-demo/`.
+What this does:
 
----
+1. Copies the reusable operating scaffold.
+2. Excludes ProjectGenesis maintainer history.
+3. Resets project-owned state files to clean starter content.
+4. Writes `.bootstrap-scaffold-mode=downstream`.
+5. Runs the extracted scaffold contract check.
+6. Runs `bash SCRIPTS/validate-bootstrap.sh` inside the target unless you pass `--no-validate`.
 
-## How It Works (Step by Step)
+Useful flags:
 
-### Step 1 — Set up the scaffold
+| Flag | Use |
+|---|---|
+| no flag | Dry run; previews what would happen |
+| `--apply` | Writes files |
+| `--force` | Allows overwriting a non-empty target after you inspect it |
+| `--no-validate` | Skips only the final in-target validation step |
 
-Extract a clean scaffold into your new project:
+Manual fallback: follow [TEMPLATE_MANIFEST.md](TEMPLATE_MANIFEST.md). Do not treat a raw copy as clean unless you also apply the starter-reset and maintainer-archive rules.
 
-```sh
-bash SCRIPTS/scaffold-extract.sh --apply <target-directory>
-```
+## Run the first workflow
 
-Or copy manually following the manifest-mediated rules in `TEMPLATE_MANIFEST.md`.
+After extraction, put your source material in `00_intake/raw/`. Plain Markdown or text is easiest, but you can also add exported notes, PRD fragments, feature lists, customer feedback, or converted document text.
 
-This gives you a clean workspace. ProjectGenesis maintainer state (backlog,
-review records, architecture decisions for the scaffold itself) does not carry
-over to your downstream project.
+### Option 1: research first
 
-### Step 2 — Drop raw material into intake
-
-Put any raw project material into `00_intake/raw/`: product notes, feature
-lists, PRD fragments, screenshots, customer feedback, research exports. Format
-does not matter. The agent handles registration and summarization.
-
-### Step 3 — Run research (optional but recommended)
-
-If you want evidence-backed market, competitor, user, or feasibility research
-before defining requirements, ask an agent:
+Use this when the product space, competitors, feasibility, costs, or risks are still uncertain.
 
 ```text
 Start research.
 ```
 
-The agent will:
+The agent plans the research depth, runs focused research tracks, sends findings through critic review, synthesizes a research brief, and pauses for your approval. Product definition consumes only an accepted research brief.
 
-1. Inspect your intake material and decide research depth (quick / standard / deep)
-2. Select which research tracks apply from the track catalog
-3. Spawn focused evidence-collection agents — one per assigned track
-4. An independent critic agent (fresh context required) challenges every finding
-5. A synthesizer merges accepted findings into a draft Research Brief
-6. **The agent pauses and asks for your explicit approval**
+Expected outputs:
 
-Only after you write your approval into the brief does it become `status: accepted`.
-The accepted Research Brief is the only path from research evidence into product
-definition. Raw research reports are audit evidence and never become requirement
-sources directly.
+- `00_intake/research/RESEARCH_PLAN-NNN.md`
+- one `00_intake/research/RR-NNN-<track>.md` file per research track
+- `00_intake/research/RCR-NNN.md`
+- `00_intake/research/RESEARCH_BRIEF-NNN.md`
+- source registry, assumption, risk, and open-question updates
 
-**Research tracks available:**
+If the agent has no web research tools, this workflow must stop instead of fabricating evidence.
 
-| Track | What It Covers |
-|-------|---------------|
-| Market | Size, growth trends, segments, timing signals |
-| Competitors | Features, pricing, positioning, gaps, moats |
-| User needs | Target user problems, jobs-to-be-done, workflows, pain points |
-| Technical feasibility | Stack viability, integrations, build vs. buy, technical risks |
-| Regulatory | Compliance requirements, legal constraints, jurisdiction rules |
-| Costs and free tiers | Infrastructure costs, tool pricing, viable free tiers |
-| Risks | High-impact unknowns that could change direction |
-| Differentiation | Underserved gaps, positioning opportunities |
+### Option 2: start intake directly
 
-**Research depth:**
-
-| Depth | When | Tracks |
-|-------|------|--------|
-| Quick | Familiar domain, time-boxed validation | 1–3 tracks |
-| Standard | New product space, moderate uncertainty | 4–7 tracks |
-| Deep | Novel market, high uncertainty, regulatory complexity | 8–12 tracks |
-
-### Step 4 — Run requirement breakdown
-
-Ask an agent:
+Use this when you already have enough product context to begin requirement breakdown.
 
 ```text
 Start requirement breakdown.
 ```
 
-The agent will:
+The agent registers source files, assigns `SRC-` IDs, summarizes input, extracts requirements, records assumptions and risks, creates open questions, proposes backlog candidates, drafts specs where appropriate, identifies architecture or ADR candidates, and classifies readiness.
 
-1. Register raw sources and assign stable source IDs (`SRC-001`, `SRC-002`, …)
-2. Summarize each source
-3. Extract and label requirements as confirmed, inferred, or assumption
-4. Record assumptions, risks, and open questions
-5. Generate product context (brief, charter, value proposition, workflows)
-6. Create backlog candidates, draft specs, and ADR candidates where appropriate
-7. Map acceptance criteria and validation needs
-8. Update traceability, handoffs, and state files
-9. Run scaffold validation
-10. Classify project readiness: `intake-incomplete` → `discovery-ready` → `spec-draft-ready` → `backlog-draft-ready` → `implementation-blocked` → `implementation-ready`
+Expected outputs:
 
-If an accepted Research Brief exists, the agent reads it and uses it as an
-evidence input. Research claims enter requirements only through the brief — the
-single-door rule.
+- `00_intake/SOURCE_REGISTRY.md`
+- `00_intake/summaries/`
+- `01_context/PROJECT_BRIEF.md`
+- `01_context/PROJECT_CHARTER.md`
+- `01_context/GLOSSARY.md`
+- `01_context/CONSTRAINTS.md`
+- `02_requirements/REQUIREMENTS_INDEX.md`
+- `02_requirements/ASSUMPTIONS_REGISTER.md`
+- `02_requirements/RISK_REGISTER.md`
+- backlog candidates, draft specs, traceability rows, and validation evidence when the input is ready
 
-### Step 5 — Review and gate
+This command does not authorize implementation. Coding waits until a backlog item satisfies Definition of Ready.
 
-Before implementation, verify:
+## Use the supported prompts
 
-- Requirements trace to sources or approved assumptions
-- Open questions that block implementation are resolved or explicitly accepted
-- Backlog items satisfy Definition of Ready
-- Specs exist for features that need them
-- Architecture decisions are captured in ADRs
+The command index is authoritative for shortcut phrases. Use the exact command prompts below for reusable workflows, and use role prompts for work that does not have a shortcut.
 
-### Step 6 — Implement
+| Goal | Prompt to give your agent | Result |
+|---|---|---|
+| Run multi-track research | `Start research.` | Research plan, track reports, critic review, user-gated research brief |
+| Run product intake | `Start requirement breakdown.` | Source IDs, summaries, context, requirements, assumptions, risks, backlog candidates, readiness |
+| Validate high-risk assumptions | `Validate the idea` | Research notes, updated assumption confidence, refreshed project brief sections |
+| Design architecture | `Start architecture design` | Tech design, slim ADRs, architecture open questions |
+| Implement ready work | `Implement next story` | One scoped branch or PR for the highest-priority ready backlog story |
+| Export backlog to Linear | `Export backlog to Linear` | Linear issue URLs written back, or export-ready text if no integration exists |
+| Resume interrupted work | `Resume work` | Session summary and continued task execution |
 
-Each implementation task has a linked spec and Definition of Ready. After
-implementation, a fresh-context agent (not the implementer) runs an adversarial
-review before the PR is merged.
+The following are role prompts, not command shortcuts:
 
----
-
-## All Commands
-
-| Phrase | What It Runs | When To Use |
-|--------|-------------|-------------|
-| `Start research.` | `COMMANDS/start-research.md` | Optional first step — collects market, competitor, and feasibility evidence before defining requirements. |
-| `Start requirement breakdown.` | `COMMANDS/start-requirement-breakdown.md` | Primary intake command. Turns raw material into structured product context. |
-| `Validate idea.` | `COMMANDS/validate-idea.md` | Lightweight check on a rough idea before committing to full intake or research. |
-| `Start spec authoring.` | `COMMANDS/start-spec-authoring.md` | When a feature needs a formal spec before backlog or implementation. |
-| `Start architecture design.` | `COMMANDS/start-architecture-design.md` | When technical direction needs capturing in ADRs. |
-| `Start backlog planning.` | `COMMANDS/start-backlog-planning.md` | Converts context and specs into a prioritized backlog. |
-| `Start QA plan.` | `COMMANDS/start-qa-plan.md` | Explicit test and validation plan for a feature or release. |
-
-See `COMMANDS/COMMAND_INDEX.md` for the full list of trigger phrases.
-
----
-
-## How Agents Should Work
-
-Agents start from `AGENTS.md` or `CLAUDE.md`, read
-`memory/ai/SHARED_AGENT_RULES.md` and the relevant `memory/ai/ROLE_*.md` file,
-then follow the `CONTEXT_INDEX.md` section for the task. `CONTEXT_INDEX.md` is
-the single read-list authority.
-
-**Claude startup shortcut:**
-
-```sh
-./SCRIPTS/start-claude.sh research       # Research Planner role
-./SCRIPTS/start-claude.sh product        # Product Analyst role
-./SCRIPTS/start-claude.sh spec           # Spec Author role
-./SCRIPTS/start-claude.sh architecture   # Architect role
-./SCRIPTS/start-claude.sh backlog        # Backlog Planner role
-./SCRIPTS/start-claude.sh implementation # Implementation Agent role
-./SCRIPTS/start-claude.sh qa             # QA Reviewer role
-./SCRIPTS/start-claude.sh review         # Reviewer role
-./SCRIPTS/start-claude.sh ux             # UX Designer role
-./SCRIPTS/start-claude.sh docs           # Docs role
-./SCRIPTS/start-claude.sh handoff        # Handoff role
+```text
+Read memory/ai/SHARED_AGENT_RULES.md and memory/ai/ROLE_SPEC_AUTHOR.md.
+Use the Spec And Backlog section of CONTEXT_INDEX.md.
+Create a draft spec from the confirmed requirements and record open questions for anything not ready.
 ```
 
-Agents must not treat chat history as durable truth. If facts matter, they
-belong in repository artifacts.
+```text
+Read memory/ai/SHARED_AGENT_RULES.md and memory/ai/ROLE_BACKLOG_PLANNER.md.
+Turn the approved specs into sequenced backlog items, identify the first safe implementation task, and prepare Linear-ready descriptions without claiming tickets exist.
+```
 
----
+```text
+Read memory/ai/SHARED_AGENT_RULES.md and memory/ai/ROLE_QA_REVIEWER.md.
+Review the relevant specs and backlog items for acceptance-criteria coverage, missing tests, manual checks, and validation risk.
+```
 
-## Repository Structure
+Avoid unsupported shortcut phrases such as `Start spec authoring`, `Start backlog planning`, or `Start QA plan` unless matching command files are added to `COMMANDS/COMMAND_INDEX.md`.
 
-| Path | Purpose |
-|------|---------|
-| `00_intake/raw/` | Drop raw project notes, PRDs, screenshots, exports, rough ideas, and references here. |
-| `00_intake/research/` | Research plans, evidence reports, critic reviews, and the accepted Research Brief. |
-| `00_intake/SOURCE_REGISTRY.md` | Assigns stable source IDs such as `SRC-001`. |
-| `00_intake/summaries/` | Source summaries created during intake. |
-| `01_context/` | Product brief, charter, glossary, constraints, and UX brief. |
-| `02_requirements/` | Requirements, assumptions register, and risk register. |
-| `SPECS/` | Product, feature, spike, and implementation specs. |
-| `ADR/` | Architecture decision records. |
-| `BACKLOG/` | Backlog items; `BACKLOG/BACKLOG_INDEX.md` is the status truth. |
-| `CONTEXT_PACKS/` | Scoped read manifests for common tasks. |
-| `COMMANDS/` | Reusable workflow command prompts. |
-| `REVIEWS/` | Review records and PR review packages. |
-| `TESTS/` | Acceptance maps and manual validation checklists. |
-| `memory/ai/` | Shared role definitions for AI agents. |
-| `TEMPLATE_MANIFEST.md` | Defines which files are copied, reset, excluded, or treated as maintainer archive when creating a clean scaffold. |
-| `TEMPLATE_STARTERS/` | Starter-reset content for new downstream projects. |
-| `MAINTAINER_ARCHIVE/` | ProjectGenesis maintainer history kept out of the active required-reading path. |
-| `RELEASE_NOTES.md` | Release history and operational changes. |
+## Understand the project flow
 
----
+| Stage | Owner or trigger | Main artifacts | Exit condition |
+|---|---|---|---|
+| Research | `Start research.` | Research plan, reports, critic review, research brief | You explicitly accept the brief |
+| Intake | `Start requirement breakdown.` | Source registry, summaries, context, requirements, assumptions, risks | Readiness is classified |
+| Idea validation | `Validate the idea` | Research notes and updated assumptions | High-risk assumptions have evidence or gaps |
+| Spec | Spec Author role | Specs and acceptance criteria | Spec is promoted from draft to approved |
+| Architecture | `Start architecture design` | Tech design and ADRs | Design is approved |
+| Backlog | Backlog Planner role | Sequenced backlog items | Items are implementation-ready |
+| QA | QA Reviewer role | Coverage findings and test evidence | Required coverage exists or blocking gaps are fixed before implementation |
+| Implementation | `Implement next story` | Code, tests, PR evidence | PR is merged with an evidence note |
+| Handoff | `Resume work` or stop checklist | `.ai/SESSION.md`, PR evidence, state files when durable truth changed | Another agent can continue safely |
 
-## Anti-Hallucination Controls
+## Work with GitHub, Linear, and other external tools
 
-| Control | Where It Lives |
-|---------|---------------|
-| Source IDs on all raw claims | `00_intake/SOURCE_REGISTRY.md` |
-| Confidence levels on requirements | `02_requirements/` |
-| Explicit assumptions register | `02_requirements/ASSUMPTIONS_REGISTER.md` |
-| Risk register with mitigations | `02_requirements/RISK_REGISTER.md` |
-| Open questions for unclear material | `OPEN_QUESTIONS.md` |
-| Evidence IDs (`EV-NNN`) on research claims | `00_intake/research/` reports |
-| Single-door rule — only accepted briefs feed product | `COMMANDS/start-research.md` |
-| Independent critic review of research findings | `memory/ai/ROLE_RESEARCH_CRITIC.md` |
-| Explicit user approval gate before brief is accepted | `00_intake/research/RESEARCH_BRIEF_TEMPLATE.md` |
-| Fresh-context adversarial review before merge | `PR_REVIEW_POLICY.md` |
-| Seeded-defect benchmark (82/82 passing) | `TESTS/ADVERSARIAL_SEED_BENCHMARK.md` |
-| Traceability matrix | `TRACEABILITY_MATRIX.md` |
+Markdown is the default source of truth. External systems are useful, but they do not become truth until the repository records evidence.
 
----
+### GitHub
 
-## Quality Gates
+Use GitHub when you want hosted collaboration, pull requests, branch protection, and GitHub Actions validation.
 
-ProjectGenesis expects:
+Recommended controls are documented in [GITHUB_REPOSITORY_SETUP.md](GITHUB_REPOSITORY_SETUP.md). The public ProjectGenesis policy expects objective merge gates: required CI/status checks, local validation, clean scope, and no unresolved P0, P1, or blocking P2 review findings. Human, maintainer, and Code Owner approval are not required merge gates in the active policy.
 
-- source-linked requirements
-- explicit assumptions and expiry/review status
-- open questions for unclear or conflicting material
-- specs before implementation on non-trivial features
-- backlog items linked to specs or discovery tasks
-- test expectations before coding
-- traceability from source to requirement to spec to backlog to test/review
-- review depth routed by operation profile (`OPERATION_ROUTING.md` and
-  `PR_REVIEW_POLICY.md`): self-check for low-risk docs/state changes,
-  fresh-context adversarial review for planning-governance and
-  strict-protected changes
-- one validation-evidence note per PR; durable state files updated only when
-  durable truth changed
+### Linear
 
-Run the baseline validator:
+Linear is optional. Use it when your team wants a ticketing system for backlog visibility.
+
+Codex setup:
 
 ```sh
+codex mcp add linear --url https://mcp.linear.app/mcp
+codex mcp login linear
+```
+
+Then ask:
+
+```text
+Export backlog to Linear
+```
+
+The export command must verify the integration, avoid duplicates, create or update issues, and write the real Linear ID or URL back to the backlog item. If no integration exists, the agent should provide export-ready text instead of claiming tickets exist.
+
+### GitHub Spec Kit
+
+Spec Kit is optional. Use it only when you intentionally want its external specification-driven development CLI, templates, or commands in a downstream project. If generated files overlap with ProjectGenesis specs or commands, treat that as a governance decision before implementation.
+
+## Validate the scaffold
+
+Run these checks before claiming the scaffold is valid:
+
+```sh
+bash SCRIPTS/doctor.sh
+git config core.hooksPath .githooks
 bash SCRIPTS/validate-bootstrap.sh
+git diff --check
 ```
 
-Run validator rule checks (red-check harness):
+What they do:
+
+| Check | Purpose |
+|---|---|
+| `SCRIPTS/doctor.sh` | Read-only orientation: branch, hooks, session, handoff freshness, intake queue |
+| `git config core.hooksPath .githooks` | Enables the bundled commit and push hooks once per clone |
+| `SCRIPTS/validate-bootstrap.sh` | Checks required files, metadata, source registry shape, assumptions, risks, command structure, traceability, and policy guards |
+| `git diff --check` | Finds whitespace errors before commit |
+
+Run the red-check harness when you change validator behavior, hooks, CI, or strict-gate rules:
 
 ```sh
 bash SCRIPTS/validate-bootstrap-red-checks.sh
 ```
 
----
+Downstream product projects should add stack-specific checks after the architecture selects a stack: formatter, linter, type check, unit tests, integration tests, build, security scan, migration checks, accessibility checks, and smoke tests as applicable.
 
-## Core Ideas
+## Keep agents on the rails
 
-- Repository files are source of truth. Chat history is context only.
-- Research is evidence collection, not feature definition.
-- Product intake is evidence-linked from raw source material.
-- Requirements are confirmed, inferred, or assumptions.
-- Important requirements must trace to sources or approved assumptions.
-- Architecture decisions use ADRs when they are high-impact.
-- Implementation waits until a task satisfies Definition of Ready.
-- Reviews use fresh context and repository evidence, not implementer memory.
-- Handoffs are written to files so another agent can resume later.
-- Commands are reusable workflow shortcuts, not hidden governance.
+At the start of meaningful work, the agent reads:
 
----
+1. `memory/ai/SHARED_AGENT_RULES.md`
+2. the task-specific `memory/ai/ROLE_*.md` file
+3. the minimum context and task section in `CONTEXT_INDEX.md`
+4. `git status --short --branch`
 
-## GitHub Repository Controls
+Before stopping, the agent records local resume context in `.ai/SESSION.md` when unmerged work remains. It updates `CURRENT_STATE.md` and `AI_HANDOFF.md` only when durable project truth changed and should remain true on `main` after merge.
 
-This public repository is governed through pull requests. The `main` branch is
-protected by objective status-check enforcement, not by human/maintainer/Code
-Owner approval gates. AI may merge after required CI/status checks pass,
-required local validation passes, scope is clean, and no P0/P1/blocking P2
-findings remain. See `PR_MERGE_POLICY.md` for the green-merge contract.
+Use this Codex kickoff prompt inside a downstream project:
 
-Recommended GitHub settings:
-
-- require the `validate` GitHub Actions status check to pass once the workflow exists on `main`
-- leave `required_pull_request_reviews` disabled — do not require approving reviews on `main`
-- leave `require_code_owner_reviews` disabled — do not require Code Owner review on `main`
-- leave `required_approving_review_count` at 0 — no approving review is required
-- conversation resolution before merge is optional but recommended
-- disallow force pushes and branch deletion
-- keep `.github/CODEOWNERS` as informational ownership only; do not wire it up as a required-review gate
-
-See `GITHUB_REPOSITORY_SETUP.md` for setup commands and verification steps.
-
----
-
-## External Backlog Storage
-
-Local Markdown is the default backlog source of truth
-(`BACKLOG/BACKLOG_INDEX.md` plus item files under `BACKLOG/`). External
-trackers are optional. Markdown remains authoritative until a real external
-issue ID or URL is recorded.
-
-### Supported External Tracker: Linear
-
-Linear is the recommended external backlog store when you want a team-facing
-issue tracker. Setup:
-
-1. Create or choose a Linear workspace, the team that will own the issues, and
-   optionally a project for the product or release.
-2. Configure workflow statuses (`Backlog`, `Todo`, `In Progress`, `In Review`,
-   `Done`) and labels matching the scaffold vocabulary (`type:<item_type>`,
-   `status:blocked`, `risk:high`).
-3. Connect the agent to Linear. For Codex:
-   `codex mcp add linear --url https://mcp.linear.app/mcp`, then
-   `codex mcp login linear`. For other agents, use the official Linear
-   connector or MCP setup. Do not commit API keys, tokens, OAuth credentials,
-   or exported private Linear data.
-
-Field mapping from scaffold backlog items to Linear:
-
-| Scaffold field | Linear |
-|----------------|--------|
-| priority `P0` / `P1` / `P2` / `P3` | `Urgent` / `High` / `Medium` / `Low` |
-| readiness `not-ready` | `Backlog` |
-| readiness `ready` | `Todo` |
-| readiness `in-progress` | `In Progress` |
-| readiness `in-review` | `In Review` |
-| readiness `done` | `Done` |
-| readiness `blocked` | label `status:blocked` |
-| estimate `1` / `2` / `3` / `5` / `8` | Linear points |
-| `item_type` and high risk | labels `type:<item_type>`, `risk:high` |
-
-Export workflow and operating rules: `COMMANDS/export-backlog-to-linear.md`.
-
----
-
-## Optional Spec Kit Integration
-
-ProjectGenesis is already spec-first and does not require GitHub Spec Kit. Use
-Spec Kit only when you want its external specification-driven development CLI,
-templates, or agent commands for a downstream project.
-
-Official Spec Kit reference: [github/spec-kit](https://github.com/github/spec-kit)
-
-If you adopt Spec Kit:
-
-- install only from the official `github/spec-kit` repository
-- pin a release for repeatability when possible
-- review generated files before accepting them
-- register generated or adopted artifacts in `ARTIFACT_REGISTRY.md`
-- keep ProjectGenesis source-of-truth rules in force unless an approved
-  migration spec says otherwise
-
-The official Spec Kit CLI can be installed with `uv`:
-
-```sh
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
-specify version
+```text
+Read AGENTS.md, then follow AI_PROJECT_BOOTSTRAP.md.
+Inspect git status and the minimum context in CONTEXT_INDEX.md before acting.
+Keep changes scoped, update traceability and handoff when required, and run SCRIPTS/validate-bootstrap.sh before claiming the scaffold is valid.
 ```
 
-One-time use is also possible:
+For Claude, use the role starter when available:
 
 ```sh
-uvx --from git+https://github.com/github/spec-kit.git specify init .
+./SCRIPTS/start-claude.sh product
+./SCRIPTS/start-claude.sh research
+./SCRIPTS/start-claude.sh architecture
+./SCRIPTS/start-claude.sh implementation
 ```
 
-Do not run `specify init` blindly in an established ProjectGenesis repository.
-First decide whether Spec Kit should create separate `.specify/` artifacts,
-augment the existing `SPECS/` and `COMMANDS/` workflow, or be skipped for that
-project. If Spec Kit creates overlapping specs, tasks, or command files, treat
-that as a governance decision and reconcile it before implementation.
+## Troubleshooting
 
----
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| `scaffold-extract.sh` says `rsync` is missing | `rsync` is not installed or not on `PATH` | Install `rsync`, then rerun the command |
+| Extraction refuses the target | The target is inside the source repo, the parent directory is missing, or the target is non-empty | Choose a sibling target, create the parent directory, or use `--force` after inspection |
+| Hooks do not run | `core.hooksPath` is not configured | Run `git config core.hooksPath .githooks` |
+| Validation routes strict during a small task | `.ai/SESSION.md` is absent, stale, branch-mismatched, or the diff touches strict-gate paths | Run `bash SCRIPTS/session.sh start <profile> "task note"` on the branch, or accept strict validation |
+| `Start research` stops | No web research tools are available, no idea exists, or the user rejected a gate | Add input under `00_intake/raw/`, enable research tools, or choose intake-first |
+| Requirement breakdown stops | `00_intake/raw/` has no source material or the source is unreadable/sensitive | Add source material or provide handling guidance |
+| Linear export produces text instead of tickets | No Linear integration is configured | Configure Linear, then rerun `Export backlog to Linear` |
+| Implementation does not start | No backlog item satisfies Definition of Ready | Resolve open questions, approve specs, define test expectations, and clear blockers |
 
-## Requirements
+## Limits
 
-ProjectGenesis itself is mostly Markdown and shell. To use the scaffold, you
-need:
+- It cannot decide product direction for you when source material is unclear.
+- It cannot verify external facts without available research or integration tools.
+- It does not enforce GitHub branch protection by itself; configure repository settings separately.
+- It does not choose your stack, database, hosting, payments provider, analytics, or ticketing system.
+- It depends on agents reading and following the repository rules.
+- It may be too much structure for very small experiments unless you use the workflow selectively.
 
-- Git
-- Bash
-- an AI coding agent that can read and edit repository files
-- GitHub, if you want hosted collaboration, branch protection, pull requests,
-  and GitHub Actions validation
-- optional: GitHub CLI for repository setup and branch protection
-- optional: Linear workspace and MCP or connector access for external backlog
-  storage
-- optional: Spec Kit CLI if you intentionally adopt Spec Kit for a downstream
-  project
-- optional: document conversion tools if your intake material includes PDFs,
-  slides, spreadsheets, screenshots, or exported documents that agents cannot
-  read directly
+## Repository map
 
-No application framework, package manager, database, or cloud provider is
-selected by default.
-
----
-
-## Who It Is For
-
-ProjectGenesis is useful when you want AI to move fast, but you still need a
-record of what was decided, why it was decided, what remains uncertain, and what
-must be true before code is written.
-
-It is especially useful for:
-
-- AI-first builders who start with rough ideas and want a stronger path to implementation
-- founders and solo builders who need structure without a full product team
-- engineers who want AI agents to follow the same project truth across sessions
-- teams that want requirements, backlog, architecture, testing, reviews, and handoffs to stay synchronized
-
-It is not a replacement for product judgment, engineering review, security
-review, user research, or legal review. It gives those activities a place to
-live and a process agents can follow.
-
----
-
-## Strengths
-
-- Works across different AI agents and sessions (Codex, Claude, Gemini, and others).
-- Keeps project truth in versioned files, not chat history.
-- Research evidence is challenged by an independent critic and gates on your explicit approval before feeding product definition.
-- Makes hallucinated requirements harder to introduce.
-- Preserves source evidence and decisions with end-to-end traceability.
-- Encourages small, reviewable implementation slices.
-- Supports future automation without requiring it upfront.
-
-## Limitations
-
-- It is a scaffold, not an autonomous project manager.
-- It cannot make unclear product direction clear without user input.
-- It depends on agents actually reading and following the repository rules.
-- It does not enforce GitHub branch protection by itself; repository settings must be configured on GitHub.
-- It does not choose your product architecture, stack, database, hosting, or external tools.
-- It can feel heavier than necessary for very small experiments unless you use the process pragmatically.
-
----
-
-## Contribution Policy
-
-Public contributions should come through pull requests. Direct changes to
-`main` should be blocked by repository settings except for maintainer-controlled
-administrative cases.
-
-Before opening a PR:
-
-1. Read `CONTRIBUTING.md`.
-2. Link your change to a spec, backlog item, ADR, or documented discovery task.
-3. Keep the change scoped.
-4. Run `bash SCRIPTS/validate-bootstrap.sh`.
-5. Record one validation-evidence note in the PR body; update durable state,
-   registry, or traceability files only when durable truth changed.
-6. Provide review evidence under `REVIEWS/` when the operation profile
-   requires it.
-
----
+| Path | Purpose |
+|---|---|
+| `00_intake/raw/` | Raw product input |
+| `00_intake/research/` | Research plans, reports, critic reviews, and briefs |
+| `00_intake/SOURCE_REGISTRY.md` | Source IDs and source metadata |
+| `01_context/` | Product brief, charter, glossary, constraints, and UX brief |
+| `02_requirements/` | Requirements, assumptions, and risks |
+| `SPECS/` | Product, feature, spike, and implementation specs |
+| `ADR/` | Architecture decision records |
+| `BACKLOG/` | Backlog index and detailed backlog items |
+| `COMMANDS/` | Reusable workflow command prompts |
+| `CONTEXT_PACKS/` | Scoped read lists for common work |
+| `memory/ai/` | Shared rules and role files for AI agents |
+| `REVIEWS/` | Review records and review templates |
+| `TESTS/` | Acceptance maps and manual validation checklists |
+| `SCRIPTS/` | Extraction, validation, session, and orientation scripts |
+| `.githooks/` | Local Git hooks |
+| `.github/workflows/` | GitHub Actions validation workflow |
+| `TEMPLATE_MANIFEST.md` | Clean scaffold extraction contract |
 
 ## License
 
-ProjectGenesis is licensed under the GNU Affero General Public License v3.0.
-See `LICENSE` for the full license text.
+ProjectGenesis is licensed under the GNU Affero General Public License v3.0. See [LICENSE](LICENSE).
 
-AGPLv3 is a strong copyleft license. If you modify and run a covered network
-service based on this project, review the license obligations carefully. This
-README is not legal advice.
+AGPLv3 is a strong copyleft license. If you modify and run a covered network service based on this project, review the license obligations carefully. This README is not legal advice.
