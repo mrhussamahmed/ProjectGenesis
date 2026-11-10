@@ -17,8 +17,26 @@ concurrency:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    # Optional self-hosted routing, off unless the repository sets variables
+    # CI_TARGET=masterworker and MW_RUNNER_LABEL=<its enrolled runner label>.
+    # Then pushes, dispatches and same-repository PRs use that runner; fork PRs
+    # queue on a reserved never-registered label so untrusted code never runs on
+    # the persistent runner and nothing falls back to paid compute. Without the
+    # variables (e.g. scaffold copies) the standard hosted runner is used.
+    runs-on: >-
+      ${{ fromJSON(
+        vars.CI_TARGET != 'masterworker' && '"ubuntu-latest"' ||
+        ((github.event_name != 'pull_request' ||
+          github.event.pull_request.head.repo.full_name == github.repository) &&
+         format('["self-hosted","Linux","X64","masterworker","{0}"]', vars.MW_RUNNER_LABEL) ||
+         '["self-hosted","masterworker-ci-blocked-do-not-register"]')) }}
+    # Typical run is ~1.5 minutes (max observed 3.6); never hold a runner for 6 hours.
+    timeout-minutes: 15
     steps:
+      - name: Verify MasterWorker job lease
+        if: vars.CI_TARGET == 'masterworker'
+        run: /usr/bin/python3 /usr/local/lib/masterworker-ci/resource_gate.py verify-current-worker-lease
+
       - name: Check out repository
         uses: actions/checkout@v5
         with:
